@@ -1,0 +1,638 @@
+unit UDM;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DbxSqlite, Data.FMTBcd, Data.DB,
+  System.RegularExpressions, Data.SqlExpr, System.IOUtils, ArrayAssoc, FMX.Dialogs;
+
+type
+  TDriver = (SQLITE, MYSQL, POSTGRES, FIREBIRD, SQLSERVER, ORACLE);
+
+type
+  TConnection = class
+  private
+    { Private declarations }
+    class var FInstance: TConnection;
+    class var FSQLConnection: TSQLConnection;
+    class var FDriver: TDriver;
+    class var FHost: String;
+    class var FSchema: String;
+    class var FDatabase: String;
+    class var FPath: String;
+    class var FUsername: String;
+    class var FPassword: String;
+    //class var FPort: Integer;
+    //class var FConectado: Boolean;
+    class procedure SetDriver(const Value: TDriver); static;
+    class procedure SetConnection(const Value: TSQLConnection);
+    function GetConnection: TSQLConnection;
+    constructor Create;
+  public
+    { Public declarations }
+    property Connection: TSQLConnection read GetConnection write SetConnection;
+    class property Driver: TDriver read FDriver write SetDriver default SQLITE;
+    class property Path: String read FPath write FPath;
+    class property Host: String read FHost write FHost;
+    class property Schema: String read FSchema write FSchema;
+    class property Database: String read FDatabase write FDatabase;
+    class property Username: String read FUsername write FUsername;
+    class property Password: String read FPassword write FPassword;
+    class function GetInstance: TConnection;
+  end;
+
+type
+  TQuery = class
+  private
+    { Private declarations }
+    class var FSQLConnection: TConnection;
+    class var FQuery: TSQLQuery;
+  public
+    { Public declarations }
+    constructor Create;
+    destructor Destroy; override;
+    class property Query: TSQLQuery read FQuery write FQuery;
+  end;
+
+type
+  TQueryBuilder = record
+  private
+    { Private declarations }
+    function GenericQuery(Input: string; Mode: Boolean = False): TQuery;
+  public
+    { Public declarations }
+    function View(Input: string): TQuery;
+    function Exec(Input: string): TQuery;
+
+    function Filter(Input, Column: String): String;
+
+    function Fetch(ATable: string; Filter: string; Condition: string = '1'): TArray; overload;
+    function Fetch(ATable: string; Filter: string): TArray; overload;
+    function Fetch(ATable: string): TArray; overload;
+
+    function Select(ATable: string; Filter: string; Condition: string = '1'): string; overload;
+    function Select(ATable: string; Filter: string): string; overload;
+    function Select(ATable: string): string; overload;
+
+    function Insert(ATable: string; Data: TArray; Run: Boolean = False): string;
+    function Replace(ATable: string; Data: TArray; Run: Boolean = False): string;
+
+    function Update(ATable: string; Data: TArray; Condition: TArray; Run: Boolean = False): string; overload;
+    function Update(ATable: string; Data: TArray; Run: Boolean = False): string; overload;
+
+    function Delete(ATable: string; Condition: TArray; Run: Boolean = False): string; overload;
+    function Delete(ATable: String; Run: Boolean = False): string; overload;
+  end;
+
+type
+  TDM = class(TDataModule)
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM: TDM;
+
+{$R *.dfm}
+
+implementation
+
+{ TConnection }
+
+constructor TConnection.Create;
+begin
+  inherited Create;
+  FSQLConnection := nil;
+end;
+
+class procedure TConnection.SetConnection(const Value: TSQLConnection);
+begin
+  FSQLConnection := Value;
+  FSQLConnection.Connected := False;
+  FSQLConnection.KeepConnection := False;
+  FSQLConnection.LoginPrompt := False;
+  SetDriver(FDriver);
+end;
+
+class procedure TConnection.SetDriver(const Value: TDriver);
+begin
+  FDriver := Value;
+  if FDriver = SQLITE then
+  try
+    if not Assigned(FInstance) then
+    begin
+      FInstance := TConnection.Create;
+      TConnection.FInstance.FSQLConnection := TSQLConnection.Create(nil);
+      with TConnection.FInstance.FSQLConnection do
+      begin
+        ConnectionName := 'DB';
+        DriverName := 'SQLite';
+        KeepConnection := True;
+        Params.BeginUpdate();
+        Params.Clear();
+        Params.Values['ColumnMetadataSupported'] := 'False';
+        Params.Values['LoginPrompt'] := 'False';
+        Params.Values['Database'] := FPath;
+        Params.Add('ForceCreateDatabase=True');
+        Params.Add('FailIfMissing=False');
+        Params.EndUpdate();
+        ParamsLoaded := True;
+      end;
+    end;
+  except
+    on E: Exception do
+      raise Exception.Create(E.Message);
+  end;
+end;
+
+class function TConnection.GetInstance: TConnection;
+begin
+  try
+    if not Assigned(FInstance) then
+    begin
+      SetDriver(FDriver);
+      Result := FInstance;
+    end;
+  except
+    on E: Exception do
+      raise Exception.Create(E.Message);
+  end;
+end;
+
+function TConnection.GetConnection: TSQLConnection;
+begin
+  Result := FSQLConnection;
+end;
+
+function ExtractStringBetweenDelims(Input: String;
+  Delim1, Delim2: String): String;
+var
+  Pattern: String;
+  RegEx: TRegEx;
+  Match: TMatch;
+begin
+  Result := '';
+  Pattern := Format('%s(.*?)%s', [Delim1, Delim2]);
+  RegEx := TRegEx.Create(Pattern);
+  Match := RegEx.Match(Input);
+  if Match.Success and (Match.Groups.Count > 1) then
+    Result := Match.Groups[1].Value;
+end;
+
+constructor TQuery.Create;
+begin
+  FSQLConnection := TConnection.Create;
+  FQuery := TSQLQuery.Create(nil);
+
+  FSQLConnection.FDriver := SQLITE;
+  FSQLConnection.FPath :=
+  {$IFDEF MSWINDOWS}
+  ExtractFilePath(ParamStr(0)) + 'db.db';
+  {$ELSE}
+  TPath.Combine(TPath.GetDocumentsPath, 'db.db');
+  {$ENDIF}
+
+  //showmessage(FSQLConnection.Connection.DriverName);
+  ShowMessage(FSQLConnection.Connection.DriverName);
+  exit;
+
+  //FQuery.SQLConnection := FSQLConnection.GetInstance.GetConnection;
+end;
+
+destructor TQuery.Destroy;
+begin
+  inherited;
+end;
+
+function TQueryBuilder.GenericQuery(Input: string; Mode: Boolean = False): TQuery;
+var
+  SQL: TQuery;
+begin
+  SQL := TQuery.Create;
+  SQL.Query.Close;
+  SQL.Query.SQL.Clear;
+  SQL.Query.SQL.Text := Input;
+  if not Mode then
+    SQL.Query.Open
+  else
+    SQL.Query.ExecSQL;
+  Result := SQL;
+end;
+
+function TQueryBuilder.Filter(Input, Column: String): String;
+begin
+  Result := ExtractStringBetweenDelims(Input, '<' + Column + '>',
+    '</' + Column + '>');
+end;
+
+function TQueryBuilder.View(Input: string): TQuery;
+begin
+  Result := GenericQuery(Input, false);
+end;
+
+function TQueryBuilder.Exec(Input: string): TQuery;
+begin
+  Result := GenericQuery(Input, true);
+end;
+
+function TQueryBuilder.Fetch(ATable: string; Filter: string;
+  Condition: string = '1'): TArray;
+var
+  Query : TQueryBuilder;
+  SQL: TQuery;
+  Matriz, Return: TArray;
+  I: Integer;
+begin
+  if ((Condition = '') or (Condition = '1')) then
+    Condition := ';'
+  else
+    Condition := ' WHERE ' + Condition + ';';
+  SQL := Query.View('SELECT ' + Filter + ' FROM ' + ATable + Condition);
+  if (SQL.Query.RecordCount > 0) then
+  begin
+    Return := TArray.Create;
+    Return.Clear;
+    while not SQL.Query.Eof do
+    begin // Linhas
+      Matriz := TArray.Create;
+      for I := 0 to SQL.Query.FieldCount - 1 do
+      begin // Colunas
+        Matriz[SQL.Query.Fields[I].DisplayName] := '<' + SQL.Query.Fields[I]
+          .DisplayName + '>' + SQL.Query.Fields[I].Text + '</' +
+          SQL.Query.Fields[I].DisplayName + '>';
+      end;
+      Return.Add(Matriz.ToString);
+      SQL.Query.Next;
+    end;
+    Result := Return;
+  end
+  else
+  begin
+    Return := TArray.Create;
+    Return.Clear;
+    Return.Add('0');
+    Result := Return;
+  end;
+end;
+
+function TQueryBuilder.Fetch(ATable: string; Filter: string): TArray;
+var
+  Query : TQueryBuilder;
+  SQL: TQuery;
+  Matriz, Return: TArray;
+  I: Integer;
+begin
+  SQL := Query.View('SELECT ' + Filter + ' FROM ' + ATable + ';');
+  if (SQL.Query.RecordCount > 0) then
+  begin
+    Return := TArray.Create;
+    Return.Clear;
+    while not SQL.Query.Eof do
+    begin // Linhas
+      Matriz := TArray.Create;
+      for I := 0 to SQL.Query.FieldCount - 1 do
+      begin // Colunas
+        Matriz[SQL.Query.Fields[I].DisplayName] := '<' + SQL.Query.Fields[I]
+          .DisplayName + '>' + SQL.Query.Fields[I].Text + '</' +
+          SQL.Query.Fields[I].DisplayName + '>';
+      end;
+      Return.Add(Matriz.ToString);
+      SQL.Query.Next;
+    end;
+    Result := Return;
+  end
+  else
+  begin
+    Return := TArray.Create;
+    Return.Clear;
+    Return.Add('0');
+    Result := Return;
+  end;
+end;
+
+function TQueryBuilder.Fetch(ATable: string): TArray;
+var
+  Query : TQueryBuilder;
+  SQL: TQuery;
+  Matriz, Return: TArray;
+  I: Integer;
+begin
+  SQL := Query.View('SELECT * FROM ' + ATable + ';');
+  if (SQL.Query.RecordCount > 0) then
+  begin
+    Return := TArray.Create;
+    Return.Clear;
+    while not SQL.Query.Eof do
+    begin // Linhas
+      Matriz := TArray.Create;
+      for I := 0 to SQL.Query.FieldCount - 1 do
+      begin // Colunas
+        Matriz[SQL.Query.Fields[I].DisplayName] := '<' + SQL.Query.Fields[I]
+          .DisplayName + '>' + SQL.Query.Fields[I].Text + '</' +
+          SQL.Query.Fields[I].DisplayName + '>';
+      end;
+      Return.Add(Matriz.ToString);
+      SQL.Query.Next;
+    end;
+    Result := Return;
+  end
+  else
+  begin
+    Return := TArray.Create;
+    Return.Clear;
+    Return.Add('0');
+    Result := Return;
+  end;
+end;
+
+function TQueryBuilder.Select(ATable: string): String;
+begin
+  Result := 'SELECT * FROM ' + ATable + ';';
+end;
+
+function TQueryBuilder.Select(ATable: string; Filter: string): String;
+begin
+  Result := 'SELECT ' + Filter + ' FROM ' + ATable + ';';
+end;
+
+function TQueryBuilder.Select(ATable: string; Filter: string;
+  Condition: string = '1'): String;
+begin
+  if ((Condition = '') or (Condition = '1')) then
+    Condition := ';'
+  else
+    Condition := ' WHERE ' + Condition + ';';
+  Result := 'SELECT ' + Filter + ' FROM ' + ATable + Condition;
+end;
+
+function TQueryBuilder.Insert(ATable: string; Data: TArray;
+  Run: Boolean = False): String;
+var
+  DbNames: String;
+  DbValues: String;
+  I: Integer;
+  Value: String;
+  Sentencia: String;
+  Query : TQueryBuilder;
+begin
+  DbNames := '';
+  DbValues := '';
+  for I := 0 to Data.Count - 1 do
+  begin
+    Value := Data.ValuesAtIndex[I];
+    if Value = 'NOW()' then
+      DbValues := DbValues + ',' + Value
+    else
+      DbValues := DbValues + ',''' + Value + '''';
+    DbNames := DbNames + ',' + Data.Names[I] + '';
+  end;
+  System.Delete(DbNames, 1, 1);
+  System.Delete(DbValues, 1, 1);
+  Sentencia := 'INSERT INTO ' + ATable + ' (' + DbNames + ') VALUES (' +
+    DbValues + ');';
+  if Run then
+    Query.Exec(Sentencia);
+  Result := Sentencia;
+end;
+
+function TQueryBuilder.Update(ATable: String; Data: TArray;
+  Condition: TArray; Run: Boolean = False): String;
+var
+  DbValues: String;
+  DbFilters: String;
+  Value: String;
+  I: Integer;
+  Sentencia: String;
+  Query : TQueryBuilder;
+begin
+  DbValues := '';
+  for I := 0 to Data.Count - 1 do
+  begin
+    Value := Data.ValuesAtIndex[I];
+    if Value = 'NOW()' then
+      DbValues := DbValues + ', ' + Value
+    else
+      DbValues := DbValues + ', ' + Data.Names[I] + ' = ' + '''' + Value + '''';
+  end;
+  System.Delete(DbValues, 1, 1);
+  if Condition.Count > 0 then
+    DbFilters := ' WHERE ' + Condition.ToFilter + ';'
+  else
+    DbFilters := ';';
+  Sentencia := 'UPDATE ' + ATable + ' SET ' + DbValues + DbFilters;
+  if Run then
+    Query.Exec(Sentencia);
+  Result := Sentencia;
+end;
+
+function TQueryBuilder.Update(ATable: String; Data: TArray;
+  Run: Boolean = False): String;
+var
+  DbValues: String;
+  Value: String;
+  I: Integer;
+  Sentencia: String;
+  Query : TQueryBuilder;
+begin
+  DbValues := '';
+  for I := 0 to Data.Count - 1 do
+  begin
+    Value := Data.ValuesAtIndex[I];
+    if Value = 'NOW()' then
+      DbValues := DbValues + ',' + Value
+    else
+      DbValues := DbValues + ',' + Data.Names[I] + ' = ' + '''' + Value + '''';
+  end;
+  System.Delete(DbValues, 1, 1);
+  Sentencia := 'UPDATE ' + ATable + ' SET ' + DbValues;
+  if Run then
+    Query.Exec(Sentencia);
+  Result := Sentencia;
+end;
+
+function TQueryBuilder.Delete(ATable: String; Condition: TArray;
+  Run: Boolean = False): String;
+var
+  Sentencia: String;
+  DbFilters : String;
+  Query : TQueryBuilder;
+begin
+  if Condition.Count > 0 then
+    DbFilters := ' WHERE ' + Condition.ToFilter + ';'
+  else
+    DbFilters := ';';
+  Sentencia := 'DELETE FROM ' + ATable + DbFilters;
+  if Run then
+    Query.Exec(Sentencia);
+  Result := Sentencia;
+end;
+
+function TQueryBuilder.Delete(ATable: String; Run: Boolean = False): string;
+var
+  Sentencia: String;
+  Query : TQueryBuilder;
+begin
+  Sentencia := 'DELETE FROM ' + ATable + ';';
+  if Run then
+    Query.Exec(Sentencia);
+  Result := Sentencia;
+end;
+
+function TQueryBuilder.Replace(ATable: String; Data: TArray;
+  Run: Boolean = False): String;
+var
+  DbNames: string;
+  DbValues: string;
+  Value: string;
+  I: Integer;
+  Sentencia: String;
+  Query : TQueryBuilder;
+begin
+  DbNames := '';
+  DbValues := '';
+  for I := 0 to Data.Count - 1 do
+  begin
+    Value := Data.ValuesAtIndex[I];
+    if Value = 'NOW()' then
+      DbValues := DbValues + ',' + Value
+    else
+      DbValues := DbValues + ',''' + Value + '''';
+    DbNames := DbNames + ',' + Data.Names[I] + '';
+  end;
+  System.Delete(DbNames, 1, 1);
+  System.Delete(DbValues, 1, 1);
+  Sentencia := 'REPLACE INTO ' + ATable + ' (' + DbNames + ') VALUES (' +
+    DbValues + ')';
+  if Run then
+    Query.Exec(Sentencia);
+  Result := Sentencia;
+end;
+
+procedure TDM.DataModuleCreate(Sender: TObject);
+var
+  TblCat, TblCli, TblCfg, TblSinc, TblUser, TblEmp, TblProd, TblVen, TblIVen: String;
+  DB: TConnection;
+begin
+  if DB.Driver = SQLITE then
+  begin
+    DB.FDriver := SQLITE;
+    DB.FPath :=
+    {$IFDEF MSWINDOWS}
+    ExtractFilePath(ParamStr(0)) + 'db.db';
+    {$ELSE}
+    TPath.Combine(TPath.GetDocumentsPath, 'db.db');
+    {$ENDIF}
+    DB := TConnection.GetInstance();
+    try
+      if not FileExists(DB.FSQLConnection.Params.Values['Database']) then
+      begin
+        try
+          { Tabelas do SIMPOS }
+          TblSinc := 'CREATE TABLE IF NOT EXISTS sincronizacao ( ' +
+            '  id TEXT(32) NOT NULL, ' + '  data_sincronizacao TEXT(10), ' +
+            '  hora_sincronizacao TEXT(10) ' + ');';
+          DB.FSQLConnection.ExecuteDirect(TblSinc);
+
+          TblCfg := 'CREATE TABLE IF NOT EXISTS configuracao ( ' +
+            '  id TEXT(32) NOT NULL, ' + '  enviar_sms_ao_sucesso TEXT(1), ' +
+            '  enviar_email_ao_sucesso TEXT(1), ' +
+            '  confirmar_ao_fechar TEXT(1), ' +
+            '  exibir_forma_dinheiro TEXT(1), ' + '  criar_atalhos TEXT(1), ' +
+            '  auto_sincronizar TEXT(1), ' + '  simpos TEXT(1), ' +
+            '  simtef TEXT(1), ' + '  simpdv TEXT(1), ' +
+            '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT CONFIGURACAO_PK PRIMARY KEY (id) ' + ');';
+          DB.FSQLConnection.ExecuteDirect(TblCfg);
+
+          TblEmp := 'CREATE TABLE IF NOT EXISTS empresa ( ' +
+            '  id INTEGER NOT NULL, ' + '  cnpj TEXT(18), ' + '  imei TEXT(28), '
+            + '  nome_fantasia TEXT(255), ' + '  razao_social TEXT(255), ' +
+            '  data_validacao TEXT(10), ' + '  data_expiracao TEXT(10), ' +
+            '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT EMPRESA_PK PRIMARY KEY (id) ' + ');' +
+            'CREATE INDEX CNPJ_INDEX ON empresa (cnpj); ' +
+            'CREATE INDEX IMEI_INDEX ON empresa (imei);';
+          DB.FSQLConnection.ExecuteDirect(TblEmp);
+
+          TblUser := 'CREATE TABLE IF NOT EXISTS usuarios ( ' +
+            '  id INTEGER NOT NULL, ' + '  apelido TEXT(255), ' +
+            '  email TEXT(255), ' + '  senha TEXT(255), ' + '  logado TEXT(1), ' +
+            '  administrador TEXT(1), ' + '  sincronizado TEXT(1), ' +
+            '  data_insercao TEXT(20), ' + '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT USUARIOS_PK PRIMARY KEY (id) ' + '  );' +
+            'CREATE UNIQUE INDEX EMAIL_USUARIO_UNIQUE ON usuarios (email);';
+          DB.FSQLConnection.ExecuteDirect(TblUser);
+
+          TblVen := 'CREATE TABLE IF NOT EXISTS vendas ( ' +
+            '  id INTEGER NOT NULL, ' + '  cliente_id INTEGER NOT NULL, ' +
+            '  forma_pagamento TEXT(255) NOT NULL, ' +
+            '  valor_venda REAL(10,2), ' + '  data_venda TEXT(20), ' +
+            '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT VENDAS_PK PRIMARY KEY (id) ' + ');' +
+            'CREATE INDEX FORMA_PAGAMENTO_INDEX ON vendas (FORMA_PAGAMENTO); ' +
+            'CREATE INDEX CLIENTE_ID_INDEX ON vendas (cliente_id);';
+          DB.FSQLConnection.ExecuteDirect(TblVen);
+
+          { Tabelas do SIMTEF e SIMPDV }
+
+          TblCat := 'CREATE TABLE IF NOT EXISTS categorias ( ' +
+            '  id INTEGER NOT NULL, ' + '  nome TEXT(255), ' +
+            '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT CATEGORIAS_PK PRIMARY KEY (id) ' + ');';
+          DB.FSQLConnection.ExecuteDirect(TblCat);
+
+          TblCli := 'CREATE TABLE IF NOT EXISTS clientes ( ' +
+            '  id INTEGER NOT NULL, ' + '  nome TEXT(255), ' + '  rg TEXT(50), ' +
+            '  cpf TEXT(14), ' + '  email TEXT(255), ' + '  fone TEXT(255), ' +
+            '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT CLIENTES_PK PRIMARY KEY (id) ' + ');' +
+            'CREATE UNIQUE INDEX EMAIL_CLIENTE_UNIQUE ON clientes (email); ' +
+            'CREATE UNIQUE INDEX FONE_UNIQUE ON clientes (fone); ' +
+            'CREATE INDEX RG_INDEX ON clientes (rg); ' +
+            'CREATE INDEX CPF_INDEX ON clientes (cpf);';
+          DB.FSQLConnection.ExecuteDirect(TblCli);
+
+          TblIVen := 'CREATE TABLE IF NOT EXISTS itens_vendas ( ' +
+            '  id INTEGER NOT NULL, ' + '  venda_id INTEGER NOT NULL, ' +
+            '  produto_id INTEGER NOT NULL, ' + '  quantidade INTEGER NOT NULL, '
+            + '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT ITENS_VENDAS_PK PRIMARY KEY (id) ' + ');' +
+            'CREATE INDEX VENDA_ID_INDEX ON itens_vendas (venda_id); ' +
+            'CREATE INDEX PRODUTO_ID_INDEX ON itens_vendas (produto_id);';
+          DB.FSQLConnection.ExecuteDirect(TblIVen);
+
+          TblProd := 'CREATE TABLE IF NOT EXISTS produtos ( ' +
+            '  id INTEGER NOT NULL, ' + '  status TEXT(255) NOT NULL, ' +
+            '  categoria_id INTEGER NOT NULL, ' + '  descricao TEXT(255), ' +
+            '  valor_unitario REAL(10,2), ' + '  codigo_barras TEXT(50), ' +
+            '  sincronizado TEXT(1), ' + '  data_insercao TEXT(20), ' +
+            '  data_edicao TEXT(20), ' +
+            '  CONSTRAINT PRODUTOS_PK PRIMARY KEY (id) ' + ');' +
+            'CREATE INDEX STATUS_INDEX ON produtos (status); ' +
+            'CREATE INDEX CATEGORIA_ID_INDEX ON produtos (categoria_id);';
+          DB.FSQLConnection.ExecuteDirect(TblProd);
+
+        except
+          on E: Exception do
+            raise Exception.Create(E.Message);
+        end;
+      end;
+      DB.FSQLConnection.Connected := True;
+    except
+      on E: Exception do
+        raise Exception.Create(E.Message);
+    end;
+  end;
+end;
+
+end.
+

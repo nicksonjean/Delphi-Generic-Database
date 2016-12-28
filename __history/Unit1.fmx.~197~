@@ -1,0 +1,210 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 496
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ButSQLite: TButton
+    Position.X = 128.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 1
+    Text = 'SQLite'
+    OnClick = ButSQLiteClick
+  end
+  object ButMySQL: TButton
+    Position.X = 336.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 2
+    Text = 'MySQL'
+    OnClick = ButMySQLClick
+  end
+  object ButPostgreSQL: TButton
+    Position.X = 440.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 4
+    Text = 'PostgreSQL'
+    OnClick = ButPostgreSQLClick
+  end
+  object ButFirebird: TButton
+    Position.X = 232.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 5
+    Text = 'Firebird'
+    OnClick = ButFirebirdClick
+  end
+  object ComboBox1: TComboBox
+    Position.X = 96.000000000000000000
+    Position.Y = 280.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+  end
+  object TabControl1: TTabControl
+    Align = Top
+    FullSize = True
+    Margins.Top = -2.000000000000000000
+    Position.Y = -2.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 208.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 6
+    TabPosition = PlatformDefault
+    Sizes = (
+      640s
+      159s
+      640s
+      159s
+      640s
+      159s
+      640s
+      159s)
+    object TabSQLite: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 159.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'SQLite'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridSQLite: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 640.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Viewport.Width = 636.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabFirebird: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 159.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Firebird'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridFirebird: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 640.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 636.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabMySQL: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 159.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'MySQL'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridMySQL: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 640.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 636.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabPostgreSQL: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 161.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'PostgreSQL'
+      ExplicitSize.cx = 161.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridPostgreSQL: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 640.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 636.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+  end
+  object SQLConnection1: TSQLConnection
+    DriverName = 'Sqlite'
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverUnit=Data.DbxSqlite'
+      
+        'DriverPackageLoader=TDBXSqliteDriverLoader,DBXSqliteDriver240.bp' +
+        'l'
+      
+        'MetaDataPackageLoader=TDBXSqliteMetaDataCommandFactory,DbxSqlite' +
+        'Driver240.bpl'
+      'FailIfMissing=True'
+      'Database=F:\TEF\Cobaia2\DB.SQLITE')
+    Connected = True
+    Left = 208
+    Top = 208
+  end
+  object SQLQuery1: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'SELECT * FROM logradouro')
+    SQLConnection = SQLConnection1
+    Left = 304
+    Top = 208
+  end
+  object DataSetProvider1: TDataSetProvider
+    DataSet = SQLQuery1
+    Left = 400
+    Top = 208
+  end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProvider1'
+    Left = 512
+    Top = 208
+  end
+end
