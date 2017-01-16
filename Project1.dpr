@@ -4,7 +4,6 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  System.Classes in 'System.Classes.pas',
   ArrayAssoc in 'ArrayAssoc.pas',
   SQLConnection in 'SQLConnection.pas';
 

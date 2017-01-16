@@ -1,0 +1,319 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 627
+  ClientWidth = 964
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ButSQLite: TButton
+    Position.X = 120.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 1
+    Text = 'SQLite'
+    OnClick = ButSQLiteClick
+  end
+  object ButMySQL: TButton
+    Position.X = 328.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 2
+    Text = 'MySQL'
+    OnClick = ButMySQLClick
+  end
+  object ButPostgreSQL: TButton
+    Position.X = 432.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 4
+    Text = 'PostgreSQL'
+    OnClick = ButPostgreSQLClick
+  end
+  object ButFirebird: TButton
+    Position.X = 224.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 5
+    Text = 'Firebird'
+    OnClick = ButFirebirdClick
+  end
+  object TabControl1: TTabControl
+    Align = Top
+    FullSize = True
+    Margins.Top = -2.000000000000000000
+    Position.Y = -2.000000000000000000
+    Size.Width = 964.000000000000000000
+    Size.Height = 208.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 6
+    TabPosition = PlatformDefault
+    Sizes = (
+      964s
+      159s
+      964s
+      159s
+      964s
+      159s
+      964s
+      159s)
+    object TabSQLite: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 240.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'SQLite'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridSQLite: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 964.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Viewport.Width = 960.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabFirebird: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 240.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Firebird'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridFirebird: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 964.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 960.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabMySQL: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 240.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'MySQL'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridMySQL: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 964.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 960.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabPostgreSQL: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 242.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'PostgreSQL'
+      ExplicitSize.cx = 161.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridPostgreSQL: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 964.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 960.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+  end
+  object ComboBoxSQLite: TComboBox
+    Position.X = 24.000000000000000000
+    Position.Y = 216.000000000000000000
+    TabOrder = 20
+  end
+  object ComboBoxFirebird: TComboBox
+    Position.X = 184.000000000000000000
+    Position.Y = 216.000000000000000000
+    TabOrder = 21
+  end
+  object ComboBoxMySQL: TComboBox
+    Position.X = 344.000000000000000000
+    Position.Y = 216.000000000000000000
+    TabOrder = 22
+  end
+  object ComboBoxPostgreSQL: TComboBox
+    Position.X = 504.000000000000000000
+    Position.Y = 216.000000000000000000
+    TabOrder = 23
+  end
+  object ListBoxSQLite: TListBox
+    Position.X = 24.000000000000000000
+    Position.Y = 256.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 24
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 96.000000000000000000
+    Viewport.Height = 96.000000000000000000
+  end
+  object ListBoxFirebird: TListBox
+    Position.X = 184.000000000000000000
+    Position.Y = 255.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 25
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 96.000000000000000000
+    Viewport.Height = 96.000000000000000000
+  end
+  object ListBoxMySQL: TListBox
+    Position.X = 344.000000000000000000
+    Position.Y = 256.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 26
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 96.000000000000000000
+    Viewport.Height = 96.000000000000000000
+  end
+  object ListBoxPostgreSQL: TListBox
+    Position.X = 504.000000000000000000
+    Position.Y = 256.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 27
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 96.000000000000000000
+    Viewport.Height = 96.000000000000000000
+  end
+  object ListBox1: TListBox
+    Position.X = 720.000000000000000000
+    Position.Y = 352.000000000000000000
+    TabOrder = 29
+    DisableFocusEffect = True
+    ItemIndex = 0
+    Items.Strings = (
+      'Back-end'
+      'Front-end'
+      'Design'
+      'Documenta'#195#167#195#163'o')
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 196.000000000000000000
+    Viewport.Height = 196.000000000000000000
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'DriverID=FB'
+      'CharacterSet=UTF8'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'Database=F:\TEF\Cobaia\DB.FDB'
+      'Server=127.0.0.1'
+      'Port=3050'
+      'ExtendedMetadata=False')
+    Connected = True
+    LoginPrompt = False
+    Left = 40
+    Top = 464
+  end
+  object FDQuery1: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT * FROM "card_sector"')
+    Left = 136
+    Top = 464
+  end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProvider1'
+    Left = 232
+    Top = 464
+  end
+  object DataSetProvider1: TDataSetProvider
+    DataSet = ClientDataSet1
+    Left = 336
+    Top = 464
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = FDQuery1
+    ScopeMappings = <>
+    Left = 560
+    Top = 464
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 556
+    Top = 389
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'nome'
+      Control = ListBox1
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+  end
+  object FDPhysFBDriverLink1: TFDPhysFBDriverLink
+    Embedded = True
+    Left = 392
+    Top = 544
+  end
+end

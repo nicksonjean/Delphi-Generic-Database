@@ -1,0 +1,353 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 443
+  ClientWidth = 634
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ComboBox1: TComboBox
+    Items.Strings = (
+      'Outros'
+      'Aeroporto'
+      #193'rea'
+      'Avenida'
+      'Beco'
+      'Campo'
+      'Ch'#225'cara'
+      'Col'#244'nia'
+      'Condom'#237'nio'
+      'Conjunto'
+      'Distrito'
+      'Esplanada'
+      'Esta'#231#227'o'
+      'Estrada'
+      'Favela'
+      'Fazenda'
+      'Feira'
+      'Jardim'
+      'Ladeira'
+      'Lago'
+      'Lagoa'
+      'Largo'
+      'Loteamento'
+      'Morro'
+      'N'#250'cleo'
+      'Parque'
+      'Passarela'
+      'P'#225'tio'
+      'Pra'#231'a'
+      'Recanto'
+      'Residencial'
+      'Rodovia'
+      'Rua'
+      'Setor'
+      'S'#237'tio'
+      'Travessa'
+      'Trecho'
+      'Trevo'
+      'Vale'
+      'Vereda'
+      'Viaduto'
+      'Viela'
+      'Vila'
+      'Zona')
+    ItemIndex = 0
+    Position.X = 424.000000000000000000
+    Position.Y = 216.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+  end
+  object ListBox1: TListBox
+    Position.X = 16.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 137.000000000000000000
+    Size.Height = 153.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 15
+    DisableFocusEffect = True
+    ItemIndex = 0
+    Items.Strings = (
+      'Outros'
+      'Aeroporto'
+      #193'rea'
+      'Avenida'
+      'Beco'
+      'Campo'
+      'Ch'#225'cara'
+      'Col'#244'nia'
+      'Condom'#237'nio'
+      'Conjunto'
+      'Distrito'
+      'Esplanada'
+      'Esta'#231#227'o'
+      'Estrada'
+      'Favela'
+      'Fazenda'
+      'Feira'
+      'Jardim'
+      'Ladeira'
+      'Lago'
+      'Lagoa'
+      'Largo'
+      'Loteamento'
+      'Morro'
+      'N'#250'cleo'
+      'Parque'
+      'Passarela'
+      'P'#225'tio'
+      'Pra'#231'a'
+      'Recanto'
+      'Residencial'
+      'Rodovia'
+      'Rua'
+      'Setor'
+      'S'#237'tio'
+      'Travessa'
+      'Trecho'
+      'Trevo'
+      'Vale'
+      'Vereda'
+      'Viaduto'
+      'Viela'
+      'Vila'
+      'Zona')
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 117.000000000000000000
+    Viewport.Height = 149.000000000000000000
+  end
+  object ButSQLite: TButton
+    Position.X = 128.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 1
+    Text = 'SQLite'
+    OnClick = ButSQLiteClick
+  end
+  object ButMySQL: TButton
+    Position.X = 336.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 2
+    Text = 'MySQL'
+    OnClick = ButMySQLClick
+  end
+  object ButPostgreSQL: TButton
+    Position.X = 440.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 4
+    Text = 'PostgreSQL'
+    OnClick = ButPostgreSQLClick
+  end
+  object ButFirebird: TButton
+    Position.X = 232.000000000000000000
+    Position.Y = 400.000000000000000000
+    TabOrder = 5
+    Text = 'Firebird'
+    OnClick = ButFirebirdClick
+  end
+  object TabControl1: TTabControl
+    Align = Top
+    FullSize = True
+    Margins.Top = -2.000000000000000000
+    Position.Y = -2.000000000000000000
+    Size.Width = 634.000000000000000000
+    Size.Height = 208.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 6
+    TabPosition = PlatformDefault
+    Sizes = (
+      634s
+      159s
+      634s
+      159s
+      634s
+      159s
+      634s
+      159s)
+    object TabSQLite: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 158.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'SQLite'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridSQLite: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 634.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Viewport.Width = 630.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabFirebird: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 158.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Firebird'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridFirebird: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 634.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 630.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabMySQL: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 158.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'MySQL'
+      ExplicitSize.cx = 159.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridMySQL: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 634.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 630.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+    object TabPostgreSQL: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 158.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'PostgreSQL'
+      ExplicitSize.cx = 161.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object GridPostgreSQL: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 634.000000000000000000
+        Size.Height = 159.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        RowCount = 0
+        Viewport.Width = 630.000000000000000000
+        Viewport.Height = 134.000000000000000000
+      end
+    end
+  end
+  object DataSetProvider1: TDataSetProvider
+    DataSet = FDQuery1
+    Left = 400
+    Top = 328
+  end
+  object ClientDataSet1: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProvider1'
+    Left = 512
+    Top = 328
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=F:\TEF\Cobaia2\DB.SQLITE'
+      'DriverID=SQLite')
+    Connected = True
+    LoginPrompt = False
+    Left = 184
+    Top = 328
+  end
+  object FDQuery1: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT * FROM logradouro;')
+    Left = 296
+    Top = 328
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = ClientDataSet1
+    ScopeMappings = <>
+    Left = 552
+    Top = 272
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 444
+    Top = 272
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'nome'
+      Control = ComboBox1
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+    object LinkPropertyToFieldIndex: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'id'
+      Component = ComboBox1
+      ComponentProperty = 'Index'
+    end
+    object LinkListControlToField2: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'nome'
+      Control = ListBox1
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+    object LinkPropertyToFieldIndex2: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'id'
+      Component = ListBox1
+      ComponentProperty = 'Index'
+    end
+  end
+end

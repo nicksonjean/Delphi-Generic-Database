@@ -25,14 +25,9 @@ uses
   FMX.Grid,
   FMX.Bind.DBEngExt,
   FMX.Bind.Grid,
-  FMX.ExtCtrls, FMX.ListBox, Data.DbxSqlite, Data.FMTBcd, Datasnap.Provider,
-  Datasnap.DBClient, Data.DB, Data.SqlExpr, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
-  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
-  FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
-  FireDAC.FMXUI.Wait, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, Data.Bind.EngExt, Data.Bind.Components, Data.Bind.DBScope,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FMX.Layouts;
+  FMX.ExtCtrls,
+  FMX.ListBox,
+  FMX.Layouts;
 
 type
   TForm1 = class(TForm)
@@ -40,8 +35,6 @@ type
     ButMySQL: TButton;
     ButPostgreSQL: TButton;
     ButFirebird: TButton;
-    ComboBox1: TComboBox;
-    DataSetProvider1: TDataSetProvider;
     TabControl1: TTabControl;
     TabSQLite: TTabItem;
     GridSQLite: TGrid;
@@ -51,16 +44,14 @@ type
     GridMySQL: TGrid;
     TabPostgreSQL: TTabItem;
     GridPostgreSQL: TGrid;
-    ClientDataSet1: TClientDataSet;
-    FDConnection1: TFDConnection;
-    FDQuery1: TFDQuery;
-    BindSourceDB1: TBindSourceDB;
-    BindingsList1: TBindingsList;
-    LinkListControlToField1: TLinkListControlToField;
-    LinkPropertyToFieldIndex: TLinkPropertyToField;
-    ListBox1: TListBox;
-    LinkListControlToField2: TLinkListControlToField;
-    LinkPropertyToFieldIndex2: TLinkPropertyToField;
+    ComboBoxSQLite: TComboBox;
+    ComboBoxFirebird: TComboBox;
+    ComboBoxMySQL: TComboBox;
+    ComboBoxPostgreSQL: TComboBox;
+    ListBoxSQLite: TListBox;
+    ListBoxFirebird: TListBox;
+    ListBoxMySQL: TListBox;
+    ListBoxPostgreSQL: TListBox;
     procedure ButSQLiteClick(Sender: TObject);
     procedure ButMySQLClick(Sender: TObject);
     procedure ButPostgreSQLClick(Sender: TObject);
@@ -104,6 +95,8 @@ begin
     try
       SQL := Query.View('SELECT * FROM logradouro');
       SQL.toGrid(GridSQLite);
+      SQL.toComboBox(ComboBoxSQLite, 'id', 'nome');
+      SQL.toListBox(ListBoxSQLite, 'id', 'nome');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       SQL.Free;
@@ -142,6 +135,8 @@ begin
     try
       SQL := Query.View('SELECT * FROM "card_sector"');
       SQL.toGrid(GridFirebird);
+      SQL.toComboBox(ComboBoxFirebird, 'id', 'nome');
+      SQL.toListBox(ListBoxFirebird, 'id', 'nome');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       SQL.Free;
@@ -175,6 +170,8 @@ begin
     try
       SQL := Query.View('SELECT * FROM estado');
       SQL.toGrid(GridMySQL);
+      SQL.toComboBox(ComboBoxMySQL, 'id', 'nome');
+      SQL.toComboBox(ListBoxMySQL, 'id', 'nome');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       SQL.Free;
@@ -209,6 +206,8 @@ begin
     try
       SQL := Query.View('SELECT * FROM demodev.cidade');
       SQL.toGrid(GridPostgreSQL);
+      SQL.toComboBox(ComboBoxPostgreSQL, 'id', 'nome');
+      SQL.toListBox(ListBoxPostgreSQL, 'id', 'nome');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       SQL.Free;

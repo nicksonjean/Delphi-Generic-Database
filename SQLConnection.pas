@@ -48,7 +48,8 @@ uses
 
   FMX.Dialogs,
   FMX.Forms,
-  FMX.Grid,
+  FMX.Grid, //Necessário para o método toGrid
+  FMX.ListBox, //Necessário para os métodos toFillList, toListBox e toComboBox
   FMX.Types,
 
   { Runtime Live Bindings }
@@ -94,8 +95,11 @@ uses
 
   { FireDAC }
   {$IFDEF FireDACLib}
+  FireDAC.DatS, //FireDAC Local Data Storage Class
   FireDAC.DApt,
+  FireDAC.DApt.Intf,
   FireDAC.Comp.Client,
+  FireDAC.Comp.DataSet,
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
   FireDAC.Stan.Error,
@@ -119,16 +123,16 @@ uses
   {$ENDIF}
 
   { Ping de Conexão }
-  IdBaseComponent, 
-  IdComponent, 
-  IdRawBase, 
-  IdRawClient, 
+  IdBaseComponent,
+  IdComponent,
+  IdRawBase,
+  IdRawClient,
   IdIcmpClient,
 
   { Classe para Criação de Matrizes Associativas }
   ArrayAssoc;
 
-type
+type      //   OK     OK       OK                                     OK
   TDriver = (SQLITE, MYSQL, FIREBIRD, INTERBASE, SQLSERVER, MSSQL, POSTGRES, ORACLE);
 
 { Design Pattern Singleton }
@@ -198,11 +202,14 @@ type
     { Private declarations }
     Instance: TConnection;
     FQuery: {$I CNX.Query.Type.inc};
+    procedure toFillList(AOwner: TComponent; IndexField, ValueField : String);
   public
     { Public declarations }
     constructor Create;
     destructor Destroy; override;
     procedure toGrid(AOwner: TComponent);
+    procedure toComboBox(AOwner: TComponent; IndexField, ValueField : String);
+    procedure toListBox(AOwner: TComponent; IndexField, ValueField : String);
     property Query: {$I CNX.Query.Type.inc} read FQuery write FQuery;
   end;
 
@@ -354,6 +361,73 @@ begin
   Instance.FreeInstance;
 end;
 
+procedure TQuery.toFillList(AOwner: TComponent; IndexField, ValueField : String);
+var
+  DataSetProvider : TDataSetProvider;
+  ClientDataSet : TClientDataSet;
+  BindSourceDB : TBindSourceDB;
+  BindingsList : TBindingsList;
+  LinkListControlToField : TLinkListControlToField;
+  LinkPropertyToFieldIndex : TLinkPropertyToField;
+begin
+
+  try
+
+    Application.ProcessMessages;
+    if (AOwner is TComboBox) and (TComboBox(AOwner) <> nil) and (TComboBox(AOwner).Items.Count > 0) then
+      TComboBox(AOwner).Items.Clear
+    else if (AOwner is TListBox) and (TListBox(AOwner) <> nil) and (TListBox(AOwner).Items.Count > 0) then
+      TListBox(AOwner).Clear;
+
+    {$WARNINGS OFF}
+    {$HINTS OFF}
+
+    DataSetProvider := TDataSetProvider.Create(FQuery);
+    ClientDataSet := TClientDataSet.Create(DataSetProvider);
+    BindSourceDB := TBindSourceDB.Create(ClientDataSet);
+    BindingsList := TBindingsList.Create(BindSourceDB);
+    LinkListControlToField := TLinkListControlToField.Create(BindSourceDB);
+    LinkPropertyToFieldIndex := TLinkPropertyToField.Create(BindSourceDB);
+
+    DataSetProvider.DataSet := FQuery;
+    ClientDataSet.SetProvider(DataSetProvider);
+
+    BindSourceDB.DataSet := ClientDataSet;
+    BindSourceDB.DataSet.Active := True;
+
+    BindingsList.PromptDeleteUnused := True;
+
+    LinkListControlToField.Control := AOwner;
+    LinkListControlToField.DataSource := BindSourceDB;
+    LinkListControlToField.FieldName := ValueField;
+    LinkListControlToField.AutoBufferCount := False;
+    LinkListControlToField.Active := True;
+
+    LinkPropertyToFieldIndex.Component := AOwner;
+    LinkPropertyToFieldIndex.DataSource := BindSourceDB;
+    LinkPropertyToFieldIndex.ComponentProperty := 'Index';
+    LinkPropertyToFieldIndex.FieldName := IndexField;
+    LinkPropertyToFieldIndex.Active := True;
+
+    {$HINTS ON}
+    {$WARNINGS ON}
+
+  except
+
+  end;
+
+end;
+
+procedure TQuery.toComboBox(AOwner: TComponent; IndexField, ValueField : String);
+begin
+  toFillList(AOwner, IndexField, ValueField);
+end;
+
+procedure TQuery.toListBox(AOwner: TComponent; IndexField, ValueField : String);
+begin
+  toFillList(AOwner, IndexField, ValueField);
+end;
+
 procedure TQuery.toGrid(AOwner: TComponent);
 var
   DataSetProvider : TDataSetProvider;
@@ -362,36 +436,43 @@ var
   BindingsList : TBindingsList;
   LinkGridToDataSource : TLinkGridToDataSource;
 begin
-  Application.ProcessMessages;
-  if (AOwner is TGrid) and (TGrid(AOwner) <> nil) and (TGrid(AOwner).VisibleColumnCount > 0) then
-    TGrid(AOwner).Clear
-  else if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) and (TStringGrid(AOwner).VisibleColumnCount > 0) then
-    TStringGrid(AOwner).Clear;
 
-  {$WARNINGS OFF}
-  {$HINTS OFF}
+  try
 
-  DataSetProvider := TDataSetProvider.Create(FQuery);
-  ClientDataSet := TClientDataSet.Create(DataSetProvider);
-  BindSourceDB := TBindSourceDB.Create(ClientDataSet);
-  BindingsList := TBindingsList.Create(BindSourceDB);
-  LinkGridToDataSource := TLinkGridToDataSource.Create(BindSourceDB);
+    Application.ProcessMessages;
+    if (AOwner is TGrid) and (TGrid(AOwner) <> nil) and (TGrid(AOwner).VisibleColumnCount > 0) then
+      TGrid(AOwner).Clear
+    else if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) and (TStringGrid(AOwner).VisibleColumnCount > 0) then
+      TStringGrid(AOwner).Clear;
 
-  DataSetProvider.DataSet := FQuery;
-  ClientDataSet.SetProvider(DataSetProvider);
+    {$WARNINGS OFF}
+    {$HINTS OFF}
 
-  BindSourceDB.DataSet := ClientDataSet;
-  BindSourceDB.DataSet.Active := True;
+    DataSetProvider := TDataSetProvider.Create(FQuery);
+    ClientDataSet := TClientDataSet.Create(DataSetProvider);
+    BindSourceDB := TBindSourceDB.Create(ClientDataSet);
+    BindingsList := TBindingsList.Create(BindSourceDB);
+    LinkGridToDataSource := TLinkGridToDataSource.Create(BindSourceDB);
 
-  BindingsList.PromptDeleteUnused := True;
+    DataSetProvider.DataSet := FQuery;
+    ClientDataSet.SetProvider(DataSetProvider);
 
-  LinkGridToDataSource.GridControl := AOwner;
-  LinkGridToDataSource.DataSource := BindSourceDB;
-  LinkGridToDataSource.AutoBufferCount := False;
-  LinkGridToDataSource.Active := True;
+    BindSourceDB.DataSet := ClientDataSet;
+    BindSourceDB.DataSet.Active := True;
 
-  {$HINTS ON}
-  {$WARNINGS ON}
+    BindingsList.PromptDeleteUnused := True;
+
+    LinkGridToDataSource.GridControl := AOwner;
+    LinkGridToDataSource.DataSource := BindSourceDB;
+    LinkGridToDataSource.AutoBufferCount := False;
+    LinkGridToDataSource.Active := True;
+
+    {$HINTS ON}
+    {$WARNINGS ON}
+
+  except
+
+  end;
 
 end;
 

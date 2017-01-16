@@ -313,7 +313,6 @@
             <Form>Form1</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="System.Classes.pas"/>
         <DCCReference Include="ArrayAssoc.pas"/>
         <DCCReference Include="SQLConnection.pas"/>
         <BuildConfiguration Include="Release">
