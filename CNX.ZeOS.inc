@@ -20,7 +20,7 @@
               Port     := IfThen(FPort = 3306, 3306, FPort);
               Database := FDatabase;
               User     := FUsername;
-              Password := FPassword;
+              Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               AutoCommit := False;
               Properties.Clear;
               Properties.Add('CLIENT_MULTI_STATEMENTS=1');
@@ -36,7 +36,7 @@
               Port     := IfThen(FPort = 3050, 3050, FPort);
               Database := FDatabase;
               User     := FUsername;
-              Password := FPassword;
+              Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               AutoCommit := False;
               Properties.Clear;
               Properties.Add('CLIENT_MULTI_STATEMENTS=1');
@@ -65,7 +65,7 @@
               Database := FDatabase;
               Catalog  := FSchema;
               User     := FUsername;
-              Password := FPassword;
+              Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               AutoCommit := False;
               Properties.Clear;
               Properties.Add('CLIENT_MULTI_STATEMENTS=1');

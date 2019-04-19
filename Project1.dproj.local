@@ -2,9 +2,9 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2016/11/29 23:06:36.000.546,=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/11/29 23:07:38.000.595,F:\TEF\Cobaia2\Unit1.pas=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/11/29 23:07:38.000.595,F:\TEF\Cobaia2\Unit1.fmx=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
-    <Transaction>2016/11/29 23:07:40.000.810,F:\TEF\Cobaia2\Project1.dproj=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2016/11/29 23:07:38.000.595,C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.pas=F:\TEF\Cobaia2\Unit1.pas</Transaction>
+    <Transaction>2016/11/29 23:07:38.000.595,C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.fmx=F:\TEF\Cobaia2\Unit1.fmx</Transaction>
+    <Transaction>2016/11/29 23:07:40.000.810,C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Project1.dproj=F:\TEF\Cobaia2\Project1.dproj</Transaction>
     <Transaction>2016/11/29 23:07:59.000.776,=F:\TEF\Cobaia2\ArrayAssoc.pas</Transaction>
     <Transaction>2016/11/29 23:09:14.000.609,=F:\TEF\Cobaia2\UDM.pas</Transaction>
     <Transaction>2016/12/05 20:09:12.000.832,F:\TEF\Cobaia2\UDM.pas=</Transaction>
@@ -12,6 +12,6 @@
     <Transaction>2016/12/31 22:44:50.000.071,F:\TEF\Cobaia2\System.Classes.pas=</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
-		<NoProfile iOSSimulator="iPhone5" Android="AVD_for_Nexus_5_by_Google_ARM_5_1_1"/>
+		<NoProfile iOSSimulator="iPhone5" Android=""/>
 	</ActiveMobileDevice>
 </BorlandProject>

@@ -32,11 +32,10 @@
               Params.Values['ColumnMetadataSupported'] := 'False';
               Params.Values['LoginPrompt'] := 'False';
               Params.Values['HostName'] := FHost;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 3306, 3306, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 3306, 3306, FPort));
               Params.Values['Database'] := FDatabase;
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['ForceCreateDatabase'] := 'False';
               Params.Values['FailIfMissing'] := 'False';
               Params.Values['MaxBlobSize'] := '-1';
@@ -64,10 +63,9 @@
                 Params.Values['Database'] := FDatabase
               else
                 Params.Values['Database'] := FHost + ':' + FDatabase;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 3050, 3050, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 3050, 3050, FPort));
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['Role'] := 'RoleName';
               Params.Values['LocaleCode'] := '0000';
               Params.Values['IsolationLevel'] := 'ReadCommitted';
@@ -96,10 +94,9 @@
                 Params.Values['Database'] := FDatabase
               else
                 Params.Values['Database'] := FHost + ':' + FDatabase;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 3050, 3050, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 3050, 3050, FPort));
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['Role'] := 'RoleName';
               Params.Values['LocaleCode'] := '0000';
               Params.Values['IsolationLevel'] := 'ReadCommitted';
@@ -125,11 +122,10 @@
               Params.Values['ColumnMetadataSupported'] := 'False';
               Params.Values['LoginPrompt'] := 'False';
               Params.Values['HostName'] := FHost;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 1433, 1433, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 1433, 1433, FPort));
               Params.Values['Database'] := FDatabase;
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['ForceCreateDatabase'] := 'False';
               Params.Values['FailIfMissing'] := 'False';
               Params.Values['MaxBlobSize'] := '-1';
@@ -149,18 +145,17 @@
               KeepConnection := False;
               LoginPrompt := False;
               GetDriverFunc := 'getSQLDriverMSSQL';
-              VendorLib := 'sqlncli10.dll';
+              VendorLib := 'sqlncli11.dll';
               LibraryName := 'dbxmss.dll';
               Params.BeginUpdate();
               Params.Clear();
               Params.Values['ColumnMetadataSupported'] := 'False';
               Params.Values['LoginPrompt'] := 'False';
               Params.Values['HostName'] := FHost;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 1433, 1433, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 1433, 1433, FPort));
               Params.Values['Database'] := FDatabase;
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['ForceCreateDatabase'] := 'False';
               Params.Values['FailIfMissing'] := 'False';
               Params.Values['MaxBlobSize'] := '-1';
@@ -186,12 +181,11 @@
               Params.Clear();
               Params.Values['LoginPrompt'] := 'False';
               Params.Values['HostName'] := FHost;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 5432, 5432, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 5432, 5432, FPort));
               Params.Values['Database'] := FDatabase;
               Params.Values['SchemaName'] := FSchema;
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['SchemaName'] := FSchema;
               Params.EndUpdate();
               ParamsLoaded := True;
@@ -210,11 +204,10 @@
               Params.Values['ColumnMetadataSupported'] := 'False';
               Params.Values['LoginPrompt'] := 'False';
               Params.Values['HostName'] := FHost;
-              Params.Values['Port'] :=
-                IntToStr(IfThen(FPort = 1521, 1521, FPort));
+              Params.Values['Port'] := IntToStr(IfThen(FPort = 1521, 1521, FPort));
               Params.Values['Database'] := FDatabase;
               Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := FPassword;
+              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
               Params.Values['Port'] := IntToStr(FPort);
               Params.Values['BlobSize'] := '1';
               Params.Values['LocaleCode'] := '0000';

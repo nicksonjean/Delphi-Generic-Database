@@ -12,3 +12,5 @@
 {$IFDEF FireDAC} //Condição
   {$DEFINE FireDACLib} //Constante
 {$ENDIF}
+
+{$I CNX.SQL.Convernions.inc} //Constantes

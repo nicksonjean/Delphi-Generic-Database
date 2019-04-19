@@ -1,52 +1,97 @@
-unit ArrayAssoc;
+{
+  ArrayAssoc.
+  ------------------------------------------------------------------------------
+  Objetivo : Simplificar a criação de matrizes php-like em Delphi.
+  Suporta 2 Tipos de Matrizes Associativas Unidimensionais:
+  1 - Matriz de Strings Herdada de TStringList;
+  2 - Matriz de Variants Herdada de TDictionary<Variant, Variant>
+  ------------------------------------------------------------------------------
+  Autor : Nickson Jeanmerson
+  Colaborador : Ramon Ruan
+  ------------------------------------------------------------------------------
+  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
+  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
+  qualquer versão posterior.
+  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
+  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
+  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
+  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
+  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Você também pode obter uma copia da licença em:
+  http://www.opensource.org/licenses/lgpl-license.php
+}
 
-{$WARNINGS OFF}
-{$HINTS OFF}
+unit ArrayAssoc;
 
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Generics.Collections,
-  System.RTLConsts;
+  System.Classes,
+  System.SysUtils,
+  System.Generics.Collections,
+  System.RTLConsts,
+  System.Variants,
+  Data.DB,
+  {Record para Conversão de Tipos}
+  Conversion;
 
+{$REGION 'TArray'}
 type
   TArray = class(TStringList)
   private
-    function GetValues(Index: string): string;
-    function GetValuesAtIndex(Index: Integer): string;
-    procedure SetValues(Index: string; const Value: string);
+    { Private declarations }
+    function GetKey(Index: Integer): String;
+    function GetValues(Index: String): String;
+    function GetValuesAtIndex(Index: Integer): String;
+    procedure SetValues(Index: String; const Value: String);
+    function GetItem(Index: String): String;
+    procedure SetItem(Index: String; const Value: String);
   public
+    { Public declarations }
     constructor Create;
     destructor Destroy; override;
-    function ToFilter: string;
-    function ToString: string;
-    procedure AddKeyValue(Key, Value: string);
-    property ValuesAtIndex[Index: Integer]: string read GetValuesAtIndex;
-    property Values[Index: string]: string read GetValues
-      write SetValues; default;
+    function ToFilter: String;
+    function ToString: String; reintroduce; virtual;
+    procedure AddKeyValue(Key : String; Value: String = '');
+    procedure Add(Key : String; Value: String = ''); reintroduce;
+    property Key[Index : Integer] : String read GetKey;
+    property ValuesAtIndex[Index: Integer]: String read GetValuesAtIndex;
+    property Values[Index: String]: String read GetValues write SetValues;
+    property Item[Index: String]: String read GetItem write SetItem; default;
   end;
+{$ENDREGION}
 
-  { TRows em Desuso }
-
+{$REGION 'TArrayVariant'}
 type
-  TRows = class(TList)
+  TArrayVariant = class(TDictionary<Variant, Variant>)
   private
-    function GetData(Index: Integer): TArray;
-    procedure SetData(Index: Integer; const Value: TArray);
+    { Private declarations }
+    function GetKey(Index: Integer): String;
+    function GetValues(Name: String): Variant;
+    function GetValuesAtIndex(Index: Integer): Variant;
+    procedure SetValues(Name: String; const Value: Variant);
+    function GetItem(Index: String): Variant;
+    procedure SetItem(Index: String; const Value: Variant);
   public
-    property Data[Index: Integer]: TArray read GetData write SetData; default;
+    { Public declarations }
     destructor Destroy; override;
+    function ToFilter: String;
+    function ToString: String; reintroduce; virtual;
+    procedure AddKeyValue(Key : String; Value : Variant);
+    procedure Add(Key : String; Value : Variant);
+    property Key[Index : Integer] : String read GetKey;
+    property ValuesAtIndex[Index: Integer]: Variant read GetValuesAtIndex;
+    property Values[Name: string]: Variant read GetValues write SetValues;
+    property Item[Index: String]: Variant read GetItem write SetItem; default;
   end;
+{$ENDREGION}
 
 implementation
 
-{ TArray }
-
-procedure TArray.AddKeyValue(Key, Value: string);
-begin
-  Add(Key + NameValueSeparator + Value);
-end;
-
+{$REGION 'TArray'}
 constructor TArray.Create;
 begin
   NameValueSeparator := '|';
@@ -64,22 +109,34 @@ begin
   Result := '';
   for I := 0 to Count - 1 do
   begin
-    Result := Result + Names[I] + ' ' + ValuesAtIndex[I] + ' ';
+    Result := Result + Names[I] + ' ' + QuotedStr(ValuesAtIndex[I]) + ' ';
   end;
 end;
 
 function TArray.ToString: string;
 var
   I: Integer;
-  Return: String;
 begin
-  Return := '';
+  Result := '';
   for I := 0 to Count - 1 do
   begin
-    Return := Return + ValuesAtIndex[I];
+    Result := Result + QuotedStr(ValuesAtIndex[I]);
   end;
-  Return := Copy(Return, 1, Length(Return) - 1);
-  Result := Return;
+end;
+
+procedure TArray.Add(Key : String; Value: String = '');
+begin
+  inherited Add(Key + NameValueSeparator + Value);
+end;
+
+procedure TArray.AddKeyValue(Key : String; Value: String = '');
+begin
+  inherited Add(Key + NameValueSeparator + Value);
+end;
+
+function TArray.GetKey(Index: Integer): String;
+begin
+  inherited;
 end;
 
 function TArray.GetValues(Index: string): string;
@@ -97,28 +154,90 @@ begin
   inherited Values[Index] := Value;
 end;
 
-{ TRows }
-
-destructor TRows.Destroy;
-var
-  I: Integer;
+function TArray.GetItem(Index: String): string;
 begin
-  for I := 0 to Count - 1 do
-    Data[I].Free;
+  Result := Self.GetValues(Index);
+end;
+
+procedure TArray.SetItem(Index: String; const Value: string);
+begin
+  AddKeyValue(Index, Value);
+end;
+{$ENDREGION}
+
+{$REGION 'TArrayVariant'}
+destructor TArrayVariant.Destroy;
+begin
   inherited;
 end;
 
-function TRows.GetData(Index: Integer): TArray;
+function TArrayVariant.ToFilter: string;
+var
+  I: Integer;
 begin
-  Result := Items[Index];
+  Result := '';
+  for I := 0 to Count - 1 do
+  begin
+    Result := Result + Key[I] + ' ' + Convert.VarToStr(ValuesAtIndex[I]) + ' ';
+  end;
 end;
 
-procedure TRows.SetData(Index: Integer; const Value: TArray);
+function TArrayVariant.ToString: string;
+var
+  I: Integer;
 begin
-  Items[Index] := Value;
+  Result := '';
+  for I := 0 to Count - 1 do
+  begin
+    Result := Result + Convert.VarToStr(ValuesAtIndex[I]);
+  end;
 end;
 
-{$WARNINGS ON}
-{$HINTS ON}
+procedure TArrayVariant.Add(Key : String; Value : Variant);
+begin
+  inherited Add(Key, Value);
+end;
+
+procedure TArrayVariant.AddKeyValue(Key : String; Value : Variant);
+begin
+  inherited AddOrSetValue(Key, Value);
+end;
+
+function TArrayVariant.GetKey(Index: Integer): String;
+begin
+  Result := ToArray[Index].Key;
+end;
+
+function TArrayVariant.GetValues(Name: string): Variant;
+var
+  OutValue : Variant;
+begin
+  TryGetValue(Name, OutValue);
+  Result := OutValue;
+end;
+
+procedure TArrayVariant.SetValues(Name: String; const Value: Variant);
+begin
+  Values[Name] := Value;
+end;
+
+function TArrayVariant.GetItem(Index: String): Variant;
+begin
+  Result := Self.GetValues(Index);
+end;
+
+procedure TArrayVariant.SetItem(Index: String; const Value: Variant);
+begin
+  AddOrSetValue(Index, Value);
+end;
+
+function TArrayVariant.GetValuesAtIndex(Index: Integer): Variant;
+var
+  OutValue : Variant;
+begin
+  TryGetValue(Self.ToArray[Index].Key, OutValue);
+  Result := OutValue;
+end;
+{$ENDREGION}
 
 end.
