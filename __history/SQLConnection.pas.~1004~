@@ -557,16 +557,11 @@ begin
     if (AOwner is TGrid) and (TGrid(AOwner) <> nil) and (TGrid(AOwner).VisibleColumnCount > 0) then
     begin
       TGrid(AOwner).Clear;
-      try
-        FreeAndNil(LinkGridToDataSource);
-        FreeAndNil(BindingsList);
-        FreeAndNil(BindSourceDB);
-        FreeAndNil(ClientDataSet);
-        FreeAndNil(DataSetProvider);
-      except
-
-      end;
-
+      FreeAndNil(LinkGridToDataSource);
+      FreeAndNil(BindingsList);
+      FreeAndNil(BindSourceDB);
+      FreeAndNil(ClientDataSet);
+      FreeAndNil(DataSetProvider);
     end
     else if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) and (TStringGrid(AOwner).VisibleColumnCount > 0) then
       TStringGrid(AOwner).Clear;
