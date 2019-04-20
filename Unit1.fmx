@@ -71,7 +71,7 @@ object Form1: TForm1
         Text = 'SQLite'
         ExplicitSize.cx = 159.000000000000000000
         ExplicitSize.cy = 26.000000000000000000
-        object GridSQLite: TGrid
+        object GridSQLite: TStringGrid
           Align = Client
           CanFocus = True
           ClipChildren = True
@@ -96,7 +96,7 @@ object Form1: TForm1
         Text = 'Firebird'
         ExplicitSize.cx = 159.000000000000000000
         ExplicitSize.cy = 26.000000000000000000
-        object GridFirebird: TGrid
+        object GridFirebird: TStringGrid
           Align = Client
           CanFocus = True
           ClipChildren = True
@@ -104,7 +104,6 @@ object Form1: TForm1
           Size.Height = 289.500000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          RowCount = 0
           Viewport.Width = 714.000000000000000000
           Viewport.Height = 264.500000000000000000
         end
@@ -122,7 +121,7 @@ object Form1: TForm1
         Text = 'MySQL'
         ExplicitSize.cx = 159.000000000000000000
         ExplicitSize.cy = 26.000000000000000000
-        object GridMySQL: TGrid
+        object GridMySQL: TStringGrid
           Align = Client
           CanFocus = True
           ClipChildren = True
@@ -130,7 +129,6 @@ object Form1: TForm1
           Size.Height = 289.500000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          RowCount = 0
           Viewport.Width = 714.000000000000000000
           Viewport.Height = 264.500000000000000000
         end
@@ -148,7 +146,7 @@ object Form1: TForm1
         Text = 'PostgreSQL'
         ExplicitSize.cx = 161.000000000000000000
         ExplicitSize.cy = 26.000000000000000000
-        object GridPostgreSQL: TGrid
+        object GridPostgreSQL: TStringGrid
           Align = Client
           CanFocus = True
           ClipChildren = True
@@ -156,7 +154,6 @@ object Form1: TForm1
           Size.Height = 289.500000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          RowCount = 0
           Viewport.Width = 714.000000000000000000
           Viewport.Height = 264.500000000000000000
         end

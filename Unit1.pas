@@ -37,13 +37,9 @@ type
     GridPanelLayout1: TGridPanelLayout;
     TabControl1: TTabControl;
     TabSQLite: TTabItem;
-    GridSQLite: TGrid;
     TabFirebird: TTabItem;
-    GridFirebird: TGrid;
     TabMySQL: TTabItem;
-    GridMySQL: TGrid;
     TabPostgreSQL: TTabItem;
-    GridPostgreSQL: TGrid;
     GridPanelLayout2: TGridPanelLayout;
     ComboBoxSQLite: TComboBox;
     ComboBoxFirebird: TComboBox;
@@ -67,6 +63,10 @@ type
     GridPanelLayout3: TGridPanelLayout;
     ButClone: TButton;
     ButCopy: TButton;
+    GridSQLite: TStringGrid;
+    GridFirebird: TStringGrid;
+    GridMySQL: TStringGrid;
+    GridPostgreSQL: TStringGrid;
     procedure ButSQLiteClick(Sender: TObject);
     procedure ButMySQLClick(Sender: TObject);
     procedure ButPostgreSQLClick(Sender: TObject);
@@ -768,7 +768,7 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM estado');
+      SQL := Query.View('SELECT * FROM estado ORDER BY id');
       SQL.toGrid(GridSQLite);
       SQL.toComboBox(ComboBoxSQLite, 'id', 'nome');
       SQL.toListBox(ListBoxSQLite, 'id', 'nome');
@@ -810,7 +810,7 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM "estado"');
+      SQL := Query.View('SELECT * FROM "estado" ORDER BY "id"');
       SQL.toGrid(GridFirebird);
       SQL.toComboBox(ComboBoxFirebird, 'id', 'nome');
       SQL.toListBox(ListBoxFirebird, 'id', 'nome');
@@ -847,7 +847,7 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM estado');
+      SQL := Query.View('SELECT * FROM estado ORDER BY id');
       SQL.toGrid(GridMySQL);
       SQL.toComboBox(ComboBoxMySQL, 'id', 'nome');
       SQL.toComboBox(ListBoxMySQL, 'id', 'nome');
@@ -885,7 +885,7 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM demodev.estado');
+      SQL := Query.View('SELECT * FROM demodev.estado ORDER BY id');
       SQL.toGrid(GridPostgreSQL);
       SQL.toComboBox(ComboBoxPostgreSQL, 'id', 'nome');
       SQL.toListBox(ListBoxPostgreSQL, 'id', 'nome');

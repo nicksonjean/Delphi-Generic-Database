@@ -157,6 +157,7 @@ uses
   FMX.Platform.Android,
   FMX.Helpers.Android,
 {$ENDIF}
+  System.Rtti,
   System.UITypes;
 
 type        // OK     OK       OK                                     OK       OK
@@ -170,6 +171,30 @@ type
   public
     class function GetInstance(): T;
     class procedure ReleaseInstance();
+  end;
+
+  { Classe Helper para o Componente TGrid }
+type
+  TArrayColumn= Array of String;
+  TGridHelper = class(TGrid)
+  private
+    FRows: Array of TArrayColumn;
+    FRecNo: Integer;
+    function iif(B: Boolean; T,F: Variant): Variant;
+    function GetCell(const Row, Col: Integer): String;
+    procedure SetCell(const Row, Col: Integer; const Value: String);
+    procedure SelfGetValue(Sender: TObject; const Col, Row: Integer; var Value: TValue);
+    procedure SelfSetValue(Sender: TObject; const Col, Row: Integer; const Value: TValue);
+    function GetAdd(const Col: Integer): String;
+    procedure SetAdd(const Col: Integer; const Value: String);
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+    function RecNo: Integer;
+    procedure IncRow(Value: Integer = 1);
+    property Cell[const Row, Col: Integer]: String read GetCell write SetCell; default;
+    property AddValue[const Col:Integer]: String read GetAdd write SetAdd;
+    procedure ClearItems;
   end;
 
   { Classe Helper para o Componente TStringGrid }
@@ -428,6 +453,102 @@ begin
     Self.SInstance.Free;
 end;
 
+{ TGridHelper }
+
+procedure TGridHelper.ClearItems;
+begin
+  if RowCount = 0 then Exit;
+
+  RowCount := 0;
+  FRecNo := RowCount;
+  SetLength(FRows, 0);
+end;
+
+constructor TGridHelper.Create(AOwner: TComponent);
+begin
+  inherited;
+  RowCount := 0;
+  FRecNo := RowCount;
+  inherited OnGetValue := SelfGetValue;
+  inherited OnSetValue := SelfSetValue;
+end;
+
+destructor TGridHelper.Destroy;
+begin
+  inherited;
+end;
+
+function TGridHelper.GetAdd(const Col: Integer): String;
+begin
+
+end;
+
+function TGridHelper.GetCell(const Row, Col: Integer): String;
+begin
+  Result := FRows[Row][Col];
+end;
+
+function TGridHelper.iif(B: Boolean; T, F: Variant): Variant;
+begin
+  if B then
+    Result := T
+  else
+    Result := F;
+end;
+
+procedure TGridHelper.IncRow(Value: Integer);
+begin
+  RowCount := RowCount + Value;
+  SetLength(FRows, RowCount);
+  SetLength(FRows[RowCount - 1], ColumnCount);
+  FRecNo := RowCount;
+end;
+
+function TGridHelper.RecNo: Integer;
+begin
+  Result := FRecNo;
+end;
+
+procedure TGridHelper.SelfGetValue(Sender: TObject; const Col, Row: Integer;
+  var Value: TValue);
+begin
+  if (Row <= RowCount) and (Col < ColumnCount) then
+  begin
+    Value := TValue.FromVariant(
+                                 iif((Cell[Row, Col] = 'N'),
+                                     False,
+                                     iif(Cell[Row, Col] = 'Y', True, Cell[Row, Col])
+                                    )
+                               );
+  end;
+end;
+
+procedure TGridHelper.SelfSetValue(Sender: TObject; const Col, Row: Integer;
+  const Value: TValue);
+begin
+  if (Row <= RowCount) and (Col < ColumnCount) then
+  begin
+    Cell[Row, Col] := iif(UpperCase(Value.ToString) = 'TRUE', 'Y', iif(UpperCase(Value.ToString) = 'FALSE', 'N', Value.ToString));
+  end;
+end;
+
+procedure TGridHelper.SetAdd(const Col: Integer; const Value: String);
+begin
+  SetCell(FRecNo - 1, Col, Value);
+end;
+
+procedure TGridHelper.SetCell(const Row, Col: Integer; const Value: String);
+begin
+  try
+    if Length(FRows[Row]) = 0 then
+      SetLength(FRows[Row], ColumnCount);
+
+    FRows[Row][Col]:= Value;
+  except
+    ShowMessage('This cell not found!');
+  end;
+end;
+
 { TStringGridRowDeletion }
 
 procedure TStringGridRowDeletion.Clear;
@@ -454,6 +575,7 @@ end;
 procedure TGridRowDeletion.Clear;
 begin
   TStringGrid(Self).Clear;
+  TStringGrid(Self).ClearColumns;
 end;
 
 procedure TGridRowDeletion.RemoveRows(RowIndex, RCount: Integer);
@@ -544,6 +666,35 @@ end;
 
 procedure TQuery.toGrid(AOwner: TComponent);
 var
+  Column : TColumn;
+  I : Integer;
+begin
+  FQuery.Open(FQuery.Text);
+  FQuery.FetchOptions.Mode := fmAll;
+
+  TStringGrid(AOwner).ClearColumns;
+  TStringGrid(AOwner).RowCount := FQuery.RecordCount;
+
+  for I := 0 to FQuery.FieldCount - 1 do
+  begin
+    Column := TColumn.Create(FQuery);
+    Column.Header := FQuery.Fields[I].FieldName;
+    Column.Parent := TStringGrid(AOwner);
+  end;
+
+  FQuery.First;
+  while not FQuery.Eof do
+  begin
+    for I := 0 to FQuery.FieldCount - 1 do
+      TStringGrid(AOwner).Cells[I, FQuery.RecNo - 1] := FQuery.Fields[I].AsString;
+    FQuery.Next;
+  end;
+end;
+
+{
+procedure TQuery.toGrid(AOwner: TComponent);
+
+var
   DataSetProvider: TDataSetProvider;
   ClientDataSet: TClientDataSet;
   BindSourceDB: TBindSourceDB;
@@ -555,50 +706,41 @@ begin
 
     Application.ProcessMessages;
     if (AOwner is TGrid) and (TGrid(AOwner) <> nil) and (TGrid(AOwner).VisibleColumnCount > 0) then
-    begin
-      TGrid(AOwner).Clear;
-      try
-        FreeAndNil(LinkGridToDataSource);
-        FreeAndNil(BindingsList);
-        FreeAndNil(BindSourceDB);
-        FreeAndNil(ClientDataSet);
-        FreeAndNil(DataSetProvider);
-      except
-
-      end;
-
-    end
+      TGrid(AOwner).Clear
     else if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) and (TStringGrid(AOwner).VisibleColumnCount > 0) then
       TStringGrid(AOwner).Clear;
 
-{$WARNINGS OFF}
-{$HINTS OFF}
-    DataSetProvider := TDataSetProvider.Create(FQuery);
-    ClientDataSet := TClientDataSet.Create(DataSetProvider);
-    BindSourceDB := TBindSourceDB.Create(ClientDataSet);
-    BindingsList := TBindingsList.Create(BindSourceDB);
-    LinkGridToDataSource := TLinkGridToDataSource.Create(BindSourceDB);
+    if TGrid(AOwner).ColumnCount = 0 then
+    begin
+      DataSetProvider := TDataSetProvider.Create(FQuery);
+      ClientDataSet := TClientDataSet.Create(DataSetProvider);
+      BindSourceDB := TBindSourceDB.Create(ClientDataSet);
+      BindingsList := TBindingsList.Create(BindSourceDB);
+      LinkGridToDataSource := TLinkGridToDataSource.Create(BindSourceDB);
 
-    DataSetProvider.DataSet := FQuery;
-    ClientDataSet.SetProvider(DataSetProvider);
+      DataSetProvider.DataSet := FQuery;
+      ClientDataSet.SetProvider(DataSetProvider);
 
-    BindSourceDB.DataSet := ClientDataSet;
-    BindSourceDB.DataSet.Active := True;
+      BindSourceDB.DataSet := ClientDataSet;
 
-    BindingsList.PromptDeleteUnused := True;
-    LinkGridToDataSource.GridControl := AOwner;
+      BindSourceDB.DataSet.Active := False;
+      BindSourceDB.DataSet.Active := True;
 
-    LinkGridToDataSource.DataSource := BindSourceDB;
-    LinkGridToDataSource.AutoBufferCount := False;
-    LinkGridToDataSource.Active := True;
+      BindingsList.PromptDeleteUnused := True;
 
-{$HINTS ON}
-{$WARNINGS ON}
+      LinkGridToDataSource.GridControl := AOwner;
+      LinkGridToDataSource.DataSource := BindSourceDB;
+      LinkGridToDataSource.AutoBufferCount := False;
+      LinkGridToDataSource.Active := False;
+      LinkGridToDataSource.Active := True;
+    end;
+
   except
 
   end;
 
 end;
+}
 
 procedure TQuery.toFillList(AOwner: TComponent; IndexField, ValueField: String);
 var
