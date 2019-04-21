@@ -48,22 +48,30 @@ uses
   Data.FMTBcd,
   Data.SqlExpr, // Expressões SQL dbExpress
 
+  FMX.Consts,
   FMX.Dialogs,
   FMX.Forms,
+  FMX.Types,
+  FMX.Edit,
+
   FMX.Grid, // Necessário para o método toGrid
   FMX.ListBox, // Necessário para os métodos toFillList, toListBox e toComboBox
-  FMX.Types,
+  FMX.ListView, // Necessário para o método toListView
+  FMX.SearchBox,
+  FMX.TextLayout,
+  MultiDetailAppearanceU, // Necessário para o método toMultiList
+  FMX.Bind.Editors,
+  FMX.Bind.DBEngExt,
 
   FMX.ListView.Types,
   FMX.ListView.Appearances,
   FMX.ListView.Adapters.Base,
-  FMX.ListView,
-  FMX.SearchBox,
 
   {Runtime Live Bindings}
   Data.Bind.Components,
   Data.Bind.Grid,
   Data.Bind.DBScope,
+  Data.Bind.EngExt,
   Datasnap.DBClient,
   Datasnap.Provider,
 
@@ -160,7 +168,7 @@ uses
   System.Rtti,
   System.UITypes;
 
-type        // OK     OK       OK                                     OK       OK
+type        // OK     OK       OK                                     OK
   TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, SQLSERVER, MSSQL, POSTGRES, ORACLE);
 
   { Design Pattern Singleton }
@@ -171,6 +179,13 @@ type
   public
     class function GetInstance(): T;
     class procedure ReleaseInstance();
+  end;
+
+  { Classe Helper para o Objeto TFMXObject }
+type
+  TObjectHelper = class helper for TFMXObject
+  public
+    procedure Placeholder(Desc: String);
   end;
 
   { Classe Helper para o Componente TGrid }
@@ -285,29 +300,23 @@ type
     { Public declarations }
     function View(Input: String; const Mode: Boolean = False): TQuery;
     function Exec(Input: String; const Mode: Boolean = True): TQuery;
-
     procedure Fetch(Input: String; out ReturnArray: TArray); overload;  // OK
     procedure Fetch(Input: String; out ReturnArray: TArrayVariant); overload; // OK
-
     function Insert(ATable: String; Data: TArray; Run: Boolean = False; Ignore : Boolean = False) : String; overload; // OK
     function Insert(ATable: String; Data: TArrayVariant; Run: Boolean = False; Ignore : Boolean = False) : String; overload; // OK
-
     function Update(ATable: String; Data: TArray; Run: Boolean = False) : String; overload; // OK
     function Update(ATable: String; Data: TArray; Condition: TArray; Run: Boolean = False): String; overload; // OK
     function Update(ATable: String; Data: TArrayVariant; Run: Boolean = False) : String; overload; // OK
     function Update(ATable: String; Data: TArrayVariant; Condition: TArrayVariant; Run: Boolean = False) : String; overload; // OK
-
     function Delete(ATable: String; Run: Boolean = False): String; overload; // OK //Genérica
     function Delete(ATable: String; Condition: TArray; Run: Boolean = False) : String; overload; // OK
     function Delete(ATable: String; Condition: TArrayVariant; Run: Boolean = False): String; overload; // OK
-
     function Replace(ATable: String; Data: TArray; Run: Boolean = False) : String; overload; // OK
     function Replace(ATable: String; Data: TArrayVariant; Run: Boolean = False) : String; overload; // OK
     function Replace(ATable: String; Data: TArray; Condition: TArray; Run: Boolean = False) : String; overload; // OK
     function Replace(ATable: String; Data: TArrayVariant; Condition: TArrayVariant; Run: Boolean = False) : String; overload; // OK
-
-    function Upsert(ATable: String; Data: TArray; Run: Boolean = False; Ignore : Boolean = False; Duplicate : Boolean = False) : String; overload;
-    function Upsert(ATable: String; Data: TArrayVariant; Run: Boolean = False; Ignore : Boolean = False; Duplicate : Boolean = False) : String; overload;
+    function Upsert(ATable: String; Data: TArray; Run: Boolean = False; Ignore : Boolean = False; Duplicate : Boolean = False) : String; overload; // OK
+    function Upsert(ATable: String; Data: TArrayVariant; Run: Boolean = False; Ignore : Boolean = False; Duplicate : Boolean = False) : String; overload; // OK
   end;
 
   { Classe TEventComponent Herdada de TComponent }
@@ -451,6 +460,54 @@ class procedure TSingleton<T>.ReleaseInstance;
 begin
   if Assigned(Self.SInstance) then
     Self.SInstance.Free;
+end;
+
+{ TObjectHelper }
+
+procedure TObjectHelper.Placeholder(Desc: String);
+var
+  lbl : TLabel;
+  Win: TForm;
+begin
+  lbl := TLabel.Create(Self);
+  lbl.Text := Desc;
+  lbl.Name := 'Label'+Self.Name;
+  lbl.StyledSettings := [TStyledSetting.Family];
+  lbl.Position.X := 3;
+  lbl.Position.Y := 0;
+  lbl.TextSettings.Font.Size := 13;
+  lbl.TextSettings.FontColor := TAlphaColors.Darkgray;
+  lbl.Parent := Self;
+
+  TEdit(Self).OnEnter := TEventComponent.NotifyEvent(Win,
+              procedure
+              var
+                runlbl :TLabel;
+              begin
+                if (Self as TEdit).Text = '' then
+                begin
+                  runlbl := TLabel((Self as TEdit).FindComponent('Label'+(Self as TEdit).Name));
+                  runlbl.AnimateFloat('Font.Size',9,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
+                  runlbl.AnimateFloat('Position.Y',-16,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
+                  runlbl.FontColor := TAlphaColors.Royalblue;
+                end;
+                Win.Free;
+              end);
+
+  TEdit(Self).OnExit := TEventComponent.NotifyEvent(Win,
+              procedure
+              var
+                runlbl :TLabel;
+              begin
+                if (Self as TEdit).Text = '' then
+                begin
+                  runlbl := TLabel((Self as TEdit).FindComponent('Label'+(Self as TEdit).Name));
+                  runlbl.AnimateFloat('Font.Size',14,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
+                  runlbl.AnimateFloat('Position.Y',3,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
+                  runlbl.FontColor := TAlphaColors.Darkgray;
+                end;
+                Win.Free;
+              end);
 end;
 
 { TGridHelper }
@@ -664,6 +721,7 @@ begin
     Instance.FreeInstance;
 end;
 
+{
 procedure TQuery.toGrid(AOwner: TComponent);
 var
   Column : TColumn;
@@ -672,28 +730,47 @@ begin
   FQuery.Open(FQuery.Text);
   FQuery.FetchOptions.Mode := fmAll;
 
-  TStringGrid(AOwner).ClearColumns;
-  TStringGrid(AOwner).RowCount := FQuery.RecordCount;
-
-  for I := 0 to FQuery.FieldCount - 1 do
+  if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) then
   begin
-    Column := TColumn.Create(FQuery);
-    Column.Header := FQuery.Fields[I].FieldName;
-    Column.Parent := TStringGrid(AOwner);
-  end;
+    TStringGrid(AOwner).ClearColumns;
+    TStringGrid(AOwner).RowCount := FQuery.RecordCount;
 
-  FQuery.First;
-  while not FQuery.Eof do
-  begin
     for I := 0 to FQuery.FieldCount - 1 do
-      TStringGrid(AOwner).Cells[I, FQuery.RecNo - 1] := FQuery.Fields[I].AsString;
-    FQuery.Next;
+    begin
+      Column := TColumn.Create(FQuery);
+      Column.Header := FQuery.Fields[I].FieldName;
+      Column.Parent := TStringGrid(AOwner);
+    end;
+
+    FQuery.First;
+    while not FQuery.Eof do
+    begin
+      for I := 0 to FQuery.FieldCount - 1 do
+        TStringGrid(AOwner).Cells[I, FQuery.RecNo - 1] := FQuery.Fields[I].AsString;
+      FQuery.Next;
+    end;
   end;
+
+  if (AOwner is TGrid) and (TGrid(AOwner) <> nil) then
+  begin
+    TGrid(AOwner).ClearColumns;
+    TGrid(AOwner).RowCount := FQuery.RecordCount;
+
+    for I := 0 to FQuery.FieldCount - 1 do
+    begin
+      Column := TColumn.Create(FQuery);
+      Column.Header := FQuery.FieldDefs[I].Name;
+      Column.Tag := I;
+      Column.Data := FQuery.Fields[I].AsString;
+      TGrid(AOwner).AddObject(Column);
+    end;
+
+  end;
+
 end;
+}
 
-{
 procedure TQuery.toGrid(AOwner: TComponent);
-
 var
   DataSetProvider: TDataSetProvider;
   ClientDataSet: TClientDataSet;
@@ -710,37 +787,38 @@ begin
     else if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) and (TStringGrid(AOwner).VisibleColumnCount > 0) then
       TStringGrid(AOwner).Clear;
 
-    if TGrid(AOwner).ColumnCount = 0 then
-    begin
-      DataSetProvider := TDataSetProvider.Create(FQuery);
-      ClientDataSet := TClientDataSet.Create(DataSetProvider);
-      BindSourceDB := TBindSourceDB.Create(ClientDataSet);
-      BindingsList := TBindingsList.Create(BindSourceDB);
-      LinkGridToDataSource := TLinkGridToDataSource.Create(BindSourceDB);
+{$WARNINGS OFF}
+{$HINTS OFF}
 
-      DataSetProvider.DataSet := FQuery;
-      ClientDataSet.SetProvider(DataSetProvider);
+    DataSetProvider := TDataSetProvider.Create(FQuery);
+    ClientDataSet := TClientDataSet.Create(DataSetProvider);
+    BindSourceDB := TBindSourceDB.Create(ClientDataSet);
+    BindingsList := TBindingsList.Create(BindSourceDB);
+    LinkGridToDataSource := TLinkGridToDataSource.Create(BindSourceDB);
 
-      BindSourceDB.DataSet := ClientDataSet;
+    DataSetProvider.DataSet := FQuery;
+    ClientDataSet.SetProvider(DataSetProvider);
 
-      BindSourceDB.DataSet.Active := False;
-      BindSourceDB.DataSet.Active := True;
+    BindSourceDB.DataSet := ClientDataSet;
+    BindSourceDB.DataSet.Active := False;
+    BindSourceDB.DataSet.Active := True;
 
-      BindingsList.PromptDeleteUnused := True;
+    BindingsList.PromptDeleteUnused := True;
 
-      LinkGridToDataSource.GridControl := AOwner;
-      LinkGridToDataSource.DataSource := BindSourceDB;
-      LinkGridToDataSource.AutoBufferCount := False;
-      LinkGridToDataSource.Active := False;
-      LinkGridToDataSource.Active := True;
-    end;
+    LinkGridToDataSource.GridControl := AOwner;
+    LinkGridToDataSource.DataSource := BindSourceDB;
+    LinkGridToDataSource.AutoBufferCount := False;
+    LinkGridToDataSource.Active := False;
+    LinkGridToDataSource.Active := True;
 
+{$HINTS ON}
+{$WARNINGS ON}    
+        
   except
 
   end;
 
 end;
-}
 
 procedure TQuery.toFillList(AOwner: TComponent; IndexField, ValueField: String);
 var
@@ -818,6 +896,7 @@ begin
 
 {$WARNINGS OFF}
 {$HINTS OFF}
+
     DataSetProvider := TDataSetProvider.Create(FQuery);
     ClientDataSet := TClientDataSet.Create(DataSetProvider);
     BindSourceDB := TBindSourceDB.Create(ClientDataSet);

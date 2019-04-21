@@ -322,6 +322,7 @@
         <DCCReference Include="Conversion.pas"/>
         <DCCReference Include="ArrayAssoc.pas"/>
         <DCCReference Include="SQLConnection.pas"/>
+        <DCCReference Include="MultiDetailAppearanceU.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

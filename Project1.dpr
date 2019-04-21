@@ -6,7 +6,8 @@ uses
   Unit1 in 'Unit1.pas' {Form1},
   Conversion in 'Conversion.pas',
   ArrayAssoc in 'ArrayAssoc.pas',
-  SQLConnection in 'SQLConnection.pas';
+  SQLConnection in 'SQLConnection.pas',
+  MultiDetailAppearanceU in 'MultiDetailAppearanceU.pas';
 
 {$R *.res}
 

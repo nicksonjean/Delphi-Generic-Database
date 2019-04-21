@@ -28,7 +28,11 @@ uses
   FMX.ExtCtrls,
   FMX.ListBox,
   FMX.Layouts,
-
+  FMX.Edit,
+  FMX.ListView.Types,
+  FMX.ListView.Appearances,
+  FMX.ListView.Adapters.Base,
+  FMX.ListView,
   ArrayAssoc,
   SQLConnection;
 
@@ -40,33 +44,62 @@ type
     TabFirebird: TTabItem;
     TabMySQL: TTabItem;
     TabPostgreSQL: TTabItem;
+    GridPanelLayout4: TGridPanelLayout;
+    StringGridSQLite: TStringGrid;
+    GridSQLite: TGrid;
+    GridPanelLayout5: TGridPanelLayout;
+    GridFirebird: TGrid;
+    StringGridFirebird: TStringGrid;
+    ListBoxFirebird: TListBox;
+    ListViewFirebird: TListView;
+    ListBoxSQLite: TListBox;
+    ListViewSQLite: TListView;
+    GridPanelLayout6: TGridPanelLayout;
+    GridMySQL: TGrid;
+    StringGridMySQL: TStringGrid;
+    ListBoxMySQL: TListBox;
+    ListViewMySQL: TListView;
+    GridPanelLayout7: TGridPanelLayout;
+    GridPostgreSQL: TGrid;
+    StringGridPostgreSQL: TStringGrid;
+    ListBoxPostgreSQL: TListBox;
+    ListViewPostgreSQL: TListView;
     GridPanelLayout2: TGridPanelLayout;
     ComboBoxSQLite: TComboBox;
     ComboBoxFirebird: TComboBox;
     ComboBoxMySQL: TComboBox;
     ComboBoxPostgreSQL: TComboBox;
-    ListBoxSQLite: TListBox;
-    ListBoxFirebird: TListBox;
-    ListBoxMySQL: TListBox;
-    ListBoxPostgreSQL: TListBox;
-    ToStr: TButton;
+    ButToStr: TButton;
     ButInsert: TButton;
     ButUpdate: TButton;
     ButDelete: TButton;
     ButFetch: TButton;
     ButReplace: TButton;
     ButUpsert: TButton;
+    GridPanelLayout3: TGridPanelLayout;
+    ButClone: TButton;
+    ButCopy: TButton;
     ButSQLite: TButton;
     ButFirebird: TButton;
     ButMySQL: TButton;
     ButPostgreSQL: TButton;
-    GridPanelLayout3: TGridPanelLayout;
-    ButClone: TButton;
-    ButCopy: TButton;
-    GridSQLite: TStringGrid;
-    GridFirebird: TStringGrid;
-    GridMySQL: TStringGrid;
-    GridPostgreSQL: TStringGrid;
+    GridPanelLayout8: TGridPanelLayout;
+    GridPanelLayout9: TGridPanelLayout;
+    GridPanelLayout10: TGridPanelLayout;
+    GridPanelLayout11: TGridPanelLayout;
+    Edit1: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    Edit9: TEdit;
+    Edit10: TEdit;
+    Edit11: TEdit;
+    Edit12: TEdit;
+    Edit13: TEdit;
+    Edit14: TEdit;
+    Edit15: TEdit;
+    Edit16: TEdit;
     procedure ButSQLiteClick(Sender: TObject);
     procedure ButMySQLClick(Sender: TObject);
     procedure ButPostgreSQLClick(Sender: TObject);
@@ -76,10 +109,11 @@ type
     procedure ButDeleteClick(Sender: TObject);
     procedure ButReplaceClick(Sender: TObject);
     procedure ButUpsertClick(Sender: TObject);
-    procedure ToStrClick(Sender: TObject);
+    procedure ButToStrClick(Sender: TObject);
     procedure ButFetchClick(Sender: TObject);
     procedure ButCloneClick(Sender: TObject);
-    procedure ButCopyClick(Sender: TObject); private
+    procedure ButCopyClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -136,7 +170,7 @@ begin
   end;
 end;
 
-procedure TForm1.ToStrClick(Sender: TObject);
+procedure TForm1.ButToStrClick(Sender: TObject);
 var
   DB: TConnection;
   Dados1 : TArray;
@@ -312,6 +346,11 @@ var
   finally
     FreeAndNil(DB);
   end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Edit1.Placeholder('teste');
 end;
 
 procedure TForm1.ButReplaceClick(Sender: TObject);
@@ -768,10 +807,12 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM estado ORDER BY id');
+      SQL := Query.View('SELECT id AS Codigo, nome AS Estado, sigla AS Sigla FROM estado ORDER BY id');
       SQL.toGrid(GridSQLite);
-      SQL.toComboBox(ComboBoxSQLite, 'id', 'nome');
-      SQL.toListBox(ListBoxSQLite, 'id', 'nome');
+      SQL.toGrid(StringGridSQLite);
+      SQL.toComboBox(ComboBoxSQLite, 'Codigo', 'Estado');
+      SQL.toListBox(ListBoxSQLite, 'Codigo', 'Estado');
+      SQL.toListView(ListViewSQLite, 'Codigo', 'Estado', 'Sigla', 'Sigla', 'Sigla');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       FreeAndNil(SQL);
@@ -810,10 +851,12 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM "estado" ORDER BY "id"');
+      SQL := Query.View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM "estado" ORDER BY "id"');
       SQL.toGrid(GridFirebird);
-      SQL.toComboBox(ComboBoxFirebird, 'id', 'nome');
-      SQL.toListBox(ListBoxFirebird, 'id', 'nome');
+      SQL.toGrid(StringGridFirebird);
+      SQL.toComboBox(ComboBoxFirebird, 'Codigo', 'Estado');
+      SQL.toListBox(ListBoxFirebird, 'Codigo', 'Estado');
+      SQL.toListView(ListViewFirebird, 'Codigo', 'Estado', 'Sigla', 'Sigla', 'Sigla');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       FreeAndNil(SQL);
@@ -847,10 +890,12 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM estado ORDER BY id');
+      SQL := Query.View('SELECT id AS Codigo, nome AS Estado, sigla AS Sigla FROM estado ORDER BY id');
       SQL.toGrid(GridMySQL);
-      SQL.toComboBox(ComboBoxMySQL, 'id', 'nome');
-      SQL.toComboBox(ListBoxMySQL, 'id', 'nome');
+      SQL.toGrid(StringGridMySQL);
+      SQL.toComboBox(ComboBoxMySQL, 'Codigo', 'Estado');
+      SQL.toComboBox(ListBoxMySQL, 'Codigo', 'Estado');
+      SQL.toListView(ListViewMySQL, 'Codigo', 'Estado', 'Sigla', 'Sigla', 'Sigla');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       FreeAndNil(SQL);
@@ -885,10 +930,12 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT * FROM demodev.estado ORDER BY id');
+      SQL := Query.View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM "estado" ORDER BY "id"');
       SQL.toGrid(GridPostgreSQL);
-      SQL.toComboBox(ComboBoxPostgreSQL, 'id', 'nome');
-      SQL.toListBox(ListBoxPostgreSQL, 'id', 'nome');
+      SQL.toGrid(StringGridPostgreSQL);
+      SQL.toComboBox(ComboBoxPostgreSQL, 'Codigo', 'Estado');
+      SQL.toListBox(ListBoxPostgreSQL, 'Codigo', 'Estado');
+      SQL.toListView(ListViewPostgreSQL, 'Codigo', 'Estado', 'Sigla', 'Sigla', 'Sigla');
       //ShowMessage(SQL.Query.RecordCount.ToString);
     finally
       FreeAndNil(SQL);
