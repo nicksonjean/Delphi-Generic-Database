@@ -890,7 +890,8 @@ begin
 
     SQL := TQuery.Create;
     try
-      SQL := Query.View('SELECT id AS Codigo, nome AS Estado, sigla AS Sigla FROM estado ORDER BY id');
+      //SQL := Query.View('SELECT id AS Codigo, nome AS Estado, sigla AS Sigla FROM estado ORDER BY id');
+      SQL := Query.View('SELECT c.id AS Codigo, c.nome AS Cidade, e.nome AS Estado, e.sigla AS Sigla FROM cidade c INNER JOIN estado e ON c.estado_id = e.id');
       SQL.toGrid(GridMySQL);
       SQL.toGrid(StringGridMySQL);
       SQL.toComboBox(ComboBoxMySQL, 'Codigo', 'Estado');

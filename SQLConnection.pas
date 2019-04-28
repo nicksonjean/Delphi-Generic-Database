@@ -188,9 +188,16 @@ type
     procedure Placeholder(Desc: String);
   end;
 
+  { Classe Helper para o Objeto TSQLQuery ou TZQuery ou TFDQuery }
+type
+  TQueryHelper = class helper for {$I CNX.Query.Type.inc}
+  public
+    procedure Open(SQL : String); overload;
+  end;
+
   { Classe Helper para o Componente TGrid }
 type
-  TArrayColumn= Array of String;
+  TArrayColumn = Array of String;
   TGridHelper = class(TGrid)
   private
     FRows: Array of TArrayColumn;
@@ -460,6 +467,28 @@ class procedure TSingleton<T>.ReleaseInstance;
 begin
   if Assigned(Self.SInstance) then
     Self.SInstance.Free;
+end;
+
+{ TQueryHelper }
+
+procedure TQueryHelper.Open(SQL : String);
+{$IFDEF FireDAC}
+var
+  Task : ITask;
+{$ENDIF}
+begin
+{$IFDEF FireDAC}
+  if Self.Command.State <> csExecuting then
+  begin
+    Task := TTask.Create(
+    procedure()
+    begin
+      Self.Open(SQL);
+    end);
+    Task.Start;
+  end;
+{$ENDIF}
+  Self.Open(SQL);
 end;
 
 { TObjectHelper }
