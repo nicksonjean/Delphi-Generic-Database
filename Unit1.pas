@@ -33,8 +33,11 @@ uses
   FMX.ListView.Appearances,
   FMX.ListView.Adapters.Base,
   FMX.ListView,
+
   ArrayAssoc,
-  SQLConnection;
+  SQLConnection,
+
+  FormHelper, FMX.Objects;
 
 type
   TForm1 = class(TForm)
@@ -79,27 +82,11 @@ type
     GridPanelLayout3: TGridPanelLayout;
     ButClone: TButton;
     ButCopy: TButton;
-    ButSQLite: TButton;
     ButFirebird: TButton;
     ButMySQL: TButton;
     ButPostgreSQL: TButton;
-    GridPanelLayout8: TGridPanelLayout;
-    GridPanelLayout9: TGridPanelLayout;
-    GridPanelLayout10: TGridPanelLayout;
-    GridPanelLayout11: TGridPanelLayout;
-    Edit1: TEdit;
-    Edit5: TEdit;
-    Edit6: TEdit;
-    Edit7: TEdit;
-    Edit8: TEdit;
-    Edit9: TEdit;
-    Edit10: TEdit;
-    Edit11: TEdit;
-    Edit12: TEdit;
-    Edit13: TEdit;
-    Edit14: TEdit;
-    Edit15: TEdit;
-    Edit16: TEdit;
+    ButSQLite: TButton;
+    Button1: TButton;
     procedure ButSQLiteClick(Sender: TObject);
     procedure ButMySQLClick(Sender: TObject);
     procedure ButPostgreSQLClick(Sender: TObject);
@@ -113,7 +100,7 @@ type
     procedure ButFetchClick(Sender: TObject);
     procedure ButCloneClick(Sender: TObject);
     procedure ButCopyClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -346,11 +333,6 @@ var
   finally
     FreeAndNil(DB);
   end;
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
-begin
-  Edit1.Placeholder('teste');
 end;
 
 procedure TForm1.ButReplaceClick(Sender: TObject);
@@ -821,6 +803,11 @@ begin
   finally
     FreeAndNil(DBSQLite);
   end;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Self.AvisoPositivo('teste');
 end;
 
 procedure TForm1.ButFirebirdClick(Sender: TObject);

@@ -166,7 +166,9 @@ uses
   FMX.Helpers.Android,
 {$ENDIF}
   System.Rtti,
-  System.UITypes;
+  System.UITypes,
+
+  NotifyHelper;
 
 type        // OK     OK       OK                                     OK
   TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, SQLSERVER, MSSQL, POSTGRES, ORACLE);
@@ -179,13 +181,6 @@ type
   public
     class function GetInstance(): T;
     class procedure ReleaseInstance();
-  end;
-
-  { Classe Helper para o Objeto TFMXObject }
-type
-  TObjectHelper = class helper for TFMXObject
-  public
-    procedure Placeholder(Desc: String);
   end;
 
   { Classe Helper para o Objeto TSQLQuery ou TZQuery ou TFDQuery }
@@ -326,19 +321,6 @@ type
     function Upsert(ATable: String; Data: TArrayVariant; Run: Boolean = False; Ignore : Boolean = False; Duplicate : Boolean = False) : String; overload; // OK
   end;
 
-  { Classe TEventComponent Herdada de TComponent }
-type
-  TEventComponent = class(TComponent)
-  protected
-    { Protected declarations }
-    FAnon: TProc;
-    procedure Notify(Sender: TObject);
-    class function MakeComponent(const AOwner: TComponent; const AProc: TProc): TEventComponent;
-  public
-    { Public declarations }
-    class function NotifyEvent(const AOwner: TComponent; const AProc: TProc): TNotifyEvent;
-  end;
-
   { Record TLocale para Localidade }
 type
   TLocale = record
@@ -436,24 +418,6 @@ begin
   end;
 end;
 
-{ TEventComponent }
-
-class function TEventComponent.MakeComponent(const AOwner: TComponent; const AProc: TProc): TEventComponent;
-begin
-  Result:= TEventComponent.Create(AOwner);
-  Result.FAnon:= AProc;
-end;
-
-procedure TEventComponent.Notify(Sender: TObject);
-begin
-  FAnon();
-end;
-
-class function TEventComponent.NotifyEvent(const AOwner: TComponent; const AProc: TProc): TNotifyEvent;
-begin
-  Result:= MakeComponent(AOwner, AProc).Notify;
-end;
-
 { Singleton }
 
 class function TSingleton<T>.GetInstance: T;
@@ -489,54 +453,6 @@ begin
   end;
 {$ENDIF}
   Self.Open(SQL);
-end;
-
-{ TObjectHelper }
-
-procedure TObjectHelper.Placeholder(Desc: String);
-var
-  lbl : TLabel;
-  Win: TForm;
-begin
-  lbl := TLabel.Create(Self);
-  lbl.Text := Desc;
-  lbl.Name := 'Label'+Self.Name;
-  lbl.StyledSettings := [TStyledSetting.Family];
-  lbl.Position.X := 3;
-  lbl.Position.Y := 0;
-  lbl.TextSettings.Font.Size := 13;
-  lbl.TextSettings.FontColor := TAlphaColors.Darkgray;
-  lbl.Parent := Self;
-
-  TEdit(Self).OnEnter := TEventComponent.NotifyEvent(Win,
-              procedure
-              var
-                runlbl :TLabel;
-              begin
-                if (Self as TEdit).Text = '' then
-                begin
-                  runlbl := TLabel((Self as TEdit).FindComponent('Label'+(Self as TEdit).Name));
-                  runlbl.AnimateFloat('Font.Size',9,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
-                  runlbl.AnimateFloat('Position.Y',-16,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
-                  runlbl.FontColor := TAlphaColors.Royalblue;
-                end;
-                Win.Free;
-              end);
-
-  TEdit(Self).OnExit := TEventComponent.NotifyEvent(Win,
-              procedure
-              var
-                runlbl :TLabel;
-              begin
-                if (Self as TEdit).Text = '' then
-                begin
-                  runlbl := TLabel((Self as TEdit).FindComponent('Label'+(Self as TEdit).Name));
-                  runlbl.AnimateFloat('Font.Size',14,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
-                  runlbl.AnimateFloat('Position.Y',3,0.1, TAnimationType.InOut,TInterpolationType.Elastic);
-                  runlbl.FontColor := TAlphaColors.Darkgray;
-                end;
-                Win.Free;
-              end);
 end;
 
 { TGridHelper }

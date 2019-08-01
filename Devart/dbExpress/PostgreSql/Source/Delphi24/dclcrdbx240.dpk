@@ -1,6 +1,8 @@
 package dclcrdbx240;
 
 {$R *.res}
+{$R *.otares}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -21,13 +23,13 @@ package dclcrdbx240;
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
-{$IFNDEF POSIX}
 {$IMAGEBASE $400000}
-{$ENDIF}
+{$DEFINE LITE}
+{$DEFINE LITE}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'Devart dbx components'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
-{$DEFINE LITE}
 
 requires
   rtl,

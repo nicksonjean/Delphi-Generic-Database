@@ -7,7 +7,10 @@ uses
   Conversion in 'Conversion.pas',
   ArrayAssoc in 'ArrayAssoc.pas',
   SQLConnection in 'SQLConnection.pas',
-  MultiDetailAppearanceU in 'MultiDetailAppearanceU.pas';
+  MultiDetailAppearanceU in 'MultiDetailAppearanceU.pas',
+  FMXObjectHelper in 'Helpers\FMXObjectHelper.pas',
+  NotifyHelper in 'Helpers\NotifyHelper.pas',
+  FormHelper in 'Helpers\FormHelper.pas';
 
 {$R *.res}
 
@@ -16,5 +19,4 @@ begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;
-
 end.
