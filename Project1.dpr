@@ -10,7 +10,8 @@ uses
   MultiDetailAppearanceU in 'MultiDetailAppearanceU.pas',
   FMXObjectHelper in 'Helpers\FMXObjectHelper.pas',
   NotifyHelper in 'Helpers\NotifyHelper.pas',
-  FormHelper in 'Helpers\FormHelper.pas';
+  FormHelper in 'Helpers\FormHelper.pas',
+  AnonumousThreadPool in 'AnonumousThreadPool.pas';
 
 {$R *.res}
 

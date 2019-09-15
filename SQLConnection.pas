@@ -53,6 +53,7 @@ uses
   FMX.Forms,
   FMX.Types,
   FMX.Edit,
+  FMX.Controls,
 
   FMX.Grid, // Necessário para o método toGrid
   FMX.ListBox, // Necessário para os métodos toFillList, toListBox e toComboBox
@@ -149,6 +150,7 @@ uses
   IdRawClient,
   IdIcmpClient,
 
+  AnonumousThreadPool,
   {Classe para Criação de Matrizes Associativas}
   ArrayAssoc,
   {Record para Conversão de Tipos}
@@ -188,6 +190,10 @@ type
   TQueryHelper = class helper for {$I CNX.Query.Type.inc}
   public
     procedure Open(SQL : String); overload;
+  end;
+
+type
+  TColumnAccess = class(TColumn)
   end;
 
   { Classe Helper para o Componente TGrid }
@@ -436,12 +442,12 @@ end;
 { TQueryHelper }
 
 procedure TQueryHelper.Open(SQL : String);
-{$IFDEF FireDAC}
+{$IFDEF FireDACLib}
 var
   Task : ITask;
 {$ENDIF}
 begin
-{$IFDEF FireDAC}
+{$IFDEF FireDACLib}
   if Self.Command.State <> csExecuting then
   begin
     Task := TTask.Create(
@@ -666,13 +672,14 @@ begin
     Instance.FreeInstance;
 end;
 
-{
 procedure TQuery.toGrid(AOwner: TComponent);
 var
   Column : TColumn;
   I : Integer;
 begin
+{$IFDEF dbExpressLib}
   FQuery.Open(FQuery.Text);
+{$ENDIF}
   FQuery.FetchOptions.Mode := fmAll;
 
   if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) then
@@ -698,6 +705,7 @@ begin
 
   if (AOwner is TGrid) and (TGrid(AOwner) <> nil) then
   begin
+
     TGrid(AOwner).ClearColumns;
     TGrid(AOwner).RowCount := FQuery.RecordCount;
 
@@ -710,11 +718,12 @@ begin
       TGrid(AOwner).AddObject(Column);
     end;
 
+    // Falta as Linhas
   end;
 
 end;
-}
 
+(*
 procedure TQuery.toGrid(AOwner: TComponent);
 var
   DataSetProvider: TDataSetProvider;
@@ -734,7 +743,6 @@ begin
 
 {$WARNINGS OFF}
 {$HINTS OFF}
-
     DataSetProvider := TDataSetProvider.Create(FQuery);
     ClientDataSet := TClientDataSet.Create(DataSetProvider);
     BindSourceDB := TBindSourceDB.Create(ClientDataSet);
@@ -745,7 +753,6 @@ begin
     ClientDataSet.SetProvider(DataSetProvider);
 
     BindSourceDB.DataSet := ClientDataSet;
-    BindSourceDB.DataSet.Active := False;
     BindSourceDB.DataSet.Active := True;
 
     BindingsList.PromptDeleteUnused := True;
@@ -753,18 +760,17 @@ begin
     LinkGridToDataSource.GridControl := AOwner;
     LinkGridToDataSource.DataSource := BindSourceDB;
     LinkGridToDataSource.AutoBufferCount := False;
-    LinkGridToDataSource.Active := False;
     LinkGridToDataSource.Active := True;
 
 {$HINTS ON}
-{$WARNINGS ON}    
-        
+{$WARNINGS ON}
+
   except
 
   end;
 
 end;
-
+*)
 procedure TQuery.toFillList(AOwner: TComponent; IndexField, ValueField: String);
 var
   DataSetProvider: TDataSetProvider;
