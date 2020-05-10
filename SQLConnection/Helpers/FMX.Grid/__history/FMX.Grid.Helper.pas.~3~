@@ -1,0 +1,32 @@
+﻿unit FMX.Grid.Helper;
+
+interface
+
+uses
+  FMX.Grid,
+  FMX.Types,
+  FMX.Controls,
+  FMX.StdCtrls;
+
+type
+  TGridHelper = class helper for TGrid
+  public
+    procedure RemoveRows(RowIndex, RCount: Integer);
+    procedure Clear;
+  end;
+
+implementation
+
+{ TGridHelper }
+
+procedure TGridHelper.Clear;
+begin
+  TGrid(Self).Clear;
+end;
+
+procedure TGridHelper.RemoveRows(RowIndex, RCount: Integer);
+begin
+  TGrid(Self).RemoveRows(RowIndex, RCount);
+end;
+
+end.
