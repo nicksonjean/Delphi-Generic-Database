@@ -262,7 +262,7 @@ object SQLConnectionTester: TSQLConnectionTester
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 190.000000000000000000
+                  Size.Width = 186.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -305,8 +305,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 1
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
               object GridSQLite: TGrid
                 Align = Client
@@ -316,8 +316,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
             end
           end
@@ -542,7 +542,7 @@ object SQLConnectionTester: TSQLConnectionTester
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 190.000000000000000000
+                  Size.Width = 186.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -567,8 +567,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
               object GridFirebird: TGrid
                 Align = Client
@@ -578,8 +578,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
             end
           end
@@ -804,7 +804,7 @@ object SQLConnectionTester: TSQLConnectionTester
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 190.000000000000000000
+                  Size.Width = 186.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -829,8 +829,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
               object GridMySQL: TGrid
                 Align = Client
@@ -840,8 +840,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
             end
           end
@@ -1066,7 +1066,7 @@ object SQLConnectionTester: TSQLConnectionTester
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 190.000000000000000000
+                  Size.Width = 186.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1091,8 +1091,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
               object GridPostgreSQL: TGrid
                 Align = Client
@@ -1102,8 +1102,8 @@ object SQLConnectionTester: TSQLConnectionTester
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 186.000000000000000000
-                Viewport.Height = 256.000000000000000000
+                Viewport.Width = 182.000000000000000000
+                Viewport.Height = 231.000000000000000000
               end
             end
           end
@@ -1130,7 +1130,7 @@ object SQLConnectionTester: TSQLConnectionTester
         Size.Width = 400.000000000000000000
         Size.Height = 700.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 2
+        TabIndex = 3
         TabOrder = 16
         TabPosition = PlatformDefault
         Sizes = (
@@ -1156,200 +1156,6 @@ object SQLConnectionTester: TSQLConnectionTester
           Text = 'Strings'
           ExplicitSize.cx = 50.000000000000000000
           ExplicitSize.cy = 50.000000000000000000
-          object GridPanelLayout2: TGridPanelLayout
-            Position.Y = 280.000000000000000000
-            Size.Width = 393.000000000000000000
-            Size.Height = 257.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 16
-            ColumnCollection = <
-              item
-                Value = 25.000000000000000000
-              end
-              item
-                Value = 25.000000000000000000
-              end
-              item
-                Value = 25.000000000000000000
-              end
-              item
-                Value = 25.000000000000000000
-              end>
-            ControlCollection = <
-              item
-                Column = 0
-                Control = ButToStr
-                Row = 1
-              end
-              item
-                Column = 1
-                Control = ButInsert
-                Row = 1
-              end
-              item
-                Column = 2
-                Control = ButUpdate
-                Row = 1
-              end
-              item
-                Column = 3
-                Control = ButDelete
-                Row = 1
-              end
-              item
-                Column = 0
-                Control = ButFetch
-                Row = 2
-              end
-              item
-                Column = 1
-                Control = ButReplace
-                Row = 2
-              end
-              item
-                Column = 2
-                Control = ButUpsert
-                Row = 2
-              end
-              item
-                Column = 3
-                Control = GridPanelLayout3
-                Row = 2
-              end>
-            ExpandStyle = FixedSize
-            RowCollection = <
-              item
-                SizeStyle = Absolute
-                Value = 50.000000000000000000
-              end
-              item
-                SizeStyle = Absolute
-                Value = 50.000000000000000000
-              end
-              item
-                SizeStyle = Absolute
-                Value = 50.000000000000000000
-              end
-              item
-                SizeStyle = Absolute
-                Value = 50.000000000000000000
-              end>
-            object ButToStr: TButton
-              Position.Y = 50.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 21
-              Text = 'ButToStr'
-              OnClick = ButToStrClick
-            end
-            object ButInsert: TButton
-              Position.X = 98.250000000000000000
-              Position.Y = 50.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 17
-              Text = 'Insert'
-              OnClick = ButInsertClick
-            end
-            object ButUpdate: TButton
-              Position.X = 196.500000000000000000
-              Position.Y = 50.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 14
-              Text = 'Update'
-              OnClick = ButUpdateClick
-            end
-            object ButDelete: TButton
-              Position.X = 294.750000000000000000
-              Position.Y = 50.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 12
-              Text = 'Delete'
-              OnClick = ButDeleteClick
-            end
-            object ButFetch: TButton
-              Position.Y = 100.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 15
-              Text = 'ButFetch'
-              OnClick = ButFetchClick
-            end
-            object ButReplace: TButton
-              Position.X = 98.250000000000000000
-              Position.Y = 100.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 13
-              Text = 'Replace'
-              OnClick = ButReplaceClick
-            end
-            object ButUpsert: TButton
-              Position.X = 196.500000000000000000
-              Position.Y = 100.000000000000000000
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 11
-              Text = 'Upsert'
-              OnClick = ButUpsertClick
-            end
-            object GridPanelLayout3: TGridPanelLayout
-              Align = Client
-              Size.Width = 98.250000000000000000
-              Size.Height = 50.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 22
-              ColumnCollection = <
-                item
-                  Value = 50.000000000000000000
-                end
-                item
-                  Value = 50.000000000000000000
-                end>
-              ControlCollection = <
-                item
-                  Column = 0
-                  Control = ButClone
-                  Row = 0
-                end
-                item
-                  Column = 1
-                  Control = ButCopy
-                  Row = 0
-                end>
-              ExpandStyle = FixedSize
-              RowCollection = <
-                item
-                  Value = 100.000000000000000000
-                end>
-              object ButClone: TButton
-                Size.Width = 49.125000000000000000
-                Size.Height = 50.000000000000000000
-                Size.PlatformDefault = False
-                TabOrder = 23
-                Text = 'ButClone'
-                OnClick = ButCloneClick
-              end
-              object ButCopy: TButton
-                Position.X = 49.125000000000000000
-                Size.Width = 49.125000000000000000
-                Size.Height = 50.000000000000000000
-                Size.PlatformDefault = False
-                TabOrder = 22
-                Text = 'ButCopy'
-                OnClick = ButCopyClick
-              end
-            end
-          end
         end
         object TabFloats: TTabItem
           CustomIcon = <
@@ -1783,8 +1589,8 @@ object SQLConnectionTester: TSQLConnectionTester
                   Size.Height = 43.750000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 22
-                  Viewport.Width = 372.000000000000000000
-                  Viewport.Height = 43.800000000000000000
+                  Viewport.Width = 368.000000000000000000
+                  Viewport.Height = 39.800000000000000000
                 end
                 object GridPanelLayoutFloatFormatActions: TGridPanelLayout
                   Align = Client
@@ -1963,8 +1769,8 @@ object SQLConnectionTester: TSQLConnectionTester
                   Size.Height = 43.750000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 16
-                  Viewport.Width = 372.000000000000000000
-                  Viewport.Height = 43.800000000000000000
+                  Viewport.Width = 368.000000000000000000
+                  Viewport.Height = 39.800000000000000000
                 end
                 object GridPanelLayoutFloatCalculate1: TGridPanelLayout
                   Align = Client
@@ -2545,7 +2351,7 @@ object SQLConnectionTester: TSQLConnectionTester
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 99.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
@@ -2554,19 +2360,12 @@ object SQLConnectionTester: TSQLConnectionTester
           Text = 'DateTime'
           ExplicitSize.cx = 99.000000000000000000
           ExplicitSize.cy = 50.000000000000000000
-          object Button1: TButton
-            Position.X = 160.000000000000000000
-            Position.Y = 174.000000000000000000
-            TabOrder = 0
-            Text = 'Button1'
-            OnClick = Button1Click
-          end
         end
         object TabArrays: TTabItem
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 101.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
@@ -2593,7 +2392,7 @@ object SQLConnectionTester: TSQLConnectionTester
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
               Size.Width = 372.000000000000000000
-              Size.Height = 281.000000000000000000
+              Size.Height = 180.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               ColumnCollection = <
@@ -2745,13 +2544,13 @@ object SQLConnectionTester: TSQLConnectionTester
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
               Position.X = 2.000000000000000000
-              Position.Y = 298.000000000000000000
+              Position.Y = 197.000000000000000000
               Size.Width = 372.000000000000000000
-              Size.Height = 332.000000000000000000
+              Size.Height = 433.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 17
-              Viewport.Width = 372.000000000000000000
-              Viewport.Height = 332.000000000000000000
+              Viewport.Width = 368.000000000000000000
+              Viewport.Height = 429.000000000000000000
             end
           end
         end
@@ -2933,8 +2732,8 @@ object SQLConnectionTester: TSQLConnectionTester
           Size.Height = 382.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 16
-          Viewport.Width = 372.000000000000000000
-          Viewport.Height = 382.000000000000000000
+          Viewport.Width = 368.000000000000000000
+          Viewport.Height = 378.000000000000000000
         end
       end
     end

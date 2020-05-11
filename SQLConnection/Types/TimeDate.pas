@@ -25,6 +25,15 @@
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
 
+//  Showmessage(TTimeDate.ToArray('2020-02-28 10:23:59 +02:00').ToList(True));
+//  Showmessage(TTimeDate.ToArray('29/02/2020 10:23:59 AM').ToList(True));
+
+  
+  https://stackoverflow.com/questions/34425123/how-to-handle-tregex-named-capture-groups-that-might-be-empty
+  https://stackoverflow.com/questions/15362556/regular-expressions-and-tmatch-groups-count
+  https://stackoverflow.com/questions/30804569/get-which-capture-group-matched-a-result-using-delphis-tregex
+
+
   https://stackoverflow.com/questions/16467919/regex-matching-a-date-and-time
   https://stackoverflow.com/questions/51224/regular-expression-to-match-valid-dates
   https://forum.imasters.com.br/topic/429416-resolvido%C2%A0converter-data-mysqldelphi/
@@ -34,8 +43,6 @@
   https://stackoverflow.com/questions/51224/regular-expression-to-match-valid-dates/8768241#8768241
 
   https://stackoverflow.com/questions/20767011/how-do-i-get-the-named-groups-of-a-regex-in-delphi
-  https://stackoverflow.com/questions/34425123/how-to-handle-tregex-named-capture-groups-that-might-be-empty
-  https://stackoverflow.com/questions/15362556/regular-expressions-and-tmatch-groups-count
   https://stackoverflow.com/questions/39841797/how-to-use-delphi-tregex-to-replace-a-particular-capture-group
   https://www.finalbuilder.com/resources/blogs/getting-started-with-delphi-xes-regular-expressio  
 }
@@ -50,7 +57,11 @@ uses
   System.Math,
   System.RegularExpressions,
   System.DateUtils,
+  System.Variants,
   Winapi.Windows,
+
+  FMX.Dialogs,
+
   Locale,
   &Array
   ;
@@ -135,6 +146,7 @@ type
     class function ToDateString(Value: String; const &ShortDateFormat : String = 'yyyy-MM-dd'; const &LongDateFormat : String = 'yyyy-MM-dd hh:nn:ss'; const &DateSeparator : Char = '-'; const &TimeSeparator : Char = ':'): String;
     class function ToDateTimeString(Value: String; const &ShortDateFormat : String = 'yyyy-MM-dd'; const &LongDateFormat : String = 'yyyy-MM-dd hh:nn:ss'; const &DateSeparator : Char = '-'; const &TimeSeparator : Char = ':'): String;
     class function ToFormat(Value: String; const Format: String): String;
+    class function ToSQL(Value: String): String;
     property NOW: TDateTime read GetNOW;
     property TIME: TDateTime read GetTIME;
     property DATE: TDateTime read GetDATE;
@@ -318,21 +330,23 @@ begin
   IsValid := Self.IsValidTime(Value);
   if IsValid then
   begin
-    Match := TRegEx.Create(TRegexDateTime.HNSM, [roIgnoreCase, roMultiline]).Match(Value);
+    Match := TRegEx.Create(TRegexDateTime.HNSM, [roIgnoreCase, roMultiline, roExplicitCapture]).Match(Value);
     if Match.Success then
     begin
       Return['hours'] := Match.Groups['hours_12'].Value;
       Return['minutes'] := Match.Groups['minutes_12'].Value;
       Return['seconds'] := Match.Groups['seconds_12'].Value;
-      Return['meridian'] := Match.Groups['meridian'].Value;
+      if Match.Groups.Count > 4 then
+        Return['meridian'] := Match.Groups['meridian'].Value;
     end;
-    Match := TRegEx.Create(TRegexDateTime.HNSZ, [roIgnoreCase, roMultiline]).Match(Value);
+    Match := TRegEx.Create(TRegexDateTime.HNSZ, [roIgnoreCase, roMultiline, roExplicitCapture]).Match(Value);
     if Match.Success then
     begin
       Return['hours'] := Match.Groups['hours_24'].Value;
       Return['minutes'] := Match.Groups['minutes_24'].Value;
       Return['seconds'] := Match.Groups['seconds_24'].Value;
-      Return['timezone'] := Match.Groups['timezone'].Value;
+      if Match.Groups.Count > 4 then
+        Return['timezone'] := Match.Groups['timezone'].Value;
     end;
   end;
   Result := Return;
@@ -646,7 +660,33 @@ end;
 
 class function TTimeDate.ToFormat(Value: String; const Format: String): String;
 begin
+  Result := '';
+end;
 
+class function TTimeDate.ToSQL(Value: String): String;
+var
+  Return : TArrayVariant;
+begin
+  Return := TArrayVariant.Create;
+  Return.Clear;
+
+  if Self.IsValidTime(Value) then
+  begin
+    Return := Self.ToArrayTime(Value);
+    Result := Return['hours'] + ':' + Return['minutes'] + ':' + Return['seconds'];
+  end
+  else if Self.IsValidDate(Value) then
+  begin
+    Return := Self.ToArrayDate(Value);
+    Result := Return['year'] + '-' + Return['month'] + '-' + Return['day'];
+  end
+  else if Self.IsValidDateTime(Value) then
+  begin
+    Return := Self.ToArrayDateTime(Value);
+    Result := Return['year'] + '-' + Return['month'] + '-' + Return['day'] + ' ' + Return['hours'] + ':' + Return['minutes'] + ':' + Return['seconds'];
+  end
+  else
+    Result := Value;
 end;
 
 end.

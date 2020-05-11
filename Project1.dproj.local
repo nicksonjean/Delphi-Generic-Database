@@ -2,9 +2,9 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2016/11/29 23:06:36.000.546,=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/11/29 23:07:38.000.595,C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.fmx=F:\TEF\Cobaia2\Unit1.fmx</Transaction>
-    <Transaction>2016/11/29 23:07:38.000.595,C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.pas=F:\TEF\Cobaia2\Unit1.pas</Transaction>
-    <Transaction>2016/11/29 23:07:40.000.810,C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Project1.dproj=F:\TEF\Cobaia2\Project1.dproj</Transaction>
+    <Transaction>2016/11/29 23:07:38.000.595,F:\TEF\Cobaia2\Unit1.pas=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2016/11/29 23:07:38.000.595,F:\TEF\Cobaia2\Unit1.fmx=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2016/11/29 23:07:40.000.810,F:\TEF\Cobaia2\Project1.dproj=C:\Users\Nickson\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2016/11/29 23:07:59.000.776,=F:\TEF\Cobaia2\ArrayAssoc.pas</Transaction>
     <Transaction>2016/11/29 23:09:14.000.609,=F:\TEF\Cobaia2\UDM.pas</Transaction>
     <Transaction>2016/12/05 20:09:12.000.832,F:\TEF\Cobaia2\UDM.pas=</Transaction>
@@ -12,25 +12,25 @@
     <Transaction>2016/12/31 22:44:50.000.071,F:\TEF\Cobaia2\System.Classes.pas=</Transaction>
     <Transaction>2019/08/01 14:54:49.000.253,=D:\Projetos\Agnostic-Database-Connection\Unit2.pas</Transaction>
     <Transaction>2019/08/01 15:00:47.000.220,=D:\Projetos\Agnostic-Database-Connection\Unit3.pas</Transaction>
-    <Transaction>2019/08/01 15:03:34.000.856,D:\Projetos\Agnostic-Database-Connection\Unit3.pas=D:\Projetos\Agnostic-Database-Connection\Helpers\NotifyHelper.pas</Transaction>
-    <Transaction>2019/08/01 15:04:36.000.178,D:\Projetos\Agnostic-Database-Connection\Unit2.pas=D:\Projetos\Agnostic-Database-Connection\Helpers\FMXObjectHelper.pas</Transaction>
+    <Transaction>2019/08/01 15:03:34.000.856,D:\Projetos\Agnostic-Database-Connection\Helpers\NotifyHelper.pas=D:\Projetos\Agnostic-Database-Connection\Unit3.pas</Transaction>
+    <Transaction>2019/08/01 15:04:36.000.178,D:\Projetos\Agnostic-Database-Connection\Helpers\FMXObjectHelper.pas=D:\Projetos\Agnostic-Database-Connection\Unit2.pas</Transaction>
     <Transaction>2019/08/01 17:47:16.000.301,=D:\Projetos\Agnostic-Database-Connection\Unit2.pas</Transaction>
-    <Transaction>2019/08/01 18:46:18.000.984,D:\Projetos\Agnostic-Database-Connection\Helpers\FormHelper.pas=D:\Projetos\Agnostic-Database-Connection\Unit2.pas</Transaction>
+    <Transaction>2019/08/01 18:46:18.000.984,D:\Projetos\Agnostic-Database-Connection\Unit2.pas=D:\Projetos\Agnostic-Database-Connection\Helpers\FormHelper.pas</Transaction>
     <Transaction>2019/09/15 10:09:31.000.820,=D:\Projetos\Agnostic-Database-Connection\Unit2.pas</Transaction>
-    <Transaction>2019/09/15 10:10:58.000.796,D:\Projetos\Agnostic-Database-Connection\AnonumousThreadPool.pas=D:\Projetos\Agnostic-Database-Connection\Unit2.pas</Transaction>
+    <Transaction>2019/09/15 10:10:58.000.796,D:\Projetos\Agnostic-Database-Connection\Unit2.pas=D:\Projetos\Agnostic-Database-Connection\AnonumousThreadPool.pas</Transaction>
     <Transaction>2020/04/21 13:36:34.000.141,D:\Projetos\DELPHI\Agnostic-Database-Connection\AnonumousThreadPool.pas=</Transaction>
     <Transaction>2020/04/21 13:36:38.000.303,D:\Projetos\DELPHI\Agnostic-Database-Connection\MultiDetailAppearanceU.pas=</Transaction>
     <Transaction>2020/04/21 13:37:07.000.262,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\SQLConnection.pas</Transaction>
     <Transaction>2020/04/21 13:37:31.000.956,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\ArrayAssoc\ArrayAssoc.pas</Transaction>
     <Transaction>2020/04/21 13:37:45.000.948,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Strings.pas</Transaction>
-    <Transaction>2020/04/21 13:37:45.000.917,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Money.pas</Transaction>
     <Transaction>2020/04/21 13:37:45.000.886,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.DateTime.pas</Transaction>
     <Transaction>2020/04/21 13:37:45.000.833,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\Fetch.Locale.pas</Transaction>
+    <Transaction>2020/04/21 13:37:45.000.917,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Money.pas</Transaction>
     <Transaction>2020/04/21 18:47:46.000.572,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\MultiDetailAppearanceU.pas</Transaction>
     <Transaction>2020/04/26 13:31:51.000.394,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Floats.pas</Transaction>
     <Transaction>2020/04/26 14:22:15.000.338,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.DateTime.pas=</Transaction>
-    <Transaction>2020/04/26 14:22:16.000.144,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Floats.pas=</Transaction>
     <Transaction>2020/04/26 14:22:16.000.590,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Strings.pas=</Transaction>
+    <Transaction>2020/04/26 14:22:16.000.144,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\FormatType.Floats.pas=</Transaction>
     <Transaction>2020/04/26 14:24:48.000.165,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\FormatType\Fetch.Locale.pas=</Transaction>
     <Transaction>2020/04/26 14:28:20.000.696,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\String.pas</Transaction>
     <Transaction>2020/04/26 14:29:07.000.284,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Float.pas</Transaction>
@@ -39,10 +39,10 @@
     <Transaction>2020/04/26 14:31:16.000.878,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Locale\Locale.pas</Transaction>
     <Transaction>2020/04/26 14:35:03.000.389,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTime.pas</Transaction>
     <Transaction>2020/04/26 14:36:39.000.282,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Array.pas</Transaction>
-    <Transaction>2020/04/26 18:49:28.000.642,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\ArrayClass.pas</Transaction>
-    <Transaction>2020/04/26 18:49:28.000.735,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\FloatClass.pas</Transaction>
     <Transaction>2020/04/26 18:49:28.000.775,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\StringClass.pas</Transaction>
     <Transaction>2020/04/26 18:49:28.000.687,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTimeClass.pas</Transaction>
+    <Transaction>2020/04/26 18:49:28.000.642,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\ArrayClass.pas</Transaction>
+    <Transaction>2020/04/26 18:49:28.000.735,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\FloatClass.pas</Transaction>
     <Transaction>2020/04/26 19:12:57.000.261,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\VisualExtension\ComponentQuery.pas</Transaction>
     <Transaction>2020/04/26 20:31:40.000.243,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\VisualExtension\ComponentQuery.pas=</Transaction>
     <Transaction>2020/04/26 20:49:32.000.280,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\VisualExtension\QueryComponent.pas</Transaction>
@@ -58,8 +58,8 @@
     <Transaction>2020/05/01 20:43:06.000.337,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Connector\Helpers\FMX.Object\FMX.Object.Helper.pas</Transaction>
     <Transaction>2020/05/02 14:38:12.000.536,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\StringClass.pas=</Transaction>
     <Transaction>2020/05/02 14:38:12.000.183,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\ArrayClass.pas=</Transaction>
-    <Transaction>2020/05/02 14:38:12.000.322,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTimeClass.pas=</Transaction>
     <Transaction>2020/05/02 14:38:12.000.354,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\FloatClass.pas=</Transaction>
+    <Transaction>2020/05/02 14:38:12.000.322,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTimeClass.pas=</Transaction>
     <Transaction>2020/05/02 14:38:58.000.659,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\String.Helper.pas</Transaction>
     <Transaction>2020/05/02 14:40:43.000.169,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\String.Helper.pas=</Transaction>
     <Transaction>2020/05/02 14:41:10.000.946,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\String.Class.pas</Transaction>
@@ -70,8 +70,8 @@
     <Transaction>2020/05/03 16:20:24.000.318,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Float.pas</Transaction>
     <Transaction>2020/05/03 17:58:11.000.214,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\String.Class.pas=</Transaction>
     <Transaction>2020/05/03 18:00:56.000.816,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\String.pas</Transaction>
-    <Transaction>2020/05/03 18:14:15.000.743,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Array.Class.pas=</Transaction>
     <Transaction>2020/05/03 18:14:15.000.771,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTime.Class.pas=</Transaction>
+    <Transaction>2020/05/03 18:14:15.000.743,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Array.Class.pas=</Transaction>
     <Transaction>2020/05/03 18:15:40.000.696,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\Array.pas</Transaction>
     <Transaction>2020/05/03 18:15:40.000.739,=D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTime.pas</Transaction>
     <Transaction>2020/05/03 18:22:50.000.411,D:\Projetos\DELPHI\Agnostic-Database-Connection\SQLConnection\Types\DateTime.pas=</Transaction>

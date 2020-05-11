@@ -127,6 +127,11 @@ type
     class function ToSQL(Value: String; DecimalLength: Integer = -1; Mode: TResultMode = TResultMode.Truncate; const &ThousandSeparator: Char = #0; const &DecimalSeparator: Char = '.'): String;
   end;
 
+{
+  TODO -oNickson Jeanmerson -cProgrammer :
+  1)   Estudar Diferença Entre CurrToStr e FloatToStr
+}
+
 function CurrToStr(const Value: Extended): string;
 
 implementation

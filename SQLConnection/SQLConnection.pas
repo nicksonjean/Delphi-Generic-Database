@@ -24,6 +24,12 @@
 }
 
 //https://www.delphigeist.com/ //TArraySlice
+//https://components4developers.blog/2019/03/11/rest-easy-with-kbmmw-24-xml_json_yaml_to_object_conversion/ //REST easy with kbmMW #24 – XML, JSON or YAML to object conversion
+
+{
+  TODO -oNickson Jeanmerson -cProgrammer :
+  1)   Criar Gerador de Classes com Base em Tabela
+}
 
 unit SQLConnection;
 
@@ -725,7 +731,7 @@ begin
   Result := Self.Query(Input, Mode);
 end;
 
-function TQueryBuilder.toJSON(Input: String; Prettify : Boolean = False): String;
+function TQueryBuilder.ToJSON(Input: String; Prettify : Boolean = False): String;
 var
   SQL: TQuery;
   JSONObject: TJSONObject;
@@ -758,7 +764,7 @@ begin
   end;
 end;
 
-function TQueryBuilder.toXML(Input: String; Prettify : Boolean = False): String;
+function TQueryBuilder.ToXML(Input: String; Prettify : Boolean = False): String;
 var
   S1, S2: String;
   SQL: TQuery;

@@ -70,13 +70,13 @@ const
   SSPACE : Char = #32; //\s
   CTAG : String = '</';
   DSPACE : String = '  '; //\s\s
-  EOL : String = #10#13; //\r\n
+  EOL : String = #13#10; //\r\n
   XML : String = '<?xml version="1.0" encoding="UTF-8"?>';
   NUL : String = 'null';
   NULER : String = '\b(\w*null|NULL\w*)\b';
   SYMBOLS = '[-()\"#\/@;:<>{}`+=~|?!@#$%^&*a-zA-Z\s]';
   NUMERIC : String = '^\-?\d{1,}$';
-  DECIMAL : String = '^\d*[\,]?\d*$';
+  DECIMAL : String = '^\d*[\,\.]?\d*$';
 
 type
   TString = class
@@ -93,6 +93,8 @@ type
     class function IsDecimal(Text: String): Boolean;
     class function EscapeStrings(Text: String): String;
     class function FromTags(Input, Column: String): String;
+    class function IsUTF8(const Text: AnsiString): boolean; static;
+    class function IsAnsi(const AString: String): Boolean; static;
     class function IndentTag(Input, Replace : String): String;
     class function RemoveLastComma(Input : String): String;
     class function RemoveLastCommaEOL(Input : String): String;
@@ -178,6 +180,21 @@ begin
       result := Copy(Input, aPos + Length(Delim1), bPos - (aPos + Length(Delim1)));
     end;
   end;
+end;
+
+class function TString.IsUTF8(const Text : AnsiString): Boolean;
+begin
+  Result := (Text <> '') and (UTF8Decode(Text) <> '');
+end;
+
+class function TString.IsAnsi(const AString: String): Boolean;
+var
+  tempansi : AnsiString;
+  temp : String;
+begin
+  tempansi := AnsiString(AString);
+  temp := tempansi;
+  Result := temp = AString;
 end;
 
 class function TString.IndentTag(Input, Replace: String): String;
