@@ -63,9 +63,11 @@ const
   LTAG : Char = #60; //<
   EQUAL : Char = #61; //=
   RTAG : Char = #62; //>
-  LBRACKET : Char = #123; //{
+  LCURLYBRACKET : Char = #123; //{
+  RCURLYBRACKET : Char = #125; //}
+  LSQUAREBRACKET : Char = #91; //[
+  RSQUAREBRACKET : Char = #93; //]
   PIPE : Char = #124; //|
-  RBRACKET : Char = #125; //}
   CBAR : Char = #92; //\
   SSPACE : Char = #32; //\s
   CTAG : String = '</';
@@ -184,7 +186,7 @@ end;
 
 class function TString.IsUTF8(const Text : AnsiString): Boolean;
 begin
-  Result := (Text <> '') and (UTF8Decode(Text) <> '');
+  Result := (Text <> '') and (UTF8ToString(Text) <> '');
 end;
 
 class function TString.IsAnsi(const AString: String): Boolean;
@@ -193,7 +195,7 @@ var
   temp : String;
 begin
   tempansi := AnsiString(AString);
-  temp := tempansi;
+  temp := String(tempansi);
   Result := temp = AString;
 end;
 
@@ -201,8 +203,8 @@ class function TString.IndentTag(Input, Replace: String): String;
 var
   Regex: TRegEx;
 begin
-  Regex := TRegEx.Create('^(<)', [roMultiLine]);
-  Result := Regex.Replace(Input, Replace);
+  Regex := TRegEx.Create('^([^<]*)<(.*)', [roMultiLine]);
+  Result := Regex.Replace(Input, '$1' + Replace + '<$2');
 end;
 
 class function TString.FromTags(Input, Column: String): String;

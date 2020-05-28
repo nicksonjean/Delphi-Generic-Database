@@ -21,10 +21,11 @@
   no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
-}
 
-//https://www.delphigeist.com/ //TArraySlice
-//https://components4developers.blog/2019/03/11/rest-easy-with-kbmmw-24-xml_json_yaml_to_object_conversion/ //REST easy with kbmMW #24 – XML, JSON or YAML to object conversion
+https://www.delphigeist.com/ //TArraySlice
+https://components4developers.blog/2019/03/11/rest-easy-with-kbmmw-24-xml_json_yaml_to_object_conversion/ //REST easy with kbmMW #24 – XML, JSON or YAML to object conversion
+https://stackoverflow.com/questions/7502217/delphi-map-database-table-as-class
+}
 
 {
   TODO -oNickson Jeanmerson -cProgrammer :
@@ -280,7 +281,7 @@ type
     function FetchOne(Input: String; out &Array: TArray): TQuery; overload;
     function FetchOne(Input: String; out &Array: TArrayVariant): TQuery; overload;
     function FetchOne(Input: String; out &Array: TArrayField): TQuery; overload;
-    //function FetchAll(Input: String; out &Array: TArrayAssoc): TQuery; overload;
+    function FetchAll(Input: String; out &Array: TArrayAssoc): TQuery; overload;
     function Insert(Table: String; Columns: TArray; Run: Boolean = False; Ignore: Boolean = False): String; overload;
     function Insert(Table: String; Columns: TArrayVariant; Run: Boolean = False; Ignore: Boolean = False): String; overload;
     function Insert(Table: String; Columns: TArrayField; Run: Boolean = False; Ignore: Boolean = False): String; overload;
@@ -449,7 +450,7 @@ begin
   case FInstance.Driver of
     MySQL :
     begin
-      SQL := Query.View('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA Filters SCHEMA_NAME = ' + QuotedStr(FInstance.Database));
+      SQL := Query.View('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ' + QuotedStr(FInstance.Database));
       if not SQL.Query.IsEmpty then
         Result := True;
     end;
@@ -559,8 +560,37 @@ begin
 end;
 
 function TQueryBuilder.FetchAll<T>(Input : String; out &Array: T): TQuery;
+var
+  I, J : Integer;
+  SQL: TQuery;
+  Query: TQueryBuilder;
 begin
-  //Result := TQuery;
+  SQL := Query.View(Input);
+  if not(SQL.Query.IsEmpty) then
+  begin
+    if (TypeInfo(T) = TypeInfo(TArrayAssoc)) then
+      TArrayAssoc(&Array).Clear;
+    while not SQL.Query.Eof do // Linhas
+    begin
+      for I := 0 to SQL.Query.FieldCount - 1 do // Colunas
+      begin
+        //Showmessage((I+1).ToString + ' ' + SQL.Query.Fields[I].DisplayName + ' ' + FieldTypes[SQL.Query.Fields[I].DataType]);
+        if SQL.Query.FieldByName(SQL.Query.Fields[I].DisplayName).IsNull then
+        begin
+          if (TypeInfo(T) = TypeInfo(TArrayAssoc)) then
+            TArrayAssoc(&Array)[J][SQL.Query.Fields[I].DisplayName].Val := NUL
+        end
+        else
+        begin
+          if (TypeInfo(T) = TypeInfo(TArrayAssoc)) then
+            TArrayAssoc(&Array)[J][SQL.Query.Fields[I].DisplayName].Val := TArrayVariantHelper.VarToStr(SQL.Query.FieldValues[SQL.Query.Fields[I].DisplayName], EmptyStr, TBinaryMode.Write)
+        end;
+      end;
+      Inc(J);
+      SQL.Query.Next;
+    end;
+  end;
+  Result := SQL;
 end;
 
 function TQueryBuilder.Insert<T>(Table: String; Columns: T; Run: Boolean = False; Ignore: Boolean = False): String;
@@ -790,7 +820,7 @@ begin
         begin
           CollumnName := FieldDefs[I].Name;
           CollumnValue := FieldByName(CollumnName).AsString;
-          CollumnData := CollumnData + TString.IndentTag(LTag + CollumnName + RTag + CollumnValue + CTag + CollumnName + RTag + S1, S2 + LTag);
+          CollumnData := CollumnData + TString.IndentTag(LTag + CollumnName + RTag + CollumnValue + CTag + CollumnName + RTag + S1, S2);
         end;
         RowData := RowData + CollumnData;
         RowData := RowData + CTag + 'node' + RTag;
@@ -799,7 +829,7 @@ begin
       end;
       Result := Result + XML + S1;
       Result := Result + LTag + 'root' + RTag + S1;
-      Result := Result + TString.IndentTag(RowData + S1, S2 + LTag);
+      Result := Result + TString.IndentTag(RowData + S1, S2);
       Result := Result + CTag + 'root' + RTag;
     end
     else
@@ -942,6 +972,11 @@ end;
 function TQueryBuilder.FetchOne(Input: String; out &Array: TArrayField) : TQuery;
 begin
   Result := Self.FetchOne<TArrayField>(Input, &Array);
+end;
+
+function TQueryBuilder.FetchAll(Input: string; out &Array: TArrayAssoc) : TQuery;
+begin
+  Result := Self.FetchAll<TArrayAssoc>(Input, &Array);
 end;
 
 function TQueryBuilder.Insert(Table: String; Columns: TArray; Run: Boolean = False; Ignore: Boolean = False): String;

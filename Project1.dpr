@@ -13,6 +13,8 @@ uses
   FMX.ListView.Helper in 'SQLConnection\Helpers\FMX.ListView\FMX.ListView.Helper.pas',
   FMX.StringGrid.Helper in 'SQLConnection\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas',
   FMX.Edit.Helper in 'SQLConnection\Helpers\FMX.Edit\FMX.Edit.Helper.pas',
+  FMX.ComboEdit.Helper in 'SQLConnection\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas',
+  FMX.ComboBox.Helper in 'SQLConnection\Helpers\FMX.ComboBox\FMX.ComboBox.Helper.pas',
   FMX.&Object.Helper in 'SQLConnection\Helpers\FMX.Object\FMX.Object.Helper.pas',
   Float in 'SQLConnection\Types\Float.pas',
   &String in 'SQLConnection\Types\String.pas',

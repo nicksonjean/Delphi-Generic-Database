@@ -183,24 +183,31 @@ type
 type
   TArrayAssoc = class
   private
+    { Private declarations }
     fVal: Variant;
     fStrict: Boolean;
     fDict: TDictionary<Variant,TArrayAssoc>;
     function GetItem(Index: Variant): TArrayAssoc;
-    procedure SetVal(v: Variant);
+    procedure SetVal(Value: Variant);
     function GetVal:Variant;
   public
-    property Items[Index: Variant]: TArrayAssoc read GetItem; default;
-    property Val:Variant read GetVal write SetVal;
-    property All:TDictionary<Variant,TArrayAssoc> read fDict;
-    function Add(Index: Variant):TArrayAssoc; overload;
-    function Add(Index: Variant; Value: Variant):TArrayAssoc; overload;
-    constructor Create(strictRules:Boolean);
-    destructor Free;
+    { Public declarations }
+    constructor Create(StrictRules: Boolean = False);
+    destructor Destroy; override;
+    function Add(Index: Variant): TArrayAssoc; overload;
+    function Add(Index: Variant; Value: Variant): TArrayAssoc; overload;
+    function ToList(Prettify : Boolean = False): String;
+    function ToTags(Prettify : Boolean = False): String;
+    function ToXML(Prettify : Boolean = False): String;
+    function ToJSON(Prettify : Boolean = False): String;
     procedure Clear;
+    property Items[Index: Variant]: TArrayAssoc read GetItem; default;
+    property Val: Variant read GetVal write SetVal;
+    property ToArray: TDictionary<Variant,TArrayAssoc> read fDict;
   end;
 
-type TArrayAssocEnum = TPair<Variant, TArrayAssoc>;
+type
+  TArrayAssocEnum = TPair<Variant, TArrayAssoc>;
 
 implementation
 
@@ -301,7 +308,7 @@ begin
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
   Result := Result + XML + S1;
   Result := Result + LTag + 'root' + RTag + S1;
-  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2 + LTag);
+  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2);
   Result := Result + CTag + 'root' + RTag;
 end;
 
@@ -313,11 +320,11 @@ begin
   Result := EmptyStr;
   S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
-  Result := Result + LBracket + S1;
+  Result := Result + LCURLYBRACKET + S1;
   for I := 0 to Count - 1 do
     Result := Result + S2 + DQuote + Names[I] + DQuote + Colon + TArrayHelper.StrToStr(ValuesAtIndex[I], DQuote) + Comma + S1;
   Result := TString.RemoveLastComma(Result);
-  Result := Result + RBracket;
+  Result := Result + RCURLYBRACKET;
 end;
 
 procedure TArray.Add(Key, Value: string);
@@ -366,12 +373,10 @@ end;
 
 class function TArrayHelper.StrToStr(Value: String; Quote : String = #39): String;
 begin
-  // Valida Inteiros ou Decimais
   if TArrayVariantHelper.IsNullOrEmpty(Value) then
     Result := NUL
   else if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
     Result := TString.Quote(TFloat.ToSQL(Value), Quote)
-  // Valida Data e/ou Date/Hora
   else if TTimeDate.IsValid(Value) then
     Result := TString.Quote(TTimeDate.ToSQL(Value), Quote)
   else
@@ -384,7 +389,6 @@ begin
     else if TString.IsNull(Value) then
       Result := NUL
     else
-    // Valida Strings
       Result := TString.Quote(Value, Quote);
   end;
   Result := TString.StringReplace(Result, [SQUOTE+SQUOTE+SQUOTE], [SQUOTE], [rfReplaceAll]);
@@ -515,7 +519,7 @@ begin
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
   Result := Result + XML + S1;
   Result := Result + LTag + 'root' + RTag + S1;
-  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2 + LTag);
+  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2);
   Result := Result + CTag + 'root' + RTag;
 end;
 
@@ -527,11 +531,11 @@ begin
   Result := EmptyStr;
   S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
-  Result := Result + LBracket + S1;
+  Result := Result + LCURLYBRACKET + S1;
   for I := 0 to Count - 1 do
     Result := Result + S2 + DQuote + Key[I] + DQuote + Colon + TArrayVariantHelper.VarToStr(ValuesAtIndex[I], DQUOTE, TBinaryMode.Write) + Comma + S1;
   Result := TString.RemoveLastComma(Result);
-  Result := Result + RBracket;
+  Result := Result + RCURLYBRACKET;
 end;
 
 procedure TArrayVariant.Add(Key: String; Value: Variant);
@@ -603,14 +607,16 @@ begin
       Result := TString.Quote(TBase64.ToEncode(TEncoding.UTF8.GetString(Value)), Quote)
     else
       Result := TString.Quote(Trim(TEncoding.UTF8.GetString(Value)), Quote)
+  else if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
+    Result := TString.Quote(TFloat.ToSQL(Value), Quote)
   else if TTimeDate.IsValid(Value) then
     Result := TString.Quote(TTimeDate.ToSQL(Value), Quote)
   else
   begin
     case TVarData(Value).VType of
-      varWord, varShortInt, varSmallInt, varInteger, varUInt32:
+      varWord, varShortInt, varSmallInt, varInteger, varInt64:
         Result := IntToStr(Value);
-      varInt64, varUInt64:
+      varUInt32, varUInt64:
         Result := UIntToStr(Value);
       varSingle, varDouble, varCurrency:
         Result := TFloat.ToSQL(Value);
@@ -709,7 +715,7 @@ begin
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
   Result := Result + XML + S1;
   Result := Result + LTag + 'root' + RTag + S1;
-  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2 + LTag);
+  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2);
   Result := Result + CTag + 'root' + RTag;
 end;
 
@@ -721,11 +727,11 @@ begin
   Result := EmptyStr;
   S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
-  Result := Result + LBracket + S1;
+  Result := Result + LCURLYBRACKET + S1;
   for I := 0 to Count - 1 do
     Result := Result + S2 + DQuote + Key[I] + DQuote + Colon + TArrayVariantHelper.VarToStr(ValuesAtIndex[I].AsVariant, DQUOTE, TBinaryMode.Write) + Comma + S1;
   Result := TString.RemoveLastComma(Result);
-  Result := Result + RBracket;
+  Result := Result + RCURLYBRACKET;
 end;
 
 procedure TArrayField.Add(Key: String; Value: TField);
@@ -853,6 +859,24 @@ end;
 
 { TArrayAssoc }
 
+constructor TArrayAssoc.Create(StrictRules: Boolean = False);
+begin
+  fStrict := StrictRules;
+  fDict := nil;
+  TVarData(fVal).VType := varEmpty;
+end;
+
+destructor TArrayAssoc.Destroy;
+var
+  Enum: TPair<Variant, TArrayAssoc>;
+begin
+  if(fDict <> nil) then
+  begin
+    for Enum in fDict do
+      Enum.Value.Free;
+  end;
+end;
+
 function TArrayAssoc.Add(Index: Variant): TArrayAssoc;
 begin
   Result := nil;
@@ -861,7 +885,7 @@ begin
     if(fDict.ContainsKey(Index)) then
     begin
       if(fStrict = true) then
-        raise Exception.Create('Dictionary is in strict mode, the key "'+Index+'" was already set.')
+        raise Exception.Create('A Matriz está em estrito, a chave "'+ Index +'" já estava definida.')
     end
     else
     begin
@@ -891,25 +915,7 @@ begin
   begin
     for Enum in fDict do
       Enum.Value.Free;
-  end;
-  fDict.Clear;
-end;
-
-constructor TArrayAssoc.Create(strictRules:Boolean);
-begin
-  fStrict := strictRules;
-  fDict := nil;
-  TVarData(fVal).VType := varEmpty;
-end;
-
-destructor TArrayAssoc.Free;
-var
-  Enum: TPair<Variant, TArrayAssoc>;
-begin
-  if(fDict <> nil) then
-  begin
-    for Enum in fDict do
-      Enum.Value.Free;
+    fDict.Clear;
   end;
 end;
 
@@ -922,7 +928,7 @@ begin
     else
     begin
       if (fStrict) then
-        raise Exception.Create('Dictionary is in strict mode, the key "'+Index+'" was not set.')
+        raise Exception.Create('A Matriz está em estrito, a chave "'+ Index +'" não foi definida.')
       else
       begin
         Result := TArrayAssoc.Create(fStrict);
@@ -933,7 +939,7 @@ begin
   else
   begin
     if(fStrict) then
-      raise Exception.Create('Dictionary is in strict mode, the key "'+Index+'" was not set.')
+      raise Exception.Create('A Matriz está em estrito, a chave "'+ Index +'" não foi definida.')
     else
     begin
       fDict := TDictionary<Variant,TArrayAssoc>.Create(1);
@@ -948,9 +954,80 @@ begin
   Result := fVal;
 end;
 
-procedure TArrayAssoc.SetVal(v: Variant);
+procedure TArrayAssoc.SetVal(Value: Variant);
 begin
-  fVal := v;
+  fVal := Value;
+end;
+
+function TArrayAssoc.ToList(Prettify : Boolean = False): String;
+var
+  S1, S2: String;
+  Parent, Children: TPair<Variant, TArrayAssoc>;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, SSpace + LTag + Equal + RTag + SSpace, SSpace);
+  S2 := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for Parent in Self.ToArray do
+  begin
+    for Children in Parent.Value.ToArray do
+    begin
+      Result := Result + Children.Key + LSQUAREBRACKET + String(Parent.Key) + RSQUAREBRACKET + S1 + TArrayVariantHelper.VarToStr(Parent.Value[Children.Key].Val, SQUOTE, TBinaryMode.Write) + S2;
+      Result := TString.RemoveLastComma(Result);
+    end;
+  end;
+end;
+
+function TArrayAssoc.ToTags(Prettify : Boolean = False): string;
+var
+  S1, S2: String;
+  Parent, Children: TPair<Variant, TArrayAssoc>;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSPACE, EmptyStr);
+  for Parent in Self.ToArray do
+  begin
+    Result := Result + LTag + 'resultset' + SSPACE + 'rowid' + EQUAL + DQUOTE + String(Parent.Key) + DQUOTE + RTag + S1;
+    for Children in Parent.Value.ToArray do
+    begin
+      Result := Result + TString.IndentTag(LTag + Children.Key + RTag + TArrayVariantHelper.VarToStr(Parent.Value[Children.Key].Val, EmptyStr, TBinaryMode.Write) + CTag + Children.Key + RTag, S2) + S1;
+    end;
+    Result := Result + CTag + 'resultset' + RTag + S1;
+  end;
+  Result := TString.RemoveLastEOL(Result);
+end;
+
+function TArrayAssoc.ToXML(Prettify : Boolean = False): string;
+var
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSPACE, EmptyStr);
+  Result := Result + XML + S1;
+  Result := Result + LTag + 'root' + RTag + S1;
+  Result := Result + TString.IndentTag(Self.ToTags(Prettify), S2);
+  Result := Result + CTag + 'root' + RTag;
+end;
+
+function TArrayAssoc.ToJSON(Prettify : Boolean = False): string;
+var
+  S1, S2: String;
+  Parent, Children: TPair<Variant, TArrayAssoc>;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
+  Result := Result + LCURLYBRACKET + S1;
+  for Parent in Self.ToArray do
+  begin
+    for Children in Parent.Value.ToArray do
+    begin
+      Result := Result + S2 + DQuote + Children.Key + DQuote + Colon + TArrayVariantHelper.VarToStr(Parent.Value[Children.Key].Val, DQUOTE, TBinaryMode.Write) + Comma + S1;
+    end;
+  end;
+  Result := TString.RemoveLastComma(Result);
+  Result := Result + RCURLYBRACKET;
 end;
 
 end.

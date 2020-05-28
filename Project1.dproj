@@ -410,6 +410,8 @@
         <DCCReference Include="SQLConnection\Helpers\FMX.ListView\FMX.ListView.Helper.pas"/>
         <DCCReference Include="SQLConnection\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas"/>
         <DCCReference Include="SQLConnection\Helpers\FMX.Edit\FMX.Edit.Helper.pas"/>
+        <DCCReference Include="SQLConnection\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas"/>
+        <DCCReference Include="SQLConnection\Helpers\FMX.ComboBox\FMX.ComboBox.Helper.pas"/>
         <DCCReference Include="SQLConnection\Helpers\FMX.Object\FMX.Object.Helper.pas"/>
         <DCCReference Include="SQLConnection\Types\Float.pas"/>
         <DCCReference Include="SQLConnection\Types\String.pas"/>
@@ -442,6 +444,8 @@
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\FastReport 6 VCL Enterprise\LibD26\dclfrxBDE26.bpl">File C:\Program Files (x86)\FastReport 6 VCL Enterprise\LibD26\dclfrxBDE26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\FastReport 6 VCL Enterprise\LibD26\dclfsBDE26.bpl">File C:\Program Files (x86)\FastReport 6 VCL Enterprise\LibD26\dclfsBDE26.bpl not found</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
