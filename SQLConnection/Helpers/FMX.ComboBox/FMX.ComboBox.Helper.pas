@@ -14,7 +14,6 @@ uses
   FMX.Types,
   FMX.Controls,
   FMX.StdCtrls,
-  FMX.SearchBox,
   EventDriven;
 
 //https://living-sun.com/pt/delphi/232199-how-can-i-make-a-searchbox-visible-when-i-open-the-list-of-a-combobox-in-delphi-delphi-combobox-firemonkey-search-box.html
@@ -34,9 +33,19 @@ uses
 //https://www.developpez.net/forums/d1942684/environnements-developpement/delphi/composants-fmx/combobox-auto-completion-chose/
 
 type
+  TComboBoxHack = class(FMX.ListBox.TComboBox)
+  private
+    class var LastTimeKeydown:TDatetime;
+    class var Keys:string;
+  protected
+    class procedure KeyDown(Sender: TObject; var Key: Word; var KeyChar: System.WideChar; Shift: TShiftState); reintroduce;
+  end;
+
+type
   TComboBoxHelper = class helper for TComboBox
   public
-    procedure ShowSearchBox;
+    procedure AutoComplete;
+    //property AutoTranslate: Boolean read FAutoTranslate write FAutoTranslate;
   end;
 
 implementation
@@ -46,42 +55,50 @@ uses
 
 { TComboBoxHelper }
 
-procedure TComboBoxHelper.ShowSearchBox;
-var
-  FSearchBox: TSearchBox;
-  FComboBoxIndex : Integer;
+procedure TComboBoxHelper.AutoComplete;
 begin
-  FSearchBox := TSearchBox.Create(Self.ListBox);
-  FSearchBox.Align := TAlignLayout.Contents;
-  FSearchBox.Parent := Self;
-  FSearchBox.Visible := False;
+  Self.OnKeyDown := DelegateKeyEvent(
+    Self,
+    procedure(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState)
+    begin
+      TComboBoxHack.KeyDown(Sender, Key, KeyChar, Shift);
+    end
+  );
+end;
 
-  OnPopup := DelegateEvent(
-    Self,
-    procedure(Sender: TObject)
+//https://android.developreference.com/article/16137058/AutoComplete+functionality+for+FireMonkey+'s+TComboEdit
+//https://stackoverrun.com/ru/q/10367953
+//https://stackoverflow.com/questions/37611345/autocomplete-functionality-for-firemonkey-s-tcomboedit
+//https://xbuba.com/questions/37611345
+//https://stackoverrun.com/ru/q/9303004
+//https://code5.cn/so/delphi/706730
+
+//https://stackoverflow.com/questions/7696075/need-a-combobox-with-filtering
+//https://stackoverflow.com/questions/9466547/how-to-make-a-combo-box-with-fulltext-search-autocomplete-support
+//https://jquery.develop-bugs.com/article/15398626/How+can+I+make+a+SearchBox+visible+when+I+open+the+list+of+a+ComboBox+in+Delphi
+
+{ TComboboxHack }
+
+class procedure TComboBoxHack.KeyDown(Sender: TObject; var Key: Word; var KeyChar: System.WideChar; Shift: TShiftState);
+var
+  I: Integer;
+begin
+  if Key = vkReturn then
+    Exit;
+  if (KeyChar in [Chr(48)..Chr(57)]) or (KeyChar in [Chr(65)..Chr(90)]) or (KeyChar in [Chr(97)..Chr(122)]) then
+  begin
+    if MilliSecondsBetween(LastTimeKeydown, Now) < 500 then
+      Keys := Keys + KeyChar
+    else
+      Keys := KeyChar;
+    LastTimeKeydown := Now;
+    for I := 0 to TComboBox(Sender).Count-1 do
+    if UpperCase(Copy(TComboBox(Sender).Items[I], 0, Keys.Length)) = UpperCase(Keys) then
     begin
-      FSearchBox.Visible := True;
-      Sleep(10);
-      Application.ProcessMessages;
-      FSearchBox.SetFocus;
-    end
-  );
-//  OnClosePopup := DelegateEvent(
-//    Self,
-//    procedure(Sender: TObject)
-//    begin
-//      //FSearchBox.Visible := False;
-//    end
-//  );
-  FSearchBox.OnExit := DelegateEvent(
-    Self,
-    procedure(Sender: TObject)
-    begin
-      FSearchBox.Visible := False;
-      FComboBoxIndex := TListBox(Self.ListBox).Items.IndexOf(FSearchBox.Text);
-      Self.ItemIndex := FComboBoxIndex;
-    end
-  );
+      TComboBox(Sender).ItemIndex := I;
+      Break;
+    end;
+  end;
 end;
 
 end.

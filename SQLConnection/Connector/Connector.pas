@@ -275,10 +275,13 @@ begin
   if AOwner Is TComboBox then
   begin
     TComboBox(AOwner).DropDownKind := TDropDownKind.Custom;
-    TComboBox(AOwner).ShowSearchBox;
+    TComboBox(AOwner).AutoComplete;
   end
   else if AOwner Is TComboEdit then
+  begin
     TComboEdit(AOwner).DropDownKind := TDropDownKind.Custom;
+    TComboEdit(AOwner).AutoComplete;
+  end;
 
 {$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
   MemTableOrClientDataSet := Self.ToClientDataSet(Self.FQuery);

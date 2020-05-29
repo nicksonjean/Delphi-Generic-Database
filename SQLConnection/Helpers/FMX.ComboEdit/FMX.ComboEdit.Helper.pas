@@ -3,11 +3,25 @@
 interface
 
 uses
+  System.SysUtils,
+  System.Types,
   System.UITypes,
+  System.Classes,
+  System.DateUtils,
   FMX.Types,
   FMX.ComboEdit,
   FMX.ComboEdit.Style,
-  FMX.Forms;
+  FMX.Forms,
+  EventDriven;
+
+type
+  TComboEditHack = class(TComboEdit)
+  private
+    class var LastTimeKeydown:TDatetime;
+    class var Keys:String;
+  protected
+    class procedure KeyDown(Sender: TObject; var Key: Word; var KeyChar: System.WideChar; Shift: TShiftState); reintroduce;
+  end;
 
 type
   TComboEditHelper = class helper for TComboEdit
@@ -18,6 +32,7 @@ type
     procedure ListBoxApplyStyleLookup(Sender: TObject);
   public
     procedure SetFont(const FontFamily: TFontName; const FontStyles: TFontStyles; const FontSize: Integer; const FontColor: TAlphaColor);
+    procedure AutoComplete;
     property ListBox: TComboEditListBox read GetListBoxFromComboEdit;
   end;
 
@@ -74,16 +89,26 @@ begin
     Result := nil;
 end;
 
+procedure TComboEditHelper.AutoComplete;
+begin
+  Self.OnKeyDown := DelegateKeyEvent(
+    Self,
+    procedure(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState)
+    begin
+      TComboEditHack.KeyDown(Sender, Key, KeyChar, Shift);
+    end
+  );
+end;
+
 function TComboEditHelper.GetEdit: TStyledComboEdit;
 var
-  i: Integer;
+  I: Integer;
 begin
   Result := nil;
-
-  for i := 0 to ChildrenCount - 1 do
-    if Children[i] is TStyledComboEdit then
+  for I := 0 to ChildrenCount - 1 do
+    if Children[I] is TStyledComboEdit then
     begin
-      Result := TStyledComboEdit(Children[i]);
+      Result := TStyledComboEdit(Children[I]);
       Break;
     end;
 end;
@@ -184,6 +209,30 @@ function TComboEditHelper.RemoveFontSettings(const Settings: TStyledSettings)
   : TStyledSettings;
 begin
   Result := Settings - [TStyledSetting.Family, TStyledSetting.Size, TStyledSetting.Style, TStyledSetting.FontColor];
+end;
+
+{ TComboEditHack }
+
+class procedure TComboEditHack.KeyDown(Sender: TObject; var Key: Word; var KeyChar: System.WideChar; Shift: TShiftState);
+var
+  I: Integer;
+begin
+  if Key = vkReturn then
+    Exit;
+  if (KeyChar in [Chr(48)..Chr(57)]) or (KeyChar in [Chr(65)..Chr(90)]) or (KeyChar in [Chr(97)..Chr(122)]) then
+  begin
+    if MilliSecondsBetween(LastTimeKeydown, Now) < 500 then
+      Keys := Keys + KeyChar
+    else
+      Keys := KeyChar;
+    LastTimeKeydown := Now;
+    for I := 0 to TComboEdit(Sender).Count-1 do
+    if UpperCase(Copy(TComboEdit(Sender).Items[I], 0, Keys.Length)) = UpperCase(Keys) then
+    begin
+      TComboEdit(Sender).ItemIndex := I;
+      Break;
+    end;
+  end;
 end;
 
 initialization
