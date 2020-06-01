@@ -96,6 +96,8 @@ uses
   FMX.ListView.Adapters.Base,
   FMX.ListView,
   FMX.ListBox,
+  FMX.Edit,
+  FMX.Controls.Presentation,
   FMX.Grid;
 
 type
@@ -114,6 +116,8 @@ type
   TItemControlEvent = procedure(const Sender: TObject; const AItem: TListItem; const AObject: TListItemSimpleControl) of object;
   TUpdatingObjectsEvent = procedure(const Sender: TObject; const AItem: TListViewItem; var AHandled: Boolean) of object;
   TOnGetValue = procedure(Sender: TObject; const ACol, ARow: Integer; var Value: System.Rtti.TValue) of object;
+  TOnSetValue = procedure(Sender: TObject; const ACol, ARow: Integer; const Value: System.Rtti.TValue) of object;
+  TPresenterNameChoosingEvent = procedure (Sender: TObject; var PresenterName: string) of object;
 
 type
   TNotifyEventReference = reference to procedure(Sender: TObject);
@@ -125,6 +129,8 @@ type
   TNotifyItemButtonEventReference = reference to procedure(const Sender: TObject; const AItem: TListItem; const AObject: TListItemSimpleControl);
   TNotifyItemUpdatingEventReference = reference to procedure(const Sender: TObject; const AItem: TListViewItem; var AHandled: Boolean);
   TNotifyOnGetValueEventReference = reference to procedure(Sender: TObject; const ACol, ARow: Integer; var Value: System.Rtti.TValue);
+  TNotifyOnSetValueEventReference = reference to procedure(Sender: TObject; const ACol, ARow: Integer; const Value: System.Rtti.TValue);
+  TNotityOnPresentationNameChoosing = reference to procedure(Sender: TObject; var PresenterName: string);
 
 type
   TNotifyEventWrapper = class(TComponent)
@@ -207,6 +213,26 @@ type
   end;
 
 type
+  TNotifyOnSetValueEventReferenceWrapper = class(TComponent)
+  private
+    FProc: TNotifyOnSetValueEventReference;
+  public
+    constructor Create(Owner: TComponent; Proc: TNotifyOnSetValueEventReference); reintroduce;
+  published
+    procedure OnSetValue(Sender: TObject; const ACol, ARow: Integer; const Value: System.Rtti.TValue);
+  end;
+
+type
+  TNotityOnPresentationNameChoosingReferenceWrapper = class(TComponent)
+  private
+    FProc: TNotityOnPresentationNameChoosing;
+  public
+    constructor Create(Owner: TComponent; Proc: TNotityOnPresentationNameChoosing); reintroduce;
+  published
+    procedure OnPresentationNameChoosing(Sender: TObject; var PresenterName: string);
+  end;
+
+type
   TEventComponent = class(TComponent)
   protected
     FAnon: TProc;
@@ -227,6 +253,8 @@ function DelegateItemViewEvent(Owner: TComponent; Proc: TNotifyItemViewEventRefe
 function DelegateItemButtonEvent(Owner: TComponent; Proc: TNotifyItemButtonEventReference): TItemControlEvent;
 function DelegateItemUpdatingEvent(Owner: TComponent; Proc: TNotifyItemUpdatingEventReference): TUpdatingObjectsEvent;
 function DelegateOnGetValueEvent(Owner: TComponent; Proc: TNotifyOnGetValueEventReference): TOnGetValue;
+function DelegateOnSetValueEvent(Owner: TComponent; Proc: TNotifyOnSetValueEventReference): TOnSetValue;
+function DelegateOnPresentationNameChoosing(Owner: TComponent; Proc: TNotityOnPresentationNameChoosing): TPresenterNameChoosingEvent;
 
 implementation
 
@@ -374,6 +402,42 @@ begin
   Result := TNotifyOnGetValueEventReferenceWrapper.Create(Owner, Proc).OnGetValue;
 end;
 
+{ TNotifyOnSetValueEventReferenceWrapper }
+
+constructor TNotifyOnSetValueEventReferenceWrapper.Create(Owner: TComponent; Proc: TNotifyOnSetValueEventReference);
+begin
+  inherited Create(Owner);
+  FProc := Proc;
+end;
+
+procedure TNotifyOnSetValueEventReferenceWrapper.OnSetValue(Sender: TObject; const ACol, ARow: Integer; const Value: System.Rtti.TValue);
+begin
+  FProc(Sender, ACol, ARow, Value);
+end;
+
+function DelegateOnSetValueEvent(Owner: TComponent; Proc: TNotifyOnSetValueEventReference): TOnSetValue;
+begin
+  Result := TNotifyOnSetValueEventReferenceWrapper.Create(Owner, Proc).OnSetValue;
+end;
+
+{ TNotityOnPresentationNameChoosingReferenceWrapper }
+
+constructor TNotityOnPresentationNameChoosingReferenceWrapper.Create(Owner: TComponent; Proc: TNotityOnPresentationNameChoosing);
+begin
+  inherited Create(Owner);
+  FProc := Proc;
+end;
+
+procedure TNotityOnPresentationNameChoosingReferenceWrapper.OnPresentationNameChoosing(Sender: TObject; var PresenterName: string);
+begin
+  FProc(Sender, PresenterName);
+end;
+
+function DelegateOnPresentationNameChoosing(Owner: TComponent; Proc: TNotityOnPresentationNameChoosing): TPresenterNameChoosingEvent;
+begin
+  Result := TNotityOnPresentationNameChoosingReferenceWrapper.Create(Owner, Proc).OnPresentationNameChoosing;
+end;
+
 { TEventComponent }
 
 class function TEventComponent.MakeComponent(const AOwner: TComponent; const AProc: TProc): TEventComponent;
@@ -406,5 +470,5 @@ procedure TEventComponent.Notify(Sender: TObject);
 begin
   FAnon();
 end;
-
+
 end.

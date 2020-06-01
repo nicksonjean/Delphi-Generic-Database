@@ -278,36 +278,36 @@ type
     function Exec(Input: String; const Mode: Boolean = True): TQuery;
     function ToJSON(Input: String; Prettify : Boolean = False): String;
     function ToXML(Input: String; Prettify : Boolean = False): String;
-    function FetchOne(Input: String; out &Array: TArray): TQuery; overload;
+    function FetchOne(Input: String; out &Array: TArrayString): TQuery; overload;
     function FetchOne(Input: String; out &Array: TArrayVariant): TQuery; overload;
     function FetchOne(Input: String; out &Array: TArrayField): TQuery; overload;
     function FetchAll(Input: String; out &Array: TArrayAssoc): TQuery; overload;
-    function Insert(Table: String; Columns: TArray; Run: Boolean = False; Ignore: Boolean = False): String; overload;
+    function Insert(Table: String; Columns: TArrayString; Run: Boolean = False; Ignore: Boolean = False): String; overload;
     function Insert(Table: String; Columns: TArrayVariant; Run: Boolean = False; Ignore: Boolean = False): String; overload;
     function Insert(Table: String; Columns: TArrayField; Run: Boolean = False; Ignore: Boolean = False): String; overload;
     //function Insert(Table: String; Columns: TArrayAssoc; Run: Boolean = False; Ignore: Boolean = False): String; overload;
-    function Update(Table: String; Columns: TArray; Run: Boolean = False): String; overload;
+    function Update(Table: String; Columns: TArrayString; Run: Boolean = False): String; overload;
     function Update(Table: String; Columns: TArrayVariant; Run: Boolean = False) : String; overload;
     function Update(Table: String; Columns: TArrayField; Run: Boolean = False) : String; overload;
     //function Update(Table: String; Columns: TArrayAssoc; Run: Boolean = False) : String; overload;
-    function Update(Table: String; Columns: TArray; Filters: TArray; Run: Boolean = False): String; overload;
+    function Update(Table: String; Columns: TArrayString; Filters: TArrayString; Run: Boolean = False): String; overload;
     function Update(Table: String; Columns: TArrayVariant; Filters: TArrayVariant; Run: Boolean = False): String; overload;
     function Update(Table: String; Columns: TArrayField; Filters: TArrayVariant; Run: Boolean = False): String; overload;
     //function Update(Table: String; Columns: TArrayAssoc; Filters: TArrayVariant; Run: Boolean = False): String; overload;
-    function Replace(Table: String; Columns: TArray; Run: Boolean = False) : String; overload;
+    function Replace(Table: String; Columns: TArrayString; Run: Boolean = False) : String; overload;
     function Replace(Table: String; Columns: TArrayVariant; Run: Boolean = False) : String; overload;
     function Replace(Table: String; Columns: TArrayField; Run: Boolean = False) : String; overload;
     //function Replace(Table: String; Columns: TArrayAssoc; Run: Boolean = False) : String; overload;
-    function Replace(Table: String; Columns: TArray; Filters: TArray; Run: Boolean = False): String; overload;
+    function Replace(Table: String; Columns: TArrayString; Filters: TArrayString; Run: Boolean = False): String; overload;
     function Replace(Table: String; Columns: TArrayVariant; Filters: TArrayVariant; Run: Boolean = False): String; overload;
     function Replace(Table: String; Columns: TArrayField; Filters: TArrayVariant; Run: Boolean = False): String; overload;
     //function Replace(Table: String; Columns: TArrayAssoc; Filters: TArrayVariant; Run: Boolean = False): String; overload;
-    function Upsert(Table: String; Columns: TArray; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String; overload;
+    function Upsert(Table: String; Columns: TArrayString; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String; overload;
     function Upsert(Table: String; Columns: TArrayVariant; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String; overload;
     function Upsert(Table: String; Columns: TArrayField; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String; overload;
     //function Upsert(Table: String; Columns: TArrayAssoc; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String; overload;
     function Delete(Table: String; Run: Boolean = False): String; overload;
-    function Delete(Table: String; Filters: TArray; Run: Boolean = False) : String; overload;
+    function Delete(Table: String; Filters: TArrayString; Run: Boolean = False) : String; overload;
     function Delete(Table: String; Filters: TArrayVariant; Run: Boolean = False): String; overload;
   end;
 
@@ -523,8 +523,8 @@ begin
   SQL := Query.View(Input);
   if not(SQL.Query.IsEmpty) then
   begin
-    if (TypeInfo(T) = TypeInfo(TArray)) then
-      TArray(&Array).Clear
+    if (TypeInfo(T) = TypeInfo(TArrayString)) then
+      TArrayString(&Array).Clear
     else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
       TArrayVariant(&Array).Clear
     else
@@ -536,8 +536,8 @@ begin
         //Showmessage((I+1).ToString + ' ' + SQL.Query.Fields[I].DisplayName + ' ' + FieldTypes[SQL.Query.Fields[I].DataType]);
         if SQL.Query.FieldByName(SQL.Query.Fields[I].DisplayName).IsNull then
         begin
-          if (TypeInfo(T) = TypeInfo(TArray)) then
-            TArray(&Array).AddKeyValue(SQL.Query.Fields[I].DisplayName, NUL)
+          if (TypeInfo(T) = TypeInfo(TArrayString)) then
+            TArrayString(&Array).AddKeyValue(SQL.Query.Fields[I].DisplayName, NUL)
           else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
             TArrayVariant(&Array).AddKeyValue(SQL.Query.Fields[I].DisplayName, NUL)
           else
@@ -545,8 +545,8 @@ begin
         end
         else
         begin
-          if (TypeInfo(T) = TypeInfo(TArray)) then
-            TArray(&Array).AddKeyValue(SQL.Query.Fields[I].DisplayName, TArrayVariantHelper.VarToStr(SQL.Query.FieldValues[SQL.Query.Fields[I].DisplayName], EmptyStr, TBinaryMode.Write))
+          if (TypeInfo(T) = TypeInfo(TArrayString)) then
+            TArrayString(&Array).AddKeyValue(SQL.Query.Fields[I].DisplayName, TArrayVariantHelper.VarToStr(SQL.Query.FieldValues[SQL.Query.Fields[I].DisplayName], EmptyStr, TBinaryMode.Write))
           else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
             TArrayVariant(&Array).AddKeyValue(SQL.Query.Fields[I].DisplayName, TArrayVariantHelper.VarToStr(SQL.Query.FieldValues[SQL.Query.Fields[I].DisplayName], EmptyStr, TBinaryMode.Write))
           else
@@ -599,8 +599,8 @@ var
   Query: TQueryBuilder;
   DBFields, DBValues: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.InsertToStr<TArray>(TArray(Columns), DBFields, DBValues)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.InsertToStr<TArrayString>(TArrayString(Columns), DBFields, DBValues)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.InsertToStr<TArrayVariant>(TArrayVariant(Columns), DBFields, DBValues)
   else
@@ -618,8 +618,8 @@ var
   Query: TQueryBuilder;
   DBValues: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.UpdateToStr<TArray>(TArray(Columns), DBValues)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.UpdateToStr<TArrayString>(TArrayString(Columns), DBValues)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.UpdateToStr<TArrayVariant>(TArrayVariant(Columns), DBValues)
   else
@@ -637,15 +637,15 @@ var
   Query: TQueryBuilder;
   DBValues, DBFilters: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.UpdateToStr<TArray>(TArray(Columns), DBValues)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.UpdateToStr<TArrayString>(TArrayString(Columns), DBValues)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.UpdateToStr<TArrayVariant>(TArrayVariant(Columns), DBValues)
   else
     Self.UpdateToStr<TArrayField>(TArrayField(Columns), DBValues);
 
-  if (TypeInfo(F) = TypeInfo(TArray)) then
-    Self.FiltersToStr<TArray>(TArray(Filters), DBFilters)
+  if (TypeInfo(F) = TypeInfo(TArrayString)) then
+    Self.FiltersToStr<TArrayString>(TArrayString(Filters), DBFilters)
   else
     Self.FiltersToStr<TArrayVariant>(TArrayVariant(Filters), DBFilters);
 
@@ -671,8 +671,8 @@ var
   Query: TQueryBuilder;
   DBFilters: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.FiltersToStr<TArray>(TArray(Filters), DBFilters)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.FiltersToStr<TArrayString>(TArrayString(Filters), DBFilters)
   else
     Self.FiltersToStr<TArrayVariant>(TArrayVariant(Filters), DBFilters);
 
@@ -688,8 +688,8 @@ var
   Query: TQueryBuilder;
   DBFields, DBValues: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.InsertToStr<TArray>(TArray(Columns), DBFields, DBValues)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.InsertToStr<TArrayString>(TArrayString(Columns), DBFields, DBValues)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.InsertToStr<TArrayVariant>(TArrayVariant(Columns), DBFields, DBValues)
   else
@@ -707,15 +707,15 @@ var
   Query: TQueryBuilder;
   DBFields, DBValues, DBFilters: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.InsertToStr<TArray>(TArray(Columns), DBFields, DBValues)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.InsertToStr<TArrayString>(TArrayString(Columns), DBFields, DBValues)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.InsertToStr<TArrayVariant>(TArrayVariant(Columns), DBFields, DBValues)
   else
     Self.InsertToStr<TArrayField>(TArrayField(Columns), DBFields, DBValues);
 
-  if (TypeInfo(F) = TypeInfo(TArray)) then
-    Self.FiltersToStr<TArray>(TArray(Filters), DBFilters)
+  if (TypeInfo(F) = TypeInfo(TArrayString)) then
+    Self.FiltersToStr<TArrayString>(TArrayString(Filters), DBFilters)
   else
     Self.FiltersToStr<TArrayVariant>(TArrayVariant(Filters), DBFilters);
 
@@ -731,15 +731,15 @@ var
   Query: TQueryBuilder;
   DBFields, DBValues, DBReplaces: String;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.InsertToStr<TArray>(TArray(Columns), DBFields, DBValues)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.InsertToStr<TArrayString>(TArrayString(Columns), DBFields, DBValues)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.InsertToStr<TArrayVariant>(TArrayVariant(Columns), DBFields, DBValues)
   else
     Self.InsertToStr<TArrayField>(TArrayField(Columns), DBFields, DBValues);
 
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    Self.ReplaceToStr<TArray>(TArray(Columns), DBReplaces)
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    Self.ReplaceToStr<TArrayString>(TArrayString(Columns), DBReplaces)
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     Self.ReplaceToStr<TArrayVariant>(TArrayVariant(Columns), DBReplaces)
   else
@@ -876,12 +876,12 @@ var
 begin
   FieldsStr := EmptyStr;
   ValuesStr := EmptyStr;
-  if (TypeInfo(T) = TypeInfo(TArray)) then
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
   begin
-    for I := 0 to TArray(Columns).Count - 1 do
+    for I := 0 to TArrayString(Columns).Count - 1 do
     begin
-      FieldsStr := FieldsStr + COMMA + TArray(Columns).Names[I] + EmptyStr;
-      ValuesStr := Self.ReservedWord<TArray>(TArray(Columns).ValuesAtIndex[I], TArrayHelper.StrToStr(TArray(Columns).ValuesAtIndex[I], SQUOTE));
+      FieldsStr := FieldsStr + COMMA + TArrayString(Columns).Names[I] + EmptyStr;
+      ValuesStr := Self.ReservedWord<TArrayString>(TArrayString(Columns).ValuesAtIndex[I], TArrayStringHelper.StrToStr(TArrayString(Columns).ValuesAtIndex[I], SQUOTE));
     end;
   end
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
@@ -909,9 +909,9 @@ var
   I : Integer;
 begin
   ValuesStr := EmptyStr;
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    for I := 0 to TArray(Columns).Count - 1 do
-      ValuesStr := Self.ReservedWord<TArray>(TArray(Columns).Names[I], TArray(Columns).ValuesAtIndex[I], TArrayHelper.StrToStr(TArray(Columns).ValuesAtIndex[I], SQUOTE))
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    for I := 0 to TArrayString(Columns).Count - 1 do
+      ValuesStr := Self.ReservedWord<TArrayString>(TArrayString(Columns).Names[I], TArrayString(Columns).ValuesAtIndex[I], TArrayStringHelper.StrToStr(TArrayString(Columns).ValuesAtIndex[I], SQUOTE))
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     for I := 0 to TArrayVariant(Columns).Count - 1 do
       ValuesStr := Self.ReservedWord<TArrayVariant>(TArrayVariant(Columns).Key[I], TArrayVariant(Columns).ValuesAtIndex[I], TArrayVariantHelper.VarToStr(TArrayVariant(Columns).ValuesAtIndex[I], SQUOTE, TBinaryMode.Write))
@@ -927,10 +927,10 @@ var
 begin
   ValuesStr := EmptyStr;
   ValuesStr := ' ON DUPLICATE KEY UPDATE';
-  if (TypeInfo(T) = TypeInfo(TArray)) then
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
   begin
-    for I := 0 to TArray(Columns).Count - 1 do
-      ValuesStr := ValuesStr + SSPACE + TArray(Columns).Names[I] + SSPACE + EQUAL + SSPACE + 'VALUES(' + TArray(Columns).Names[I] + '),';
+    for I := 0 to TArrayString(Columns).Count - 1 do
+      ValuesStr := ValuesStr + SSPACE + TArrayString(Columns).Names[I] + SSPACE + EQUAL + SSPACE + 'VALUES(' + TArrayString(Columns).Names[I] + '),';
   end
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
   begin
@@ -950,18 +950,18 @@ var
   I : Integer;
 begin
   ValuesStr := EmptyStr;
-  if (TypeInfo(T) = TypeInfo(TArray)) then
-    for I := 0 to TArray(Columns).Count - 1 do
-      ValuesStr := ValuesStr + TArray(Columns).Names[I] + SSPACE + TArrayHelper.StrToStr(TArray(Columns).ValuesAtIndex[I], SQUOTE) + SSPACE
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
+    for I := 0 to TArrayString(Columns).Count - 1 do
+      ValuesStr := ValuesStr + TArrayString(Columns).Names[I] + SSPACE + TArrayStringHelper.StrToStr(TArrayString(Columns).ValuesAtIndex[I], SQUOTE) + SSPACE
   else
     for I := 0 to TArrayVariant(Columns).Count - 1 do
       ValuesStr := ValuesStr + TArrayVariant(Columns).Key[I] + SSPACE + TArrayVariantHelper.VarToStr(TArrayVariant(Columns).ValuesAtIndex[I], SQUOTE, TBinaryMode.Read) + SSPACE;
   System.Delete(ValuesStr, Length(ValuesStr), 1);
 end;
 
-function TQueryBuilder.FetchOne(Input: String; out &Array: TArray) : TQuery;
+function TQueryBuilder.FetchOne(Input: String; out &Array: TArrayString) : TQuery;
 begin
-  Result := Self.FetchOne<TArray>(Input, &Array);
+  Result := Self.FetchOne<TArrayString>(Input, &Array);
 end;
 
 function TQueryBuilder.FetchOne(Input: String; out &Array: TArrayVariant) : TQuery;
@@ -979,9 +979,9 @@ begin
   Result := Self.FetchAll<TArrayAssoc>(Input, &Array);
 end;
 
-function TQueryBuilder.Insert(Table: String; Columns: TArray; Run: Boolean = False; Ignore: Boolean = False): String;
+function TQueryBuilder.Insert(Table: String; Columns: TArrayString; Run: Boolean = False; Ignore: Boolean = False): String;
 begin
-  Result := Self.Insert<TArray>(Table, Columns, Run, Ignore);
+  Result := Self.Insert<TArrayString>(Table, Columns, Run, Ignore);
 end;
 
 function TQueryBuilder.Insert(Table: String; Columns: TArrayVariant; Run: Boolean = False; Ignore: Boolean = False): String;
@@ -994,9 +994,9 @@ begin
   Result := Self.Insert<TArrayField>(Table, Columns, Run, Ignore);
 end;
 
-function TQueryBuilder.Update(Table: String; Columns: TArray; Run: Boolean = False): String;
+function TQueryBuilder.Update(Table: String; Columns: TArrayString; Run: Boolean = False): String;
 begin
-  Result := Self.Update<TArray>(Table, Columns, Run);
+  Result := Self.Update<TArrayString>(Table, Columns, Run);
 end;
 
 function TQueryBuilder.Update(Table: String; Columns: TArrayVariant; Run: Boolean = False): String;
@@ -1009,9 +1009,9 @@ begin
   Result := Self.Update<TArrayField>(Table, Columns, Run);
 end;
 
-function TQueryBuilder.Update(Table: String; Columns: TArray; Filters: TArray; Run: Boolean = False): String;
+function TQueryBuilder.Update(Table: String; Columns: TArrayString; Filters: TArrayString; Run: Boolean = False): String;
 begin
-  Result := Self.Update<TArray, TArray>(Table, Columns, Filters, Run);
+  Result := Self.Update<TArrayString, TArrayString>(Table, Columns, Filters, Run);
 end;
 
 function TQueryBuilder.Update(Table: String; Columns: TArrayVariant; Filters: TArrayVariant; Run: Boolean = False): String;
@@ -1026,12 +1026,12 @@ end;
 
 function TQueryBuilder.Delete(Table: String; Run: Boolean = False): String;
 begin
-  Result := Self.Delete<TArray>(Table, Run);
+  Result := Self.Delete<TArrayString>(Table, Run);
 end;
 
-function TQueryBuilder.Delete(Table: String; Filters: TArray; Run: Boolean = False): String;
+function TQueryBuilder.Delete(Table: String; Filters: TArrayString; Run: Boolean = False): String;
 begin
-  Result := Self.Delete<TArray>(Table, Filters, Run);
+  Result := Self.Delete<TArrayString>(Table, Filters, Run);
 end;
 
 function TQueryBuilder.Delete(Table: String; Filters: TArrayVariant; Run: Boolean = False): String;
@@ -1039,9 +1039,9 @@ begin
   Result := Self.Delete<TArrayVariant>(Table, Filters, Run);
 end;
 
-function TQueryBuilder.Replace(Table: String; Columns: TArray; Run: Boolean = False): String;
+function TQueryBuilder.Replace(Table: String; Columns: TArrayString; Run: Boolean = False): String;
 begin
-  Result := Self.Replace<TArray>(Table, Columns, Run);
+  Result := Self.Replace<TArrayString>(Table, Columns, Run);
 end;
 
 function TQueryBuilder.Replace(Table: String; Columns: TArrayVariant; Run: Boolean = False): String;
@@ -1054,9 +1054,9 @@ begin
   Result := Self.Replace<TArrayField>(Table, Columns, Run);
 end;
 
-function TQueryBuilder.Replace(Table: String; Columns: TArray; Filters: TArray; Run: Boolean = False): String;
+function TQueryBuilder.Replace(Table: String; Columns: TArrayString; Filters: TArrayString; Run: Boolean = False): String;
 begin
-  Result := Self.Replace<TArray, TArray>(Table, Columns, Filters, Run);
+  Result := Self.Replace<TArrayString, TArrayString>(Table, Columns, Filters, Run);
 end;
 
 function TQueryBuilder.Replace(Table: String; Columns: TArrayVariant; Filters: TArrayVariant; Run: Boolean = False): String;
@@ -1069,9 +1069,9 @@ begin
   Result := Self.Replace<TArrayField, TArrayVariant>(Table, Columns, Filters, Run);
 end;
 
-function TQueryBuilder.Upsert(Table: String; Columns: TArray; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String;
+function TQueryBuilder.Upsert(Table: String; Columns: TArrayString; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String;
 begin
-  Result := Self.Upsert<TArray>(Table, Columns, Run, Ignore, Duplicate);
+  Result := Self.Upsert<TArrayString>(Table, Columns, Run, Ignore, Duplicate);
 end;
 
 function TQueryBuilder.Upsert(Table: String; Columns: TArrayVariant; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String;

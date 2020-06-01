@@ -220,11 +220,9 @@ begin
     end;
     Image.InternalPlaceOffset.X := GlyphButton.ActualWidth + LImagePlaceOffset;
     if Image.ActualWidth > 0 then
-      Text.InternalPlaceOffset.X :=
-        Image.ActualPlaceOffset.X +  Image.ActualWidth + LImageTextPlaceOffset
+      Text.InternalPlaceOffset.X := Image.ActualPlaceOffset.X +  Image.ActualWidth + LImageTextPlaceOffset
     else
-      Text.InternalPlaceOffset.X :=
-        0 + GlyphButton.ActualWidth;
+      Text.InternalPlaceOffset.X := 0 + GlyphButton.ActualWidth;
     MultiDetail1.InternalPlaceOffset.X := Text.InternalPlaceOffset.X;
     MultiDetail2.InternalPlaceOffset.X := Text.InternalPlaceOffset.X;
     MultiDetail3.InternalPlaceOffset.X := Text.InternalPlaceOffset.X;

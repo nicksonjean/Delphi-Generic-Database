@@ -59,13 +59,13 @@ uses
 
 {
   TODO 3 -oNickson Jeanmerson -cProgrammer :
-  1) Padronizar a Classes TArray e TArrayVariant; //OK
+  1) Padronizar a Classes TArrayString e TArrayVariant; //OK
   2) Padronizar a Classe TArrayField;
   3) Criar Métodos Ausentes;
 }
 
 type
-  TArray = class(TStringList)
+  TArrayString = class(TStringList)
   private
     { Private declarations }
     function GetKey(Index: Integer): String;
@@ -74,12 +74,12 @@ type
     procedure SetValues(Index: String; Const Value: String);
     function GetItem(Index: String): String;
     procedure SetItem(Index: String; Const Value: String);
-    procedure DoCopy(Collection: TArray = nil);
+    procedure DoCopy(Collection: TArrayString = nil);
   public
     { Public declarations }
-    constructor Create(Collection: TArray = nil);
+    constructor Create(Collection: TArrayString = nil);
     destructor Destroy; override;
-    procedure Assign(Collection: TArray); reintroduce;
+    procedure Assign(Collection: TArrayString); reintroduce;
     function ToKeys(Prettify : Boolean = False): string;
     function ToValues(Prettify : Boolean = False): string;
     function ToList(Prettify : Boolean = False): string;
@@ -95,7 +95,7 @@ type
   end;
 
 type
-  TArrayHelper = class(TArray)
+  TArrayStringHelper = class(TArrayString)
   private
     { Private declarations }
   public
@@ -216,9 +216,9 @@ uses
   Float,
   TimeDate;
 
-{ TArray }
+{ TArrayString }
 
-constructor TArray.Create(Collection: TArray = nil);
+constructor TArrayString.Create(Collection: TArrayString = nil);
 begin
   NameValueSeparator := PIPE;
   NullStrictConvert := False;
@@ -226,18 +226,18 @@ begin
     Self.DoCopy(Collection);
 end;
 
-destructor TArray.Destroy;
+destructor TArrayString.Destroy;
 begin
   inherited;
 end;
 
-procedure TArray.Assign(Collection: TArray);
+procedure TArrayString.Assign(Collection: TArrayString);
 begin
   if Collection <> nil then
     Self.DoCopy(Collection);
 end;
 
-procedure TArray.DoCopy(Collection: TArray);
+procedure TArrayString.DoCopy(Collection: TArrayString);
 var
   I: Integer;
 begin
@@ -248,7 +248,7 @@ begin
   end;
 end;
 
-function TArray.ToKeys(Prettify : Boolean = False): string;
+function TArrayString.ToKeys(Prettify : Boolean = False): string;
 var
   I: Integer;
   S: String;
@@ -260,7 +260,7 @@ begin
   Result := TString.RemoveLastCommaEOL(Result);
 end;
 
-function TArray.ToValues(Prettify : Boolean = False): string;
+function TArrayString.ToValues(Prettify : Boolean = False): string;
 var
   I: Integer;
   S: String;
@@ -272,7 +272,7 @@ begin
   Result := TString.RemoveLastCommaEOL(Result);
 end;
 
-function TArray.ToList(Prettify : Boolean = False): string;
+function TArrayString.ToList(Prettify : Boolean = False): string;
 var
   I: Integer;
   S1, S2: String;
@@ -282,12 +282,12 @@ begin
   S2 := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
   for I := 0 to Count - 1 do
   begin
-    Result := Result + Names[I] + S1 + TArrayHelper.StrToStr(ValuesAtIndex[I]) + S2;
+    Result := Result + Names[I] + S1 + TArrayStringHelper.StrToStr(ValuesAtIndex[I]) + S2;
     Result := TString.RemoveLastComma(Result);
   end;
 end;
 
-function TArray.ToTags(Prettify : Boolean = False): string;
+function TArrayString.ToTags(Prettify : Boolean = False): string;
 var
   I: Integer;
   S: String;
@@ -295,11 +295,11 @@ begin
   Result := EmptyStr;
   S := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
   for I := 0 to Count - 1 do
-    Result := Result + LTag + Names[I] + RTag + TArrayHelper.StrToStr(ValuesAtIndex[I], EmptyStr) + CTag + Names[I] + RTag + S;
+    Result := Result + LTag + Names[I] + RTag + TArrayStringHelper.StrToStr(ValuesAtIndex[I], EmptyStr) + CTag + Names[I] + RTag + S;
   Result := TString.RemoveLastEOL(Result);
 end;
 
-function TArray.ToXML(Prettify: Boolean = False): string;
+function TArrayString.ToXML(Prettify: Boolean = False): string;
 var
   S1, S2: String;
 begin
@@ -312,7 +312,7 @@ begin
   Result := Result + CTag + 'root' + RTag;
 end;
 
-function TArray.ToJSON(Prettify: Boolean = False): string;
+function TArrayString.ToJSON(Prettify: Boolean = False): string;
 var
   I : Integer;
   S1, S2: String;
@@ -322,56 +322,56 @@ begin
   S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
   Result := Result + LCURLYBRACKET + S1;
   for I := 0 to Count - 1 do
-    Result := Result + S2 + DQuote + Names[I] + DQuote + Colon + TArrayHelper.StrToStr(ValuesAtIndex[I], DQuote) + Comma + S1;
+    Result := Result + S2 + DQuote + Names[I] + DQuote + Colon + TArrayStringHelper.StrToStr(ValuesAtIndex[I], DQuote) + Comma + S1;
   Result := TString.RemoveLastComma(Result);
   Result := Result + RCURLYBRACKET;
 end;
 
-procedure TArray.Add(Key, Value: string);
+procedure TArrayString.Add(Key, Value: string);
 begin
   if Self.IndexOfName(Key) = -1 then
     Add(Key + NameValueSeparator + Value);
 end;
 
-procedure TArray.AddKeyValue(Key, Value: string);
+procedure TArrayString.AddKeyValue(Key, Value: string);
 begin
   if Self.IndexOfName(Key) = -1 then
     Self.Add(Key, Value);
 end;
 
-function TArray.GetKey(Index: Integer): String;
+function TArrayString.GetKey(Index: Integer): String;
 begin
   inherited;
 end;
 
-function TArray.GetValues(Index: String): string;
+function TArrayString.GetValues(Index: String): string;
 begin
   Result := inherited Values[Index];
 end;
 
-function TArray.GetValuesAtIndex(Index: Integer): string;
+function TArrayString.GetValuesAtIndex(Index: Integer): string;
 begin
   Result := inherited Values[Names[Index]];
 end;
 
-procedure TArray.SetValues(Index: String; Const Value: String);
+procedure TArrayString.SetValues(Index: String; Const Value: String);
 begin
   inherited Values[Index] := Value;
 end;
 
-function TArray.GetItem(Index: String): String;
+function TArrayString.GetItem(Index: String): String;
 begin
   Result := Self.GetValues(Index);
 end;
 
-procedure TArray.SetItem(Index: String; const Value: String);
+procedure TArrayString.SetItem(Index: String; const Value: String);
 begin
   Self.SetValues(Index, Value);
 end;
 
-{ TArrayHelper }
+{ TArrayStringHelper }
 
-class function TArrayHelper.StrToStr(Value: String; Quote : String = #39): String;
+class function TArrayStringHelper.StrToStr(Value: String; Quote : String = #39): String;
 begin
   if TArrayVariantHelper.IsNullOrEmpty(Value) then
     Result := NUL
@@ -414,12 +414,12 @@ procedure TArrayVariant.DoCopy<T>(Collection: T);
 var
   I: Integer;
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
   begin
-    if TArray(Collection) <> nil then
+    if TArrayString(Collection) <> nil then
     begin
-      for I := 0 to TArray(Collection).Count - 1 do
-        Self.Add(TArray(Collection).Names[I], TArray(Collection).ValuesAtIndex[I]);
+      for I := 0 to TArrayString(Collection).Count - 1 do
+        Self.Add(TArrayString(Collection).Names[I], TArrayString(Collection).ValuesAtIndex[I]);
     end;
   end
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
@@ -442,10 +442,10 @@ end;
 
 procedure TArrayVariant.Assign<T>(Collection: T);
 begin
-  if (TypeInfo(T) = TypeInfo(TArray)) then
+  if (TypeInfo(T) = TypeInfo(TArrayString)) then
   begin
-    if TArray(Collection) <> nil then
-      Self.DoCopy<T>(TArray(Collection));
+    if TArrayString(Collection) <> nil then
+      Self.DoCopy<T>(TArrayString(Collection));
   end
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
   begin
@@ -632,7 +632,7 @@ begin
       varArray:
         Result := TString.Quote(Value, Quote);
       varString, varUString, varOleStr:
-        Result := TArrayHelper.StrToStr(Value, Quote);
+        Result := TArrayStringHelper.StrToStr(Value, Quote);
     else
       Result := TString.Quote(Value, Quote);
     end;

@@ -11,29 +11,29 @@ uses
   FMX.Types,
   FMX.ComboEdit,
   FMX.ComboEdit.Style,
+  FMX.Controls.Presentation,
+  FMX.Controls.Model,
+  FMX.Presentation.Messages,
   FMX.Forms,
   EventDriven;
 
 type
-  TComboEditHack = class(TComboEdit)
-  private
-    class var LastTimeKeydown:TDatetime;
-    class var Keys:String;
-  protected
-    class procedure KeyDown(Sender: TObject; var Key: Word; var KeyChar: System.WideChar; Shift: TShiftState); reintroduce;
-  end;
-
-type
   TComboEditHelper = class helper for TComboEdit
   private
+    class var FLastKeyChar: System.WideChar;
+    class var FLastKey : Word;
+    class var FAutoComplete: Boolean;
     function GetEdit: TStyledComboEdit;
     function RemoveFontSettings(const Settings: TStyledSettings) : TStyledSettings;
     function GetListBoxFromComboEdit: TComboEditListBox;
     procedure ListBoxApplyStyleLookup(Sender: TObject);
+    procedure DoAutoComplete;
+    procedure SetAutoComplete(Value : Boolean);
+    function GetAutoComplete : Boolean;
   public
     procedure SetFont(const FontFamily: TFontName; const FontStyles: TFontStyles; const FontSize: Integer; const FontColor: TAlphaColor);
-    procedure AutoComplete;
     property ListBox: TComboEditListBox read GetListBoxFromComboEdit;
+    property AutoComplete: Boolean read GetAutoComplete write SetAutoComplete default false;
   end;
 
 implementation
@@ -60,7 +60,7 @@ type
     destructor Destroy; override;
   end;
 
-  { TComboTextSettings }
+{ TComboTextSettings }
 
 constructor TComboTextSettings.Create(const ComboEdit: TComboEdit);
 begin
@@ -81,23 +81,65 @@ end;
 
 { TComboEditHelper }
 
+procedure TComboEditHelper.DoAutoComplete;
+begin
+  if FAutoComplete = True then
+  begin
+    Self.OnKeyDown := DelegateKeyEvent(
+      Self,
+      procedure(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState)
+      begin
+        FLastKey := Key;
+        FLastKeyChar := KeyChar;
+      end
+    );
+    Self.OnTyping := DelegateEvent(Self,
+    procedure(Sender: TObject)
+    var
+      Search, Text: String;
+      I: Integer;
+    begin
+      Search := Self.Text;
+      if FLastKey = vkBack then
+      begin
+        FLastKey := 0;
+        Exit;
+      end;
+      if (CharInSet(FLastKeyChar,[Chr(48)..Chr(57)])) or (CharInSet(FLastKeyChar,[Chr(65)..Chr(90)])) or (CharInSet(FLastKeyChar,[Chr(97)..Chr(122)])) then
+      begin
+        if Length(Search)<=0 then
+          Exit;
+        for I := 0 to Self.Items.Count do
+        begin
+          Text := Self.Text.ToLower;
+          if Self.Items[I].ToLower.StartsWith(Text) then
+            Break;
+        end;
+        Self.ItemIndex := I;
+        Self.SelStart := Length(Search);
+        Self.SelLength := (Length(Self.Text) - Length(Search));
+      end;
+    end);
+  end;
+end;
+
+function TComboEditHelper.GetAutoComplete: Boolean;
+begin
+  Result := FAutoComplete;
+end;
+
+procedure TComboEditHelper.SetAutoComplete(Value: Boolean);
+begin
+  FAutoComplete := Value;
+  Self.DoAutoComplete;
+end;
+
 function TComboEditHelper.GetListBoxFromComboEdit: TComboEditListBox;
 begin
   if Self.HasPresentationProxy and (Self.PresentationProxy.Receiver is TStyledComboEdit) then
     Result := TStyledComboEdit(Self.PresentationProxy.Receiver).ListBox
   else
     Result := nil;
-end;
-
-procedure TComboEditHelper.AutoComplete;
-begin
-  Self.OnKeyDown := DelegateKeyEvent(
-    Self,
-    procedure(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState)
-    begin
-      TComboEditHack.KeyDown(Sender, Key, KeyChar, Shift);
-    end
-  );
 end;
 
 function TComboEditHelper.GetEdit: TStyledComboEdit;
@@ -204,35 +246,10 @@ begin
   Self.StyledSettings := RemoveFontSettings(Self.StyledSettings);
   Self.TextSettings.Assign(Settings);
 end;
-
-function TComboEditHelper.RemoveFontSettings(const Settings: TStyledSettings)
-  : TStyledSettings;
+
+function TComboEditHelper.RemoveFontSettings(const Settings: TStyledSettings): TStyledSettings;
 begin
   Result := Settings - [TStyledSetting.Family, TStyledSetting.Size, TStyledSetting.Style, TStyledSetting.FontColor];
-end;
-
-{ TComboEditHack }
-
-class procedure TComboEditHack.KeyDown(Sender: TObject; var Key: Word; var KeyChar: System.WideChar; Shift: TShiftState);
-var
-  I: Integer;
-begin
-  if Key = vkReturn then
-    Exit;
-  if (KeyChar in [Chr(48)..Chr(57)]) or (KeyChar in [Chr(65)..Chr(90)]) or (KeyChar in [Chr(97)..Chr(122)]) then
-  begin
-    if MilliSecondsBetween(LastTimeKeydown, Now) < 500 then
-      Keys := Keys + KeyChar
-    else
-      Keys := KeyChar;
-    LastTimeKeydown := Now;
-    for I := 0 to TComboEdit(Sender).Count-1 do
-    if UpperCase(Copy(TComboEdit(Sender).Items[I], 0, Keys.Length)) = UpperCase(Keys) then
-    begin
-      TComboEdit(Sender).ItemIndex := I;
-      Break;
-    end;
-  end;
 end;
 
 initialization
