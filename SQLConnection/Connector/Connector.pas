@@ -126,32 +126,92 @@ type
   { Classe TConnector Herdade de TQuery }
 type
   TConnector = class(TQuery)
-  strict private
-    { Strict Private declarations }
-    procedure AddObject<T: Class>(AOwner: TComponent; Index : String; Value : TObject; SelectedBy : Integer); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>); overload;
+  strict protected
+    { Strict Protected declarations }
     procedure AddEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>);
     procedure AddComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>);
     procedure AddComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>);
     procedure AddListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>);
+    procedure AddGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : TDictionary<String, TArray<Variant>>);
+    procedure AddStringGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : TDictionary<String, TArray<Variant>>);
+  strict private
+    { Strict Private declarations }
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : Integer); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : TDictionary<String, TArray<Variant>>); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; Index : String; Value : TObject; SelectedBy : Integer); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : Integer = -1); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
   private
     { Private declarations }
     FQuery: TQuery;
-    {$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-    function ToClientDataSet(Query: TQuery): TClientDataSet;
-    {$ENDIF}
-    {$IF DEFINED(FireDACLib)}
-    function ToFDMemTable(Query: TQuery): TFDMemTable;
-    {$ENDIF}
+    function ToDataSet(Query: TQuery): {$I CNC.Type.inc};
     procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
     procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
     procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : Integer = -1); overload;
     procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToGridTable(AOwner: TComponent; SelectedBy : Integer = -1); overload;
+    procedure ToGridTable(AOwner: TComponent; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
   public
     { Public declarations }
     constructor Create(Query: TQuery);
     destructor Destroy; override;
+    /// <summary>
+    ///   Método para Exibir os Dados de uma Consulta SQL Diretamente nos Componentes <c>TGrid</c> e/ou <c>TStringGrid</c>
+    ///   <para>
+    ///     Exemplo:
+    ///   </para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SQLQuery');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToGrid(GridComponent, 0);</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner">
+    ///   O Componente do Tipo <c>TGrid</c> e/ou <c>TStringGrid</c>
+    /// </param>
+    /// <param name="SelectedBy">
+    ///   O Índice Numérico da Linha do <c>TGrid</c> e/ou <c>TStringGrid</c> que se quer Selecionar
+    /// </param>
     procedure ToGrid(AOwner: TComponent; SelectedBy : Integer = -1); overload;
+    /// <summary>
+    ///   Método para Exibir os Dados de uma Consulta SQL Diretamente nos Componentes <c>TGrid</c> e/ou <c>TStringGrid</c>
+    ///   <para>
+    ///     Exemplo:
+    ///   </para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SQLQuery');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToGrid(GridComponent1, TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
+    ///     <para>    Connector.ToGrid(GridComponent2, TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Column'], [['DBColumn', 'DBValue']]));</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner">
+    ///   O Componente do Tipo <c>TGrid</c> e/ou <c>TStringGrid</c>
+    /// </param>
+    /// <param name="SelectedBy">
+    ///   Matriz Multidimensional que pode ser Utilizada da Seguinte Forma:
+    ///   <para>1) TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
+    ///   <para>2) TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Column'], [['DBColumn', 'DBValue']]));</para>
+    /// </param>
     procedure ToGrid(AOwner: TComponent; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
     procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy : Integer = -1); overload;
     procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
@@ -181,39 +241,87 @@ begin
   Self.FQuery := Query;
 end;
 
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : Integer);
+begin
+  if (TypeInfo(T) = TypeInfo(TGrid)) then
+  begin
+    TGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
+    TGrid(AOwner).FillData := DataSet;
+    TGrid(AOwner).AutoSizeColumns := True;
+
+    if SelectedBy <> -1 then
+    begin
+      TGrid(AOwner).Row := SelectedBy;
+      TGrid(AOwner).Col := 0;
+    end;
+  end
+  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
+  begin
+    TStringGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
+    TStringGrid(AOwner).FillData := DataSet;
+    TStringGrid(AOwner).AutoSizeColumns := True;
+
+    if SelectedBy <> -1 then
+    begin
+      TStringGrid(AOwner).Row := SelectedBy;
+      TStringGrid(AOwner).Col := 0;
+    end;
+  end;
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : TDictionary<String, TArray<Variant>>);
+begin
+  if (TypeInfo(T) = TypeInfo(TGrid)) then
+    Self.AddGrid<TGrid>(AOwner, DataSet, SelectedBy)
+  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
+    Self.AddStringGrid<TStringGrid>(AOwner, DataSet, SelectedBy);
+end;
+
 procedure TConnector.AddObject<T>(AOwner: TComponent; Index: String; Value: TObject; SelectedBy: Integer);
 begin
   if (TypeInfo(T) = TypeInfo(TEdit)) then
   begin
     TEdit(AOwner).Items.BeginUpdate;
-    TEdit(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-    if TEdit(AOwner).Items.IndexOf(Index) = SelectedBy then
-      TEdit(AOwner).ItemIndex := SelectedBy;
-    TEdit(AOwner).Items.EndUpdate;
+    try
+      TEdit(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
+      if TEdit(AOwner).Items.IndexOf(Index) = SelectedBy then
+        TEdit(AOwner).ItemIndex := SelectedBy;
+    finally
+      TEdit(AOwner).Items.EndUpdate;
+    end;
   end
   else if (TypeInfo(T) = TypeInfo(TComboEdit)) then
   begin
     TComboEdit(AOwner).Items.BeginUpdate;
-    TComboEdit(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-    if TComboEdit(AOwner).Items.IndexOf(Index) = SelectedBy then
-      TComboEdit(AOwner).ItemIndex := SelectedBy;
-    TComboEdit(AOwner).Items.EndUpdate;
+    try
+      TComboEdit(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
+      if TComboEdit(AOwner).Items.IndexOf(Index) = SelectedBy then
+        TComboEdit(AOwner).ItemIndex := SelectedBy;
+    finally
+      TComboEdit(AOwner).Items.EndUpdate;
+    end;
   end
   else if (TypeInfo(T) = TypeInfo(TComboBox)) then
   begin
     TComboBox(AOwner).Items.BeginUpdate;
-    TComboBox(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-    if TComboBox(AOwner).Items.IndexOf(Index) = SelectedBy then
-      TComboBox(AOwner).ItemIndex := SelectedBy;
-    TComboBox(AOwner).Items.EndUpdate;
+    try
+      TComboBox(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
+      if TComboBox(AOwner).Items.IndexOf(Index) = SelectedBy then
+        TComboBox(AOwner).ItemIndex := SelectedBy;
+    finally
+      TComboBox(AOwner).Items.EndUpdate;
+    end;
   end
   else if (TypeInfo(T) = TypeInfo(TListBox)) then
   begin
     TListBox(AOwner).Items.BeginUpdate;
-    TListBox(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-    if TListBox(AOwner).Items.IndexOf(Index) = SelectedBy then
-      TListBox(AOwner).ItemIndex := SelectedBy;
-    TListBox(AOwner).Items.EndUpdate;
+    try
+      TListBox(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
+      if TListBox(AOwner).Items.IndexOf(Index) = SelectedBy then
+        TListBox(AOwner).ItemIndex := SelectedBy;
+    finally
+      TListBox(AOwner).Items.EndUpdate;
+    end;
   end;
 end;
 
@@ -222,32 +330,35 @@ var
   Pair: TPair<String, TArray<Variant>>;
 begin
   TEdit(AOwner).Items.BeginUpdate;
-  TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-  if SelectedBy <> nil then
-  begin
-    for Pair in SelectedBy do
+  try
+    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    if SelectedBy <> nil then
     begin
-      if Pair.Key = 'Index' then
+      for Pair in SelectedBy do
       begin
-        if TEdit(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-          TEdit(AOwner).ItemIndex := Pair.Value[0];
-      end
-      else if Pair.Key = 'Column' then
-      begin
-        if Pair.Value[0] = FieldIndexValue[0] then
+        if Pair.Key = 'Index' then
         begin
-          if IndexValue[1] = Pair.Value[1] then
-            TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          if TEdit(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
+            TEdit(AOwner).ItemIndex := Pair.Value[0];
         end
-        else if Pair.Value[0] = FieldIndexValue[1] then
+        else if Pair.Key = 'Column' then
         begin
-          if IndexValue[0] = Pair.Value[1] then
-            TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          if Pair.Value[0] = FieldIndexValue[0] then
+          begin
+            if IndexValue[1] = Pair.Value[1] then
+              TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          end
+          else if Pair.Value[0] = FieldIndexValue[1] then
+          begin
+            if IndexValue[0] = Pair.Value[1] then
+              TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          end;
         end;
       end;
     end;
+  finally
+    TEdit(AOwner).Items.EndUpdate;
   end;
-  TEdit(AOwner).Items.EndUpdate;
 end;
 
 procedure TConnector.AddComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
@@ -255,32 +366,35 @@ var
   Pair: TPair<String, TArray<Variant>>;
 begin
   TComboEdit(AOwner).Items.BeginUpdate;
-  TComboEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-  if SelectedBy <> nil then
-  begin
-    for Pair in SelectedBy do
+  try
+    TComboEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    if SelectedBy <> nil then
     begin
-      if Pair.Key = 'Index' then
+      for Pair in SelectedBy do
       begin
-        if TComboEdit(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-          TComboEdit(AOwner).ItemIndex := Pair.Value[0];
-      end
-      else if Pair.Key = 'Column' then
-      begin
-        if Pair.Value[0] = FieldIndexValue[0] then
+        if Pair.Key = 'Index' then
         begin
-          if IndexValue[1] = Pair.Value[1] then
-            TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          if TComboEdit(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
+            TComboEdit(AOwner).ItemIndex := Pair.Value[0];
         end
-        else if Pair.Value[0] = FieldIndexValue[1] then
+        else if Pair.Key = 'Column' then
         begin
-          if IndexValue[0] = Pair.Value[1] then
-            TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          if Pair.Value[0] = FieldIndexValue[0] then
+          begin
+            if IndexValue[1] = Pair.Value[1] then
+              TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          end
+          else if Pair.Value[0] = FieldIndexValue[1] then
+          begin
+            if IndexValue[0] = Pair.Value[1] then
+              TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+          end;
         end;
       end;
     end;
+  finally
+    TComboEdit(AOwner).Items.EndUpdate;
   end;
-  TComboEdit(AOwner).Items.EndUpdate;
 end;
 
 procedure TConnector.AddComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
@@ -288,32 +402,35 @@ var
   Pair: TPair<String, TArray<Variant>>;
 begin
   TComboBox(AOwner).Items.BeginUpdate;
-  TComboBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-  if SelectedBy <> nil then
-  begin
-    for Pair in SelectedBy do
+  try
+    TComboBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    if SelectedBy <> nil then
     begin
-      if Pair.Key = 'Index' then
+      for Pair in SelectedBy do
       begin
-        if TComboBox(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-          TComboBox(AOwner).ItemIndex := Pair.Value[0];
-      end
-      else if Pair.Key = 'Column' then
-      begin
-        if Pair.Value[0] = FieldIndexValue[0] then
+        if Pair.Key = 'Index' then
         begin
-          if IndexValue[1] = Pair.Value[1] then
-            TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+          if TComboBox(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
+            TComboBox(AOwner).ItemIndex := Pair.Value[0];
         end
-        else if Pair.Value[0] = FieldIndexValue[1] then
+        else if Pair.Key = 'Column' then
         begin
-          if IndexValue[0] = Pair.Value[1] then
-            TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+          if Pair.Value[0] = FieldIndexValue[0] then
+          begin
+            if IndexValue[1] = Pair.Value[1] then
+              TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+          end
+          else if Pair.Value[0] = FieldIndexValue[1] then
+          begin
+            if IndexValue[0] = Pair.Value[1] then
+              TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+          end;
         end;
       end;
     end;
+  finally
+    TComboBox(AOwner).Items.EndUpdate;
   end;
-  TComboBox(AOwner).Items.EndUpdate;
 end;
 
 procedure TConnector.AddListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
@@ -321,37 +438,142 @@ var
   Pair: TPair<String, TArray<Variant>>;
 begin
   TListBox(AOwner).Items.BeginUpdate;
-  TListBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+  try
+    TListBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    if SelectedBy <> nil then
+    begin
+      for Pair in SelectedBy do
+      begin
+        if Pair.Key = 'Index' then
+        begin
+          if TListBox(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
+            TListBox(AOwner).ItemIndex := Pair.Value[0];
+        end
+        else if Pair.Key = 'Column' then
+        begin
+          if Pair.Value[0] = FieldIndexValue[0] then
+          begin
+            if IndexValue[1] = Pair.Value[1] then
+              TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
+          end
+          else if Pair.Value[0] = FieldIndexValue[1] then
+          begin
+            if IndexValue[0] = Pair.Value[1] then
+              TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
+          end;
+        end;
+      end;
+    end;
+  finally
+    TListBox(AOwner).Items.EndUpdate;
+  end;
+end;
+
+procedure TConnector.AddGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>>);
+var
+  Row, Column: Integer;
+  Pair: TPair<String, TArray<Variant>>;
+begin
+  TGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
+  TGrid(AOwner).FillData := DataSet;
+  TGrid(AOwner).AutoSizeColumns := True;
+
   if SelectedBy <> nil then
   begin
     for Pair in SelectedBy do
     begin
       if Pair.Key = 'Index' then
       begin
-        if TListBox(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-          TListBox(AOwner).ItemIndex := Pair.Value[0];
+        for Row := 0 to TGrid(AOwner).RowCount - 1 do
+        begin
+          if (Row = Pair.Value[0]) then
+          begin
+            TGrid(AOwner).Row := Pair.Value[0];
+            TGrid(AOwner).Col := 0;
+            Break;
+          end;
+        end;
       end
       else if Pair.Key = 'Column' then
       begin
-        if Pair.Value[0] = FieldIndexValue[0] then
+        for Column := 0 to TGrid(AOwner).ColumnCount - 1 do
         begin
-          if IndexValue[1] = Pair.Value[1] then
-            TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
-        end
-        else if Pair.Value[0] = FieldIndexValue[1] then
-        begin
-          if IndexValue[0] = Pair.Value[1] then
-            TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
+          if TGrid(AOwner).ColumnByIndex(Column).Header = Pair.Value[0] then
+          begin
+            Row := 0;
+            DataSet.First;
+            while not DataSet.Eof do
+            begin
+              if DataSet.Fields[Column].AsString = Pair.Value[1] then
+              begin
+                TGrid(AOwner).Row := Row;
+                TGrid(AOwner).Col := 0;
+                Break;
+              end;
+              Inc(Row);
+              DataSet.Next;
+            end;
+            DataSet.Last;
+          end;
         end;
       end;
     end;
   end;
-  TListBox(AOwner).Items.EndUpdate;
+end;
+
+procedure TConnector.AddStringGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>>);
+var
+  I, J: Integer;
+  Pair: TPair<String, TArray<Variant>>;
+begin
+  TStringGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
+  TStringGrid(AOwner).FillData := DataSet;
+  TStringGrid(AOwner).AutoSizeColumns := True;
+
+  if SelectedBy <> nil then
+  begin
+    for Pair in SelectedBy do
+    begin
+      if Pair.Key = 'Index' then
+      begin
+        for I := 0 to TStringGrid(AOwner).RowCount - 1 do
+        begin
+          if (I = Pair.Value[0]) then
+          begin
+            TStringGrid(AOwner).Row := Pair.Value[0];
+            TStringGrid(AOwner).Col := 0;
+            Break;
+          end;
+        end;
+      end
+      else if Pair.Key = 'Column' then
+      begin
+        for I := 0 to TStringGrid(AOwner).ColumnCount - 1 do
+        begin
+          if TStringGrid(AOwner).ColumnByIndex(I).Header = Pair.Value[0] then
+          begin
+            J := 0;
+            DataSet.First;
+            while not DataSet.Eof do
+            begin
+              if DataSet.Fields[I].AsString = Pair.Value[1] then
+              begin
+                TStringGrid(AOwner).Row := J;
+                TStringGrid(AOwner).Col := 0;
+                Break;
+              end;
+              Inc(J);
+              DataSet.Next;
+            end;
+            DataSet.Last;
+          end;
+        end;
+      end;
+    end;
+  end;
 end;
 
 procedure TConnector.AddObject<T>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>);
-var
-  Pair: TPair<String, TArray<Variant>>;
 begin
   if (TypeInfo(T) = TypeInfo(TEdit)) then
     Self.AddEdit<TEdit>(AOwner, FieldIndexValue, IndexValue, SelectedBy)
@@ -363,54 +585,45 @@ begin
     Self.AddListBox<TListBox>(AOwner, FieldIndexValue, IndexValue, SelectedBy);
 end;
 
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-function TConnector.ToClientDataSet(Query: TQuery): TClientDataSet;
-var
-  DataSetProvider : TDataSetProvider;
-  ClientDataSet : TClientDataSet;
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : Integer = -1);
 begin
-  DataSetProvider := TDataSetProvider.Create(Query.Query);
-  DataSetProvider.DataSet := Query.Query;
 
-  ClientDataSet := TClientDataSet.Create(DataSetProvider);
-  ClientDataSet.Data := DataSetProvider.Data;
-  ClientDataSet.Active := True;
-
-  ClientDataSet.First;
-  while not ClientDataSet.Eof do begin
-    ClientDataSet.Edit;
-    ClientDataSet.Post;
-    ClientDataSet.Next;
-  end;
-  ClientDataSet.Last;
-
-  Result := ClientDataSet;
 end;
-{$ENDIF}
 
-{$IF DEFINED(FireDACLib)}
-function TConnector.ToFDMemTable(Query: TQuery): TFDMemTable;
-var
-  FDMemTable : TFDMemTable;
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
 begin
-  FDMemTable := TFDMemTable.Create(Query.Query);
 
+end;
+
+function TConnector.ToDataSet(Query: TQuery): {$I CNC.Type.inc};
+var
+  DataSet : {$I CNC.Type.inc};
+{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
+  DataSetProvider : TDataSetProvider;
+{$ENDIF}
+begin
+{$IF DEFINED(FireDACLib)}
+  DataSet := {$I CNC.Type.inc}.Create(Query.Query);
   Query.Query.FetchOptions.Unidirectional := False;
   Query.Query.Open;
   Query.Query.FetchAll;
-
-  FDMemTable.Data := Query.Query.Data;
-  FDMemTable.First;
-  while not FDMemTable.Eof do begin
-    FDMemTable.Edit;
-    FDMemTable.Post;
-    FDMemTable.Next;
-  end;
-  FDMemTable.Last;
-
-  Result := FDMemTable;
-end;
+  DataSet.Data := Query.Query.Data;
 {$ENDIF}
+{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
+  DataSetProvider.DataSet := Query.Query;
+  DataSet := {$I CNC.Type.inc}.Create(DataSetProvider);
+  DataSet.Data := DataSetProvider.Data;
+  DataSet.Active := True;
+{$ENDIF}
+  DataSet.First;
+  while not DataSet.Eof do begin
+    DataSet.Edit;
+    DataSet.Post;
+    DataSet.Next;
+  end;
+  DataSet.Last;
+  Result := DataSet;
+end;
 
 {
   ComboBoxComponent, 'Index', 'Value', IndexNumber;
@@ -420,7 +633,7 @@ procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: Stri
 var
   I: Integer;
   Items : TStringList;
-  MemTableOrClientDataSet : {$I CNC.Type.inc};
+  DataSet : {$I CNC.Type.inc};
 begin
   if (AOwner is TEdit) and (TEdit(AOwner) <> nil) and (TEdit(AOwner).Items.Count > 0) then
     TEdit(AOwner).Items.Clear
@@ -445,24 +658,19 @@ begin
     TComboEdit(AOwner).AutoComplete := True;
   end;
 
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  MemTableOrClientDataSet := Self.ToClientDataSet(Self.FQuery);
-{$ENDIF}
-{$IF DEFINED(FireDACLib)}
-  MemTableOrClientDataSet := Self.ToFDMemTable(Self.FQuery);
-{$ENDIF}
+  DataSet := Self.ToDataSet(Self.FQuery);
 
-  if MemTableOrClientDataSet.RecordCount > 0 then
+  if DataSet.RecordCount > 0 then
   begin
     Items := TStringList.Create(True);
 
-    MemTableOrClientDataSet.First;
-    while not(MemTableOrClientDataSet.Eof) do
+    DataSet.First;
+    while not(DataSet.Eof) do
     begin
-      Items.AddPair(MemTableOrClientDataSet.FieldByName(ValueField).AsString, MemTableOrClientDataSet.FieldByName(IndexField).AsString);
-      MemTableOrClientDataSet.Next;
+      Items.AddPair(DataSet.FieldByName(ValueField).AsString, DataSet.FieldByName(IndexField).AsString);
+      DataSet.Next;
     end;
-    MemTableOrClientDataSet.Last;
+    DataSet.Last;
 
     for I := 0 to Items.Count - 1 do
     begin
@@ -484,7 +692,7 @@ begin
     else if AOwner Is TListBox then
       TListBox(AOwner).AlternatingRowBackground := True;
   end;
-  MemTableOrClientDataSet.Destroy;
+  DataSet.Destroy;
 end;
 
 {
@@ -496,7 +704,7 @@ procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: Stri
 var
   I: Integer;
   Items : TStringList;
-  MemTableOrClientDataSet : {$I CNC.Type.inc};
+  DataSet : {$I CNC.Type.inc};
 begin
   if (AOwner is TEdit) and (TEdit(AOwner) <> nil) and (TEdit(AOwner).Items.Count > 0) then
     TEdit(AOwner).Items.Clear
@@ -521,24 +729,19 @@ begin
     TComboEdit(AOwner).AutoComplete := True;
   end;
 
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  MemTableOrClientDataSet := Self.ToClientDataSet(Self.FQuery);
-{$ENDIF}
-{$IF DEFINED(FireDACLib)}
-  MemTableOrClientDataSet := Self.ToFDMemTable(Self.FQuery);
-{$ENDIF}
+  DataSet := Self.ToDataSet(Self.FQuery);
 
-  if MemTableOrClientDataSet.RecordCount > 0 then
+  if DataSet.RecordCount > 0 then
   begin
     Items := TStringList.Create(True);
 
-    MemTableOrClientDataSet.First;
-    while not(MemTableOrClientDataSet.Eof) do
+    DataSet.First;
+    while not(DataSet.Eof) do
     begin
-      Items.AddPair(MemTableOrClientDataSet.FieldByName(ValueField).AsString, MemTableOrClientDataSet.FieldByName(IndexField).AsString);
-      MemTableOrClientDataSet.Next;
+      Items.AddPair(DataSet.FieldByName(ValueField).AsString, DataSet.FieldByName(IndexField).AsString);
+      DataSet.Next;
     end;
-    MemTableOrClientDataSet.Last;
+    DataSet.Last;
 
     for I := 0 to Items.Count - 1 do
     begin
@@ -560,7 +763,7 @@ begin
     else if AOwner Is TListBox then
       TListBox(AOwner).AlternatingRowBackground := True;
   end;
-  MemTableOrClientDataSet.Destroy;
+  DataSet.Destroy;
 end;
 
 {
@@ -570,7 +773,7 @@ end;
 procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; Detail1Fields: TArray<String> = []; SelectedBy : Integer = -1);
 var
   Item: TListViewItem;
-  MemTableOrClientDataSet : {$I CNC.Type.inc};
+  DataSet : {$I CNC.Type.inc};
 begin
   TListView(AOwner).ItemAppearanceClassName := 'TMultiDetailItemAppearance';
   TListView(AOwner).ItemEditAppearanceClassName := 'TMultiDetailDeleteAppearance';
@@ -581,48 +784,44 @@ begin
     TListView(AOwner).EmptyFilter;
   end;
 
-  TListView(AOwner).BeginUpdate;
-  try
+  DataSet := Self.ToDataSet(Self.FQuery);
 
-    if FQuery.Query.RecordCount > 0 then
-    begin
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-      MemTableOrClientDataSet := Self.ToClientDataSet(Self.FQuery);
-{$ENDIF}
-{$IF DEFINED(FireDACLib)}
-      MemTableOrClientDataSet := Self.ToFDMemTable(Self.FQuery);
-{$ENDIF}
+  if DataSet.RecordCount > 0 then
+  begin
 
-      MemTableOrClientDataSet.First;
-      while not(MemTableOrClientDataSet.Eof) do
+    TListView(AOwner).BeginUpdate;
+    try
+
+      DataSet.First;
+      while not(DataSet.Eof) do
       begin
         TListView(AOwner).AlternatingColors := True;
 
         Item := TListView(AOwner).Items.Add;
-        Item.Index := MemTableOrClientDataSet.FieldByName(IndexField).AsInteger;
-        Item.Text := MemTableOrClientDataSet.FieldByName(ValueField).AsString;
+        Item.Index := DataSet.FieldByName(IndexField).AsInteger;
+        Item.Text := DataSet.FieldByName(ValueField).AsString;
         if Length(Detail1Fields) > 0 then
         begin
           if Length(Detail1Fields) = 1 then
           begin
             if Detail1Fields[0] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail1] := MemTableOrClientDataSet.FieldByName(Detail1Fields[0]).AsString;
+              Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(Detail1Fields[0]).AsString;
           end;
           if Length(Detail1Fields) = 2 then
           begin
             if Detail1Fields[0] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail1] := MemTableOrClientDataSet.FieldByName(Detail1Fields[0]).AsString;
+              Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(Detail1Fields[0]).AsString;
             if Detail1Fields[1] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail2] := MemTableOrClientDataSet.FieldByName(Detail1Fields[1]).AsString;
+              Item.Data[TMultiDetailAppearanceNames.Detail2] := DataSet.FieldByName(Detail1Fields[1]).AsString;
           end;
           if Length(Detail1Fields) = 3 then
           begin
             if Detail1Fields[0] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail1] := MemTableOrClientDataSet.FieldByName(Detail1Fields[0]).AsString;
+              Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(Detail1Fields[0]).AsString;
             if Detail1Fields[1] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail2] := MemTableOrClientDataSet.FieldByName(Detail1Fields[1]).AsString;
+              Item.Data[TMultiDetailAppearanceNames.Detail2] := DataSet.FieldByName(Detail1Fields[1]).AsString;
             if Detail1Fields[2] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail3] := MemTableOrClientDataSet.FieldByName(Detail1Fields[2]).AsString;
+              Item.Data[TMultiDetailAppearanceNames.Detail3] := DataSet.FieldByName(Detail1Fields[2]).AsString;
           end;
         end;
 
@@ -631,20 +830,19 @@ begin
   2) Adicionar Suporte à Accessory; }
 
         //Item.BitmapRef := ImageRAD.Bitmap;
-        MemTableOrClientDataSet.Next;
+        DataSet.Next;
       end;
-      MemTableOrClientDataSet.Last;
+      DataSet.Last;
 
       if SelectedBy <> 0 then
         TListView(AOwner).ItemIndex := SelectedBy;
 
-      MemTableOrClientDataSet.Destroy;
+      DataSet.Destroy;
+    finally
+      TListView(AOwner).EndUpdate;
     end;
 
-  finally
-    TListView(AOwner).EndUpdate;
   end;
-
 end;
 
 {
@@ -657,65 +855,54 @@ begin
 
 end;
 
-procedure TConnector.ToGrid(AOwner: TComponent; SelectedBy : Integer = -1);
+procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : Integer = -1);
 var
-  MemTableOrClientDataSet : {$I CNC.Type.inc};
+  DataSet : {$I CNC.Type.inc};
 begin
   if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) then
     TStringGrid(AOwner).ClearColumns
   else if (AOwner is TGrid) and (TGrid(AOwner) <> nil) then
     TGrid(AOwner).ClearColumns;
 
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  MemTableOrClientDataSet := Self.ToClientDataSet(Self.FQuery);
-{$ENDIF}
-{$IF DEFINED(FireDACLib)}
-  MemTableOrClientDataSet := Self.ToFDMemTable(Self.FQuery);
-{$ENDIF}
+  DataSet := Self.ToDataSet(Self.FQuery);
 
-  if MemTableOrClientDataSet.RecordCount > 0 then
+  if DataSet.RecordCount > 0 then
   begin
-
-    if AOwner Is TStringGrid then
-    begin
-
-      TStringGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
-      TStringGrid(AOwner).FillData := MemTableOrClientDataSet;
-      TStringGrid(AOwner).AutoSizeColumns := True;
-      TStringGrid(AOwner).Selected := SelectedBy;
-      TStringGrid(AOwner).ColumnIndex := SelectedBy;
-
-      if SelectedBy <> -1 then
-      begin
-        TStringGrid(AOwner).Row := SelectedBy;
-        TStringGrid(AOwner).Col := 0;
-      end;
-
-    end
+    if AOwner Is TStringGrid then
+      Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
     else if AOwner Is TGrid then
-    begin
-
-      TGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
-      TGrid(AOwner).FillData := MemTableOrClientDataSet;
-      TGrid(AOwner).AutoSizeColumns := True;
-      TGrid(AOwner).Selected := SelectedBy;
-      TGrid(AOwner).ColumnIndex := SelectedBy;
-
-      if SelectedBy <> -1 then
-      begin
-        TGrid(AOwner).Row := SelectedBy;
-        TGrid(AOwner).Col := 0;
-      end;
-
-    end;
-
+      Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);
   end;
+end;
 
+procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
+var
+  DataSet : {$I CNC.Type.inc};
+begin
+  if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) then
+    TStringGrid(AOwner).ClearColumns
+  else if (AOwner is TGrid) and (TGrid(AOwner) <> nil) then
+    TGrid(AOwner).ClearColumns;
+
+  DataSet := Self.ToDataSet(Self.FQuery);
+
+  if DataSet.RecordCount > 0 then
+  begin
+    if AOwner Is TStringGrid then
+      Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
+    else if AOwner Is TGrid then
+      Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);
+  end;
+end;
+
+procedure TConnector.ToGrid(AOwner: TComponent; SelectedBy : Integer = -1);
+begin
+  Self.ToGridTable(AOwner, SelectedBy);
 end;
 
 procedure TConnector.ToGrid(AOwner: TComponent; SelectedBy: TDictionary<String, TArray<Variant>>);
 begin
-
+  Self.ToGridTable(AOwner, SelectedBy);
 end;
 
 procedure TConnector.ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer);
@@ -755,7 +942,7 @@ end;
 
 procedure TConnector.ToListView(AOwner: TComponent; IndexField, ValueField: String; Detail1Fields: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
 begin
-
+  Self.ToMultiList(AOwner, IndexField, ValueField, Detail1Fields, SelectedBy);
 end;
 
 destructor TConnector.Destroy;

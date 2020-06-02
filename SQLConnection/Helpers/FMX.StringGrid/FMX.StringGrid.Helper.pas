@@ -78,7 +78,7 @@ implementation
 
 procedure TStringGridHelper.DoAutoSizeColumns;
 var
-  I, W: Integer;
+  W: Integer;
   WMax: Single;
   SizeMax: Single;
   Column : Integer;
@@ -89,9 +89,10 @@ begin
     if Self.ColumnByIndex(Column).Width > 0 then
     begin
       WMax := Round(Canvas.TextWidth(Self.ColumnByIndex(Column).Header));
-      for I := 0 to (Self.RowCount - 1) do
+      FData.First;
+      while not FData.Eof do
       begin
-        W := Round(Canvas.TextWidth(Self.Cells[Column, I]));
+        W := Round(Canvas.TextWidth(FData.Fields[Column].AsString));
         if W > WMax then
           WMax := W;
         if WMax > SizeMax then
@@ -99,8 +100,10 @@ begin
           Self.ColumnByIndex(Column).Width := SizeMax + 10;
           Break;
         end;
+        Self.ColumnByIndex(Column).Width := WMax + 10;
+        FData.Next;
       end;
-      Self.ColumnByIndex(Column).Width := WMax + 10;
+      FData.Last;
     end;
   end;
 end;
