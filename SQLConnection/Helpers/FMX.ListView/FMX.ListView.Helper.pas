@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils,
+  System.UITypes,
   FMX.ListView.Types,
   FMX.ListView,
   FMX.SearchBox;
@@ -18,6 +19,7 @@ type
   TCustomListViewHelper = class helper for TCustomListView
   public
     function FindCaption(const Name, ObjID: string): Boolean;
+    function FindItemByValue(const Value: String): Integer;
     function FindItemByName(const Name, ObjID: String): Integer;
     function FindItemByNameValue(const Name, ObjID, ObjValue: String): String;
     function CountItemByName(const Name, ObjID: String): Integer;
@@ -57,6 +59,22 @@ begin
     Result := CompareText(TListItemText(Items[I].Objects.FindDrawable(ObjID)).Text, Name) = 0;
     if Result then
       exit;
+  end;
+end;
+
+function TCustomListViewHelper.FindItemByValue(const Value: String): Integer;
+var
+  I: Integer;
+  Text: String;
+begin
+  Result := -1;
+  for I := 0 to Pred(Items.Count) do
+  begin
+    if Self.Items.AppearanceItem[I].Text = Value then
+    begin
+      Result := I;
+      Break;
+    end;
   end;
 end;
 
@@ -110,4 +128,4 @@ begin
   end;
 end;
 
-end.
+end.

@@ -14,6 +14,7 @@ uses
   System.DateUtils,
   System.Generics.Collections,
 
+  FMX.Styles.Objects,
   FMX.Types,
   FMX.Controls,
   FMX.Forms,
@@ -748,15 +749,18 @@ begin
         //Connector.ToCombo(EditFirebird, 'Codigo', 'Estado', 1);
         //Connector.ToCombo(ComboEditFirebird, 'Codigo', 'Estado', 2);
         //Connector.ToListBox(ListBoxFirebird, 'Codigo', 'Estado', 3);
+        //Connector.ToGrid(StringGridFirebird, -1);
+        //Connector.ToGrid(GridFirebird, 6);
+        //Connector.ToListView(ListViewFirebird, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 4);
 
-        Connector.ToCombo(ComboBoxFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[0]]));
-        Connector.ToCombo(EditFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Estado', 'Rio Grande do Norte']]));
-        Connector.ToCombo(ComboEditFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 4]]));
-        Connector.ToListBox(ListBoxFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 20]]));
-
-        Connector.ToListView(ListViewFirebird, 'Codigo', 'Estado', ['Sigla', 'Sigla', 'Sigla'], 4);
-        Connector.ToGrid(StringGridFirebird, 5);
-        Connector.ToGrid(GridFirebird, 6);
+        Connector.ToCombo(ComboBoxFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        Connector.ToCombo(EditFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));
+        Connector.ToCombo(ComboEditFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[5]]));
+        Connector.ToListBox(ListBoxFirebird, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Espírito Santo']]));
+        Connector.ToGrid(StringGridFirebird, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'SP']]));
+        Connector.ToGrid(GridFirebird, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
+        Connector.ToListView(ListViewFirebird, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        //Connector.ToListView(ListViewFirebird, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', '1']]));
       finally
         Connector.Destroy;
       end;
@@ -797,18 +801,21 @@ begin
       Connector := TConnector.Create(SQL);
       try
         //Connector.ToCombo(ComboBoxMySQL, 'Codigo', 'Estado', 0);
-        //Connector.ToCombo(EditPostgreSQL, 'Codigo', 'Estado', 1);
-        //Connector.ToCombo(ComboEditPostgreSQL, 'Codigo', 'Estado', 2);
-        //Connector.ToListBox(ListBoxPostgreSQL, 'Codigo', 'Estado', 3);
+        //Connector.ToCombo(EditMySQL, 'Codigo', 'Estado', 1);
+        //Connector.ToCombo(ComboEditMySQL, 'Codigo', 'Estado', 2);
+        //Connector.ToListBox(ListBoxMySQL, 'Codigo', 'Estado', 3);
+        //Connector.ToGrid(StringGridMySQL, -1);
+        //Connector.ToGrid(GridMySQL, 6);
+        //Connector.ToListView(ListViewMySQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 4);
 
-        Connector.ToCombo(ComboBoxMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[0]]));
-        Connector.ToCombo(EditMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Estado', 'Rio Grande do Norte']]));
-        Connector.ToCombo(ComboEditMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 4]]));
-        Connector.ToListBox(ListBoxMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 20]]));
-
-        Connector.ToListView(ListViewMySQL, 'Codigo', 'Estado', ['Sigla', 'Sigla', 'Sigla'], 4);
-        Connector.ToGrid(StringGridMySQL, 5);
-        Connector.ToGrid(GridMySQL, 6);
+        Connector.ToCombo(ComboBoxMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        Connector.ToCombo(EditMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));
+        Connector.ToCombo(ComboEditMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[5]]));
+        Connector.ToListBox(ListBoxMySQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Espírito Santo']]));
+        Connector.ToGrid(StringGridMySQL, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'SP']]));
+        Connector.ToGrid(GridMySQL, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
+        Connector.ToListView(ListViewMySQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        //Connector.ToListView(ListViewMySQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', '1']]));
       finally
         Connector.Destroy;
       end;
@@ -853,16 +860,19 @@ begin
         //Connector.ToCombo(EditPostgreSQL, 'Codigo', 'Estado', 1);
         //Connector.ToCombo(ComboEditPostgreSQL, 'Codigo', 'Estado', 2);
         //Connector.ToListBox(ListBoxPostgreSQL, 'Codigo', 'Estado', 3);
+        //Connector.ToGrid(StringGridPostgreSQL, -1);
+        //Connector.ToGrid(GridPostgreSQL, 6);
+        //Connector.ToListView(ListViewPostgreSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 4);
 
-        Connector.ToCombo(ComboBoxPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[0]]));
-        Connector.ToCombo(EditPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Estado', 'Rio Grande do Norte']]));
-        Connector.ToCombo(ComboEditPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 4]]));
-        Connector.ToListBox(ListBoxPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 20]]));
-
-        Connector.ToListView(ListViewPostgreSQL, 'Codigo', 'Estado', ['Sigla', 'Sigla', 'Sigla'], 4);
-        Connector.ToGrid(StringGridPostgreSQL, 5);
-        Connector.ToGrid(GridPostgreSQL, 6);
-      finally
+        Connector.ToCombo(ComboBoxPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        Connector.ToCombo(EditPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));
+        Connector.ToCombo(ComboEditPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[5]]));
+        Connector.ToListBox(ListBoxPostgreSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Espírito Santo']]));
+        Connector.ToGrid(StringGridPostgreSQL, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'SP']]));
+        Connector.ToGrid(GridPostgreSQL, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
+        Connector.ToListView(ListViewPostgreSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        //Connector.ToListView(ListViewPostgreSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', '1']]));
+       finally
         Connector.Destroy;
       end;
 
@@ -906,17 +916,18 @@ begin
         //Connector.ToCombo(EditSQLite, 'Codigo', 'Estado', 1);
         //Connector.ToCombo(ComboEditSQLite, 'Codigo', 'Estado', 2);
         //Connector.ToListBox(ListBoxSQLite, 'Codigo', 'Estado', 3);
-        //Connector.ToGrid(StringGridSQLite, 5);
+        //Connector.ToGrid(StringGridSQLite, -1);
         //Connector.ToGrid(GridSQLite, 6);
+        //Connector.ToListView(ListViewSQLite, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 4);
 
         Connector.ToCombo(ComboBoxSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
-        Connector.ToCombo(EditSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Codigo', 3]]));
+        Connector.ToCombo(EditSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));
         Connector.ToCombo(ComboEditSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[5]]));
-        Connector.ToListBox(ListBoxSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Estado', 'Espírito Santo']]));
-        Connector.ToGrid(StringGridSQLite, TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Sigla', 'SP']]));
-        Connector.ToGrid(GridSQLite, TDictionaryHelper<String, TArray<Variant>>.Make(['Column'], [['Estado', 'Distrito Federal']]));
-
-        Connector.ToListView(ListViewSQLite, 'Codigo', 'Estado', ['Sigla', 'Sigla', 'Sigla'], 4);
+        Connector.ToListBox(ListBoxSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Espírito Santo']]));
+        Connector.ToGrid(StringGridSQLite, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'SP']]));
+        Connector.ToGrid(GridSQLite, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
+        Connector.ToListView(ListViewSQLite, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        //Connector.ToListView(ListViewSQLite, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', '1']]));
       finally
         Connector.Destroy;
       end;
