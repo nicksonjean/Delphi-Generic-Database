@@ -65,7 +65,6 @@ end;
 function TCustomListViewHelper.FindItemByValue(const Value: String): Integer;
 var
   I: Integer;
-  Text: String;
 begin
   Result := -1;
   for I := 0 to Pred(Items.Count) do

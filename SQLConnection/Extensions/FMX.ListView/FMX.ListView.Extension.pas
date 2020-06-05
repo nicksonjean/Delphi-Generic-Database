@@ -140,7 +140,7 @@ begin
   FMultiDetail4.RestoreDefaults;
   FMultiDetail4.OnChange := Self.ItemPropertyChange;
   FMultiDetail4.Owner := Self;
-  FMultiDetail4.Visible := false;
+  FMultiDetail4.Visible := False;
 
   FMultiDetail1.DataMembers := TObjectAppearance.TDataMembers.Create(TObjectAppearance.TDataMember.Create(cMultiDetail1Member, Format('Data["%s"]', [TMultiDetailAppearanceNames.Detail1])));
   FMultiDetail2.DataMembers := TObjectAppearance.TDataMembers.Create(TObjectAppearance.TDataMember.Create(cMultiDetail2Member, Format('Data["%s"]', [TMultiDetailAppearanceNames.Detail2])));

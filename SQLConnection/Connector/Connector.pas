@@ -147,15 +147,12 @@ type
   protected
     { Strict Private declarations }
     const FItemHeight = 76;
+    var FJSONData: String;
+    function GetJSONData: String;
+    procedure SetJSONData(IndexField, ValueField, DataFields: String);
     procedure AddItem<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
   private
     { Private declarations }
-    {TODO -oNickson Jeanmerson -cProgrammer : Refazer a Filtragem do ListView por Colunas Utilizando a Hidden JSON DataSet Presente no Componente}
-    FItem:String;
-    FText:String;
-    FDetail1: String;
-    FDetail2: String;
-    FDetail3: String;
     FQuery: TQuery;
     function ToDataSet(Query: TQuery): {$I CNC.Type.inc};
     procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
@@ -883,8 +880,10 @@ end;
 
 procedure TConnector.AddToListView<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
 var
-  I, J: Integer;
+  I, J, K: Integer;
   Pair: TPair<String, TArray<Variant>>;
+  JSONString: String;
+  JSONObject, JSONDataBase: TJSONObject;
 begin
   TListView(AOwner).BeginUpdate;
   try
@@ -906,16 +905,28 @@ begin
         end
         else if Pair.Key = 'Field' then
         begin
-          if FText = Pair.Value[0] then
-            TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(Pair.Value[1])
-          else if FDetail1 = Pair.Value[0] then
-            TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByName(Pair.Value[1], TMultiDetailAppearanceNames.Detail1)
-          else if FDetail2 = Pair.Value[0] then
-            TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByName(Pair.Value[1], TMultiDetailAppearanceNames.Detail2)
-          else if FDetail3 = Pair.Value[0] then
-            TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByName(Pair.Value[1], TMultiDetailAppearanceNames.Detail3)
-          else
-            TListView(AOwner).ItemIndex := Pair.Value[1];
+          for I := 0 to TListView(AOwner).Items.Count - 1 do
+          begin
+            JSONString := TListView(AOwner).Items.AppearanceItem[I].Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail4).Text;
+            JSONObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(JSONString), 0) as TJSONObject;
+            if JSONObject.Get('valuefield').JsonValue.Value = Pair.Value[0] then
+            begin
+              TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(Pair.Value[1]);
+              Break;
+            end
+            else
+            begin
+              JSONDataBase := JSONObject.Get('datafields').JsonValue as TJSONObject;
+              for K := 0 to JSONDataBase.Count - 1 do
+              begin
+                if JSONDataBase.Pairs[K].JsonValue.Value = Pair.Value[1] then
+                begin
+                  TListView(AOwner).ItemIndex := I;
+                  Break;
+                end;
+              end;
+            end;
+          end;
         end;
       end;
     end;
@@ -937,11 +948,24 @@ begin
     Self.AddToListBox<TListBox>(AOwner, FieldIndexValue, IndexValue, SelectedBy);
 end;
 
+function TConnector.GetJSONData: String;
+begin
+  Result := FJSONData;
+end;
+
+procedure TConnector.SetJSONData(IndexField, ValueField, DataFields: String);
+var
+  DataColumns : String;
+begin
+  DataColumns := '{"indexfield":"' + IndexField + '","valuefield":"' + ValueField + '","datafields":' + DataFields + '}';
+  FJSONData := DataColumns;
+end;
+
 procedure TConnector.AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
 var
   Item: TListViewItem;
   I, ItemHeight: Integer;
-  Dados: TArrayVariant;
+  JSONData: TArrayVariant;
 begin
   ItemHeight := FItemHeight;
   if Length(DetailFields) > 0 then
@@ -960,59 +984,39 @@ begin
         Item.Index := DataSet.FieldByName(IndexField).AsInteger;
         Item.Text := DataSet.FieldByName(ValueField).AsString;
         Item.Height := ItemHeight;
-
-        FItem := IndexField;
-        FText := ValueField;
         if Length(DetailFields) > 0 then
         begin
           if Length(DetailFields) = 1 then
           begin
             if DetailFields[0] <> EmptyStr then
-            begin
-              FDetail1 := DetailFields[0];
               Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(DetailFields[0]).AsString;
-            end;
           end;
           if Length(DetailFields) = 2 then
           begin
             if DetailFields[0] <> EmptyStr then
-            begin
-              FDetail1 := DetailFields[0];
               Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(DetailFields[0]).AsString;
-            end;
             if DetailFields[1] <> EmptyStr then
-            begin
-              FDetail2 := DetailFields[1];
               Item.Data[TMultiDetailAppearanceNames.Detail2] := DataSet.FieldByName(DetailFields[1]).AsString;
-            end;
           end;
           if Length(DetailFields) = 3 then
           begin
             if DetailFields[0] <> EmptyStr then
-            begin
-              FDetail1 := DetailFields[0];
               Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(DetailFields[0]).AsString;
-            end;
             if DetailFields[1] <> EmptyStr then
-            begin
-              FDetail2 := DetailFields[1];
               Item.Data[TMultiDetailAppearanceNames.Detail2] := DataSet.FieldByName(DetailFields[1]).AsString;
-            end;
             if DetailFields[2] <> EmptyStr then
-            begin
-              FDetail3 := DetailFields[2];
               Item.Data[TMultiDetailAppearanceNames.Detail3] := DataSet.FieldByName(DetailFields[2]).AsString;
-            end;
           end;
         end;
 
         // Armazena Todo o ResultRow da Query SQL
-        Dados := TArrayVariant.Create;
-        Dados.Clear;
+        JSONData := TArrayVariant.Create;
+        JSONData.Clear;
         for I := 0 to DataSet.FieldDefs.Count - 1 do
-          Dados[DataSet.FieldDefs[I].Name] := DataSet.FieldByName(DataSet.FieldDefs[I].Name).Value;
-        Item.Data[TMultiDetailAppearanceNames.Detail4] := Dados.ToJSON;
-        Dados.Destroy;
+          JSONData[DataSet.FieldDefs[I].Name] := DataSet.FieldByName(DataSet.FieldDefs[I].Name).Value;
+        Self.SetJSONData(IndexField, ValueField, JSONData.ToJSON);
+        Item.Data[TMultiDetailAppearanceNames.Detail4] := Self.GetJSONData;
+        JSONData.Destroy;
 
   { TODO -oNickson Jeanmerson -cProgrammer :
   1) Adicionar Suporte à Imagens via Blog com TImage/TBitmap e ImageString em Base64;

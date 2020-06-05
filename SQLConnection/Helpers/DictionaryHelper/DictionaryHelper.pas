@@ -60,7 +60,7 @@ begin
     raise Exception.Create('O número de chaves não corresponde ao número de valores.');
   Result := TDictionary<Key, Value>.Create;
   for I := 0 to High(KeyArray) do
-    Result.AddOrSetValue(KeyArray[I], ValueArray[i]);
+    Result.AddOrSetValue(KeyArray[I], ValueArray[I]);
 end;
 
 class function TDictionaryHelper<Key, Value>.P(const K: Key; const V: Value): TPair<Key, Value>;
