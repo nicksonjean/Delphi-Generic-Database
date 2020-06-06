@@ -1,0 +1,46 @@
+﻿unit FMX.Grid.Helper;
+
+interface
+
+uses
+  FMX.Grid;
+
+type
+  TGridHelper = class helper for TGrid
+  public
+    procedure AutoSizeColumns(Column: Integer);
+    procedure RemoveRows(RowIndex, RCount: Integer);
+    procedure Clear;
+  end;
+
+implementation
+
+{ TGridHelper }
+
+procedure TGridHelper.AutoSizeColumns(Column: Integer);
+var
+  i, W, WMax: Integer;
+begin
+  WMax := 0;
+  for i := 1 to (Self.RowCount - 1) do begin
+    W := Round(Self.Canvas.TextWidth(Self.Cells[Column, i]));
+    if W > WMax then
+      WMax := W;
+  end;
+  if WMax*2 > Self.Columns[Column].Width then
+  begin
+    Self.Columns[Column].Width := WMax*2;
+  end;
+end;
+
+procedure TGridHelper.Clear;
+begin
+  TGrid(Self).Clear;
+end;
+
+procedure TGridHelper.RemoveRows(RowIndex, RCount: Integer);
+begin
+  TGrid(Self).RemoveRows(RowIndex, RCount);
+end;
+
+end.

@@ -1,0 +1,726 @@
+{
+  Array.Class.
+  ------------------------------------------------------------------------------
+  Objetivo : Simplificar a criação de matrizes php-like em Delphi.
+  Suporta 1 Tipo de Matriz Associativa Unidimensional Baseada em TStringList;
+  Suporta 2 Tipos de Matrizes Associativas Unidimensionais Baseadas em TDicionary;
+  Suporte 2 Tipos de Matrizes Associativas Multidimensional Baseadas em TDicionary;
+  1 - Matriz de Strings Herdada de TStringList;
+  2 - Matriz de Variants Herdada de TDictionary<Variant, Variant>
+  3 - Matriz de Fields Herdade de TDictionay<Variant, TField>
+  4 - Matriz de Matrizes Herdada de TDicionary<TDictionay<Variant, Variant>>
+  5 - Matriz de Matrizes Herdada de TDicionary<TDictionay<Variant, TField>>
+  ------------------------------------------------------------------------------
+  Autor : Nickson Jeanmerson
+  Colaborador : Ramon Ruan
+  ------------------------------------------------------------------------------
+  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
+  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
+  qualquer versão posterior.
+  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
+  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
+  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
+  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
+  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Você também pode obter uma copia da licença em:
+  http://www.opensource.org/licenses/lgpl-license.php
+
+https://showdelphi.com.br/transformando-qualquer-variant-para-string-para-usar-em-sql/
+https://showdelphi.com.br/diferenca-entre-itask-e-ifuture-delphi/
+https://showdelphi.com.br/dica-como-montar-um-case-com-strings-delphi/
+
+}
+
+unit &Array.&Class;
+
+interface
+
+uses
+  System.Classes,
+  System.SysUtils,
+  System.Generics.Collections,
+  System.RegularExpressions,
+  System.RTLConsts,
+  System.StrUtils,
+  System.Variants,
+  System.Rtti,
+  Data.DB,
+  REST.JSON,
+  &String.&Class
+  ;
+
+{ TODO 3 -oNickson Jeanmerson -cProgrammer :
+  1) Padronizar a Classes TArray e TArrayVariant; //OK
+  2) Padronizar a Classe TArrayField;
+  3) Criar Métodos Ausentes; }
+
+type
+  TArray = class(TStringList)
+  private
+    { Private declarations }
+    function GetKey(Index: Integer): String;
+    function GetValues(Index: String): string;
+    function GetValuesAtIndex(Index: Integer): string;
+    procedure SetValues(Index: String; Const Value: String);
+    function GetItem(Index: String): String;
+    procedure SetItem(Index: String; Const Value: String);
+  public
+    { Public declarations }
+    constructor Create;
+    destructor Destroy; override;
+    function ToKeys(Prettify : Boolean = False): string;
+    function ToValues(Prettify : Boolean = False): string;
+    function ToList(Prettify : Boolean = False): string;
+    function ToTags(Prettify : Boolean = False): string;
+    function ToXML(Prettify : Boolean = False): string;
+    function ToJSON(Prettify : Boolean = False): string;
+    procedure Add(Key, Value: string); reintroduce; overload;
+    procedure AddKeyValue(Key, Value: string);
+    property Key[Index: Integer]: String read GetKey;
+    property ValuesAtIndex[Index: Integer]: string read GetValuesAtIndex;
+    property Values[Index: string]: string read GetValues write SetValues;
+    property Item[Index: string]: string read GetItem write SetItem; default;
+  end;
+
+type
+  TArrayHelper = class(TArray)
+  private
+    { Private declarations }
+    class function ToDateOrDateTime(Text: String): String;
+  public
+    { Public declarations }
+    class function StrToJSON(Value: String): String;
+    class function StrToStr(Value: String): String;
+  end;
+
+type
+  TArrayVariant = class(TDictionary<Variant, Variant>)
+  private
+    { Private declarations }
+    function GetKey(Index: Integer): String;
+    function GetValues(Name: string): Variant;
+    function GetValuesAtIndex(Index: Integer): Variant;
+    procedure SetValues(Name: String; const Value: Variant);
+    function GetItem(Index: String): Variant;
+    procedure SetItem(Index: String; const Value: Variant);
+  public
+    { Public declarations }
+    constructor Create(Collection: TEnumerable<TPair<Variant,Variant>>); overload;
+    destructor Destroy; override;
+    function ToKeys(Prettify : Boolean = False): string;
+    function ToValues(Prettify : Boolean = False): string;
+    function ToList(Prettify : Boolean = False): string;
+    function ToTags(Prettify : Boolean = False): string;
+    function ToXML(Prettify : Boolean = False): string;
+    function ToJSON(Prettify : Boolean = False): string;
+    procedure Add(Key: String; Value: Variant);
+    procedure AddKeyValue(Key: String; Value: Variant);
+    property Key[Index: Integer]: String read GetKey;
+    property ValuesAtIndex[Index: Integer]: Variant read GetValuesAtIndex;
+    property Values[Name: string]: Variant read GetValues write SetValues;
+    property Item[Index: String]: Variant read GetItem write SetItem; default;
+  end;
+
+type
+  TArrayVariantHelper = class(TArrayVariant)
+  private
+    { Private declarations }
+    class function IsNullOrEmpty(Text: Variant): Boolean;
+    class function ToDateOrDateTime(Text: Variant): String;
+  public
+    { Public declarations }
+    class function VarToJSON(Value: Variant): String;
+    class function VarToStr(Value: Variant): String;
+  end;
+
+type
+  TArrayField = class(TDictionary<String, TField>)
+  private
+    { Private declarations }
+    function GetKey(Index: Integer): String;
+    function GetValues(Name: string): TField;
+    function GetValuesAtIndex(Index: Integer): TField;
+    procedure SetValues(Name: String; const Value: TField);
+  public
+    { Public declarations }
+    destructor Destroy; override;
+    procedure AddKeyValue(Key: String; Value: TField);
+    property Key[Index: Integer]: String read GetKey;
+    property ValuesAtIndex[Index: Integer]: TField read GetValuesAtIndex;
+    property Values[Name: string]: TField read GetValues write SetValues;
+  end;
+
+type
+  TArrayFieldHelper = class(TArrayField)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    class function FieldToStr(Field: TField): String;
+  end;
+
+implementation
+
+{ TArray }
+
+constructor TArray.Create;
+begin
+  NameValueSeparator := PIPE;
+end;
+
+destructor TArray.Destroy;
+begin
+  inherited;
+end;
+
+function TArray.ToKeys(Prettify : Boolean = False): string;
+var
+  I: Integer;
+  S: String;
+begin
+  Result := EmptyStr;
+  S := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for I := 0 to Count - 1 do
+    Result := Result + Names[I] + S;
+  Result := TStringHelper.RemoveLastCommaEOL(Result);
+end;
+
+function TArray.ToValues(Prettify : Boolean = False): string;
+var
+  I: Integer;
+  S: String;
+begin
+  Result := EmptyStr;
+  S := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for I := 0 to Count - 1 do
+    Result := Result + SQuote + ValuesAtIndex[I] + SQuote + S;
+  Result := TStringHelper.RemoveLastCommaEOL(Result);
+end;
+
+function TArray.ToList(Prettify : Boolean = False): string;
+var
+  I: Integer;
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, SSpace + LTag + Equal + RTag + SSpace, SSpace);
+  S2 := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for I := 0 to Count - 1 do
+    if ValuesAtIndex[I] = #0 then
+      Result := Result + Names[I] + S1 + SQuote + SQuote + S2
+    else
+    begin
+      Result := Result + Names[I] + S1 + SQuote + ValuesAtIndex[I] + SQuote + S2;
+      Result := TStringHelper.RemoveLastComma(Result);
+    end;
+end;
+
+function TArray.ToTags(Prettify : Boolean = False): string;
+var
+  I: Integer;
+  S: String;
+begin
+  Result := EmptyStr;
+  S := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  for I := 0 to Count - 1 do
+    Result := Result + LTag + Names[I] + RTag + SQuote + ValuesAtIndex[I] + SQuote + CTag + Key[I] + RTag + S;
+  Result := TStringHelper.RemoveLastEOL(Result);
+end;
+
+function TArray.ToXML(Prettify: Boolean = False): string;
+var
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
+  Result := Result + XML + S1;
+  Result := Result + LTag + 'root' + RTag + S1;
+  Result := Result + TStringHelper.IndentTag(Self.ToTags(Prettify), S2 + LTag);
+  Result := Result + CTag + 'root' + RTag;
+end;
+
+function TArray.ToJSON(Prettify: Boolean = False): string;
+var
+  I : Integer;
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
+  Result := Result + LBracket + S1;
+  for I := 0 to Count - 1 do
+    Result := Result + S2 + DQuote + Key[I] + DQuote + Colon + TArrayHelper.StrToJSON(AnsiDequotedStr(ValuesAtIndex[I], SQuote)) + Comma + S1;
+  Result := TStringHelper.RemoveLastEOL(Result);
+  Result := Result + RBracket;
+end;
+
+procedure TArray.Add(Key, Value: string);
+begin
+  Add(Key + NameValueSeparator + Value);
+end;
+
+procedure TArray.AddKeyValue(Key, Value: string);
+begin
+  Add(Key + NameValueSeparator + Value);
+end;
+
+function TArray.GetKey(Index: Integer): String;
+begin
+  inherited;
+end;
+
+function TArray.GetValues(Index: String): string;
+begin
+  Result := inherited Values[Index];
+end;
+
+function TArray.GetValuesAtIndex(Index: Integer): string;
+begin
+  Result := inherited Values[Names[Index]];
+end;
+
+procedure TArray.SetValues(Index: String; Const Value: String);
+begin
+  inherited Values[Index] := Value;
+end;
+
+function TArray.GetItem(Index: String): String;
+begin
+  Result := Self.GetValues(Index);
+end;
+
+procedure TArray.SetItem(Index: String; const Value: String);
+begin
+  Self.SetValues(Index, Value);
+end;
+
+{ TArrayHelper }
+
+class function TArrayHelper.ToDateOrDateTime(Text: String): String;
+var
+  DT: TDateTime;
+  Return: String;
+begin
+  try
+    DT := VarToDateTime(Text);
+    try
+      if FormatDateTime('yyyy-mm-dd hh:nn:ss', DT).Contains('00:00:00') then
+        Return := FormatDateTime('yyyy-mm-dd', DT)
+      else
+        Return := FormatDateTime('yyyy-mm-dd hh:nn:ss', DT);
+    except
+      Return := Text;
+    end;
+  except
+    Return := Text;
+  end;
+  Result := Return;
+end;
+
+class function TArrayHelper.StrToJSON(Value: String): String;
+begin
+  // Valida Inteiros ou Decimais
+  if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
+    if TString.IsNull(Value) then
+      Result := DQuote + Value + DQuote
+    else
+      Result := Value
+      // Valida Data e/ou Date/Hora
+  else if TString.IsDateOrDateTime(Value) then
+    Result := DQuote + Self.ToDateOrDateTime(Value) + DQuote
+  else
+    // Valida Strings
+    Result := DQuote + Value + DQuote;
+end;
+
+class function TArrayHelper.StrToStr(Value: String): String;
+begin
+  // Valida Inteiros ou Decimais
+  if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
+    if TString.IsNull(Value) then
+      Result := QuotedStr(Value)
+    else
+      Result := TStringHelper.StringReplace(Value, ['.', ','], ['', '.'], [rfReplaceAll])
+      // Valida Data e/ou Date/Hora
+  else if TString.IsDateOrDateTime(Value) then
+    Result := QuotedStr(Self.ToDateOrDateTime(Value))
+  else
+    if Value = #0 then
+      Result := EmptyStr
+    else if TString.IsNull(Value) then
+      Result := 'null'
+    else
+    // Valida Strings
+      Result := QuotedStr(Value);
+end;
+
+{ TArrayVariant }
+
+constructor TArrayVariant.Create(Collection: TEnumerable<TPair<Variant, Variant>>);
+begin
+  inherited Create(Collection);
+end;
+
+destructor TArrayVariant.Destroy;
+begin
+  inherited;
+
+  inherited Values.Free;
+  inherited Keys.Free;
+end;
+
+function TArrayVariant.ToKeys(Prettify : Boolean = False): String;
+var
+  I: Integer;
+  S: String;
+begin
+  Result := EmptyStr;
+  S := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for I := 0 to Count - 1 do
+    Result := Result + Key[I] + S;
+  Result := TStringHelper.RemoveLastCommaEOL(Result);
+end;
+
+function TArrayVariant.ToValues(Prettify : Boolean = False): String;
+var
+  I: Integer;
+  S: String;
+begin
+  Result := EmptyStr;
+  S := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for I := 0 to Count - 1 do
+    Result := Result + TArrayVariantHelper.VarToStr(ValuesAtIndex[I]) + S;
+  Result := TStringHelper.RemoveLastCommaEOL(Result);
+end;
+
+function TArrayVariant.ToList(Prettify : Boolean = False): String;
+var
+  I: Integer;
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, SSpace + LTag + Equal + RTag + SSpace, SSpace);
+  S2 := System.StrUtils.IfThen(Prettify, Comma + EOL, EOL);
+  for I := 0 to Count - 1 do
+  begin
+    Result := Result + Key[I] + S1 + TArrayVariantHelper.VarToStr(ValuesAtIndex[I]) + S2;
+    Result := TStringHelper.RemoveLastComma(Result);
+  end;
+end;
+
+function TArrayVariant.ToTags(Prettify : Boolean = False): string;
+var
+  I: Integer;
+  S: String;
+begin
+  Result := EmptyStr;
+  S := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  for I := 0 to Count - 1 do
+    Result := Result + LTag + Key[I] + RTag + TArrayVariantHelper.VarToStr(ValuesAtIndex[I]) + CTag + Key[I] + RTag + S;
+  Result := TStringHelper.RemoveLastEOL(Result);
+end;
+
+function TArrayVariant.ToXML(Prettify : Boolean = False): string;
+var
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
+  Result := Result + XML + S1;
+  Result := Result + LTag + 'root' + RTag + S1;
+  Result := Result + TStringHelper.IndentTag(Self.ToTags(Prettify), S2 + LTag);
+  Result := Result + CTag + 'root' + RTag;
+end;
+
+function TArrayVariant.ToJSON(Prettify : Boolean = False): string;
+var
+  I : Integer;
+  S1, S2: String;
+begin
+  Result := EmptyStr;
+  S1 := System.StrUtils.IfThen(Prettify, EOL, EmptyStr);
+  S2 := System.StrUtils.IfThen(Prettify, DSpace, EmptyStr);
+  Result := Result + LBracket + S1;
+  for I := 0 to Count - 1 do
+    Result := Result + S2 + DQuote + Key[I] + DQuote + Colon + TArrayVariantHelper.VarToJSON(ValuesAtIndex[I]) + Comma + S1;
+  Result := TStringHelper.RemoveLastComma(Result);
+  Result := Result + RBracket;
+end;
+
+procedure TArrayVariant.Add(Key: String; Value: Variant);
+begin
+  inherited Add(Key, Value);
+end;
+
+procedure TArrayVariant.AddKeyValue(Key: String; Value: Variant);
+begin
+  inherited AddOrSetValue(Key, Value);
+end;
+
+function TArrayVariant.GetKey(Index: Integer): String;
+begin
+  Result := ToArray[Index].Key;
+end;
+
+function TArrayVariant.GetValues(Name: string): Variant;
+var
+  OutValue: Variant;
+begin
+  TryGetValue(Name, OutValue);
+  Result := OutValue;
+end;
+
+function TArrayVariant.GetValuesAtIndex(Index: Integer): Variant;
+var
+  OutValue: Variant;
+begin
+  if not TArrayVariantHelper.IsNullOrEmpty(Self.ToArray[Index].Value) then
+  begin
+    TryGetValue(Self.ToArray[Index].Key, OutValue);
+    Result := OutValue;
+  end
+  else
+    Result := TArrayVariantHelper.VarToStr(Self.ToArray[Index].Value);
+end;
+
+procedure TArrayVariant.SetValues(Name: String; const Value: Variant);
+begin
+  Values[Name] := Value;
+end;
+
+function TArrayVariant.GetItem(Index: String): Variant;
+begin
+  Result := Self.GetValues(Index);
+end;
+
+procedure TArrayVariant.SetItem(Index: String; const Value: Variant);
+begin
+  AddOrSetValue(Index, Value);
+end;
+
+{ TArrayVariantHelper }
+
+class function TArrayVariantHelper.IsNullOrEmpty(Text: Variant): Boolean;
+begin
+  Result := VarIsClear(Text) or VarIsEmpty(Text) or VarIsNull(Text) or (VarCompareValue(Text, Unassigned) = vrEqual);
+  if (not Result) and VarIsStr(Text) then
+    Result := Text = EmptyStr;
+end;
+
+class function TArrayVariantHelper.ToDateOrDateTime(Text: Variant): String;
+var
+  DT: TDateTime;
+  Return: String;
+begin
+  try
+    DT := VarToDateTime(Text);
+    try
+      if FormatDateTime('yyyy-mm-dd hh:nn:ss', DT).Contains('00:00:00') then
+        Return := FormatDateTime('yyyy-mm-dd', DT)
+      else
+        Return := FormatDateTime('yyyy-mm-dd hh:nn:ss', DT);
+    except
+      Return := Text;
+    end;
+  except
+    Return := Text;
+  end;
+  Result := Return;
+end;
+
+class function TArrayVariantHelper.VarToJSON(Value: Variant): String;
+begin
+  if Self.IsNullOrEmpty(Value) then
+    Result := 'null'
+  else
+  begin
+    case TVarData(Value).VType of
+      varWord, varShortInt, varSmallInt, varInteger, varUInt32:
+        Result := IntToStr(Value);
+      varInt64, varUInt64:
+        Result := UIntToStr(Value);
+      varSingle, varDouble, varCurrency:
+        Result := TStringHelper.StringReplace(Value, ['.', ','], ['', '.'], [rfReplaceAll]);
+      varDate:
+        Result := DQuote + AnsiDequotedStr(FormatDateTime('yyyy-mm-dd', Value), SQuote) + DQuote;
+      varBoolean:
+        if Value then
+          Result := 'true'
+        else
+          Result := 'false';
+      varNull:
+        Result := 'null';
+      varString, varUString:
+        // Valida Inteiros ou Decimais
+        if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
+          if TString.IsNull(Value) then
+            Result := QuotedStr(Value)
+          else
+            Result := Value
+            // Valida Data e/ou Date/Hora
+        else if TString.IsDateOrDateTime(Value) then
+          Result := DQuote + AnsiDequotedStr(Self.ToDateOrDateTime(Value), SQuote) + DQuote
+        else
+          if Value = #0 then
+            Result := EmptyStr
+          else if TString.IsNull(Value) then
+            Result := 'null'
+          else
+            // Valida Strings
+            Result := DQuote + AnsiDequotedStr(Value, SQuote) + DQuote;
+
+    else
+      Result := DQuote + AnsiDequotedStr(Value, SQuote) + DQuote;
+    end;
+  end;
+end;
+
+class function TArrayVariantHelper.VarToStr(Value: Variant): String;
+begin
+  if Self.IsNullOrEmpty(Value) then
+    Result := 'null'
+  else
+  begin
+    case TVarData(Value).VType of
+      varWord, varShortInt, varSmallInt, varInteger, varUInt32:
+        Result := IntToStr(Value);
+      varInt64, varUInt64:
+        Result := UIntToStr(Value);
+      varSingle, varDouble, varCurrency:
+        Result := TStringHelper.StringReplace(Value, ['.', ','], ['', '.'], [rfReplaceAll]);
+      varDate:
+        Result := QuotedStr(FormatDateTime('yyyy-mm-dd', Value));
+      varBoolean:
+        if Value then
+          Result := 'true'
+        else
+          Result := 'false';
+      varNull:
+        Result := 'null';
+      varString, varUString:
+        Result := TArrayHelper.StrToStr(Value);
+    else
+      Result := QuotedStr(Value);
+    end;
+  end;
+end;
+
+{ TArrayField }
+
+destructor TArrayField.Destroy;
+begin
+  inherited;
+end;
+
+procedure TArrayField.AddKeyValue(Key: String; Value: TField);
+begin
+  AddKeyValue(Key, Value);
+end;
+
+function TArrayField.GetKey(Index: Integer): String;
+begin
+  Result := ToArray[Index].Key;
+end;
+
+function TArrayField.GetValues(Name: string): TField;
+begin
+  Result := Values[Name];
+end;
+
+function TArrayField.GetValuesAtIndex(Index: Integer): TField;
+var
+  OutValue: TField;
+begin
+  TryGetValue(Self.ToArray[Index].Key, OutValue);
+  Result := OutValue;
+end;
+
+procedure TArrayField.SetValues(Name: String; const Value: TField);
+begin
+  Values[Name] := Value;
+end;
+
+{ TArrayFieldHelper }
+
+class function TArrayFieldHelper.FieldToStr(Field: TField): String;
+var
+  FmtSet: TFormatSettings;
+  I: Integer;
+  I64: Int64;
+  D: Double;
+  Cur: Currency;
+  DT: TDateTime;
+begin
+  if Field.isNull then
+    if (Field.DataType = ftDate) then
+      Result := '0000-00-00'
+    else
+      Result := 'NULL'
+  else
+  begin
+    case Field.DataType of
+      ftSmallint, ftWord, ftInteger:
+      begin
+        i := Field.AsInteger;
+        Result := IntToStr(i);
+        Result := StringReplace(Result, #0, EmptyStr, [rfReplaceAll]);
+      end;
+      ftLargeint:
+      begin
+        I64 := TLargeintField(Field).AsLargeInt;
+        Result := IntToStr(I64);
+      end;
+      ftFloat:
+      begin
+        D := Field.AsFloat;
+        FmtSet.DecimalSeparator := '.';
+        Result := FloatToStr(D, FmtSet);
+      end;
+      ftBCD:
+      begin
+        Cur := Field.AsCurrency;
+        FmtSet.DecimalSeparator := '.';
+        Result := CurrToStr(Cur, FmtSet);
+      end;
+      ftFMTBcd:
+      begin
+        Result := Field.AsString;
+        if FormatSettings.DecimalSeparator <> '.' then
+          Result := StringReplace(Result, FormatSettings.DecimalSeparator, '.', []);
+      end;
+      ftBoolean:
+      begin
+        Result := BoolToStr(Field.AsBoolean, False);
+      end;
+      ftDate:
+      begin
+        DT := Field.AsDateTime;
+        FmtSet.DateSeparator := '-';
+        Result := QuotedStr(FormatDateTime('yyyy-mm-dd', DT, FmtSet));
+      end;
+      ftTime:
+      begin
+        DT := Field.AsDateTime;
+        FmtSet.TimeSeparator := ':';
+        Result := QuotedStr(FormatDateTime('hh:nn:ss', DT, FmtSet));
+      end;
+      ftDateTime:
+      begin
+        DT := Field.AsDateTime;
+        FmtSet.DateSeparator := '-';
+        FmtSet.TimeSeparator := ':';
+        Result := QuotedStr(FormatDateTime('yyyy-mm-dd hh:nn:ss', DT, FmtSet));
+      end;
+    else
+      Result := QuotedStr(TStringHelper.EscapeStrings(Field.Value));
+    end;
+  end;
+end;
+
+end.
+

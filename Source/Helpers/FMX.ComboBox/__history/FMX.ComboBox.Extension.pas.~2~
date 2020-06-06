@@ -1,0 +1,53 @@
+﻿unit FMX.ComboBox.Extension;
+
+interface
+
+uses
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.DateUtils,
+  FMX.Forms,
+  FMX.Pickers,
+  FMX.ListBox,
+  FMX.Types,
+  FMX.Controls,
+  FMX.StdCtrls,
+  FMX.SearchBox;
+
+type
+  TComboBoxHelper = class helper for TComboBox
+  private
+    FSearchBox: TSearchBox;
+    procedure ShowSearchBox(Sender: TObject);
+    procedure Popup(Sender: TObject);
+    procedure ClosePopup(Sender: TObject);
+  public
+  end;
+
+implementation
+
+{ TComboBoxHelper }
+
+procedure TComboBoxHelper.ClosePopup(Sender: TObject);
+begin
+  FSearchBox.Visible := False;
+end;
+
+procedure TComboBoxHelper.Popup(Sender: TObject);
+begin
+  FSearchBox.Visible := True;
+end;
+
+procedure TComboBoxHelper.ShowSearchBox(Sender: TObject);
+begin
+  FSearchBox := TSearchBox.Create(nil);
+  FSearchBox.Align := TAlignLayout.Contents;
+  FSearchBox.Parent := Self;
+  FSearchBox.Visible := False;
+  OnPopup := Popup;
+  OnClosePopup := ClosePopup;
+end;
+
+end.

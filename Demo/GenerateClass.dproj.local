@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/06/06 00:51:24.000.472,=C:\Users\nicks\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/06/06 00:56:43.000.259,D:\Projetos\DELPHI\Generic-Database\Demo\GenerateClassForm.pas=C:\Users\nicks\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/06/06 00:56:43.000.259,D:\Projetos\DELPHI\Generic-Database\Demo\GenerateClassForm.fmx=C:\Users\nicks\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2020/06/06 00:57:11.000.832,C:\Users\nicks\OneDrive\Documentos\Embarcadero\Studio\Projects\GenerateClass.dproj=C:\Users\nicks\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2020/06/06 00:57:46.000.574,D:\Projetos\DELPHI\Generic-Database\Demo\GenerateClass.dproj=C:\Users\nicks\OneDrive\Documentos\Embarcadero\Studio\Projects\GenerateClass.dproj</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>

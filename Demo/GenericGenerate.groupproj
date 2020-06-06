@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{5E42930A-8851-45B2-87EA-F581BD368B4E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="GenericDatabase.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GenerateClass.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="GenericDatabase">
+        <MSBuild Projects="GenericDatabase.dproj"/>
+    </Target>
+    <Target Name="GenericDatabase:Clean">
+        <MSBuild Projects="GenericDatabase.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GenericDatabase:Make">
+        <MSBuild Projects="GenericDatabase.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GenerateClass">
+        <MSBuild Projects="GenerateClass.dproj"/>
+    </Target>
+    <Target Name="GenerateClass:Clean">
+        <MSBuild Projects="GenerateClass.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GenerateClass:Make">
+        <MSBuild Projects="GenerateClass.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="GenericDatabase;GenerateClass"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="GenericDatabase:Clean;GenerateClass:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="GenericDatabase:Make;GenerateClass:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
