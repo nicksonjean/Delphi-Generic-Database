@@ -4,12 +4,12 @@
  
 Generic-Database é um Conjunto de Classes para Conexão Genérica à Bancos de Dados e Exibição dos Dados em Componentes Nativos da IDE de Forma Rápida, Simples e Prática
 
-RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL e FireBird [¹]
-DataBase Frameworks Suportados Atualmente: dbExpress, ZeOsLib e FireDAC [²]
+- RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL e FireBird ¹
+- DataBase Frameworks Suportados Atualmente: dbExpress, ZeOsLib e FireDAC ²
 
 ## Classes Adicionais
-[*] Adição de Matriz Associativa e Multidimensionais PHP-Like;
-[*] Para Suprir a Ausência de Componentes Nativos em Firemonkey do Tipo DB* como DBGrid, DBEdit, DBCombo e etc;
+- Adição de Matriz Associativa e Multidimensionais PHP-Like;
+- Para Suprir a Ausência de Componentes Nativos em Firemonkey do Tipo DB* como DBGrid, DBEdit, DBCombo e etc;
  
 ## Instalação Usando Boss (Gerenciador de Dependências para Aplicações em Delphi)
 ```
@@ -25,9 +25,13 @@ Adicione as Seguintes Pastas ao Seu Projeto, em *Project > Options > Resource Co
 ../Generic-Database/Source/Connection/Connector
 ```
 
-[¹] ToDo para Suportar o Oracle, SQLServer, MSSQL e InterBase
-[²] ToDo para Suportar o UniDAC
-[-] ToDo para Suportar o Component TeeGrid em ComponentConnector
-[-] ToDo para Criar um DBNavigator para TGrid e TStringGrid
-[-] ToDo para Criar a Funcionalidade de Carregar Mais on Scroll para ListBox e ListView
-[-] ToDo para Criar a Paginação para Carregar Mais para ListBox e ListView
+### ToDo
+
+- [ ] ToDo para Suportar o Oracle, SQLServer, MSSQL e InterBase
+- [ ] ToDo para Suportar o UniDAC
+- [ ] ToDo para Suportar o Component TeeGrid em ComponentConnector
+- [ ] ToDo para Criar um DBNavigator para TGrid e TStringGrid
+- [ ] ToDo para Criar a Funcionalidade de Carregar Mais on Scroll para ListBox e ListView
+- [ ] ToDo para Criar a Paginação para Carregar Mais para ListBox e ListView
+
+⁰¹²³⁴⁵⁶⁷⁸⁹
