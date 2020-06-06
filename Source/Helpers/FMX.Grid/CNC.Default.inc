@@ -1,2 +1,2 @@
-{$I ../../Connection/CNX.Consts.inc} //Constantes
-{$I ../../Connection/CNX.Settings.inc} //Condições
+{$I ../../Connection/CNX.Consts.inc}
+{$I ../../Connection/CNX.Settings.inc}
