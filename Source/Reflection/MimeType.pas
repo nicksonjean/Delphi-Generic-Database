@@ -1,3 +1,25 @@
+{
+  MimeType.
+  ------------------------------------------------------------------------------
+  Objetivo : Detectar a MimeType de um Arquivo ou Stream Através Números Mágicos.
+  ------------------------------------------------------------------------------
+  Autor : Nickson Jeanmerson
+  ------------------------------------------------------------------------------
+  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
+  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
+  qualquer versão posterior.
+  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
+  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
+  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
+  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
+  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Você também pode obter uma copia da licença em:
+  http://www.opensource.org/licenses/lgpl-license.php
+}
+
 unit MimeType;
 
 interface
@@ -18,7 +40,6 @@ uses
   System.RTTI,
   System.TypInfo,
   System.NetEncoding,
-
   &String
   ;
 
@@ -61,19 +82,19 @@ type
 implementation
 
 class function TMimeType.StringToAnsi7(const Text: string): String;
-{$ifdef UNICODE}
+{$IFDEF UNICODE}
 var
   I: NativeInt;
 begin
   SetString(Result, nil, Length(Text));
   for I := 0 to Length(Text)-1 do
-    PByteArray(result)[i] := PWordArray(Text)[i]; // no conversion for 7 bit Ansi
+    PByteArray(result)[I] := PWordArray(Text)[I];
 end;
-{$else}
+{$ELSE}
 begin
-  Result := Text; // if we are SURE this text is 7 bit Ansi -> direct assign
+  Result := Text;
 end;
-{$endif}
+{$ENDIF}
 
 class function TMimeType.GetMimeContentTypeFromBuffer(Content: Pointer; Len: NativeInt; const DefaultContentType: String): String;
 begin // see http://www.garykessler.net/library/file_sigs.html for magic numbers
@@ -225,10 +246,10 @@ begin
         end
         else
           Result := Trim(HexStr);
-//        //Leitura
-//        ResultArray.AddKeyValue(SQL.Query.Fields[I].DisplayName, QuotedStr(StrStream));
-//        //Gravação
-//        //ResultArray.AddKeyValue(SQL.Query.Fields[I].DisplayName, TEncoding.Default.GetString(TNetEncoding.Base64.Decode(TEncoding.Default.GetBytes(StringStream.DataString))));
+          //Leitura
+          //ResultArray.AddKeyValue(SQL.Query.Fields[I].DisplayName, QuotedStr(StrStream));
+          //Gravação
+          //ResultArray.AddKeyValue(SQL.Query.Fields[I].DisplayName, TEncoding.Default.GetString(TNetEncoding.Base64.Decode(TEncoding.Default.GetBytes(StringStream.DataString))));
 
           //Reobtenção
           //ResultArray.AddKeyValue(SQL.Query.Fields[I].DisplayName, QuotedStr(SQL.Query.Fields[I].AsString));

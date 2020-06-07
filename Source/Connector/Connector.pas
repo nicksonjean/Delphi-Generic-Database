@@ -1080,7 +1080,8 @@ end;
 
 procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
 begin
-  if (TypeInfo(T) = TypeInfo(TListView)) then
+
+  if (TypeInfo(T) = TypeInfo(TListView)) then
     Self.AddToListView<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, SelectedBy);
 end;
 
@@ -1310,7 +1311,8 @@ begin
 
   if DataSet.RecordCount > 0 then
   begin
-    if AOwner Is TStringGrid then
+
+    if AOwner Is TStringGrid then
       Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
     else if AOwner Is TGrid then
       Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);
@@ -1330,7 +1332,8 @@ begin
 
   if DataSet.RecordCount > 0 then
   begin
-    if AOwner Is TStringGrid then
+
+    if AOwner Is TStringGrid then
       Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
     else if AOwner Is TGrid then
       Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);

@@ -4,8 +4,8 @@
 		<NoProfile iOSSimulator="iPhone5"/>
 	</ActiveMobileDevice>
 	<Transactions>
-    <Transaction>2020/06/06 00:57:19.000.857,D:\Projetos\DELPHI\Generic-Database\Demo\GenericDatabaseTester.dproj=D:\Projetos\DELPHI\Generic-Database\Demo\GenericDatabase.dproj</Transaction>
+    <Transaction>2020/06/06 00:57:19.000.857,D:\Projetos\DELPHI\Generic-Database\Demo\GenericDatabase.dproj=D:\Projetos\DELPHI\Generic-Database\Demo\GenericDatabaseTester.dproj</Transaction>
     <Transaction>2020/06/06 16:57:32.000.773,=D:\Projetos\DELPHI\Generic-Database-NEW\Source\Connection\SQLConnection.pas</Transaction>
-    <Transaction>2020/06/06 16:59:53.641,D:\Projetos\DELPHI\Generic-Database-NEW\Source\Connection\Connection.pas=D:\Projetos\DELPHI\Generic-Database-NEW\Source\Connection\SQLConnection.pas</Transaction>
+    <Transaction>2020/06/06 16:59:53.000.641,D:\Projetos\DELPHI\Generic-Database-NEW\Source\Connection\SQLConnection.pas=D:\Projetos\DELPHI\Generic-Database-NEW\Source\Connection\Connection.pas</Transaction>
   </Transactions>
 </BorlandProject>

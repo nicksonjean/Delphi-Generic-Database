@@ -1,77 +1,25 @@
-{ ***************************************************************************
-
-  Copyright (c) 2015-2019 Nickson Jeanmerson
-
-  Unit        : UDelegateEvent
-  Description : Lib for Work with Delegate Events
-  Author      : Nickson Jeanmerson
-  Version     : 1.0
-  Created     : 27/08/2017
-  Modified    : 27/08/2017
-
-  This file is hosted in:
-  https://www.oipapio.com/question-6606946,
-  https://codeday.me/es/qa/20190307/282169.html,
-  http://qaru.site/questions/403876/tproctobject-to-tnotifyevent,
-  https://coredump.pt/questions/11491593/tproclttobjectgt-to-tnotifyevent,
-  https://itproblemy.pl/questions/11491593/tproclttobjectgt-to-tnotifyevent,
-  https://stackoverflow.com/questions/11491593/tproctobject-to-tnotifyevent,
-  http://git.fzwise.com:81/index.php/archives/162/
-  https://stackoverflow.com/questions/29159763/dynamically-assigning-anonymous-functions-in-pascal;
-  https://codereview.stackexchange.com/questions/52418/anonymous-events-in-delphi
-
-  https://delphihaven.wordpress.com/2009/09/13/calling-an-event-handler-using-rtti/
-
-  (*
-  // Sample
-  Button1.OnClick := DelegateNotifyEvent(
-    Button1,
-    procedure(Sender: TObject)
-    begin
-      (Sender as TButton).Caption := 'Clicked';
-    end
-  );
-  *)
-
-  or
-
-  https://stackoverflow.com/questions/360254/can-i-use-a-closure-on-an-event-handler-ie-tbutton-onclick;
-  https://stackoverflow.com/questions/8025481/vcl-events-with-anonymous-methods-what-do-you-think-about-this-implementation // Estudar DSharp
-
-  (*
-  // Sample
-  procedure TForm36.Button2Click(Sender: TObject);
-  var
-    Win: TForm;
-  begin
-    Win:= TForm.Create(Self);
-    Win.OnClick := TEventComponent.NotifyEvent(
-      Win,
-      procedure
-      begin
-        ShowMessage('Hello');
-        Win.Free;
-      end
-    );
-  Win.Show;
-  end;
-  *)
-
-  ***************************************************************************
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-  *************************************************************************** }
+﻿{
+  EventDriven.
+  ------------------------------------------------------------------------------
+  Objetivo : Biblioteca para Trabalhar com Delegação de Eventos Utilizando
+  o Programação Orientada à Eventos POE no Padrão de Projetos MVE.
+  ------------------------------------------------------------------------------
+  Autor : Nickson Jeanmerson
+  ------------------------------------------------------------------------------
+  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
+  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
+  qualquer versão posterior.
+  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
+  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
+  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
+  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
+  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Você também pode obter uma copia da licença em:
+  http://www.opensource.org/licenses/lgpl-license.php
+}
 
 unit EventDriven;
 

@@ -1,9 +1,10 @@
 ﻿{
-  SQLConnection.
+  Connection.
   ------------------------------------------------------------------------------
   Objetivo : Simplificar a conexão à Bancos de Dados via codigos livre de
   componentes de terceiros.
-  Suporta 3 tipos de componentes do dbExpres, ZeOSLIB e FireDAC.
+  Suporta 3 Framework de Banco de Dados: dbExpres, ZeosLib e FireDAC.
+  Suporta 4 Tipos de Banco de Dados: SQLite, MySQL/MariaDB, Firebird e PostgreSQL
   ------------------------------------------------------------------------------
   Autor : Nickson Jeanmerson
   Colaborador : Ramon Ruan
@@ -21,10 +22,6 @@
   no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
-
-https://www.delphigeist.com/ //TArraySlice
-https://components4developers.blog/2019/03/11/rest-easy-with-kbmmw-24-xml_json_yaml_to_object_conversion/ //REST easy with kbmMW #24 – XML, JSON or YAML to object conversion
-https://stackoverflow.com/questions/7502217/delphi-map-database-table-as-class
 }
 
 {

@@ -1,5 +1,4 @@
 {
-
   &Array.
   ------------------------------------------------------------------------------
   Objetivo : Simplificar a criação de matrizes php-like em Delphi.
@@ -28,10 +27,6 @@
   no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
-
-https://showdelphi.com.br/transformando-qualquer-variant-para-string-para-usar-em-sql/
-https://showdelphi.com.br/diferenca-entre-itask-e-ifuture-delphi/
-https://showdelphi.com.br/dica-como-montar-um-case-com-strings-delphi/
 }
 
 unit &Array;

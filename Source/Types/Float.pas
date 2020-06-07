@@ -28,30 +28,6 @@
   no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
-
-  http://rvelthuis.de/articles/articles-floats.html
-  http://delphi.xcjc.net/viewthread.php?tid=44044
-  https://stackoverflow.com/questions/7069204/how-to-convert-float-or-currency-to-a-localized-string
-  https://stackoverflow.com/questions/30952970/currency-formatting-with-delphi
-
-  https://www.devmedia.com.br/forum/alguem-explica-isso-seria-um-bug-no-delphi/274665
-  http://www.activedelphi.com.br/forum/viewtopic.php?t=70148&highlight=transaction
-  http://www.activedelphi.com.br/forum/viewtopic.php?t=67473&highlight=
-  https://stackoverflow.com/questions/5650051/how-to-keep-2-decimal-places-in-delphi
-  https://stackoverflow.com/questions/15023973/rounding-a-currency
-  https://stackoverflow.com/questions/36675058/delphi-roundto-always-down
-  https://marlonsouza.wordpress.com/2009/01/14/correcao-da-funcao-roundto/
-  https://www.projetoacbr.com.br/forum/topic/1983-acbraac-erro-de-arredondamento/
-
-  https://stackoverflow.com/questions/565797/setroundmodermup-and-rounding-round-values-like-10-results-in-10-0001-how-c
-  https://android.developreference.com/article/20509311/Why+does+FloatToStr+ignore+ThousandSeparator%3F
-  https://github.com/JackTrapper/Exact-Float-to-String-Routines
-  https://stackoverflow.com/questions/4884263/delphi-isnumber
-  https://stackoverflow.com/questions/21981399/fractional-part-to-int
-  https://stackoverflow.com/questions/36675058/delphi-roundto-always-down
-  https://stackoverflow.com/questions/50975653/convert-extended-80-bit-to-string
-  https://stackoverflow.com/questions/22063157/why-does-floattotext-return-different-values-in-different-projects
-  https://stackoverflow.com/questions/38817372/is-there-a-strtocurr-like-function-that-can-deal-with-thousand-separators
 }
 
 unit &Float;
