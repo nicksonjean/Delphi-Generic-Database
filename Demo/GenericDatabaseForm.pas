@@ -14,7 +14,6 @@ uses
   System.DateUtils,
   System.Generics.Collections,
   System.JSON,
-
   FMX.Styles.Objects,
   FMX.Types,
   FMX.Controls,
@@ -24,7 +23,6 @@ uses
   FMX.Controls.Presentation,
   FMX.StdCtrls,
   FMX.TabControl,
-  FMX.Bind.Editors,
   FMX.Grid.Style,
   FMX.ScrollBox,
   FMX.Grid,
@@ -42,7 +40,7 @@ uses
   FMX.Objects,
   FMX.SearchBox,
   FMX.Memo,
-  FMX.Pickers;
+  FMX.Pickers, Data.Bind.Controls, Fmx.Bind.Navigator;
 
 const
   Methods: Array of String = ['Fetch','Copy','Clone','ToList','ToTags','ToXML','ToJSON','ToYAML'];
@@ -228,6 +226,23 @@ type
     LabelComboEditPostgreSQL: TLabel;
     ComboEditPostgreSQL: TComboEdit;
     EditPostgreSQL: TEdit;
+    PagPanelLayout: TGridPanelLayout;
+    PagButtonFirst: TCornerButton;
+    PagButtonPrior: TCornerButton;
+    PagButtonNext: TCornerButton;
+    PagButtonLast: TCornerButton;
+    NavPanelLayout: TGridPanelLayout;
+    NavButtonFirst: TCornerButton;
+    NavButtonPrior: TCornerButton;
+    NavButtonNext: TCornerButton;
+    NavButtonLast: TCornerButton;
+    NavButtonInsert: TCornerButton;
+    NavButtonDelete: TCornerButton;
+    NavButtonEdit: TCornerButton;
+    NavButtonPost: TCornerButton;
+    NavButtonCancel: TCornerButton;
+    NavButtonRefresh: TCornerButton;
+    BindNavigator1: TBindNavigator;
     procedure TabDBSQLiteClick(Sender: TObject);
     procedure TabDBFirebirdClick(Sender: TObject);
     procedure TabDBMySQLClick(Sender: TObject);
@@ -269,7 +284,7 @@ uses
 
 {$R *.fmx}
 
-function TGenericDatabaseForm .ArrayStringTest(const MethodName : String) : String;
+function TGenericDatabaseForm.ArrayStringTest(const MethodName : String) : String;
 var
   Array1, Array2: TArrayString;
   Query: TQueryBuilder;
@@ -356,7 +371,7 @@ begin
   end;
 end;
 
-function TGenericDatabaseForm .ArrayVariantTest(const MethodName : String) : String;
+function TGenericDatabaseForm.ArrayVariantTest(const MethodName : String) : String;
 var
   Array1, Array2: TArrayVariant;
   Query: TQueryBuilder;
@@ -442,7 +457,7 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .Button1Click(Sender: TObject);
+procedure TGenericDatabaseForm.Button1Click(Sender: TObject);
 var
   Array1 : TArrayAssoc;
   Query: TQueryBuilder;
@@ -491,7 +506,7 @@ begin
   end;
 end;
 
-function TGenericDatabaseForm .ArrayFieldTest(const MethodName : String) : String;
+function TGenericDatabaseForm.ArrayFieldTest(const MethodName : String) : String;
 var
   Array1, Array2: TArrayField;
   Array3: TArrayVariant;
@@ -578,17 +593,17 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .EditKeyDownFloatKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+procedure TGenericDatabaseForm.EditKeyDownFloatKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
 begin
   //TEdit(Sender).SetMaskFloatKeyDown(KeyChar, Key);
 end;
 
-procedure TGenericDatabaseForm .EditKeyDownMoneyKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+procedure TGenericDatabaseForm.EditKeyDownMoneyKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
 begin
   //TEdit(Sender).SetMaskMoneyKeyDown(KeyChar, Key);
 end;
 
-procedure TGenericDatabaseForm .ComboBoxDataTypeTArrayStringChange(Sender: TObject);
+procedure TGenericDatabaseForm.ComboBoxDataTypeTArrayStringChange(Sender: TObject);
 var
   Value : String;
 begin
@@ -605,7 +620,7 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .ComboBoxDataTypeTArrayVariantChange(Sender: TObject);
+procedure TGenericDatabaseForm.ComboBoxDataTypeTArrayVariantChange(Sender: TObject);
 var
   Value : String;
 begin
@@ -622,7 +637,7 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .ComboBoxDataTypeTArrayFieldChange(Sender: TObject);
+procedure TGenericDatabaseForm.ComboBoxDataTypeTArrayFieldChange(Sender: TObject);
 var
   Value : String;
 begin
@@ -639,7 +654,7 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .CalculateClick(Sender: TObject);
+procedure TGenericDatabaseForm.CalculateClick(Sender: TObject);
 begin
   MemoResultCalculate.Lines.Clear;
   MemoResultCalculate.Lines.Append(
@@ -673,7 +688,7 @@ begin
   );
 end;
 
-procedure TGenericDatabaseForm .FormatExplicitClick(Sender: TObject);
+procedure TGenericDatabaseForm.FormatExplicitClick(Sender: TObject);
 begin
   MemoResultFormat.Lines.Clear;
   MemoResultFormat.Lines.Append('Original: ' + EditLength1.Text + ' - Valor: ' + TFloat.ToString(EditLength1.Text, StrToInt(EditDecimal1.Text), TResultMode(ComboBoxResult1.ItemIndex)));
@@ -691,7 +706,7 @@ begin
   MemoResultFormat.Lines.Append('Original: ' + EditLength7.Text + ' - Valor: ' + TFloat.ToString(EditLength7.Text, StrToInt(EditDecimal7.Text), TResultMode(ComboBoxResult7.ItemIndex)));
 end;
 
-procedure TGenericDatabaseForm .FormatImplicitClick(Sender: TObject);
+procedure TGenericDatabaseForm.FormatImplicitClick(Sender: TObject);
 begin
   MemoResultFormat.Lines.Clear;
   MemoResultFormat.Lines.Append('Original: ' + EditLength1.Text + ' - Valor: ' + TFloat.ToString(EditLength1.Text));
@@ -709,13 +724,13 @@ begin
   MemoResultFormat.Lines.Append('Original: ' + EditLength7.Text + ' - Valor: ' + TFloat.ToString(EditLength7.Text));
 end;
 
-procedure TGenericDatabaseForm .FormShow(Sender: TObject);
+procedure TGenericDatabaseForm.FormShow(Sender: TObject);
 begin
   EditKeyDownMoney.Placeholder('Máscara Monetária');
   EditKeyDownFloat.Placeholder('Máscara Decimal[4]');
 end;
 
-procedure TGenericDatabaseForm .TabDBFirebirdClick(Sender: TObject);
+procedure TGenericDatabaseForm.TabDBFirebirdClick(Sender: TObject);
 var
   DBFirebird : TConnection;
   SQL: TQuery;
@@ -775,7 +790,7 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .TabDBMySQLClick(Sender: TObject);
+procedure TGenericDatabaseForm.TabDBMySQLClick(Sender: TObject);
 var
   DBMySQL : TConnection;
   SQL: TQuery;
@@ -830,7 +845,7 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .TabDBPostgreSQLClick(Sender: TObject);
+procedure TGenericDatabaseForm.TabDBPostgreSQLClick(Sender: TObject);
 var
   DBPostgreSQL : TConnection;
   SQL: TQuery;
@@ -886,12 +901,14 @@ begin
   end;
 end;
 
-procedure TGenericDatabaseForm .TabDBSQLiteClick(Sender: TObject);
+procedure TGenericDatabaseForm.TabDBSQLiteClick(Sender: TObject);
 var
   DBSQLite : TConnection;
   SQL: TQuery;
   Query: TQueryBuilder;
   Connector: TConnector;
+  JSONString: String;
+  JSONObject, JSONDataBase: TJSONObject;
 begin
   DBSQLite := TConnection.Create;
   //DBSQLite := TConnectionClass.GetInstance();
@@ -920,6 +937,19 @@ begin
         //Connector.ToGrid(StringGridSQLite, -1);
         //Connector.ToGrid(GridSQLite, 6);
         //Connector.ToListView(ListViewSQLite, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 4);
+
+        (*
+        {"index":1}
+        {"index":1,"pagination":{"itemspage":10},"navigator":{"type":"full"}}
+        {"field":{"Codigo":5}}
+        {"field":{"Codigo":5},"pagination":{"itemspage":10},"navigator":{"type":"full"}}
+        *)
+
+
+
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes('{"index":1,"pagination":{"itemspage":10},"navigator":{"type":"full"}}'), 0) as TJSONObject;
+
+
 
         Connector.ToCombo(ComboBoxSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
         Connector.ToCombo(EditSQLite, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));

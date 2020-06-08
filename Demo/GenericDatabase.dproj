@@ -404,6 +404,10 @@
         <DCCReference Include="..\Source\EventDriven\EventDriven.pas"/>
         <DCCReference Include="..\Source\Types\Locale\Locale.pas"/>
         <DCCReference Include="..\Source\Connector\Connector.pas"/>
+        <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.FireMonkey.Parser.pas"/>
+        <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.ListView.pas"/>
+        <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.ListView.TextButtonFix.pas"/>
+        <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.ListView.Types.pas"/>
         <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.ListView.Extension.pas"/>
         <DCCReference Include="..\Source\Extensions\FMX.Edit\FMX.Edit.Extension.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.Grid\FMX.Grid.Helper.pas"/>

@@ -4,8 +4,392 @@ object GenerateClassForm: TGenerateClassForm
   Caption = 'Generator Class From MVC'
   ClientHeight = 600
   ClientWidth = 800
+  WindowState = wsMaximized
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
+  object PagPanelLayout: TGridPanelLayout
+    Opacity = 0.750000000000000000
+    Position.X = 144.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 164.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    ColumnCollection = <
+      item
+        Value = 25.000000000000000000
+      end
+      item
+        Value = 25.000000000000000000
+      end
+      item
+        Value = 25.000000000000000000
+      end
+      item
+        Value = 25.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = PagButtonFirst
+        Row = 0
+      end
+      item
+        Column = 1
+        Control = PagButtonPrior
+        Row = 0
+      end
+      item
+        Column = 2
+        Control = PagButtonNext
+        Row = 0
+      end
+      item
+        Column = 3
+        Control = PagButtonLast
+        Row = 0
+      end>
+    ExpandStyle = FixedSize
+    RowCollection = <
+      item
+        Value = 100.000000000000000000
+      end>
+    object PagButtonFirst: TCornerButton
+      Align = Client
+      Corners = [TopLeft, BottomLeft]
+      StyledSettings = [Style, FontColor]
+      Hint = 'Primeiro'
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = '9'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 8.000000000000000000
+      YRadius = 8.000000000000000000
+    end
+    object PagButtonPrior: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [Style, FontColor]
+      Hint = 'Anterior'
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = '3'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object PagButtonNext: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [Style, FontColor]
+      Hint = 'Pr'#243'ximo'
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = '4'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object PagButtonLast: TCornerButton
+      Align = Client
+      Corners = [TopRight, BottomRight]
+      StyledSettings = [Style, FontColor]
+      Hint = #218'ltimo'
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = ':'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 8.000000000000000000
+      YRadius = 8.000000000000000000
+    end
+  end
+  object NavPanelLayout: TGridPanelLayout
+    Opacity = 0.750000000000000000
+    Position.X = 144.000000000000000000
+    Position.Y = 360.000000000000000000
+    Size.Width = 410.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    ColumnCollection = <
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end
+      item
+        Value = 10.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = NavButtonFirst
+        Row = 0
+      end
+      item
+        Column = 1
+        Control = NavButtonPrior
+        Row = 0
+      end
+      item
+        Column = 2
+        Control = NavButtonNext
+        Row = 0
+      end
+      item
+        Column = 3
+        Control = NavButtonLast
+        Row = 0
+      end
+      item
+        Column = 4
+        Control = NavButtonInsert
+        Row = 0
+      end
+      item
+        Column = 5
+        Control = NavButtonDelete
+        Row = 0
+      end
+      item
+        Column = 6
+        Control = NavButtonEdit
+        Row = 0
+      end
+      item
+        Column = 7
+        Control = NavButtonPost
+        Row = 0
+      end
+      item
+        Column = 8
+        Control = NavButtonCancel
+        Row = 0
+      end
+      item
+        Column = 9
+        Control = NavButtonRefresh
+        Row = 0
+      end>
+    ExpandStyle = FixedSize
+    RowCollection = <
+      item
+        Value = 100.000000000000000000
+      end>
+    object NavButtonFirst: TCornerButton
+      Align = Client
+      Corners = [TopLeft, BottomLeft]
+      StyledSettings = [Style, FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 7
+      Text = '9'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 8.000000000000000000
+      YRadius = 8.000000000000000000
+    end
+    object NavButtonPrior: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [Style, FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 15
+      Text = '3'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonNext: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [Style, FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 14
+      Text = '4'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonLast: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [Style, FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+      Text = ':'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonInsert: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 9
+      Text = #55357#57251
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonDelete: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 8
+      Text = #8211
+      TextSettings.Font.Family = 'Impact'
+      TextSettings.Font.Size = 26.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonEdit: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [Style, FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = '3'
+      TextSettings.Font.Family = 'Wingdings'
+      TextSettings.Font.Size = 24.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonPost: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      Text = #252
+      TextSettings.Font.Family = 'Wingdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonCancel: TCornerButton
+      Align = Client
+      Corners = []
+      StyledSettings = [FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = #251
+      TextSettings.Font.Family = 'Wingdings'
+      TextSettings.Font.Size = 34.000000000000000000
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+    end
+    object NavButtonRefresh: TCornerButton
+      Align = Client
+      Corners = [TopRight, BottomRight]
+      StyledSettings = [FontColor]
+      Locked = True
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 41.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'q'
+      TextSettings.Font.Family = 'Webdings'
+      TextSettings.Font.Size = 26.000000000000000000
+      XRadius = 8.000000000000000000
+      YRadius = 8.000000000000000000
+    end
+  end
+  object BindNavigator1: TBindNavigator
+    Position.X = 144.000000000000000000
+    Position.Y = 400.000000000000000000
+    Size.Width = 410.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    xRadius = 4.000000000000000000
+    yRadius = 4.000000000000000000
+  end
 end

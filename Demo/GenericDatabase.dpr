@@ -7,6 +7,10 @@ uses
   EventDriven in '..\Source\EventDriven\EventDriven.pas',
   Locale in '..\Source\Types\Locale\Locale.pas',
   Connector in '..\Source\Connector\Connector.pas',
+  FMX.FireMonkey.Parser in '..\Source\Extensions\FMX.ListView\FMX.FireMonkey.Parser.pas',
+  FMX.ListView in '..\Source\Extensions\FMX.ListView\FMX.ListView.pas',
+  FMX.ListView.TextButtonFix in '..\Source\Extensions\FMX.ListView\FMX.ListView.TextButtonFix.pas',
+  FMX.ListView.Types in '..\Source\Extensions\FMX.ListView\FMX.ListView.Types.pas',
   FMX.ListView.Extension in '..\Source\Extensions\FMX.ListView\FMX.ListView.Extension.pas',
   FMX.Edit.Extension in '..\Source\Extensions\FMX.Edit\FMX.Edit.Extension.pas',
   FMX.Grid.Helper in '..\Source\Helpers\FMX.Grid\FMX.Grid.Helper.pas',
@@ -29,8 +33,9 @@ uses
 {$R *.res}
 
 begin
-  //ReportMemoryLeaksOnShutdown := True;
+  //ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.CreateForm(TGenericDatabaseForm, FGenericDatabaseForm);
   Application.Run;
+
 end.

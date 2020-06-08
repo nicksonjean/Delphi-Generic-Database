@@ -141,8 +141,10 @@ type
     procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: Integer); overload;
     procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>>); overload;
     procedure AddObject<T: Class>(AOwner: TComponent; Index : String; Value : TObject; SelectedBy: Integer); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; Index : String; Value : TObject; SelectedBy: String); overload;
     procedure AddObject<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>); overload;
     procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: Integer = -1); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: String = ''); overload;
     procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
   protected
     { Strict Private declarations }
@@ -156,10 +158,13 @@ type
     FQuery: TQuery;
     function ToDataSet(Query: TQuery): {$I CNC.Type.inc};
     procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
+    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: String = ''); overload;
     procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
     procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: Integer = -1); overload;
+    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: String = ''); overload;
     procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
     procedure ToGridTable(AOwner: TComponent; SelectedBy: Integer = -1); overload;
+    procedure ToGridTable(AOwner: TComponent; SelectedBy: String = ''); overload;
     procedure ToGridTable(AOwner: TComponent; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
   public
     { Public declarations }
@@ -630,6 +635,11 @@ begin
   end;
 end;
 
+procedure TConnector.AddObject<T>(AOwner: TComponent; Index: String; Value: TObject; SelectedBy: String);
+begin
+  Showmessage('teste');
+end;
+
 procedure TConnector.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
 var
   Pair: TPair<String, TArray<Variant>>;
@@ -1078,9 +1088,13 @@ begin
   end;
 end;
 
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : String = '');
+begin
+  Showmessage('teste');
+end;
+
 procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
 begin
-
   if (TypeInfo(T) = TypeInfo(TListView)) then
     Self.AddToListView<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, SelectedBy);
 end;
@@ -1182,6 +1196,11 @@ begin
   DataSet.Destroy;
 end;
 
+procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: String = '');
+begin
+  Showmessage('teste');
+end;
+
 procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>>);
 var
   I: Integer;
@@ -1273,6 +1292,11 @@ begin
     TListView(AOwner).AlternatingColors := True;
 end;
 
+procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : String = '');
+begin
+  Showmessage('teste');
+end;
+
 procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
 var
   DataSet : {$I CNC.Type.inc};
@@ -1311,12 +1335,16 @@ begin
 
   if DataSet.RecordCount > 0 then
   begin
-
     if AOwner Is TStringGrid then
       Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
     else if AOwner Is TGrid then
       Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);
   end;
+end;
+
+procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : String = '');
+begin
+
 end;
 
 procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
@@ -1332,7 +1360,6 @@ begin
 
   if DataSet.RecordCount > 0 then
   begin
-
     if AOwner Is TStringGrid then
       Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
     else if AOwner Is TGrid then
