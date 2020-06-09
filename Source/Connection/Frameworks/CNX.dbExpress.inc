@@ -1,4 +1,4 @@
-      {$IFDEF dbExpressLib}
+﻿      {$IFDEF dbExpressLib}
       with TConnection.FInstance.FSQLInstance do
       begin
         case FDriver of
@@ -69,7 +69,7 @@
               Params.Values['Role'] := 'RoleName';
               Params.Values['LocaleCode'] := '0000';
               Params.Values['IsolationLevel'] := 'ReadCommitted';
-              Params.Values['ServerCharSet'] := 'ISO8859_1'; // Causando Problemas com Acentuação e Diacríticos
+              Params.Values['ServerCharSet'] := 'ISO8859_1';
               Params.Values['SQLDialect'] := '3';
               Params.Values['BlobSize'] := '-1';
               Params.Values['CommitRetain'] := 'False';
@@ -77,7 +77,7 @@
               Params.Values['TrimChar'] := 'False';
               Params.Values['RoleName'] := 'RoleName';
             end;
-          INTERBASE: // Falta Testar
+          INTERBASE:
             begin
               ConnectionName := 'DBInterbase';
               DriverName := 'InterBase';
@@ -108,37 +108,7 @@
               Params.Values['TrimChar'] := 'False';
               Params.Values['RoleName'] := 'RoleName';
             end;
-          SQLSERVER: // Falta Testar
-            begin
-              ConnectionName := 'DBSQLServer';
-              DriverName := 'SQLServer';
-              KeepConnection := False;
-              LoginPrompt := False;
-              GetDriverFunc := 'getSQLDriverSQLServer';
-              VendorLib := 'sqloledb.dll';
-              LibraryName := 'dbexpsda.dll';
-              Params.BeginUpdate();
-              Params.Clear();
-              Params.Values['ColumnMetadataSupported'] := 'False';
-              Params.Values['LoginPrompt'] := 'False';
-              Params.Values['HostName'] := FHost;
-              Params.Values['Port'] := IntToStr(IfThen(FPort = 1433, 1433, FPort));
-              Params.Values['Database'] := FDatabase;
-              Params.Values['User_Name'] := FUsername;
-              Params.Values['Password'] := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
-              Params.Values['ForceCreateDatabase'] := 'False';
-              Params.Values['FailIfMissing'] := 'False';
-              Params.Values['MaxBlobSize'] := '-1';
-              Params.Values['BlobSize'] := '-1';
-              Params.Values['LocaleCode'] := '0000';
-              Params.Values['Compressed'] := 'True';
-              Params.Values['Encrypted'] := 'False';
-              Params.Values['Max_DBProcesses'] := '50';
-              Params.Values['SchemaOverride'] := '%.dbo';
-              Params.EndUpdate();
-              ParamsLoaded := True;
-            end;
-          MSSQL: // Falta Testar
+          MSSQL:
             begin
               ConnectionName := 'DBMSSQL';
               DriverName := 'MSSQL';
@@ -190,7 +160,7 @@
               Params.EndUpdate();
               ParamsLoaded := True;
             end;
-          ORACLE: // Falta Testar
+          ORACLE:
             begin
               ConnectionName := 'DBOracle';
               DriverName := 'Oracle';

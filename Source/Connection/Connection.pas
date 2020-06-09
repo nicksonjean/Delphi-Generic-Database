@@ -143,6 +143,8 @@ uses
   FireDAC.Phys.FBDef,
   FireDAC.Phys.PG,
   FireDAC.Phys.PGDef,
+  FireDAC.Phys.MSSQL,
+  FireDAC.Phys.MSSQLDef,
 {$ENDIF}
 {$ENDIF}
 
@@ -163,8 +165,8 @@ uses
 {$ENDIF}
   System.UITypes;
 
-type        // OK     OK       OK                                     OK
-  TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, SQLSERVER, MSSQL, POSTGRES, ORACLE);
+type        // OK     OK       OK                 OK       OK            
+  TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, MSSQL, POSTGRES, ORACLE);
 
   { Design Pattern Singleton }
 type
@@ -465,7 +467,7 @@ begin
     begin
 
     end;
-    SQLSERVER, MSSQL:
+    MSSQL:
     begin
 
     end;

@@ -10,16 +10,19 @@
               ConnectionName := 'DBSQLite';
               DriverName := 'SQLite';
               Connected := False;
-              with ResourceOptions as TFDTopResourceOptions do begin
+              with ResourceOptions as TFDTopResourceOptions do
+              begin
                 KeepConnection := True;
                 Persistent := True;
                 SilentMode := True;
               end;
-              with FetchOptions as TFDFetchOptions do begin
+              with FetchOptions as TFDFetchOptions do
+              begin
                 RecordCountMode := cmVisible;
               end;
               LoginPrompt := False;
-              with Params as TFDPhysSQLiteConnectionDefParams do begin
+              with Params as TFDPhysSQLiteConnectionDefParams do
+              begin
                 BeginUpdate();
                 Clear;
                 DriverID := 'SQLite';
@@ -35,17 +38,20 @@
               ConnectionName := 'DBMySQL';
               DriverName := 'MySQL';
               Connected := False;
-              with ResourceOptions as TFDTopResourceOptions do begin
+              with ResourceOptions as TFDTopResourceOptions do
+              begin
                 KeepConnection := True;
                 Persistent := True;
                 SilentMode := True;
                 DirectExecute := True;
               end;
-              with FetchOptions as TFDFetchOptions do begin
+              with FetchOptions as TFDFetchOptions do
+              begin
                 RecordCountMode := cmVisible;
               end;
               LoginPrompt := False;
-              with Params as TFDPhysMySQLConnectionDefParams do begin
+              with Params as TFDPhysMySQLConnectionDefParams do
+              begin
                 BeginUpdate();
                 Clear;
                 DriverID := 'MySQL';
@@ -67,17 +73,20 @@
               ConnectionName := 'DBFirebird';
               DriverName := 'FB';
               Connected := False;
-              with ResourceOptions as TFDTopResourceOptions do begin
+              with ResourceOptions as TFDTopResourceOptions do
+              begin
                 KeepConnection := True;
                 Persistent := True;
                 SilentMode := True;
                 DirectExecute := True;
               end;
-              with FetchOptions as TFDFetchOptions do begin
+              with FetchOptions as TFDFetchOptions do
+              begin
                 RecordCountMode := cmVisible;
               end;
               LoginPrompt := False;
-              with Params as TFDPhysFBConnectionDefParams do begin
+              with Params as TFDPhysFBConnectionDefParams do
+              begin
                 BeginUpdate();
                 Clear;
                 DriverID := 'FB';
@@ -90,20 +99,43 @@
               end;
               Params.Values['Protocol'] := 'ipTCPIP';
             end;
-          INTERBASE: // Falta Testar
+          INTERBASE:
             begin
               ConnectionName := 'DBInterbase';
 
             end;
-          SQLSERVER: // Falta Testar
+          MSSQL:
             begin
-              ConnectionName := 'DBSQLServer';
-
-            end;
-          MSSQL: // Falta Testar
-            begin
+              {$IFDEF MSWINDOWS}
+              //TFDPhysMSSQLDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlncli11.dll';
+              {$ENDIF}
               ConnectionName := 'DBMSSQL';
-
+              DriverName := 'MSSQL';
+              Connected := False;
+              with ResourceOptions as TFDTopResourceOptions do
+              begin
+                KeepConnection := True;
+                Persistent := True;
+                SilentMode := True;
+                DirectExecute := True;
+              end;
+              with FetchOptions as TFDFetchOptions do
+              begin
+                RecordCountMode := cmVisible;
+              end;
+              LoginPrompt := False;
+              with Params as TFDPhysMSSQLConnectionDefParams do
+              begin
+                BeginUpdate();
+                Clear;
+                DriverID := 'MSSQL';
+                Server := FHost;
+                Port :=  IfThen(FPort = 1433, 1433, FPort);
+                Database := FDatabase;
+                UserName := FUsername;
+                Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+                EndUpdate();
+              end;
             end;
           POSTGRES:
             begin
@@ -124,7 +156,8 @@
                 RecordCountMode := cmVisible;
               end;
               LoginPrompt := False;
-              with Params as TFDPhysPGConnectionDefParams do begin
+              with Params as TFDPhysPGConnectionDefParams do
+              begin
                 BeginUpdate();
                 Clear;
                 DriverID := 'PG';
@@ -138,7 +171,7 @@
               end;
               ExecSQL('SET search_path TO E''' + FSchema + ''', E''public'';');
             end;
-          ORACLE: // Falta Testar
+          ORACLE:
             begin
               ConnectionName := 'DBOracle';
 

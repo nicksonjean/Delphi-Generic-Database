@@ -2,16 +2,17 @@
 <BorlandProject>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5"/>
-	</ActiveMobileDevice>  <Transactions>
-    <Transaction>2020/06/07 23:49:26.072,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Appearances.pas</Transaction>
-    <Transaction>2020/06/07 23:49:26.186,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.pas</Transaction>
-    <Transaction>2020/06/07 23:49:26.290,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Types.pas</Transaction>
-    <Transaction>2020/06/08 00:16:07.082,D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Appearances.pas=</Transaction>
-    <Transaction>2020/06/08 00:16:07.192,D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.pas=</Transaction>
-    <Transaction>2020/06/08 00:16:07.200,D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Types.pas=</Transaction>
-    <Transaction>2020/06/08 00:18:34.733,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.FireMonkey.Parser.pas</Transaction>
-    <Transaction>2020/06/08 00:18:34.815,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.ListView.pas</Transaction>
-    <Transaction>2020/06/08 00:18:34.887,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.ListView.TextButtonFix.pas</Transaction>
-    <Transaction>2020/06/08 00:18:34.967,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.ListView.Types.pas</Transaction>
+	</ActiveMobileDevice>
+	<Transactions>
+    <Transaction>2020/06/07 23:49:26.000.290,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Types.pas</Transaction>
+    <Transaction>2020/06/07 23:49:26.000.072,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Appearances.pas</Transaction>
+    <Transaction>2020/06/07 23:49:26.000.186,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.pas</Transaction>
+    <Transaction>2020/06/08 00:16:07.000.082,D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Appearances.pas=</Transaction>
+    <Transaction>2020/06/08 00:16:07.000.192,D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.pas=</Transaction>
+    <Transaction>2020/06/08 00:16:07.000.200,D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\Sacred\FMX.ListView.Types.pas=</Transaction>
+    <Transaction>2020/06/08 00:18:34.000.967,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.ListView.Types.pas</Transaction>
+    <Transaction>2020/06/08 00:18:34.000.815,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.ListView.pas</Transaction>
+    <Transaction>2020/06/08 00:18:34.000.733,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.FireMonkey.Parser.pas</Transaction>
+    <Transaction>2020/06/08 00:18:34.000.887,=D:\Projetos\DELPHI\Generic-Database\Source\Extensions\FMX.ListView\FMX.ListView.TextButtonFix.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -40,7 +40,9 @@ uses
   FMX.Objects,
   FMX.SearchBox,
   FMX.Memo,
-  FMX.Pickers, Data.Bind.Controls, Fmx.Bind.Navigator;
+  FMX.Pickers,
+  Data.Bind.Controls,
+  Fmx.Bind.Navigator;
 
 const
   Methods: Array of String = ['Fetch','Copy','Clone','ToList','ToTags','ToXML','ToJSON','ToYAML'];
@@ -243,6 +245,26 @@ type
     NavButtonCancel: TCornerButton;
     NavButtonRefresh: TCornerButton;
     BindNavigator1: TBindNavigator;
+    TabDBSQLServer: TTabItem;
+    GroupBoxComponentsMSSQL: TGroupBox;
+    GridPanelLayoutMSSQL: TGridPanelLayout;
+    LabelComboBoxMSSQL: TLabel;
+    ComboBoxMSSQL: TComboBox;
+    LabelListBoxMSSQL: TLabel;
+    LabelListViewMSSQL: TLabel;
+    ListBoxMSSQL: TListBox;
+    SearchBoxMSSQL: TSearchBox;
+    ListViewMSSQL: TListView;
+    LabelStringGridMSSQL: TLabel;
+    LabelGridMSSQL: TLabel;
+    StringGridMSSQL: TStringGrid;
+    GridMSSQL: TGrid;
+    GridPanelLayoutMSSQLAutoCompleteEdit: TGridPanelLayout;
+    EditMSSQL: TEdit;
+    ComboEditMSSQL: TComboEdit;
+    GridPanelLayoutMSSQLLabels: TGridPanelLayout;
+    LabelEditMSSQL: TLabel;
+    LabelComboEditMSSQL: TLabel;
     procedure TabDBSQLiteClick(Sender: TObject);
     procedure TabDBFirebirdClick(Sender: TObject);
     procedure TabDBMySQLClick(Sender: TObject);
@@ -257,6 +279,7 @@ type
     procedure EditKeyDownFloatKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure TabDBSQLServerClick(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -901,6 +924,61 @@ begin
   end;
 end;
 
+procedure TGenericDatabaseForm.TabDBSQLServerClick(Sender: TObject);
+var
+  DBSQServer : TConnection;
+  SQL: TQuery;
+  Query: TQueryBuilder;
+  Connector: TConnector;
+begin
+  DBSQServer := TConnection.Create;
+  //DBSQLite := TConnectionClass.GetInstance();
+  try
+    DBSQServer.Driver := MSSQL;
+    DBSQServer.Host := '127.0.0.1';
+    DBSQServer.Port := 1433;
+    DBSQServer.Database := 'demodev';
+    DBSQServer.Username := 'sa';
+    DBSQServer.Password := 'masterkey';
+
+    if not DBSQServer.GetInstance.Connection.Connected then
+      DBSQServer.GetInstance.Connection.Connected := True;
+
+    SQL := TQuery.Create;
+    try
+      SQL := Query.View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM "estado" ORDER BY "id"');
+
+      Connector := TConnector.Create(SQL);
+      try
+        //Connector.ToCombo(ComboBoxMSSQL, 'Codigo', 'Estado', 0);
+        //Connector.ToCombo(EditMSSQL, 'Codigo', 'Estado', 1);
+        //Connector.ToCombo(ComboEditMSSQL, 'Codigo', 'Estado', 2);
+        //Connector.ToListBox(ListBoxMSSQL, 'Codigo', 'Estado', 3);
+        //Connector.ToGrid(StringGridMSSQL, -1);
+        //Connector.ToGrid(GridMSSQL, 6);
+        //Connector.ToListView(ListViewMSSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 4);
+
+        Connector.ToCombo(ComboBoxMSSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        Connector.ToCombo(EditMSSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));
+        Connector.ToCombo(ComboEditMSSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[5]]));
+        Connector.ToListBox(ListBoxMSSQL, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Espírito Santo']]));
+        Connector.ToGrid(StringGridMSSQL, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'SP']]));
+        Connector.ToGrid(GridMSSQL, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
+        Connector.ToListView(ListViewMSSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+        //Connector.ToListView(ListViewMSSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', '1']]));
+       finally
+        Connector.Destroy;
+      end;
+
+    finally
+      SQL.Destroy;
+    end;
+
+  finally
+    DBSQServer.Destroy;
+  end;
+end;
+
 procedure TGenericDatabaseForm.TabDBSQLiteClick(Sender: TObject);
 var
   DBSQLite : TConnection;
@@ -908,7 +986,10 @@ var
   Query: TQueryBuilder;
   Connector: TConnector;
   JSONString: String;
-  JSONObject, JSONDataBase: TJSONObject;
+  JSONObject,
+  JSONFields,
+  JSONPagination,
+  JSONNavigation : TJSONObject;
 begin
   DBSQLite := TConnection.Create;
   //DBSQLite := TConnectionClass.GetInstance();
@@ -940,14 +1021,25 @@ begin
 
         (*
         {"index":1}
-        {"index":1,"pagination":{"itemspage":10},"navigator":{"type":"full"}}
+        {"index":1,"pagination":{"itemspage":10},"navigation":{"type":"full"}}
         {"field":{"Codigo":5}}
-        {"field":{"Codigo":5},"pagination":{"itemspage":10},"navigator":{"type":"full"}}
+        {"field":{"Codigo":5},"pagination":{"itemspage":10},"navigation":{"type":"full"}}
         *)
 
 
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes('{"index":1,"pagination":{"itemspage":10},"navigation":{"type":"full"}}'), 0) as TJSONObject;
+        //JSONObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes('{"field":{"Codigo":5},"pagination":{"itemspage":10},"navigation":{"type":"full"}}'), 0) as TJSONObject;
 
-        JSONObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes('{"index":1,"pagination":{"itemspage":10},"navigator":{"type":"full"}}'), 0) as TJSONObject;
+        JSONPagination := JSONObject.Get('pagination').JsonValue as TJSONObject;
+        JSONNavigation := JSONObject.Get('navigation').JsonValue as TJSONObject;
+
+
+        //Showmessage(JSONObject.GetValue('index').ToString);
+        //showmessage(JSONPagination.ToString);
+        //showmessage(JSONNavigation.ToString);
+
+        if JSONObject.TryGetValue('index', JSONString) then
+          Showmessage(JSONString);
 
 
 
