@@ -3,7 +3,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
   Top = 0
   Caption = 'DataBase Connection, Connectors, DataArray & Query Builder Demo'
   ClientHeight = 750
-  ClientWidth = 407
+  ClientWidth = 437
   Position = DesktopCenter
   WindowState = wsMaximized
   FormFactor.Width = 320
@@ -14,18 +14,18 @@ object GenericDatabaseForm: TGenericDatabaseForm
   object TabControl: TTabControl
     Align = Client
     FullSize = True
-    Size.Width = 407.000000000000000000
+    Size.Width = 437.000000000000000000
     Size.Height = 750.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 0
     TabOrder = 16
     TabPosition = PlatformDefault
     Sizes = (
-      407s
+      437s
       700s
-      407s
+      437s
       700s
-      407s
+      437s
       700s)
     object TabSQLConnection: TTabItem
       AutoSize = False
@@ -33,7 +33,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
         item
         end>
       IsSelected = True
-      Size.Width = 135.000000000000000000
+      Size.Width = 145.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -44,7 +44,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
       object TabControlSQLConnection: TTabControl
         Align = Client
         FullSize = True
-        Size.Width = 407.000000000000000000
+        Size.Width = 437.000000000000000000
         Size.Height = 700.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = 'tabcontrolstyle'
@@ -52,15 +52,15 @@ object GenericDatabaseForm: TGenericDatabaseForm
         TabOrder = 16
         TabPosition = PlatformDefault
         Sizes = (
-          407s
+          437s
           650s
-          407s
+          437s
           650s
-          407s
+          437s
           650s
-          407s
+          437s
           650s
-          407s
+          437s
           650s)
         object TabDBSQLite: TTabItem
           AutoSize = False
@@ -68,7 +68,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = True
-          Size.Width = 81.000000000000000000
+          Size.Width = 87.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -83,7 +83,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             Margins.Top = 6.000000000000000000
             Margins.Right = 12.000000000000000000
             Margins.Bottom = 12.000000000000000000
-            Size.Width = 383.000000000000000000
+            Size.Width = 413.000000000000000000
             Size.Height = 632.000000000000000000
             Size.PlatformDefault = False
             Text = 'Components'
@@ -94,7 +94,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 18.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 612.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -192,7 +192,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end>
               object LabelComboBoxSQLite: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -201,14 +201,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ComboBoxSQLite: TComboBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 23
               end
               object LabelListBoxSQLite: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -217,7 +217,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListViewSQLite: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -226,7 +226,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ListBoxSQLite: TListBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 31
@@ -234,7 +234,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 230.000000000000000000
                 object SearchBoxSQLite: TSearchBox
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -245,7 +245,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 189.500000000000000000
+                  Size.Width = 204.500000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -256,7 +256,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 HeaderAppearanceClassName = 'TListHeaderObjects'
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 30
@@ -264,7 +264,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelStringGridSQLite: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -273,7 +273,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelGridSQLite: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -284,27 +284,27 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 1
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridSQLite: TGrid
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridPanelLayoutSQLiteAutoCompleteEdit: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 32
@@ -335,7 +335,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
                   TabOrder = 33
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -345,14 +345,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   TabOrder = 25
                   ItemHeight = 19.000000000000000000
                   ItemIndex = -1
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
               end
               object GridPanelLayoutSQLiteLabels: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 33
@@ -381,7 +381,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object LabelEditSQLite: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -390,7 +390,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LabelComboEditSQLite: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -407,7 +407,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 81.000000000000000000
+          Size.Width = 87.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -422,7 +422,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             Margins.Top = 6.000000000000000000
             Margins.Right = 12.000000000000000000
             Margins.Bottom = 12.000000000000000000
-            Size.Width = 383.000000000000000000
+            Size.Width = 413.000000000000000000
             Size.Height = 632.000000000000000000
             Size.PlatformDefault = False
             Text = 'Components'
@@ -433,7 +433,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 18.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 612.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -531,7 +531,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end>
               object LabelComboBoxFirebird: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -540,7 +540,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListBoxFirebird: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -549,7 +549,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListViewFirebird: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -558,7 +558,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelStringGridFirebird: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -567,7 +567,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelGridFirebird: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -576,14 +576,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ComboBoxFirebird: TComboBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 18
               end
               object ListBoxFirebird: TListBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 29
@@ -591,7 +591,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 230.000000000000000000
                 object SearchBoxFirebird: TSearchBox
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -602,7 +602,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 189.500000000000000000
+                  Size.Width = 204.500000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -613,7 +613,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 HeaderAppearanceClassName = 'TListHeaderObjects'
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 28
@@ -623,27 +623,27 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridFirebird: TGrid
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridPanelLayoutFirebirdLabels: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 31
@@ -674,7 +674,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object LabelEditFirebird: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -683,7 +683,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LabelComboEditFirebird: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -693,7 +693,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object GridPanelLayoutFirebirdAutoCompleteEdit: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 30
@@ -724,7 +724,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
                   TabOrder = 33
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -734,7 +734,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   TabOrder = 23
                   ItemHeight = 19.000000000000000000
                   ItemIndex = -1
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -748,7 +748,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 81.000000000000000000
+          Size.Width = 87.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -763,7 +763,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             Margins.Top = 6.000000000000000000
             Margins.Right = 12.000000000000000000
             Margins.Bottom = 12.000000000000000000
-            Size.Width = 383.000000000000000000
+            Size.Width = 413.000000000000000000
             Size.Height = 632.000000000000000000
             Size.PlatformDefault = False
             Text = 'Components'
@@ -774,7 +774,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 18.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 612.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -872,7 +872,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end>
               object LabelComboBoxMySQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -881,7 +881,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListBoxMySQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -890,7 +890,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListViewMySQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -899,7 +899,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelStringGridMySQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -908,7 +908,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelGridMySQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -917,14 +917,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ComboBoxMySQL: TComboBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 17
               end
               object ListBoxMySQL: TListBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 27
@@ -932,7 +932,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 230.000000000000000000
                 object SearchBoxMySQL: TSearchBox
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -943,7 +943,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 189.500000000000000000
+                  Size.Width = 204.500000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -954,7 +954,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 HeaderAppearanceClassName = 'TListHeaderObjects'
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 26
@@ -964,27 +964,27 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridMySQL: TGrid
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridPanelLayoutMySQLLabels: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 29
@@ -1015,7 +1015,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object LabelEditMySQL: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1024,7 +1024,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LabelComboEditMySQL: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1034,7 +1034,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object GridPanelLayoutMySQLAutoCompleteEdit: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 28
@@ -1070,7 +1070,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   TabOrder = 22
                   ItemHeight = 19.000000000000000000
                   ItemIndex = -1
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1078,7 +1078,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
                   TabOrder = 33
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1092,7 +1092,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 81.000000000000000000
+          Size.Width = 87.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -1107,7 +1107,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             Margins.Top = 6.000000000000000000
             Margins.Right = 12.000000000000000000
             Margins.Bottom = 12.000000000000000000
-            Size.Width = 383.000000000000000000
+            Size.Width = 413.000000000000000000
             Size.Height = 632.000000000000000000
             Size.PlatformDefault = False
             Text = 'Components'
@@ -1118,7 +1118,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 18.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 612.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -1216,7 +1216,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end>
               object LabelComboBoxPostgreSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1225,7 +1225,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListBoxPostgreSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1234,7 +1234,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListViewPostgreSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1243,7 +1243,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelStringGridPostgreSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1252,7 +1252,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelGridPostgreSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1261,14 +1261,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ComboBoxPostgreSQL: TComboBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 16
               end
               object ListBoxPostgreSQL: TListBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 27
@@ -1276,7 +1276,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 230.000000000000000000
                 object SearchBoxPostgreSQL: TSearchBox
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -1287,7 +1287,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 189.500000000000000000
+                  Size.Width = 204.500000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1298,7 +1298,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 HeaderAppearanceClassName = 'TListHeaderObjects'
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 26
@@ -1308,27 +1308,27 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridPostgreSQL: TGrid
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridPanelLayoutPostgreSQLLabels: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 29
@@ -1357,7 +1357,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object LabelEditPostgreSQL: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1366,7 +1366,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LabelComboEditPostgreSQL: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1376,7 +1376,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object GridPanelLayoutPostgreSQLAutoCompleteEdit: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 28
@@ -1409,7 +1409,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   TabOrder = 21
                   ItemHeight = 19.000000000000000000
                   ItemIndex = -1
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1417,7 +1417,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
                   TabOrder = 33
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1430,7 +1430,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 81.000000000000000000
+          Size.Width = 87.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -1445,7 +1445,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             Margins.Top = 6.000000000000000000
             Margins.Right = 12.000000000000000000
             Margins.Bottom = 12.000000000000000000
-            Size.Width = 383.000000000000000000
+            Size.Width = 413.000000000000000000
             Size.Height = 632.000000000000000000
             Size.PlatformDefault = False
             Text = 'Components'
@@ -1456,7 +1456,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 18.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 612.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -1554,7 +1554,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end>
               object LabelComboBoxMSSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1563,14 +1563,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ComboBoxMSSQL: TComboBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 23
               end
               object LabelListBoxMSSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1579,7 +1579,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelListViewMSSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1588,7 +1588,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object ListBoxMSSQL: TListBox
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 31
@@ -1596,7 +1596,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 DefaultItemStyles.ItemStyle = ''
                 DefaultItemStyles.GroupHeaderStyle = ''
                 DefaultItemStyles.GroupFooterStyle = ''
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 230.000000000000000000
                 object SearchBoxMSSQL: TSearchBox
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -1607,7 +1607,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 189.500000000000000000
+                  Size.Width = 204.500000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1618,7 +1618,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 HeaderAppearanceClassName = 'TListHeaderObjects'
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 256.006408691406300000
                 Size.PlatformDefault = False
                 TabOrder = 30
@@ -1626,7 +1626,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelStringGridMSSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1635,7 +1635,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelGridMSSQL: TLabel
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -1646,27 +1646,27 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 1
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridMSSQL: TGrid
                 Align = Client
                 CanFocus = True
                 ClipChildren = True
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 255.993591308593800000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 185.500000000000000000
+                Viewport.Width = 200.500000000000000000
                 Viewport.Height = 231.000000000000000000
               end
               object GridPanelLayoutMSSQLAutoCompleteEdit: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 32
@@ -1697,7 +1697,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
                   TabOrder = 33
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1707,14 +1707,14 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   TabOrder = 25
                   ItemHeight = 19.000000000000000000
                   ItemIndex = -1
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 40.000000000000000000
                   Size.PlatformDefault = False
                 end
               end
               object GridPanelLayoutMSSQLLabels: TGridPanelLayout
                 Align = Client
-                Size.Width = 189.500000000000000000
+                Size.Width = 204.500000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 33
@@ -1743,7 +1743,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object LabelEditMSSQL: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1752,7 +1752,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LabelComboEditMSSQL: TLabel
                   Align = Client
-                  Size.Width = 94.750000000000000000
+                  Size.Width = 102.250000000000000000
                   Size.Height = 20.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1771,7 +1771,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
         item
         end>
       IsSelected = False
-      Size.Width = 135.000000000000000000
+      Size.Width = 145.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -1782,20 +1782,20 @@ object GenericDatabaseForm: TGenericDatabaseForm
       object TabControlDataTypes: TTabControl
         Align = Client
         FullSize = True
-        Size.Width = 407.000000000000000000
+        Size.Width = 437.000000000000000000
         Size.Height = 700.000000000000000000
         Size.PlatformDefault = False
         TabIndex = 0
         TabOrder = 16
         TabPosition = PlatformDefault
         Sizes = (
-          407s
+          437s
           650s
-          407s
+          437s
           650s
-          407s
+          437s
           650s
-          407s
+          437s
           650s)
         object TabStrings: TTabItem
           AutoSize = False
@@ -1803,7 +1803,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = True
-          Size.Width = 101.000000000000000000
+          Size.Width = 108.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -2200,7 +2200,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 101.000000000000000000
+          Size.Width = 108.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -2210,7 +2210,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
           ExplicitSize.cy = 50.000000000000000000
           object GridPanelLayoutFloats: TGridPanelLayout
             Align = Client
-            Size.Width = 407.000000000000000000
+            Size.Width = 437.000000000000000000
             Size.Height = 650.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 5
@@ -2251,7 +2251,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 6.000000000000000000
               Margins.Right = 12.000000000000000000
               Margins.Bottom = 8.000000000000000000
-              Size.Width = 383.000000000000000000
+              Size.Width = 413.000000000000000000
               Size.Height = 268.750000000000000000
               Size.PlatformDefault = False
               Text = 'FloatFormat'
@@ -2262,7 +2262,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Margins.Top = 18.000000000000000000
                 Margins.Right = 2.000000000000000000
                 Margins.Bottom = 2.000000000000000000
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 248.750000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -2355,7 +2355,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object LayoutFloatFormatTest1: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 20
@@ -2364,7 +2364,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 0
                     Text = '15649846989.7654'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2373,7 +2373,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 1
                     Text = '2'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2384,7 +2384,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2393,7 +2393,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LayoutFloatFormatTest2: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 18
@@ -2402,7 +2402,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 6
                     Text = '15649846989,7654'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2411,7 +2411,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 15
                     Text = '2'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2422,7 +2422,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2431,7 +2431,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LayoutFloatFormatTest3: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 21
@@ -2440,7 +2440,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 3
                     Text = '15.649.846.989,7654'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2449,7 +2449,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 13
                     Text = '2'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2460,7 +2460,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2469,7 +2469,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LayoutFloatFormatTest4: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 19
@@ -2478,7 +2478,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 3
                     Text = '15,649,846,989.7654'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2487,7 +2487,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 11
                     Text = '2'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2498,7 +2498,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2507,7 +2507,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LayoutFloatFormatTest5: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 17
@@ -2516,7 +2516,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 3
                     Text = '15649846989'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2525,7 +2525,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 8
                     Text = '0'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2536,7 +2536,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2545,7 +2545,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LayoutFloatFormatTest6: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 16
@@ -2554,7 +2554,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 3
                     Text = 'R$ 7.75'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2563,7 +2563,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 7
                     Text = '2'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2574,7 +2574,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2583,7 +2583,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object LayoutFloatFormatTest7: TLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 15
@@ -2592,7 +2592,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Client
                     TabOrder = 8
                     Text = '5,15%'
-                    Size.Width = 254.000000000000000000
+                    Size.Width = 284.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2601,7 +2601,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     Align = Right
                     TabOrder = 7
                     Text = '2'
-                    Position.X = 354.000000000000000000
+                    Position.X = 384.000000000000000000
                     Size.Width = 25.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2612,7 +2612,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                       'Truncate'
                       'Round')
                     ItemIndex = 0
-                    Position.X = 254.000000000000000000
+                    Position.X = 284.000000000000000000
                     Size.Width = 100.000000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
@@ -2623,16 +2623,16 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
                   DataDetectorTypes = []
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 43.750000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 22
-                  Viewport.Width = 375.000000000000000000
+                  Viewport.Width = 405.000000000000000000
                   Viewport.Height = 39.800000000000000000
                 end
                 object GridPanelLayoutFloatFormatActions: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 23
@@ -2663,7 +2663,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     end>
                   object FormatExplicit: TButton
                     Align = Client
-                    Size.Width = 189.500000000000000000
+                    Size.Width = 204.500000000000000000
                     Size.Height = 30.000000000000000000
                     Size.PlatformDefault = False
                     TabOrder = 1
@@ -2672,7 +2672,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end
                   object FormatImplicit: TButton
                     Align = Client
-                    Size.Width = 189.500000000000000000
+                    Size.Width = 204.500000000000000000
                     Size.Height = 30.000000000000000000
                     Size.PlatformDefault = False
                     TabOrder = 0
@@ -2688,7 +2688,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 6.000000000000000000
               Margins.Right = 12.000000000000000000
               Margins.Bottom = 8.000000000000000000
-              Size.Width = 383.000000000000000000
+              Size.Width = 413.000000000000000000
               Size.Height = 268.750000000000000000
               Size.PlatformDefault = False
               Text = 'FloatCalculate'
@@ -2699,7 +2699,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 Margins.Top = 18.000000000000000000
                 Margins.Right = 2.000000000000000000
                 Margins.Bottom = 2.000000000000000000
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 248.750000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -2792,7 +2792,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   end>
                 object Calculate: TButton
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 30.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
@@ -2803,16 +2803,16 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
                   DataDetectorTypes = []
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 43.750000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 16
-                  Viewport.Width = 375.000000000000000000
+                  Viewport.Width = 405.000000000000000000
                   Viewport.Height = 39.800000000000000000
                 end
                 object GridPanelLayoutFloatCalculate1: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 23
@@ -2857,7 +2857,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2867,7 +2867,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2885,7 +2885,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object GridPanelLayoutFloatCalculate2: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 22
@@ -2930,7 +2930,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2940,7 +2940,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -2958,7 +2958,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object GridPanelLayoutFloatCalculate3: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 21
@@ -3003,7 +3003,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3013,7 +3013,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3031,7 +3031,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object GridPanelLayoutFloatCalculate4: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 20
@@ -3076,7 +3076,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3086,7 +3086,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3104,7 +3104,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object GridPanelLayoutFloatCalculate5: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 19
@@ -3149,7 +3149,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3159,7 +3159,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3177,7 +3177,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object GridPanelLayoutFloatCalculate6: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 18
@@ -3222,7 +3222,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3232,7 +3232,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3250,7 +3250,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end
                 object GridPanelLayoutFloatCalculate7: TGridPanelLayout
                   Align = Client
-                  Size.Width = 379.000000000000000000
+                  Size.Width = 409.000000000000000000
                   Size.Height = 25.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 17
@@ -3295,7 +3295,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 1
                     Text = '2.79'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3305,7 +3305,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                     TabOrder = 0
                     Text = '0.345'
                     TextSettings.HorzAlign = Center
-                    Size.Width = 179.500000000000000000
+                    Size.Width = 194.500000000000000000
                     Size.Height = 25.000000000000000000
                     Size.PlatformDefault = False
                   end
@@ -3327,7 +3327,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Align = Client
               Margins.Left = 14.000000000000000000
               Margins.Right = 14.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 84.500000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -3362,7 +3362,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 TextSettings.HorzAlign = Trailing
                 Margins.Top = 10.000000000000000000
                 Margins.Bottom = 10.000000000000000000
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 22.250000000000000000
                 Size.PlatformDefault = False
                 TextPrompt = '0,0000'
@@ -3376,7 +3376,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 TextSettings.HorzAlign = Trailing
                 Margins.Top = 10.000000000000000000
                 Margins.Bottom = 10.000000000000000000
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 22.250000000000000000
                 Size.PlatformDefault = False
                 TextPrompt = '0,00'
@@ -3390,7 +3390,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 101.000000000000000000
+          Size.Width = 108.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -3411,7 +3411,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             item
             end>
           IsSelected = False
-          Size.Width = 102.000000000000000000
+          Size.Width = 111.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -3425,7 +3425,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             Margins.Top = 6.000000000000000000
             Margins.Right = 12.000000000000000000
             Margins.Bottom = 12.000000000000000000
-            Size.Width = 383.000000000000000000
+            Size.Width = 413.000000000000000000
             Size.Height = 632.000000000000000000
             Size.PlatformDefault = False
             Text = 'Arrays'
@@ -3436,7 +3436,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Top = 18.000000000000000000
               Margins.Right = 2.000000000000000000
               Margins.Bottom = 2.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 180.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -3503,7 +3503,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                 end>
               object LabelDataTypeArrayString: TLabel
                 Align = Client
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -3512,7 +3512,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelDataTypeArrayVariant: TLabel
                 Align = Client
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -3521,7 +3521,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               end
               object LabelDataTypeArrayField: TLabel
                 Align = Client
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
                 TextSettings.HorzAlign = Center
@@ -3539,7 +3539,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   'ToXML'
                   'ToJSON'
                   'ToYAML')
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 16
@@ -3556,7 +3556,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   'ToXML'
                   'ToJSON'
                   'ToYAML')
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 15
@@ -3573,7 +3573,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
                   'ToXML'
                   'ToJSON'
                   'ToYAML')
-                Size.Width = 379.000000000000000000
+                Size.Width = 409.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 14
@@ -3590,11 +3590,11 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 2.000000000000000000
               Position.Y = 197.000000000000000000
-              Size.Width = 379.000000000000000000
+              Size.Width = 409.000000000000000000
               Size.Height = 433.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 17
-              Viewport.Width = 375.000000000000000000
+              Viewport.Width = 405.000000000000000000
               Viewport.Height = 429.000000000000000000
             end
           end
@@ -3606,7 +3606,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
         item
         end>
       IsSelected = False
-      Size.Width = 135.000000000000000000
+      Size.Width = 145.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -3620,7 +3620,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
         Margins.Top = 6.000000000000000000
         Margins.Right = 12.000000000000000000
         Margins.Bottom = 12.000000000000000000
-        Size.Width = 383.000000000000000000
+        Size.Width = 413.000000000000000000
         Size.Height = 682.000000000000000000
         Size.PlatformDefault = False
         Text = 'Query Arrays'
@@ -3631,7 +3631,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
           Margins.Top = 18.000000000000000000
           Margins.Right = 2.000000000000000000
           Margins.Bottom = 2.000000000000000000
-          Size.Width = 379.000000000000000000
+          Size.Width = 409.000000000000000000
           Size.Height = 281.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -3698,7 +3698,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
             end>
           object LabelQueryBuilderArrayString: TLabel
             Align = Client
-            Size.Width = 379.000000000000000000
+            Size.Width = 409.000000000000000000
             Size.Height = 20.000000000000000000
             Size.PlatformDefault = False
             TextSettings.HorzAlign = Center
@@ -3707,7 +3707,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
           end
           object LabelQueryBuilderArrayVariant: TLabel
             Align = Client
-            Size.Width = 379.000000000000000000
+            Size.Width = 409.000000000000000000
             Size.Height = 20.000000000000000000
             Size.PlatformDefault = False
             TextSettings.HorzAlign = Center
@@ -3716,7 +3716,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
           end
           object LabelQueryBuilderArrayField: TLabel
             Align = Client
-            Size.Width = 379.000000000000000000
+            Size.Width = 409.000000000000000000
             Size.Height = 20.000000000000000000
             Size.PlatformDefault = False
             TextSettings.HorzAlign = Center
@@ -3731,7 +3731,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               'Delete'
               'Replace'
               'Upsert')
-            Size.Width = 379.000000000000000000
+            Size.Width = 409.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 16
@@ -3744,7 +3744,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               'Delete'
               'Replace'
               'Upsert')
-            Size.Width = 379.000000000000000000
+            Size.Width = 409.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 15
@@ -3757,7 +3757,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               'Delete'
               'Replace'
               'Upsert')
-            Size.Width = 379.000000000000000000
+            Size.Width = 409.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 14
@@ -3773,11 +3773,11 @@ object GenericDatabaseForm: TGenericDatabaseForm
           Margins.Bottom = 2.000000000000000000
           Position.X = 2.000000000000000000
           Position.Y = 298.000000000000000000
-          Size.Width = 379.000000000000000000
+          Size.Width = 409.000000000000000000
           Size.Height = 382.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 16
-          Viewport.Width = 375.000000000000000000
+          Viewport.Width = 405.000000000000000000
           Viewport.Height = 378.000000000000000000
         end
       end

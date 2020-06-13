@@ -1,4 +1,4 @@
-{
+﻿{
   ReflectionClass.RTTI.
   ------------------------------------------------------------------------------
   Objetivo : Simplificar a convesão, formatação e comparação de valores
@@ -28,38 +28,9 @@
   no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
-
-
-  https://delphi-developers-archive.blogspot.com/2015/04/hi_16.html
-  https://stackoverflow.com/questions/48690532/returning-an-objectlist-from-rtti-in-delphi
-  https://stackoverflow.com/questions/28922070/how-can-i-get-the-sub-item-type-of-a-tobjectlistt-purely-by-rtti-information
-  http://edgarpavao.com/2017/07/01/um-pouco-sobre-o-tvalue/
-  http://tireideletra.wbagestao.com/index.php/page/7/
-  https://stackoverflow.com/questions/2559049/delphi-rtti-and-tobjectlisttobject
-  https://stackoverflow.com/questions/48828365/rtti-invoke-a-class-method-says-invalid-type-cast
-  https://android.developreference.com/article/12584253/Returning+an+ObjectList+from+RTTI+in+delphi
-  https://stackoverflow.com/questions/46433385/einvalidcast-wih-mock-function-returning-a-pointer-type
-  https://code5.cn/so/delphi/701002
-  https://stackoverflow.com/questions/23863815/how-to-get-tvirtualinterfaces-invoke-method-argument-names
-  https://stackoverflow.com/questions/48334544/how-to-pass-an-array-of-pointer-types-to-rttimethods-invoke-in-delphi
-  https://stackoverflow.com/questions/32393566/how-do-i-use-a-string-in-trttimethod-invoke-as-parameter-properly
-  https://stackoverflow.com/questions/18289782/delphi-rtti-using-method-invoke-for-tkenumeration-parameter
-  https://stackoverflow.com/questions/42412051/convert-targlist-argument-to-tvalue
-  https://stackoverflow.com/questions/2559049/delphi-rtti-and-tobjectlisttobject
-  https://stackoverflow.com/questions/28922070/how-can-i-get-the-sub-item-type-of-a-tobjectlistt-purely-by-rtti-information
-  https://stackoverflow.com/questions/10192534/delphi-invoke-record-method-per-name/10194803
-
-  http://www.andrecelestino.com/delphi-validando-propriedades-de-uma-classe-com-rtti/
-  https://www.andrecelestino.com/delphi-usando-uma-classe-sem-usa-la/
-  https://www.webtips.com.br/Home/Detail/6
-  http://www.luizsistemas.com.br/2012/10/reflection-que-tal-um-orm-basico-parte-2/
-  https://showdelphi.com.br/executar-metodos-de-classe-pelo-nome-e-sem-precisar-dar-uses-da-unit/
-  https://delphisorcery.blogspot.com/2012/06/bug-or-no-bug-that-is-question.html
-  https://stackoverflow.com/questions/48828365/rtti-invoke-a-class-method-says-invalid-type-cast
-  https://github.com/amarildolacerda/helpers/blob/master/System.Classes.Helper.pas
 }
 
-unit ReflectionClass.RTTI;
+unit RTTI;
 
 interface
 
@@ -75,14 +46,21 @@ uses
   System.Threading,
   System.JSON,
   System.Math,
-  System.Rtti,
+  System.RTTI,
+  System.TypInfo,
   System.Generics.Collections
   ;
 
 type
-  TClassRTTI = class
-    private
-    { Private declarations }
+  TEnumConverter = class
+  public
+    { Public declarations }
+    class function EnumToInt<T>(const EnumValue: T): Integer;
+    class function EnumToString<T>(EnumValue: T): string;
+  end;
+
+type
+  TRTTI = class
     public
     { Public declarations }
     class function DynArrayVariantToValue(const Value: Variant): TValue; overload;
@@ -91,9 +69,24 @@ type
     class function RunMethod(ClassName: TArray<String>; MethodName : TArray<String>; MethodParams : TArray<TValue>) : TObjectList<TObject>; overload;
   end;
 
-{ TClassRTTI }
+implementation
 
-class function TClassRTTI.RunMethod(ClassName : TArray<String>; MethodName : TArray<String>; MethodParams : TArray<TValue>): TObjectList<TObject>;
+{ TEnumConverter }
+
+class function TEnumConverter.EnumToInt<T>(const EnumValue: T): Integer;
+begin
+  Result := 0;
+  Move(EnumValue, Result, sizeOf(EnumValue));
+end;
+
+class function TEnumConverter.EnumToString<T>(EnumValue: T): String;
+begin
+  Result := GetEnumName(TypeInfo(T), EnumToInt(EnumValue));
+end;
+
+{ TRTTI }
+
+class function TRTTI.RunMethod(ClassName : TArray<String>; MethodName : TArray<String>; MethodParams : TArray<TValue>): TObjectList<TObject>;
 var
   I : Integer;
 begin
@@ -102,7 +95,7 @@ begin
     Result := Self.RunMethod(ClassName[I], MethodName[I], MethodParams).AsType<TObjectList<TObject>>;
 end;
 
-class function TClassRTTI.RunMethod(ClassName : String; MethodName : String; MethodParams : TArray<TValue>): TValue;
+class function TRTTI.RunMethod(ClassName : String; MethodName : String; MethodParams : TArray<TValue>): TValue;
 var
   Context: TRttiContext;
   Instance: TRttiInstanceType;
@@ -125,7 +118,7 @@ begin
   end;
 end;
 
-class function TClassRTTI.DynArrayVariantToValue(const Value: Variant; TypeInfo: Pointer): TValue;
+class function TRTTI.DynArrayVariantToValue(const Value: Variant; TypeInfo: Pointer): TValue;
 var
   PointerHandle: Pointer;
 begin
@@ -134,7 +127,7 @@ begin
   TValue.MakeWithoutCopy(@PointerHandle, TypeInfo, Result);
 end;
 
-class function TClassRTTI.DynArrayVariantToValue(const Value: Variant): TValue;
+class function TRTTI.DynArrayVariantToValue(const Value: Variant): TValue;
 begin
   case VarType(Value) and not varArray of
     varSmallint: Result := TValue.From(Value);

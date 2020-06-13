@@ -403,7 +403,13 @@
         <DCCReference Include="..\Source\Connection\Connection.pas"/>
         <DCCReference Include="..\Source\EventDriven\EventDriven.pas"/>
         <DCCReference Include="..\Source\Types\Locale\Locale.pas"/>
+        <DCCReference Include="..\Source\Reflection\RTTI.pas"/>
         <DCCReference Include="..\Source\Connector\Connector.pas"/>
+        <DCCReference Include="..\Source\Connector\OptionsInteger.pas"/>
+        <DCCReference Include="..\Source\Connector\OptionsArray.pas"/>
+        <DCCReference Include="..\Source\Connector\OptionsJSON.pas"/>
+        <DCCReference Include="..\Source\Vendor\XSuperObject\XSuperJSON.pas"/>
+        <DCCReference Include="..\Source\Vendor\XSuperObject\XSuperObject.pas"/>
         <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.FireMonkey.Parser.pas"/>
         <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.ListView.pas"/>
         <DCCReference Include="..\Source\Extensions\FMX.ListView\FMX.ListView.TextButtonFix.pas"/>
@@ -468,6 +474,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Win32\Debug\GenericDatabase.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>GenericDatabase.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\GenericDatabase.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>GenericDatabase.exe</RemoteName>
                         <Overwrite>true</Overwrite>

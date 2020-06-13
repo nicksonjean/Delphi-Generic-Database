@@ -25,7 +25,7 @@ unit Connector;
 
 interface
 
-{ Carrega a Interface Padrão }
+{ Carrega as Variáveis Padrão }
 {$I CNC.Default.inc}
 
 uses
@@ -66,10 +66,8 @@ uses
   FMX.Edit,
   FMX.Edit.Style,
   FMX.Controls.Presentation,
-
-  FMX.Dialogs,
-
   Data.DB,
+  FMX.Dialogs,
 
 {$IFDEF FireDACLib}
   FireDAC.Stan.Intf,
@@ -98,7 +96,6 @@ uses
 
   FMX.ListView.Extension,
   FMX.Edit.Extension,
-
   FMX.Edit.Helper,
   FMX.ListView.Helper,
   FMX.ListBox.Helper,
@@ -108,9 +105,9 @@ uses
   FMX.ComboBox.Helper,
   DictionaryHelper,
   ArrayHelper,
-
   EventDriven,
   Connection,
+  RTTI,
   &Array
   ;
 
@@ -124,54 +121,84 @@ type
     property Value: TValue read FValue;
   end;
 
+  { Tipos Específicos Pré-Validados }
+type
+  TNavigationType = (Pages, Full);
+  TPairArray = Array[0..1] of Variant;
+  TDetailArray = Array[0..2] of Variant;
+
+  { Classe para Criação dos Itens em Formato JSON, Utilizada em ToListView }
+type
+  TJSONItem = class
+  private
+    { Private declarations }
+    FJSONData: String;
+  public
+    { Public declarations }
+    const Height = 76;
+    function GetJSONData: String;
+    procedure SetJSONData(IndexField, ValueField, DataFields: String);
+    procedure AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+  end;
+
+  { Classe Estática para Facilitar a Alimentação do Parâmetro Options no Formato JSON }
+type
+  TJSONOptionsHelper = class
+  public
+    class function &Set(Index : Integer): String; overload;
+    class function &Set(Index : Integer; Pagination: Integer = -1): String; overload;
+    class function &Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String; overload;
+    class function &Set(Field : TArray<Variant>): String; overload;
+    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1): String; overload;
+    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String; overload;
+  end;
+
+  { Classe Estática para Facilitar a Alimentação do Parâmetro Options no Formato Array }
+type
+  TArrayOptionsHelper = class
+  public
+    class function &Set(Index : Integer): TDictionary<String, TArray<Variant>>; overload;
+    class function &Set(Index : Integer; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>; overload;
+    class function &Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>; overload;
+    class function &Set(Field : TArray<Variant>): TDictionary<String, TArray<Variant>>; overload;
+    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>; overload;
+    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>; overload;
+  end;
+
   { Classe TConnector Herdade de TQuery }
 type
   TConnector = class(TQuery)
-  strict protected
-    { Strict Protected declarations }
-    procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-  strict private
-    { Strict Private declarations }
-    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: Integer); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>>); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; Index : String; Value : TObject; SelectedBy: Integer); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; Index : String; Value : TObject; SelectedBy: String); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: Integer = -1); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: String = ''); overload;
-    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
   protected
-    { Strict Private declarations }
-    const FItemHeight = 76;
-    var FJSONData: String;
-    function GetJSONData: String;
-    procedure SetJSONData(IndexField, ValueField, DataFields: String);
-    procedure AddItem<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+    { protected declarations }
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: Integer); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: String); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: TDictionary<String, TArray<Variant>>); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; IndexField, ValueField: TArray<String>; Options: Integer); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; IndexField, ValueField: TArray<String>; Options: String); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; IndexField, ValueField: TArray<String>; Options: TDictionary<String, TArray<Variant>>); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = ''); overload;
+    procedure AddObject<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil); overload;
   private
     { Private declarations }
     FQuery: TQuery;
     function ToDataSet(Query: TQuery): {$I CNC.Type.inc};
-    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
-    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: String = ''); overload;
-    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
-    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: Integer = -1); overload;
-    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: String = ''); overload;
-    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
-    procedure ToGridTable(AOwner: TComponent; SelectedBy: Integer = -1); overload;
-    procedure ToGridTable(AOwner: TComponent; SelectedBy: String = ''); overload;
-    procedure ToGridTable(AOwner: TComponent; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; Options: Integer = -1); overload;
+    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; Options: String = ''); overload;
+    procedure ToFillList(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1); overload;
+    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = ''); overload;
+    procedure ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToGridTable(AOwner: TComponent; Options: Integer = -1); overload;
+    procedure ToGridTable(AOwner: TComponent; Options: String = ''); overload;
+    procedure ToGridTable(AOwner: TComponent; Options: TDictionary<String, TArray<Variant>> = nil); overload;
   public
     { Public declarations }
     constructor Create(Query: TQuery);
     destructor Destroy; override;
+
     /// <summary>
-    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TGrid</c> e/ou <c>TStringGrid</c>
+    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TGrid</c> ou <c>TStringGrid</c>
     ///   <para>Exemplo:</para>
     ///   <code>
     ///     <para>SQL := TQuery.Create;</para>
@@ -189,18 +216,52 @@ type
     ///   </code>
     /// </summary>
     /// <param name="AOwner:Requerido">
-    ///   O componente do tipo <c>TGrid</c> e/ou <c>TStringGrid</c> que se quer popular
+    ///   O componente do tipo <c>TGrid</c> ou <c>TStringGrid</c> que se quer popular
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   O índice numérico da linha do <c>TListBox</c> que se quer selecionar
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToGrid'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToGrid'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToGrid(AOwner: TComponent; SelectedBy : Integer = -1); overload;
+    procedure ToGrid(AOwner: TComponent; Options : Integer = -1); overload;
+
     /// <summary>
-    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TGrid</c> e/ou <c>TStringGrid</c>
+    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TGrid</c> ou <c>TStringGrid</c>
+    ///   <para>Exemplo:</para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToGrid(GridComponent1, '{"Index":0}');</para>
+    ///     <para>    Connector.ToGrid(GridComponent2, '{"Field":{"DBField":"DBValue"}}');</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner:Requerido">
+    ///   O componente do tipo <c>TGrid</c> ou <c>TStringGrid</c> que se quer popular
+    /// </param>
+    /// <param name="Options:Opcional[¹]">
+    ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
+    ///   <para>1) Seleção por índice: <c>'{"Index":0}';</c></para>
+    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>'{"Field":{"DBField":"DBValue"}}';</c></para>
+    /// </param>
+    /// <remarks>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToGrid'</c>, informando que há uma ambiguidade de métodos</para>
+    /// </remarks>
+
+    procedure ToGrid(AOwner: TComponent; Options : String = ''); overload;
+
+    /// <summary>
+    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TGrid</c> ou <c>TStringGrid</c>
     ///   <para>Exemplo:</para>
     ///   <code>
     ///     <para>SQL := TQuery.Create;</para>
@@ -219,18 +280,19 @@ type
     ///   </code>
     /// </summary>
     /// <param name="AOwner:Requerido">
-    ///   O componente do tipo <c>TGrid</c> e/ou <c>TStringGrid</c> que se quer popular
+    ///   O componente do tipo <c>TGrid</c> ou <c>TStringGrid</c> que se quer popular
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
     ///   <para>1) Seleção por índice: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</c></para>
     ///   <para>2) Seleção por pares[DBField, DBValue]: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</c></para>
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToGrid'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToGrid'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToGrid(AOwner: TComponent; SelectedBy : TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToGrid(AOwner: TComponent; Options : TDictionary<String, TArray<Variant>> = nil); overload;
+
     /// <summary>
     ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TEdit</c>
     ///   <para>Exemplo:</para>
@@ -240,7 +302,7 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToEdit(EditComponent0, 'DBField1', 'DBField2', 0);</para>
+    ///     <para>    Connector.ToEdit(EditComponent0, 'IndexField', 'ValueField', 0);</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -258,14 +320,15 @@ type
     /// <param name="ValueField:Requerido">
     ///   A coluna que se quer exibir na listagem
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   O índice numérico da linha do <c>TEdit</c> que se quer selecionar
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToEdit'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToEdit'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
+    procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; Options: Integer = -1); overload;
+
     /// <summary>
     ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TEdit</c>
     ///   <para>Exemplo:</para>
@@ -275,8 +338,8 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToEdit(EditComponent1, 'DBField1', 'DBField2', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
-    ///     <para>    Connector.ToEdit(EditComponent2, 'DBField1', 'DBField2', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</para>
+    ///     <para>    Connector.ToEdit(EditComponent1, 'IndexField', 'ValueField', '{"Index":0}');</para>
+    ///     <para>    Connector.ToEdit(EditComponent2, 'IndexField', 'ValueField', '{"Field":{"DBField":"DBValue"}}');</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -294,18 +357,19 @@ type
     /// <param name="ValueField:Requerido">
     ///   A coluna que se quer exibir na listagem
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
-    ///   <para>1) Seleção por índice: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</c></para>
-    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</c></para>
+    ///   <para>1) Seleção por índice: <c>'{"Index":0}';</c></para>
+    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>'{"Field":{"DBField":"DBValue"}}';</c></para>
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToEdit'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToEdit'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; Options: String = ''); overload;
+
     /// <summary>
-    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TComboBox</c>, <c>TComboEdit</c> e/ou <c>TEdit</c>
+    ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TEdit</c>
     ///   <para>Exemplo:</para>
     ///   <code>
     ///     <para>SQL := TQuery.Create;</para>
@@ -313,7 +377,46 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToCombo(ComboComponent0, 'DBField1', 'DBField2', 0);</para>
+    ///     <para>    Connector.ToEdit(EditComponent1, 'IndexField', 'ValueField', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
+    ///     <para>    Connector.ToEdit(EditComponent2, 'IndexField', 'ValueField', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner:Requerido">
+    ///   O componente do tipo <c>TEdit</c> que se quer popular
+    /// </param>
+    /// <param name="IndexField:Requerido">
+    ///   Uma coluna para indexação de preferência o Auto-Incremento da consulta
+    /// </param>
+    /// <param name="ValueField:Requerido">
+    ///   A coluna que se quer exibir na listagem
+    /// </param>
+    /// <param name="Options:Opcional[¹]">
+    ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
+    ///   <para>1) Seleção por índice: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</c></para>
+    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</c></para>
+    /// </param>
+    /// <remarks>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToEdit'</c>, informando que há uma ambiguidade de métodos</para>
+    /// </remarks>
+
+    procedure ToEdit(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>> = nil); overload;
+
+    /// <summary>
+    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TComboBox</c>, <c>TComboEdit</c> ou <c>TEdit</c>
+    ///   <para>Exemplo:</para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToCombo(ComboComponent0, 'IndexField', 'ValueField', 0);</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -331,16 +434,56 @@ type
     /// <param name="ValueField:Requerido">
     ///   A coluna que se quer exibir na listagem
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   O índice numérico da linha do <c>TComboBox</c>, <c>TComboEdit</c> e/ou <c>TEdit</c> que se quer selecionar
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'TComboBox|TComboEdit|TEdit'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToCombo'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToCombo(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
+    procedure ToCombo(AOwner: TComponent; IndexField, ValueField: String; Options: Integer = -1); overload;
+
     /// <summary>
-    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TComboBox</c>, <c>TComboEdit</c> e/ou <c>TEdit</c>
+    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TComboBox</c>, <c>TComboEdit</c> ou <c>TEdit</c>
+    ///   <para>Exemplo:</para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToCombo(ComboComponent1, 'IndexField', 'ValueField', '{"Index":0}');</para>
+    ///     <para>    Connector.ToCombo(ComboComponent2, 'IndexField', 'ValueField', '{"Field":{"DBField":"DBValue"}}');</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner:Requerido">
+    ///   O componente do tipo <c>TComboBox</c>, <c>TComboEdit</c> e/ou <c>TEdit</c> que se quer popular
+    /// </param>
+    /// <param name="IndexField:Requerido">
+    ///   Uma coluna para indexação de preferência o Auto-Incremento da consulta
+    /// </param>
+    /// <param name="ValueField:Requerido">
+    ///   A coluna que se quer exibir na listagem
+    /// </param>
+    /// <param name="Options:Opcional[¹]">
+    ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
+    ///   <para>1) Seleção por índice: <c>'{"Index":0}';</c></para>
+    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>'{"Field":{"DBField":"DBValue"}}';</c></para>
+    /// </param>
+    /// <remarks>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToCombo'</c>, informando que há uma ambiguidade de métodos</para>
+    /// </remarks>
+
+    procedure ToCombo(AOwner: TComponent; IndexField, ValueField: String; Options: String = ''); overload;
+
+    /// <summary>
+    ///   Método para exibir os dados de uma consulta SQL diretamente nos componentes <c>TComboBox</c>, <c>TComboEdit</c> ou <c>TEdit</c>
     ///   <para>Exemplo:</para>
     ///   <code>
     ///     <para>SQL := TQuery.Create;</para>
@@ -367,16 +510,17 @@ type
     /// <param name="ValueField:Requerido">
     ///   A coluna que se quer exibir na listagem
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
     ///   <para>1) Seleção por indice: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</c></para>
     ///   <para>2) Seleção por pares[DBField, DBValue]: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</c></para>
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'TComboBox|TComboEdit|TEdit'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToCombo'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToCombo(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToCombo(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>> = nil); overload;
+
     /// <summary>
     ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TListBox</c>
     ///   <para>Exemplo:</para>
@@ -386,7 +530,7 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToListBox(ListBoxComponent0, 'DBField1', 'DBField2', 0);</para>
+    ///     <para>    Connector.ToListBox(ListBoxComponent0, 'IndexField', 'ValueField', 0);</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -404,14 +548,15 @@ type
     /// <param name="ValueField:Requerido">
     ///   A coluna que se quer exibir na listagem
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   O índice numérico da linha do <c>TListBox</c> que se quer selecionar
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListBox'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListBox'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToListBox(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer = -1); overload;
+    procedure ToListBox(AOwner: TComponent; IndexField, ValueField: String; Options: Integer = -1); overload;
+
     /// <summary>
     ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TListBox</c>
     ///   <para>Exemplo:</para>
@@ -421,8 +566,8 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToListBox(ListBoxComponent1, 'DBField1', 'DBField2', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
-    ///     <para>    Connector.ToListBox(ListBoxComponent2, 'DBField1', 'DBField2', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</para>
+    ///     <para>    Connector.ToListBox(ListBoxComponent1, 'IndexField', 'ValueField', '{"Index":0}');</para>
+    ///     <para>    Connector.ToListBox(ListBoxComponent2, 'IndexField', 'ValueField', '{"Field":{"DBField":"DBValue"}}');</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -440,16 +585,56 @@ type
     /// <param name="ValueField:Requerido">
     ///   A coluna que se quer exibir na listagem
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
+    ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
+    ///   <para>1) Seleção por índice: <c>'{"Index":0}';</c></para>
+    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>'{"Field":{"DBField":"DBValue"}}';</c></para>
+    /// </param>
+    /// <remarks>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListBox'</c>, informando que há uma ambiguidade de métodos</para>
+    /// </remarks>
+
+    procedure ToListBox(AOwner: TComponent; IndexField, ValueField: String; Options: String = ''); overload;
+
+    /// <summary>
+    ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TListBox</c>
+    ///   <para>Exemplo:</para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToListBox(ListBoxComponent1, 'IndexField', 'ValueField', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
+    ///     <para>    Connector.ToListBox(ListBoxComponent2, 'IndexField', 'ValueField', TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner:Requerido">
+    ///   O componente do tipo <c>TListBox</c> que se quer popular
+    /// </param>
+    /// <param name="IndexField:Requerido">
+    ///   Uma coluna para indexação de preferência o Auto-Incremento da consulta
+    /// </param>
+    /// <param name="ValueField:Requerido">
+    ///   A coluna que se quer exibir na listagem
+    /// </param>
+    /// <param name="Options:Opcional[¹]">
     ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
     ///   <para>1) Seleção por índice: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</c></para>
     ///   <para>2) Seleção por pares[DBField, DBValue]: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</c></para>
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListBox'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListBox'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToListBox(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToListBox(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>> = nil); overload;
+
     /// <summary>
     ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TListView</c>
     ///   <para>Exemplo:</para>
@@ -459,7 +644,7 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToListView(ListViewComponent0, 'DBField1', 'DBField2', [DetailFields], 0);</para>
+    ///     <para>    Connector.ToListView(ListViewComponent0, 'IndexField', 'ValueField', [DetailFields], 0);</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -480,15 +665,16 @@ type
     /// <param name="DetailFields:Opcional[²]">
     ///   As colunas adicionais que se quer exibir na listagem, até o máximo de 3 colunas
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
     ///   O índice numérico da linha do <c>TListView</c> que se quer selecionar
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>-1</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
     ///   <para>[²]: O parâmetro <c>DetailFields</c> é uma matriz de strings que pode conter de 0 à 3 índices, no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>[]</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: Integer = -1); overload;
+    procedure ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1); overload;
+
     /// <summary>
     ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TListView</c>
     ///   <para>Exemplo:</para>
@@ -498,8 +684,8 @@ type
     ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
     ///     <para>  Connector := TConnector.Create(SQL);</para>
     ///     <para>  try</para>
-    ///     <para>    Connector.ToListView(ListViewComponent1, 'DBField1', 'DBField2', [DetailFields], TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
-    ///     <para>    Connector.ToListView(ListViewComponent2, 'DBField1', 'DBField2', [DetailFields], TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</para>
+    ///     <para>    Connector.ToListView(ListViewComponent1, 'IndexField', 'ValueField', [DetailFields], '{"Index":0}');</para>
+    ///     <para>    Connector.ToListView(ListViewComponent2, 'IndexField', 'ValueField', [DetailFields], '{"Field":{"DBField":"DBValue"}}');</para>
     ///     <para>  finally</para>
     ///     <para>    Connector.Destroy;</para>
     ///     <para>  end;</para>
@@ -520,20 +706,68 @@ type
     /// <param name="DetailFields:Opcional[²]">
     ///   As colunas adicionais que se quer exibir na listagem, até o máximo de 3 colunas
     /// </param>
-    /// <param name="SelectedBy:Opcional[¹]">
+    /// <param name="Options:Opcional[¹]">
+    ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
+    ///   <para>1) Seleção por índice: <c>'{"Index":0}';</c></para>
+    ///   <para>2) Seleção por pares[DBField, DBValue]: <c>'{"Field":{"DBField":"DBValue"}}';</c></para>
+    /// </param>
+    /// <remarks>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[²]: O parâmetro <c>DetailFields</c> é uma matriz de strings que pode conter de 0 à 3 índices, no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>[]</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
+    /// </remarks>
+
+    procedure ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = ''); overload;
+
+    /// <summary>
+    ///   Método para exibir os dados de uma consulta SQL diretamente no componente <c>TListView</c>
+    ///   <para>Exemplo:</para>
+    ///   <code>
+    ///     <para>SQL := TQuery.Create;</para>
+    ///     <para>try</para>
+    ///     <para>  SQL := Query.View('SELECT DBField FROM DBTable');</para>
+    ///     <para>  Connector := TConnector.Create(SQL);</para>
+    ///     <para>  try</para>
+    ///     <para>    Connector.ToListView(ListViewComponent1, 'IndexField', 'ValueField', [DetailFields], TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</para>
+    ///     <para>    Connector.ToListView(ListViewComponent2, 'IndexField', 'ValueField', [DetailFields], TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</para>
+    ///     <para>  finally</para>
+    ///     <para>    Connector.Destroy;</para>
+    ///     <para>  end;</para>
+    ///     <para>finally</para>
+    ///     <para>  SQL.Destroy;</para>
+    ///     <para>end;</para>
+    ///   </code>
+    /// </summary>
+    /// <param name="AOwner:Requerido">
+    ///   O componente do tipo <c>TListView</c> que se quer popular
+    /// </param>
+    /// <param name="IndexField:Requerido">
+    ///   Uma coluna para indexação de preferência o Auto-Incremento da consulta
+    /// </param>
+    /// <param name="ValueField:Requerido">
+    ///   A coluna que se quer exibir na listagem
+    /// </param>
+    /// <param name="DetailFields:Opcional[²]">
+    ///   As colunas adicionais que se quer exibir na listagem, até o máximo de 3 colunas
+    /// </param>
+    /// <param name="Options:Opcional[¹]">
     ///   Matriz utilizada para selecionar uma linha do componente, possuindo duas formas:
     ///   <para>1) Seleção por índice: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Index'], [[0]]));</c></para>
     ///   <para>2) Seleção por pares[DBField, DBValue]: <c>TDictionaryHelper&lt;String, TArray&lt;Variant&gt;&gt;.Make(['Field'], [['DBField', 'DBValue']]));</c></para>
     /// </param>
     /// <remarks>
-    ///   <para>[¹]: O parâmetro <c>SelectedBy</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
+    ///   <para>[¹]: O parâmetro <c>Options</c> no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>nil</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
     ///   <para>[²]: O parâmetro <c>DetailFields</c> é uma matriz de strings que pode conter de 0 à 3 índices, no contexto do método é opcional, porém, no contexto da classe ele é obrigatório e deve ser informado <c>[]</c> como seu valor, caso contrário haverá o erro de compilação <c>E2251 Ambiguous overloaded call to 'ToListView'</c>, informando que há uma ambiguidade de métodos</para>
     /// </remarks>
 
-    procedure ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil); overload;
+    procedure ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil); overload;
   end;
 
 implementation
+
+uses
+  OptionsInteger,
+  OptionsArray,
+  OptionsJSON;
 
 { TValueObject }
 
@@ -542,451 +776,28 @@ begin
   FValue := aValue;
 end;
 
-{ TConnector }
+{ TJSONItem }
 
-constructor TConnector.Create(Query : TQuery);
-begin
-  inherited Create;
-
-  Self.FQuery := Query;
-end;
-
-procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : Integer);
-begin
-  if (TypeInfo(T) = TypeInfo(TGrid)) then
-  begin
-    TGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
-    TGrid(AOwner).FillData := DataSet;
-    TGrid(AOwner).AutoSizeColumns := True;
-
-    if SelectedBy <> -1 then
-    begin
-      TGrid(AOwner).Row := SelectedBy;
-      TGrid(AOwner).Col := 0;
-    end;
-  end
-  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
-  begin
-    TStringGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
-    TStringGrid(AOwner).FillData := DataSet;
-    TStringGrid(AOwner).AutoSizeColumns := True;
-
-    if SelectedBy <> -1 then
-    begin
-      TStringGrid(AOwner).Row := SelectedBy;
-      TStringGrid(AOwner).Col := 0;
-    end;
-  end;
-end;
-
-procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy : TDictionary<String, TArray<Variant>>);
-begin
-  if (TypeInfo(T) = TypeInfo(TGrid)) then
-    Self.AddToGrid<TGrid>(AOwner, DataSet, SelectedBy)
-  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
-    Self.AddToStringGrid<TStringGrid>(AOwner, DataSet, SelectedBy);
-end;
-
-procedure TConnector.AddObject<T>(AOwner: TComponent; Index: String; Value: TObject; SelectedBy: Integer);
-begin
-  if (TypeInfo(T) = TypeInfo(TEdit)) then
-  begin
-    TEdit(AOwner).Items.BeginUpdate;
-    try
-      TEdit(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-      if TEdit(AOwner).Items.IndexOf(Index) = SelectedBy then
-        TEdit(AOwner).ItemIndex := SelectedBy;
-    finally
-      TEdit(AOwner).Items.EndUpdate;
-    end;
-  end
-  else if (TypeInfo(T) = TypeInfo(TComboEdit)) then
-  begin
-    TComboEdit(AOwner).Items.BeginUpdate;
-    try
-      TComboEdit(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-      if TComboEdit(AOwner).Items.IndexOf(Index) = SelectedBy then
-        TComboEdit(AOwner).ItemIndex := SelectedBy;
-    finally
-      TComboEdit(AOwner).Items.EndUpdate;
-    end;
-  end
-  else if (TypeInfo(T) = TypeInfo(TComboBox)) then
-  begin
-    TComboBox(AOwner).Items.BeginUpdate;
-    try
-      TComboBox(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-      if TComboBox(AOwner).Items.IndexOf(Index) = SelectedBy then
-        TComboBox(AOwner).ItemIndex := SelectedBy;
-    finally
-      TComboBox(AOwner).Items.EndUpdate;
-    end;
-  end
-  else if (TypeInfo(T) = TypeInfo(TListBox)) then
-  begin
-    TListBox(AOwner).Items.BeginUpdate;
-    try
-      TListBox(AOwner).Items.AddObject(Index, TValueObject.Create(Value));
-      if TListBox(AOwner).Items.IndexOf(Index) = SelectedBy then
-        TListBox(AOwner).ItemIndex := SelectedBy;
-    finally
-      TListBox(AOwner).Items.EndUpdate;
-    end;
-  end;
-end;
-
-procedure TConnector.AddObject<T>(AOwner: TComponent; Index: String; Value: TObject; SelectedBy: String);
-begin
-  Showmessage('teste');
-end;
-
-procedure TConnector.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  Pair: TPair<String, TArray<Variant>>;
-begin
-  TEdit(AOwner).Items.BeginUpdate;
-  try
-    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-
-    if SelectedBy <> nil then
-    begin
-      for Pair in SelectedBy do
-      begin
-        if Pair.Key = 'Index' then
-        begin
-          if TEdit(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-            TEdit(AOwner).ItemIndex := Pair.Value[0];
-        end
-        else if Pair.Key = 'Field' then
-        begin
-          if Pair.Value[0] = FieldIndexValue[0] then
-          begin
-            if IndexValue[1] = Pair.Value[1] then
-              TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
-          end
-          else if Pair.Value[0] = FieldIndexValue[1] then
-          begin
-            if IndexValue[0] = Pair.Value[1] then
-              TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
-          end;
-        end;
-      end;
-    end;
-
-  finally
-    TEdit(AOwner).Items.EndUpdate;
-  end;
-end;
-
-procedure TConnector.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  Pair: TPair<String, TArray<Variant>>;
-begin
-  TComboEdit(AOwner).Items.BeginUpdate;
-  try
-    TComboEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-
-    if SelectedBy <> nil then
-    begin
-      for Pair in SelectedBy do
-      begin
-        if Pair.Key = 'Index' then
-        begin
-          if TComboEdit(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-            TComboEdit(AOwner).ItemIndex := Pair.Value[0];
-        end
-        else if Pair.Key = 'Field' then
-        begin
-          if Pair.Value[0] = FieldIndexValue[0] then
-          begin
-            if IndexValue[1] = Pair.Value[1] then
-              TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
-          end
-          else if Pair.Value[0] = FieldIndexValue[1] then
-          begin
-            if IndexValue[0] = Pair.Value[1] then
-              TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
-          end;
-        end;
-      end;
-    end;
-
-  finally
-    TComboEdit(AOwner).Items.EndUpdate;
-  end;
-end;
-
-procedure TConnector.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  Pair: TPair<String, TArray<Variant>>;
-begin
-  TComboBox(AOwner).Items.BeginUpdate;
-  try
-    TComboBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-
-    if SelectedBy <> nil then
-    begin
-      for Pair in SelectedBy do
-      begin
-        if Pair.Key = 'Index' then
-        begin
-          if TComboBox(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-            TComboBox(AOwner).ItemIndex := Pair.Value[0];
-        end
-        else if Pair.Key = 'Field' then
-        begin
-          if Pair.Value[0] = FieldIndexValue[0] then
-          begin
-            if IndexValue[1] = Pair.Value[1] then
-              TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
-          end
-          else if Pair.Value[0] = FieldIndexValue[1] then
-          begin
-            if IndexValue[0] = Pair.Value[1] then
-              TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
-          end;
-        end;
-      end;
-    end;
-
-  finally
-    TComboBox(AOwner).Items.EndUpdate;
-  end;
-end;
-
-procedure TConnector.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  Pair: TPair<String, TArray<Variant>>;
-begin
-  TListBox(AOwner).Items.BeginUpdate;
-  try
-    TListBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
-
-    if SelectedBy <> nil then
-    begin
-      for Pair in SelectedBy do
-      begin
-        if Pair.Key = 'Index' then
-        begin
-          if TListBox(AOwner).Items.IndexOf(IndexValue[0]) = Pair.Value[0] then
-            TListBox(AOwner).ItemIndex := Pair.Value[0];
-        end
-        else if Pair.Key = 'Field' then
-        begin
-          if Pair.Value[0] = FieldIndexValue[0] then
-          begin
-            if IndexValue[1] = Pair.Value[1] then
-              TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
-          end
-          else if Pair.Value[0] = FieldIndexValue[1] then
-          begin
-            if IndexValue[0] = Pair.Value[1] then
-              TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
-          end;
-        end;
-      end;
-    end;
-
-  finally
-    TListBox(AOwner).Items.EndUpdate;
-  end;
-end;
-
-procedure TConnector.AddToGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  Row, Column: Integer;
-  Pair: TPair<String, TArray<Variant>>;
-begin
-  TGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
-  TGrid(AOwner).FillData := DataSet;
-  TGrid(AOwner).AutoSizeColumns := True;
-
-  if SelectedBy <> nil then
-  begin
-    for Pair in SelectedBy do
-    begin
-      if Pair.Key = 'Index' then
-      begin
-        for Row := 0 to TGrid(AOwner).RowCount - 1 do
-        begin
-          if (Row = Pair.Value[0]) then
-          begin
-            TGrid(AOwner).Row := Pair.Value[0];
-            TGrid(AOwner).Col := 0;
-            Break;
-          end;
-        end;
-      end
-      else if Pair.Key = 'Field' then
-      begin
-        for Column := 0 to TGrid(AOwner).ColumnCount - 1 do
-        begin
-          if TGrid(AOwner).ColumnByIndex(Column).Header = Pair.Value[0] then
-          begin
-            Row := 0;
-            DataSet.First;
-            while not DataSet.Eof do
-            begin
-              if DataSet.Fields[Column].AsString = Pair.Value[1] then
-              begin
-                TGrid(AOwner).Row := Row;
-                TGrid(AOwner).Col := 0;
-                Break;
-              end;
-              Inc(Row);
-              DataSet.Next;
-            end;
-            DataSet.Last;
-          end;
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TConnector.AddToStringGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  I, J: Integer;
-  Pair: TPair<String, TArray<Variant>>;
-begin
-  TStringGrid(AOwner).Options := [TGridOption.AlternatingRowBackground, TGridOption.RowSelect, TGridOption.ColumnResize, TGridOption.ColumnMove, TGridOption.ColLines, TGridOption.RowLines, TGridOption.Tabs, TGridOption.Header, TGridOption.HeaderClick, TGridOption.AutoDisplacement];
-  TStringGrid(AOwner).FillData := DataSet;
-  TStringGrid(AOwner).AutoSizeColumns := True;
-
-  if SelectedBy <> nil then
-  begin
-    for Pair in SelectedBy do
-    begin
-      if Pair.Key = 'Index' then
-      begin
-        for I := 0 to TStringGrid(AOwner).RowCount - 1 do
-        begin
-          if (I = Pair.Value[0]) then
-          begin
-            TStringGrid(AOwner).Row := Pair.Value[0];
-            TStringGrid(AOwner).Col := 0;
-            Break;
-          end;
-        end;
-      end
-      else if Pair.Key = 'Field' then
-      begin
-        for I := 0 to TStringGrid(AOwner).ColumnCount - 1 do
-        begin
-          if TStringGrid(AOwner).ColumnByIndex(I).Header = Pair.Value[0] then
-          begin
-            J := 0;
-            DataSet.First;
-            while not DataSet.Eof do
-            begin
-              if DataSet.Fields[I].AsString = Pair.Value[1] then
-              begin
-                TStringGrid(AOwner).Row := J;
-                TStringGrid(AOwner).Col := 0;
-                Break;
-              end;
-              Inc(J);
-              DataSet.Next;
-            end;
-            DataSet.Last;
-          end;
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TConnector.AddToListView<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
-var
-  I, J: Integer;
-  Pair: TPair<String, TArray<Variant>>;
-  JSONString: String;
-  JSONObject, JSONDataBase: TJSONObject;
-begin
-  TListView(AOwner).BeginUpdate;
-  try
-    Self.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
-
-    if SelectedBy <> nil then
-    begin
-      for Pair in SelectedBy do
-      begin
-        if Pair.Key = 'Index' then
-        begin
-          for I := 0 to TListView(AOwner).Items.Count - 1 do
-          begin
-            if (I = Pair.Value[0]) then
-            begin
-              TListView(AOwner).ItemIndex := Pair.Value[0];
-              Break;
-            end;
-          end;
-        end
-        else if Pair.Key = 'Field' then
-        begin
-          for I := 0 to TListView(AOwner).Items.Count - 1 do
-          begin
-            JSONString := TListView(AOwner).Items.AppearanceItem[I].Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail4).Text;
-            JSONObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(JSONString), 0) as TJSONObject;
-            if JSONObject.Get('valuefield').JsonValue.Value = Pair.Value[0] then
-            begin
-              TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(Pair.Value[1]);
-              Break;
-            end
-            else
-            begin
-              JSONDataBase := JSONObject.Get('datafields').JsonValue as TJSONObject;
-              for J := 0 to JSONDataBase.Count - 1 do
-              begin
-                if JSONDataBase.Pairs[J].JsonValue.Value = Pair.Value[1] then
-                begin
-                  TListView(AOwner).ItemIndex := I;
-                  Break;
-                end;
-              end;
-            end;
-          end;
-        end;
-      end;
-    end;
-
-  finally
-    TListView(AOwner).EndUpdate;
-  end;
-end;
-
-procedure TConnector.AddObject<T>(AOwner: TComponent; FieldIndexValue, IndexValue : TArray<String>; SelectedBy : TDictionary<String, TArray<Variant>>);
-begin
-  if (TypeInfo(T) = TypeInfo(TEdit)) then
-    Self.AddToEdit<TEdit>(AOwner, FieldIndexValue, IndexValue, SelectedBy)
-  else if (TypeInfo(T) = TypeInfo(TComboEdit)) then
-    Self.AddToComboEdit<TComboEdit>(AOwner, FieldIndexValue, IndexValue, SelectedBy)
-  else if (TypeInfo(T) = TypeInfo(TComboBox)) then
-    Self.AddToComboBox<TComboBox>(AOwner, FieldIndexValue, IndexValue, SelectedBy)
-  else if (TypeInfo(T) = TypeInfo(TListBox)) then
-    Self.AddToListBox<TListBox>(AOwner, FieldIndexValue, IndexValue, SelectedBy);
-end;
-
-function TConnector.GetJSONData: String;
+function TJSONItem.GetJSONData: String;
 begin
   Result := FJSONData;
 end;
 
-procedure TConnector.SetJSONData(IndexField, ValueField, DataFields: String);
+procedure TJSONItem.SetJSONData(IndexField, ValueField, DataFields: String);
 var
   DataColumns : String;
 begin
-  DataColumns := '{"indexfield":"' + IndexField + '","valuefield":"' + ValueField + '","datafields":' + DataFields + '}';
+  DataColumns := '{"IndexField":"' + IndexField + '","ValueField":"' + ValueField + '","DataFields":' + DataFields + '}';
   FJSONData := DataColumns;
 end;
 
-procedure TConnector.AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+procedure TJSONItem.AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
 var
   Item: TListViewItem;
   I, ItemHeight: Integer;
   JSONData: TArrayVariant;
 begin
-  ItemHeight := FItemHeight;
+  ItemHeight := Self.Height;
   if Length(DetailFields) > 0 then
     ItemHeight := 19 * (Length(DetailFields) + 1)
   else
@@ -1078,25 +889,155 @@ begin
   end;
 end;
 
-procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : Integer = -1);
+{ TOptionsHelper }
+
+class function TJSONOptionsHelper.&Set(Index : Integer): String;
 begin
-  if (TypeInfo(T) = TypeInfo(TListView)) then
-  begin
-    Self.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
-    if SelectedBy <> 0 then
-      TListView(AOwner).ItemIndex := SelectedBy;
-  end;
+  Result := '{"Index":' + IntToStr(Index) + '}';
 end;
 
-procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : String = '');
-begin
-  Showmessage('teste');
+class function TJSONOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1): String;
+begin
+  Result := '{"Index":' + IntToStr(Index) + ',"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '}}';
 end;
 
-procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
+class function TJSONOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String;
+begin
+  Result := '{"Index":' + IntToStr(Index) + ',"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '},"Navigation":{"Type":"' + TEnumConverter.EnumToString(Navigation) + '"}}';
+end;
+
+class function TJSONOptionsHelper.&Set(Field : TArray<Variant>): String;
+begin
+  Result := '{"Field":{"' + Field[0] + '":' +  Field[1] + '}}';
+end;
+
+class function TJSONOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1): String;
+begin
+  Result := '{"Field":{"' + Field[0] + '":' +  Field[1] + '},"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '}}';
+end;
+
+class function TJSONOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String;
+begin
+  Result := '{"Field":{"' + Field[0] + '":' +  Field[1] + '},"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '},"Navigation":{"Type":"' + TEnumConverter.EnumToString(Navigation) + '"}}';
+end;
+
+{ TOptionsHelper }
+
+class function TArrayOptionsHelper.&Set(Index : Integer): TDictionary<String, TArray<Variant>>;
+begin
+  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[Index]]);
+end;
+
+class function TArrayOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>;
+begin
+  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Index', 'Pagination'], [[Index], ['ItemsPerPage',IntToStr(Pagination)]]);
+end;
+
+class function TArrayOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>;
+begin
+  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Index', 'Pagination', 'Navigation'], [[Index], ['ItemsPerPage', Pagination], ['Type', Navigation]]);
+end;
+
+class function TArrayOptionsHelper.&Set(Field : TArray<Variant>): TDictionary<String, TArray<Variant>>;
+begin
+  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [[Field[0], Field[1]]]);
+end;
+
+class function TArrayOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>;
+begin
+  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Field', 'Pagination'], [[Field[0], Field[1]], ['ItemsPerPage', Pagination]]);
+end;
+
+class function TArrayOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>;
+begin
+  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Field', 'Pagination', 'Navigation'], [[Field[0], Field[1]], ['ItemsPerPage', Pagination], ['Type', Navigation]]);
+end;
+
+{ TConnector }
+
+constructor TConnector.Create(Query : TQuery);
+begin
+  inherited Create;
+
+  Self.FQuery := Query;
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options : Integer);
+begin
+  if (TypeInfo(T) = TypeInfo(TGrid)) then
+    InstanceOptionsInteger.AddToGrid<TGrid>(AOwner, DataSet, Options)
+  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
+    InstanceOptionsInteger.AddToStringGrid<TStringGrid>(AOwner, DataSet, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options : String);
+begin
+  if (TypeInfo(T) = TypeInfo(TGrid)) then
+    InstanceOptionsJSON.AddToGrid<TGrid>(AOwner, DataSet, Options)
+  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
+    InstanceOptionsJSON.AddToStringGrid<TStringGrid>(AOwner, DataSet, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options : TDictionary<String, TArray<Variant>>);
+begin
+  if (TypeInfo(T) = TypeInfo(TGrid)) then
+    InstanceOptionsArray.AddToGrid<TGrid>(AOwner, DataSet, Options)
+  else if (TypeInfo(T) = TypeInfo(TStringGrid)) then
+    InstanceOptionsArray.AddToStringGrid<TStringGrid>(AOwner, DataSet, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; IndexField, ValueField: TArray<String>; Options: Integer);
+begin
+  if (TypeInfo(T) = TypeInfo(TEdit)) then
+    InstanceOptionsInteger.AddToEdit<TEdit>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TComboEdit)) then
+    InstanceOptionsInteger.AddToComboEdit<TComboEdit>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TComboBox)) then
+    InstanceOptionsInteger.AddToComboBox<TComboBox>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TListBox)) then
+    InstanceOptionsInteger.AddToListBox<TListBox>(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; IndexField, ValueField: TArray<String>; Options : String);
+begin
+  if (TypeInfo(T) = TypeInfo(TEdit)) then
+    InstanceOptionsJSON.AddToEdit<TEdit>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TComboEdit)) then
+    InstanceOptionsJSON.AddToComboEdit<TComboEdit>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TComboBox)) then
+    InstanceOptionsJSON.AddToComboBox<TComboBox>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TListBox)) then
+    InstanceOptionsJSON.AddToListBox<TListBox>(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; IndexField, ValueField: TArray<String>; Options : TDictionary<String, TArray<Variant>>);
+begin
+  if (TypeInfo(T) = TypeInfo(TEdit)) then
+    InstanceOptionsArray.AddToEdit<TEdit>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TComboEdit)) then
+    InstanceOptionsArray.AddToComboEdit<TComboEdit>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TComboBox)) then
+    InstanceOptionsArray.AddToComboBox<TComboBox>(AOwner, IndexField, ValueField, Options)
+  else if (TypeInfo(T) = TypeInfo(TListBox)) then
+    InstanceOptionsArray.AddToListBox<TListBox>(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : Integer = -1);
 begin
   if (TypeInfo(T) = TypeInfo(TListView)) then
-    Self.AddToListView<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, SelectedBy);
+    InstanceOptionsInteger.AddToListView<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : String = '');
+begin
+  if (TypeInfo(T) = TypeInfo(TListView)) then
+    InstanceOptionsJSON.AddToListView<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, Options);
+end;
+
+procedure TConnector.AddObject<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : TDictionary<String, TArray<Variant>> = nil);
+begin
+  if (TypeInfo(T) = TypeInfo(TListView)) then
+    InstanceOptionsArray.AddToListView<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, Options);
 end;
 
 function TConnector.ToDataSet(Query: TQuery): {$I CNC.Type.inc};
@@ -1121,7 +1062,8 @@ begin
   DataSet.Active := True;
 {$ENDIF}
   DataSet.First;
-  while not DataSet.Eof do begin
+  while not DataSet.Eof do
+  begin
     DataSet.Edit;
     DataSet.Post;
     DataSet.Next;
@@ -1130,7 +1072,7 @@ begin
   Result := DataSet;
 end;
 
-procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy : Integer = -1);
+procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; Options : Integer = -1);
 var
   I: Integer;
   Items : TStringList;
@@ -1176,13 +1118,13 @@ begin
     for I := 0 to Items.Count - 1 do
     begin
       if (AOwner is TEdit) then
-        Self.AddObject<TEdit>(AOwner, Items.Names[I], TValueObject.Create(Items.ValueFromIndex[I]), SelectedBy)
+        Self.AddObject<TEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
       else if AOwner Is TComboEdit then
-        Self.AddObject<TComboEdit>(AOwner, Items.Names[I], TValueObject.Create(Items.ValueFromIndex[I]), SelectedBy)
+        Self.AddObject<TComboEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
       else if AOwner Is TComboBox then
-        Self.AddObject<TComboBox>(AOwner, Items.Names[I], TValueObject.Create(Items.ValueFromIndex[I]), SelectedBy)
+        Self.AddObject<TComboBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
       else if AOwner Is TListBox then
-        Self.AddObject<TListBox>(AOwner, Items.Names[I], TValueObject.Create(Items.ValueFromIndex[I]), SelectedBy);
+        Self.AddObject<TListBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
     end;
     Items.Destroy;
 
@@ -1196,12 +1138,7 @@ begin
   DataSet.Destroy;
 end;
 
-procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: String = '');
-begin
-  Showmessage('teste');
-end;
-
-procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>>);
+procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; Options: String = '');
 var
   I: Integer;
   Items : TStringList;
@@ -1247,13 +1184,13 @@ begin
     for I := 0 to Items.Count - 1 do
     begin
       if AOwner Is TEdit then
-        Self.AddObject<TEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], SelectedBy)
+        Self.AddObject<TEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
       else if AOwner Is TComboEdit then
-        Self.AddObject<TComboEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], SelectedBy)
+        Self.AddObject<TComboEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
       else if AOwner Is TComboBox then
-        Self.AddObject<TComboBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], SelectedBy)
+        Self.AddObject<TComboBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
       else if AOwner Is TListBox then
-        Self.AddObject<TListBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], SelectedBy);
+        Self.AddObject<TListBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options);
     end;
     Items.Destroy;
 
@@ -1267,7 +1204,73 @@ begin
   DataSet.Destroy;
 end;
 
-procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : Integer = -1);
+procedure TConnector.ToFillList(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>>);
+var
+  I: Integer;
+  Items : TStringList;
+  DataSet : {$I CNC.Type.inc};
+begin
+  if (AOwner is TEdit) and (TEdit(AOwner) <> nil) and (TEdit(AOwner).Items.Count > 0) then
+    TEdit(AOwner).Items.Clear
+  else if (AOwner is TComboEdit) and (TComboEdit(AOwner) <> nil) and (TComboEdit(AOwner).Items.Count > 0) then
+    TComboEdit(AOwner).Items.Clear
+  else if (AOwner is TComboBox) and (TComboBox(AOwner) <> nil) and (TComboBox(AOwner).Items.Count > 0) then
+    TComboBox(AOwner).Items.Clear
+  else if (AOwner is TListBox) and (TListBox(AOwner) <> nil) and (TListBox(AOwner).Items.Count > 0) then
+  begin
+    TListBox(AOwner).Items.Clear;
+    TListBox(AOwner).EmptyFilter;
+  end;
+
+  if AOwner Is TComboBox then
+  begin
+    TComboBox(AOwner).DropDownKind := TDropDownKind.Custom;
+    TComboBox(AOwner).AutoComplete := True;
+  end
+  else if AOwner Is TComboEdit then
+  begin
+    TComboEdit(AOwner).DropDownKind := TDropDownKind.Custom;
+    TComboEdit(AOwner).AutoComplete := True;
+  end;
+
+  DataSet := Self.ToDataSet(Self.FQuery);
+
+  if DataSet.RecordCount > 0 then
+  begin
+    Items := TStringList.Create(True);
+
+    DataSet.First;
+    while not(DataSet.Eof) do
+    begin
+      Items.AddPair(DataSet.FieldByName(ValueField).AsString, DataSet.FieldByName(IndexField).AsString);
+      DataSet.Next;
+    end;
+    DataSet.Last;
+
+    for I := 0 to Items.Count - 1 do
+    begin
+      if AOwner Is TEdit then
+        Self.AddObject<TEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
+      else if AOwner Is TComboEdit then
+        Self.AddObject<TComboEdit>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
+      else if AOwner Is TComboBox then
+        Self.AddObject<TComboBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
+      else if AOwner Is TListBox then
+        Self.AddObject<TListBox>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options);
+    end;
+    Items.Destroy;
+
+    if AOwner Is TComboBox then
+      TListBox(TComboBox(AOwner).ListBox).AlternatingRowBackground := True
+    else if AOwner Is TComboEdit then
+      TListBox(TComboEdit(AOwner).ListBox).AlternatingRowBackground := True
+    else if AOwner Is TListBox then
+      TListBox(AOwner).AlternatingRowBackground := True;
+  end;
+  DataSet.Destroy;
+end;
+
+procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : Integer = -1);
 var
   DataSet : {$I CNC.Type.inc};
 begin
@@ -1285,19 +1288,14 @@ begin
   if DataSet.RecordCount > 0 then
   begin
     if (AOwner is TListView) then
-      Self.AddObject<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, SelectedBy);
+      Self.AddObject<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, Options);
   end;
 
   if AOwner Is TListView then
     TListView(AOwner).AlternatingColors := True;
 end;
 
-procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : String = '');
-begin
-  Showmessage('teste');
-end;
-
-procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
+procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : String = '');
 var
   DataSet : {$I CNC.Type.inc};
 begin
@@ -1315,14 +1313,39 @@ begin
   if DataSet.RecordCount > 0 then
   begin
     if (AOwner is TListView) then
-      Self.AddObject<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, SelectedBy);
+      Self.AddObject<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, Options);
   end;
 
   if AOwner Is TListView then
     TListView(AOwner).AlternatingColors := True;
 end;
 
-procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : Integer = -1);
+procedure TConnector.ToMultiList(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String>; Options: TDictionary<String, TArray<Variant>>);
+var
+  DataSet : {$I CNC.Type.inc};
+begin
+  TListView(AOwner).ItemAppearanceClassName := 'TMultiDetailItemAppearance';
+  TListView(AOwner).ItemEditAppearanceClassName := 'TMultiDetailDeleteAppearance';
+
+  if (AOwner is TListView) and (TListView(AOwner) <> nil) and (TListView(AOwner).Items.Count > 0) then
+  begin
+    TListView(AOwner).Items.Clear;
+    TListView(AOwner).EmptyFilter;
+  end;
+
+  DataSet := Self.ToDataSet(Self.FQuery);
+
+  if DataSet.RecordCount > 0 then
+  begin
+    if (AOwner is TListView) then
+      Self.AddObject<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields, Options);
+  end;
+
+  if AOwner Is TListView then
+    TListView(AOwner).AlternatingColors := True;
+end;
+
+procedure TConnector.ToGridTable(AOwner: TComponent; Options : Integer = -1);
 var
   DataSet : {$I CNC.Type.inc};
 begin
@@ -1336,18 +1359,13 @@ begin
   if DataSet.RecordCount > 0 then
   begin
     if AOwner Is TStringGrid then
-      Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
+      Self.AddObject<TStringGrid>(AOwner, DataSet, Options)
     else if AOwner Is TGrid then
-      Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);
+      Self.AddObject<TGrid>(AOwner, DataSet, Options);
   end;
 end;
 
-procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : String = '');
-begin
-
-end;
-
-procedure TConnector.ToGridTable(AOwner: TComponent; SelectedBy : TDictionary<String, TArray<Variant>> = nil);
+procedure TConnector.ToGridTable(AOwner: TComponent; Options : String = '');
 var
   DataSet : {$I CNC.Type.inc};
 begin
@@ -1361,60 +1379,105 @@ begin
   if DataSet.RecordCount > 0 then
   begin
     if AOwner Is TStringGrid then
-      Self.AddObject<TStringGrid>(AOwner, DataSet, SelectedBy)
+      Self.AddObject<TStringGrid>(AOwner, DataSet, Options)
     else if AOwner Is TGrid then
-      Self.AddObject<TGrid>(AOwner, DataSet, SelectedBy);
+      Self.AddObject<TGrid>(AOwner, DataSet, Options);
   end;
 end;
 
-procedure TConnector.ToGrid(AOwner: TComponent; SelectedBy : Integer = -1);
+procedure TConnector.ToGridTable(AOwner: TComponent; Options : TDictionary<String, TArray<Variant>> = nil);
+var
+  DataSet : {$I CNC.Type.inc};
 begin
-  Self.ToGridTable(AOwner, SelectedBy);
+  if (AOwner is TStringGrid) and (TStringGrid(AOwner) <> nil) then
+    TStringGrid(AOwner).ClearColumns
+  else if (AOwner is TGrid) and (TGrid(AOwner) <> nil) then
+    TGrid(AOwner).ClearColumns;
+
+  DataSet := Self.ToDataSet(Self.FQuery);
+
+  if DataSet.RecordCount > 0 then
+  begin
+    if AOwner Is TStringGrid then
+      Self.AddObject<TStringGrid>(AOwner, DataSet, Options)
+    else if AOwner Is TGrid then
+      Self.AddObject<TGrid>(AOwner, DataSet, Options);
+  end;
 end;
 
-procedure TConnector.ToGrid(AOwner: TComponent; SelectedBy: TDictionary<String, TArray<Variant>>);
+procedure TConnector.ToGrid(AOwner: TComponent; Options : Integer = -1);
 begin
-  Self.ToGridTable(AOwner, SelectedBy);
+  Self.ToGridTable(AOwner, Options);
 end;
 
-procedure TConnector.ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: Integer);
+procedure TConnector.ToGrid(AOwner: TComponent; Options: String = '');
 begin
-  Self.ToFillList(AOwner, IndexField, ValueField, SelectedBy);
+  Self.ToGridTable(AOwner, Options);
 end;
 
-procedure TConnector.ToEdit(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>>);
+procedure TConnector.ToGrid(AOwner: TComponent; Options: TDictionary<String, TArray<Variant>>);
 begin
-  Self.ToFillList(AOwner, IndexField, ValueField, SelectedBy);
+  Self.ToGridTable(AOwner, Options);
 end;
 
-procedure TConnector.ToCombo(AOwner: TComponent; IndexField, ValueField: String; SelectedBy : Integer = -1);
+procedure TConnector.ToEdit(AOwner: TComponent; IndexField, ValueField: String; Options: Integer);
 begin
-  Self.ToFillList(AOwner, IndexField, ValueField, SelectedBy);
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
 end;
 
-procedure TConnector.ToCombo(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>> = nil);
+procedure TConnector.ToEdit(AOwner: TComponent; IndexField, ValueField: String; Options: String);
 begin
-  Self.ToFillList(AOwner, IndexField, ValueField, SelectedBy);
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
 end;
 
-procedure TConnector.ToListBox(AOwner: TComponent; IndexField, ValueField: String; SelectedBy : Integer = -1);
+procedure TConnector.ToEdit(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>>);
 begin
-  Self.ToFillList(AOwner, IndexField, ValueField, SelectedBy);
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
 end;
 
-procedure TConnector.ToListBox(AOwner: TComponent; IndexField, ValueField: String; SelectedBy: TDictionary<String, TArray<Variant>>);
+procedure TConnector.ToCombo(AOwner: TComponent; IndexField, ValueField: String; Options : Integer = -1);
 begin
-  Self.ToFillList(AOwner, IndexField, ValueField, SelectedBy);
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
 end;
 
-procedure TConnector.ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; SelectedBy : Integer = -1);
+procedure TConnector.ToCombo(AOwner: TComponent; IndexField, ValueField: String; Options : String = '');
 begin
-  Self.ToMultiList(AOwner, IndexField, ValueField, DetailFields, SelectedBy);
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
 end;
 
-procedure TConnector.ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String>; SelectedBy: TDictionary<String, TArray<Variant>>);
+procedure TConnector.ToCombo(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>> = nil);
 begin
-  Self.ToMultiList(AOwner, IndexField, ValueField, DetailFields, SelectedBy);
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.ToListBox(AOwner: TComponent; IndexField, ValueField: String; Options : Integer = -1);
+begin
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.ToListBox(AOwner: TComponent; IndexField, ValueField: String; Options : String = '');
+begin
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.ToListBox(AOwner: TComponent; IndexField, ValueField: String; Options: TDictionary<String, TArray<Variant>>);
+begin
+  Self.ToFillList(AOwner, IndexField, ValueField, Options);
+end;
+
+procedure TConnector.ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : Integer = -1);
+begin
+  Self.ToMultiList(AOwner, IndexField, ValueField, DetailFields, Options);
+end;
+
+procedure TConnector.ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options : String = '');
+begin
+  Self.ToMultiList(AOwner, IndexField, ValueField, DetailFields, Options);
+end;
+
+procedure TConnector.ToListView(AOwner: TComponent; IndexField, ValueField: String; DetailFields: TArray<String>; Options: TDictionary<String, TArray<Variant>>);
+begin
+  Self.ToMultiList(AOwner, IndexField, ValueField, DetailFields, Options);
 end;
 
 destructor TConnector.Destroy;

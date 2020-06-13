@@ -4,7 +4,7 @@
  
 Generic-Database é um Conjunto de Classes para Conexão Genérica à Bancos de Dados e Exibição dos Dados em Componentes Nativos da IDE de Forma Rápida, Simples e Prática
 
-- RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL e FireBird ¹
+- RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL, SQLServer e FireBird ¹
 - DataBase Frameworks Suportados Atualmente: dbExpress, ZeOsLib e FireDAC ²
 
 ## Classes Adicionais
@@ -16,7 +16,7 @@ Generic-Database é um Conjunto de Classes para Conexão Genérica à Bancos de 
 - Connectors.pas - Esta Classe Fornece uma Série de Métodos que são Capazes de Simular o Comportamente dos Componentes do Tipo DB* Presentes Nativamente em VCL como DBGrid, DBEdit, DBCombo e etc, nos Componentes Nativos do Firemonkey, Conectando uma Query Inclusive de Forma Bidirecional e Exibindo seu Resultado Diretamente nos Componentes, Suprindo Assim a Ausência de Componentes Nativos em Firemonkey do Tipo DB*.
  - Todos os Componentes Listados Abaixo, Ganharam um Connector;
   - TEdit - Com o Método ToEdit;
-  - TComboBox - Com o Método TpComboBox;
+  - TComboBox - Com o Método ToComboBox;
   - TComboEdit - Com o Método ToComboEdit;
   - TGrid - Com o Método ToGrid; 
   - TStringGrid - Com o Método ToStringGrid; 
@@ -43,7 +43,7 @@ Adicione as Seguintes Pastas ao Seu Projeto, em *Project > Options > Resource Co
 
 ### ToDo
 
-- [ ] Suportar o Oracle, SQLServer, MSSQL e InterBase
+- [ ] Suportar o Oracle e InterBase
 - [ ] Suportar o UniDAC
 - [ ] Suportar o Component TeeGrid em ComponentConnector
 - [ ] Criar um DBNavigator para TGrid e TStringGrid

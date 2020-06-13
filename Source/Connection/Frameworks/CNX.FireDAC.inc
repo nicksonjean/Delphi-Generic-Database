@@ -107,7 +107,7 @@
           MSSQL:
             begin
               {$IFDEF MSWINDOWS}
-              //TFDPhysMSSQLDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlncli11.dll';
+              TFDPhysMSSQLDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlncli11.dll';
               {$ENDIF}
               ConnectionName := 'DBMSSQL';
               DriverName := 'MSSQL';
