@@ -3162,7 +3162,7 @@ begin
   FOption := Option;
   case FOption of
     roEmptyArrayToNull:
-       FValue := System.Variants.Null;
+       FValue := Variants.Null;
   end;
 end;
 

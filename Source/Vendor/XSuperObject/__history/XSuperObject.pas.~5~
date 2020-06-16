@@ -3145,14 +3145,14 @@ constructor REVAL.Create(EQVal: Double);
 begin
   FOption := roNone;
   FEqual := EQVal;
-  FValue := System.Variants.Null;
+  FValue := Variants.Null;
 end;
 
 constructor REVAL.Create(EQVal: Boolean);
 begin
   FOption := roNone;
   FEqual := EQVal;
-  FValue := System.Variants.Null;
+  FValue := Variants.Null;
 end;
 
 constructor REVAL.Create(Option: TRevalOption);
@@ -3162,7 +3162,7 @@ begin
   FOption := Option;
   case FOption of
     roEmptyArrayToNull:
-       FValue := System.Variants.Null;
+       FValue := Variants.Null;
   end;
 end;
 

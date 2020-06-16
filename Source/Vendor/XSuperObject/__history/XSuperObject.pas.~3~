@@ -761,7 +761,7 @@ begin
     varBoolean: Result := B[V];
     varDate: Result := D[V];
   else
-    Result := System.Variants.Null;
+    Result := Variants.Null;
   end;
 end;
 
@@ -3124,7 +3124,7 @@ constructor REVAL.Create(EQVal: String);
 begin
   FOption := roNone;
   FEqual := EQVal;
-  FValue := System.Variants.Null;
+  FValue := Variants.Null;
 end;
 
 constructor REVAL.Create(EQVal, NewVal: Boolean);
@@ -3138,21 +3138,21 @@ constructor REVAL.Create(EQVal: Integer);
 begin
   FOption := roNone;
   FEqual := EQVal;
-  FValue := System.Variants.Null;
+  FValue := Variants.Null;
 end;
 
 constructor REVAL.Create(EQVal: Double);
 begin
   FOption := roNone;
   FEqual := EQVal;
-  FValue := System.Variants.Null;
+  FValue := Variants.Null;
 end;
 
 constructor REVAL.Create(EQVal: Boolean);
 begin
   FOption := roNone;
   FEqual := EQVal;
-  FValue := System.Variants.Null;
+  FValue := Variants.Null;
 end;
 
 constructor REVAL.Create(Option: TRevalOption);
@@ -3162,7 +3162,7 @@ begin
   FOption := Option;
   case FOption of
     roEmptyArrayToNull:
-       FValue := System.Variants.Null;
+       FValue := Variants.Null;
   end;
 end;
 

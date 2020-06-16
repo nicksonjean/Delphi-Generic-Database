@@ -1067,6 +1067,8 @@ begin
 //        Connector.ToGrid(GridSQLite, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
 //        Connector.ToListView(ListViewSQLite, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'PA']]));
 
+        //Showmessage(TJSONOptionsHelper.&Set(['Codigo',3], 1, TNavigationType.Pages));
+
         Connector.ToCombo(ComboBoxSQLite, 'Codigo', 'Estado', '{"Index":1}');
         Connector.ToCombo(EditSQLite, 'Codigo', 'Estado', '{"Field":{"Codigo":3}}');
         Connector.ToCombo(ComboEditSQLite, 'Codigo', 'Estado', '{"Index":5}');

@@ -1,5 +1,5 @@
 ﻿{
-  ReflectionClass.RTTI.
+  RTTI.
   ------------------------------------------------------------------------------
   Objetivo : Simplificar a convesão, formatação e comparação de valores
   monetários e quantitativos em Delphi.
@@ -60,6 +60,21 @@ type
   end;
 
 type
+  TEnumeration<T: record> = class
+  strict private
+    class function TypeInfo: PTypeInfo; inline; static;
+    class function TypeData: PTypeData; inline; static;
+  public
+    class function IsEnumeration: Boolean; static;
+    class function ToOrdinal(Enum: T): Integer; inline; static;
+    class function FromOrdinal(Value: Integer): T; inline; static;
+    class function MinValue: Integer; inline; static;
+    class function MaxValue: Integer; inline; static;
+    class function InRange(Value: Integer): Boolean; inline; static;
+    class function EnsureRange(Value: Integer): Integer; inline; static;
+  end;
+
+type
   TRTTI = class
     public
     { Public declarations }
@@ -69,7 +84,54 @@ type
     class function RunMethod(ClassName: TArray<String>; MethodName : TArray<String>; MethodParams : TArray<TValue>) : TObjectList<TObject>; overload;
   end;
 
+type
+  TypeResolver = class
+    public
+    { Public declarations }
+    class function ReCast<T>(const AValue): T;
+    class function Format<T>(const AValue : T): String;
+    class function GetOrdValue(Info: PTypeInfo; const T): Integer;
+    class procedure SetOrdValue(Info: PTypeInfo; var T; Value: Integer);
+  end;
+
 implementation
+
+{ TGenericType }
+
+class function TypeResolver.ReCast<T>(const AValue): T;
+begin
+  Result := T(AValue);
+end;
+
+class function TypeResolver.Format<T>(const AValue: T): string;
+begin
+  Result := String(TValue.From(AValue).TypeInfo.Name);
+end;
+
+class function TypeResolver.GetOrdValue(Info: PTypeInfo; const T): Integer;
+begin
+  Result := 0;
+  case GetTypeData(Info)^.OrdType of
+    otSByte, otUByte:
+      Result := Byte(T);
+    otSWord, otUWord:
+      Result := Word(T);
+    otSLong, otULong:
+      Result := Integer(T);
+  end;
+end;
+
+class procedure TypeResolver.SetOrdValue(Info: PTypeInfo; var T; Value: Integer);
+begin
+  case GetTypeData(Info)^.OrdType of
+    otSByte, otUByte:
+      Byte(T) := Value;
+    otSWord, otUWord:
+      Word(T) := Value;
+    otSLong, otULong:
+      Integer(T) := Value;
+  end;
+end;
 
 { TEnumConverter }
 
@@ -82,6 +144,70 @@ end;
 class function TEnumConverter.EnumToString<T>(EnumValue: T): String;
 begin
   Result := GetEnumName(TypeInfo(T), EnumToInt(EnumValue));
+end;
+
+{ TEnumeration<T> }
+
+class function TEnumeration<T>.TypeInfo: PTypeInfo;
+begin
+  Result := System.TypeInfo(T);
+end;
+
+class function TEnumeration<T>.TypeData: PTypeData;
+begin
+  Result := System.TypInfo.GetTypeData(TypeInfo);
+end;
+
+class function TEnumeration<T>.IsEnumeration: Boolean;
+begin
+  Result := TypeInfo.Kind=tkEnumeration;
+end;
+
+class function TEnumeration<T>.ToOrdinal(Enum: T): Integer;
+begin
+  Assert(IsEnumeration);
+  Assert(SizeOf(Enum)<=SizeOf(Result));
+  Result := 0;
+  Move(Enum, Result, SizeOf(Enum));
+  Assert(InRange(Result));
+end;
+
+class function TEnumeration<T>.FromOrdinal(Value: Integer): T;
+begin
+  Assert(IsEnumeration);
+  Assert(InRange(Value));
+  Assert(SizeOf(Result)<=SizeOf(Value));
+  Move(Value, Result, SizeOf(Result));
+end;
+
+class function TEnumeration<T>.MinValue: Integer;
+begin
+  Assert(IsEnumeration);
+  Result := TypeData.MinValue;
+end;
+
+class function TEnumeration<T>.MaxValue: Integer;
+begin
+  Assert(IsEnumeration);
+  Result := TypeData.MaxValue;
+end;
+
+class function TEnumeration<T>.InRange(Value: Integer): Boolean;
+var
+  ptd: PTypeData;
+begin
+  Assert(IsEnumeration);
+  ptd := TypeData;
+  Result := System.Math.InRange(Value, ptd.MinValue, ptd.MaxValue);
+end;
+
+class function TEnumeration<T>.EnsureRange(Value: Integer): Integer;
+var
+  ptd: PTypeData;
+begin
+  Assert(IsEnumeration);
+  ptd := TypeData;
+  Result := System.Math.EnsureRange(Value, ptd.MinValue, ptd.MaxValue);
 end;
 
 { TRTTI }

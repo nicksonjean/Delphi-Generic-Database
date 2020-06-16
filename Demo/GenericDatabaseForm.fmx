@@ -1785,7 +1785,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
         Size.Width = 437.000000000000000000
         Size.Height = 700.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 0
+        TabIndex = 2
         TabOrder = 16
         TabPosition = PlatformDefault
         Sizes = (
@@ -1802,7 +1802,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 108.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False
@@ -3389,7 +3389,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 108.000000000000000000
           Size.Height = 50.000000000000000000
           Size.PlatformDefault = False

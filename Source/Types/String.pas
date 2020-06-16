@@ -35,6 +35,8 @@ https://stackoverflow.com/questions/246969/is-it-possible-do-declare-a-constant-
 https://stackoverflow.com/questions/17460378/possible-to-concatenate-constant-array-of-string
 https://stackoverflow.com/questions/30156172/how-to-concatenate-array-of-string-elements-into-a-string
 https://stackoverflow.com/questions/17460378/possible-to-concatenate-constant-array-of-string?noredirect=1&lq=1
+
+https://stackoverflow.com/questions/33780081/delphi-tstringlist-get-strings-as-a-quoted-comma-delimited-string
 }
 
 unit &String;
