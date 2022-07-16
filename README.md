@@ -4,7 +4,7 @@
  
 Generic-Database é um Conjunto de Classes para Conexão Genérica à Bancos de Dados e Exibição dos Dados em Componentes Nativos da IDE de Forma Rápida, Simples e Prática
 
-- RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL, SQLServer e FireBird ¹
+- RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL, SQLServer, FireBird e Oracle ¹
 - DataBase Frameworks Suportados Atualmente: dbExpress, ZeOsLib e FireDAC ²
 
 ## Classes Adicionais
@@ -29,23 +29,35 @@ boss install github.com/nicksonjean/Generic-Database
 ```
 
 ## Instalação Manual
-Adicione as Seguintes Pastas ao Seu Projeto, em *Project > Options > Resource Compiler > Directories and Conditionals > Include file search path*
+1) Clone este Repositório com a Linha de Comando Abaixo:
 ```
-../Generic-Database/Source/
+git clone https://github.com/nicksonjean/Generic-Database.git
+```
+
+2) Em Seguida execute o arquivo install.bat com a Linha de Comando Abaixo:
+```
+.\Generic-Database\install.bat
+```
+
+3) Opcionalmente Adicione as Seguintes Pastas ao Seu Projeto, em *Project > Options > Resource Compiler > Directories and Conditionals > Include file search path*
+```
 ../Generic-Database/Source/Connection
-../Generic-Database/Source/Types
-../Generic-Database/Source/Types/Locale
 ../Generic-Database/Source/Connector
 ../Generic-Database/Source/EventDriven
 ../Generic-Database/Source/Extensions
 ../Generic-Database/Source/Helpers
+../Generic-Database/Source/Reflection
+../Generic-Database/Source/Types
+../Generic-Database/Source/Types/Locale
 ```
-
 ### ToDo
 
-- [ ] Suportar o Oracle e InterBase
+- [x] Suportar o Oracle (Apenas FireDAC)
+- [ ] Suportar o InterBase
 - [ ] Suportar o UniDAC
 - [ ] Suportar o Component TeeGrid em ComponentConnector
+- [ ] Refator Types/Array.pas
+- [ ] Refator Types/TimeDate.pas
 - [ ] Criar um DBNavigator para TGrid e TStringGrid
 - [ ] Criar a Funcionalidade de Carregar Mais on Scroll para ListBox e ListView
 - [ ] Criar a Paginação para Carregar Mais para ListBox e ListView

@@ -66,7 +66,7 @@
               Properties.Add('AutoEncodeStrings=ON');
               Properties.Add('controls_cp=GET_ACP');
             end;
-          POSTGRES:
+          POSTGRESQL:
             begin
               {$IFDEF MSWINDOWS}
               LibraryLocation := ExtractFilePath(ParamStr(0)) + 'libpq.dll';

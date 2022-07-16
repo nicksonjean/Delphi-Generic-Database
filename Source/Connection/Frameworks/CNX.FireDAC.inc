@@ -63,7 +63,6 @@
                 Compress := True;
                 EndUpdate();
               end;
-              ExecSQL('SET SQL_MODE=ANSI_QUOTES');
             end;
           FIREBIRD:
             begin
@@ -137,7 +136,7 @@
                 EndUpdate();
               end;
             end;
-          POSTGRES:
+          POSTGRESQL:
             begin
               {$IFDEF MSWINDOWS}
               TFDPhysPgDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'libpq.dll';
@@ -173,7 +172,40 @@
             end;
           ORACLE:
             begin
+              {$IFDEF MSWINDOWS}
+              TFDPhysOracleDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'oci.dll';
+              {$ENDIF}
               ConnectionName := 'DBOracle';
+              DriverName := 'ORA';
+              Connected := False;
+              with ResourceOptions as TFDTopResourceOptions do
+              begin
+                KeepConnection := True;
+                Persistent := True;
+                SilentMode := True;
+                DirectExecute := True;
+              end;
+              with FetchOptions as TFDFetchOptions do
+              begin
+                RecordCountMode := cmVisible;
+              end;
+              LoginPrompt := False;
+              with Params as TFDPhysOracleConnectionDefParams do
+              begin
+                BeginUpdate();
+                Clear;
+                DriverID := 'Ora';
+                Database := System.SysUtils.Format('(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=%s)(PORT=%u))(CONNECT_DATA=(SERVICE_NAME=%s)))', [FHost, IfThen(FPort = 5432, 5432, FPort), FSchema]);
+                UserName := FUsername;
+                Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+                MetaDefSchema := FUsername;
+                MetaCurSchema := FUsername;
+                DriverID:= 'Ora';
+                Name := FUsername;
+                CharacterSet := TFDOracleCharacterSet.csUTF8;
+                EndUpdate();
+              end;
+
 
             end;
         end;

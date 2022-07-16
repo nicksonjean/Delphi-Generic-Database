@@ -138,7 +138,7 @@
               Params.EndUpdate();
               ParamsLoaded := True;
             end;
-          POSTGRES:
+          POSTGRESQL:
             begin
               ConnectionName := 'DBDevartPostgreSQL';
               DriverName := 'DevartPostgreSQL';

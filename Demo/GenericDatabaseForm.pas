@@ -42,7 +42,8 @@ uses
   FMX.Memo,
   FMX.Pickers,
   Data.Bind.Controls,
-  Fmx.Bind.Navigator;
+  Fmx.Bind.Navigator,
+  FMX.Memo.Types;
 
 const
   Methods: Array of String = ['Fetch','Copy','Clone','ToList','ToTags','ToXML','ToJSON','ToYAML'];
@@ -52,63 +53,6 @@ type
     TabControl: TTabControl;
     TabSQLConnection: TTabItem;
     TabDataTypes: TTabItem;
-    TabControlSQLConnection: TTabControl;
-    TabDBSQLite: TTabItem;
-    GroupBoxComponentsSQLite: TGroupBox;
-    GridPanelLayoutSQLite: TGridPanelLayout;
-    LabelComboBoxSQLite: TLabel;
-    ComboBoxSQLite: TComboBox;
-    LabelListBoxSQLite: TLabel;
-    LabelListViewSQLite: TLabel;
-    ListBoxSQLite: TListBox;
-    ListViewSQLite: TListView;
-    LabelStringGridSQLite: TLabel;
-    LabelGridSQLite: TLabel;
-    StringGridSQLite: TStringGrid;
-    GridSQLite: TGrid;
-    TabDBFirebird: TTabItem;
-    GroupBoxComponentsFirebird: TGroupBox;
-    GridPanelLayoutFirebird: TGridPanelLayout;
-    LabelComboBoxFirebird: TLabel;
-    LabelListBoxFirebird: TLabel;
-    LabelListViewFirebird: TLabel;
-    LabelStringGridFirebird: TLabel;
-    LabelGridFirebird: TLabel;
-    ComboBoxFirebird: TComboBox;
-    ListBoxFirebird: TListBox;
-    ListViewFirebird: TListView;
-    StringGridFirebird: TStringGrid;
-    GridFirebird: TGrid;
-    TabDBMySQL: TTabItem;
-    GroupBoxComponentsMySQL: TGroupBox;
-    GridPanelLayoutMySQL: TGridPanelLayout;
-    LabelComboBoxMySQL: TLabel;
-    LabelListBoxMySQL: TLabel;
-    LabelListViewMySQL: TLabel;
-    LabelStringGridMySQL: TLabel;
-    LabelGridMySQL: TLabel;
-    ComboBoxMySQL: TComboBox;
-    ListBoxMySQL: TListBox;
-    ListViewMySQL: TListView;
-    StringGridMySQL: TStringGrid;
-    GridMySQL: TGrid;
-    TabDBPostgreSQL: TTabItem;
-    GroupBoxComponentsPostgreSQL: TGroupBox;
-    GridPanelLayoutPostgreSQL: TGridPanelLayout;
-    LabelComboBoxPostgreSQL: TLabel;
-    LabelListBoxPostgreSQL: TLabel;
-    LabelListViewPostgreSQL: TLabel;
-    LabelStringGridPostgreSQL: TLabel;
-    LabelGridPostgreSQL: TLabel;
-    ComboBoxPostgreSQL: TComboBox;
-    ListBoxPostgreSQL: TListBox;
-    ListViewPostgreSQL: TListView;
-    StringGridPostgreSQL: TStringGrid;
-    GridPostgreSQL: TGrid;
-    SearchBoxSQLite: TSearchBox;
-    SearchBoxFirebird: TSearchBox;
-    SearchBoxMySQL: TSearchBox;
-    SearchBoxPostgreSQL: TSearchBox;
     TabQueryBuilder: TTabItem;
     TabControlDataTypes: TTabControl;
     TabStrings: TTabItem;
@@ -204,47 +148,90 @@ type
     EditKeyDownFloat: TEdit;
     EditKeyDownMoney: TEdit;
     Button1: TButton;
+    TabControlSQLConnectors: TTabControl;
+    TabDBConnectors: TTabItem;
+    TabArrayConnectors: TTabItem;
+    TabControlSQLConnection: TTabControl;
+    TabDBSQLite: TTabItem;
+    GroupBoxComponentsSQLite: TGroupBox;
+    GridPanelLayoutSQLite: TGridPanelLayout;
+    LabelComboBoxSQLite: TLabel;
+    ComboBoxSQLite: TComboBox;
+    LabelListBoxSQLite: TLabel;
+    LabelListViewSQLite: TLabel;
+    ListBoxSQLite: TListBox;
+    SearchBoxSQLite: TSearchBox;
+    ListViewSQLite: TListView;
+    LabelStringGridSQLite: TLabel;
+    LabelGridSQLite: TLabel;
+    StringGridSQLite: TStringGrid;
+    GridSQLite: TGrid;
     GridPanelLayoutSQLiteAutoCompleteEdit: TGridPanelLayout;
+    EditSQLite: TEdit;
+    ComboEditSQLite: TComboEdit;
     GridPanelLayoutSQLiteLabels: TGridPanelLayout;
     LabelEditSQLite: TLabel;
     LabelComboEditSQLite: TLabel;
-    EditSQLite: TEdit;
-    ComboEditSQLite: TComboEdit;
+    TabDBFirebird: TTabItem;
+    GroupBoxComponentsFirebird: TGroupBox;
+    GridPanelLayoutFirebird: TGridPanelLayout;
+    LabelComboBoxFirebird: TLabel;
+    LabelListBoxFirebird: TLabel;
+    LabelListViewFirebird: TLabel;
+    LabelStringGridFirebird: TLabel;
+    LabelGridFirebird: TLabel;
+    ComboBoxFirebird: TComboBox;
+    ListBoxFirebird: TListBox;
+    SearchBoxFirebird: TSearchBox;
+    ListViewFirebird: TListView;
+    StringGridFirebird: TStringGrid;
+    GridFirebird: TGrid;
     GridPanelLayoutFirebirdLabels: TGridPanelLayout;
-    GridPanelLayoutFirebirdAutoCompleteEdit: TGridPanelLayout;
     LabelEditFirebird: TLabel;
     LabelComboEditFirebird: TLabel;
+    GridPanelLayoutFirebirdAutoCompleteEdit: TGridPanelLayout;
     EditFirebird: TEdit;
     ComboEditFirebird: TComboEdit;
+    TabDBMySQL: TTabItem;
+    GroupBoxComponentsMySQL: TGroupBox;
+    GridPanelLayoutMySQL: TGridPanelLayout;
+    LabelComboBoxMySQL: TLabel;
+    LabelListBoxMySQL: TLabel;
+    LabelListViewMySQL: TLabel;
+    LabelStringGridMySQL: TLabel;
+    LabelGridMySQL: TLabel;
+    ComboBoxMySQL: TComboBox;
+    ListBoxMySQL: TListBox;
+    SearchBoxMySQL: TSearchBox;
+    ListViewMySQL: TListView;
+    StringGridMySQL: TStringGrid;
+    GridMySQL: TGrid;
     GridPanelLayoutMySQLLabels: TGridPanelLayout;
-    GridPanelLayoutMySQLAutoCompleteEdit: TGridPanelLayout;
     LabelEditMySQL: TLabel;
     LabelComboEditMySQL: TLabel;
+    GridPanelLayoutMySQLAutoCompleteEdit: TGridPanelLayout;
     ComboEditMySQL: TComboEdit;
     EditMySQL: TEdit;
+    TabDBPostgreSQL: TTabItem;
+    GroupBoxComponentsPostgreSQL: TGroupBox;
+    GridPanelLayoutPostgreSQL: TGridPanelLayout;
+    LabelComboBoxPostgreSQL: TLabel;
+    LabelListBoxPostgreSQL: TLabel;
+    LabelListViewPostgreSQL: TLabel;
+    LabelStringGridPostgreSQL: TLabel;
+    LabelGridPostgreSQL: TLabel;
+    ComboBoxPostgreSQL: TComboBox;
+    ListBoxPostgreSQL: TListBox;
+    SearchBoxPostgreSQL: TSearchBox;
+    ListViewPostgreSQL: TListView;
+    StringGridPostgreSQL: TStringGrid;
+    GridPostgreSQL: TGrid;
     GridPanelLayoutPostgreSQLLabels: TGridPanelLayout;
-    GridPanelLayoutPostgreSQLAutoCompleteEdit: TGridPanelLayout;
     LabelEditPostgreSQL: TLabel;
     LabelComboEditPostgreSQL: TLabel;
+    GridPanelLayoutPostgreSQLAutoCompleteEdit: TGridPanelLayout;
     ComboEditPostgreSQL: TComboEdit;
     EditPostgreSQL: TEdit;
-    PagPanelLayout: TGridPanelLayout;
-    PagButtonFirst: TCornerButton;
-    PagButtonPrior: TCornerButton;
-    PagButtonNext: TCornerButton;
-    PagButtonLast: TCornerButton;
-    NavPanelLayout: TGridPanelLayout;
-    NavButtonFirst: TCornerButton;
-    NavButtonPrior: TCornerButton;
-    NavButtonNext: TCornerButton;
-    NavButtonLast: TCornerButton;
-    NavButtonInsert: TCornerButton;
-    NavButtonDelete: TCornerButton;
-    NavButtonEdit: TCornerButton;
-    NavButtonPost: TCornerButton;
-    NavButtonCancel: TCornerButton;
-    NavButtonRefresh: TCornerButton;
-    BindNavigator1: TBindNavigator;
     TabDBSQLServer: TTabItem;
     GroupBoxComponentsMSSQL: TGroupBox;
     GridPanelLayoutMSSQL: TGridPanelLayout;
@@ -265,6 +252,142 @@ type
     GridPanelLayoutMSSQLLabels: TGridPanelLayout;
     LabelEditMSSQL: TLabel;
     LabelComboEditMSSQL: TLabel;
+    TabDBOracle: TTabItem;
+    GroupBoxComponentsOracle: TGroupBox;
+    GridPanelLayoutOracle: TGridPanelLayout;
+    LabelComboBoxOracle: TLabel;
+    ComboBoxOracle: TComboBox;
+    LabelListBoxOracle: TLabel;
+    LabelListViewOracle: TLabel;
+    ListBoxOracle: TListBox;
+    SearchBoxOracle: TSearchBox;
+    ListViewOracle: TListView;
+    LabelStringGridOracle: TLabel;
+    LabelGridOracle: TLabel;
+    StringGridOracle: TStringGrid;
+    GridOracle: TGrid;
+    GridPanelLayoutOracleAutoCompleteEdit: TGridPanelLayout;
+    ComboEditOracle: TComboEdit;
+    GridPanelLayoutOracleLabels: TGridPanelLayout;
+    LabelEditOracle: TLabel;
+    LabelComboEditOracle: TLabel;
+    TabDBConnectorsNavigators: TTabItem;
+    TabControlArrayConnectors: TTabControl;
+    TabArrayString: TTabItem;
+    TabArrayVariant: TTabItem;
+    TabArrayField: TTabItem;
+    TabArrayAssoc: TTabItem;
+    GroupBoxComponentsArrayString: TGroupBox;
+    GridPanelLayoutArrayString: TGridPanelLayout;
+    LabelComboBoxArrayString: TLabel;
+    ComboBoxArrayString: TComboBox;
+    LabelListBoxArrayString: TLabel;
+    LabelListViewArrayString: TLabel;
+    ListBoxArrayString: TListBox;
+    SearchBoxArrayString: TSearchBox;
+    ListViewArrayString: TListView;
+    LabelStringGridArrayString: TLabel;
+    LabelGridArrayString: TLabel;
+    StringGridArrayString: TStringGrid;
+    GridArrayString: TGrid;
+    GridPanelLayoutArrayStringAutoCompleteEdit: TGridPanelLayout;
+    EditArrayString: TEdit;
+    ComboEditArrayString: TComboEdit;
+    GridPanelLayoutArrayStringLabels: TGridPanelLayout;
+    LabelEditArrayString: TLabel;
+    LabelComboEditArrayString: TLabel;
+    GroupBoxComponentsArrayVariant: TGroupBox;
+    GridPanelLayoutArrayVariant: TGridPanelLayout;
+    LabelComboBoxArrayVariant: TLabel;
+    ComboBoxArrayVariant: TComboBox;
+    LabelListBoxArrayVariant: TLabel;
+    LabelListViewArrayVariant: TLabel;
+    ListBoxArrayVariant: TListBox;
+    SearchBoxArrayVariant: TSearchBox;
+    ListViewArrayVariant: TListView;
+    LabelStringGridArrayVariant: TLabel;
+    LabelGridArrayVariant: TLabel;
+    StringGridArrayVariant: TStringGrid;
+    GridArrayVariant: TGrid;
+    GridPanelLayoutArrayVariantAutoCompleteEdit: TGridPanelLayout;
+    EditArrayVariant: TEdit;
+    ComboEditArrayVariant: TComboEdit;
+    GridPanelLayoutArrayVariantLabels: TGridPanelLayout;
+    LabelEditArrayVariant: TLabel;
+    LabelComboEditArrayVariant: TLabel;
+    GroupBoxComponentsArrayField: TGroupBox;
+    GridPanelLayoutArrayField: TGridPanelLayout;
+    LabelComboBoxArrayField: TLabel;
+    ComboBoxArrayField: TComboBox;
+    LabelListBoxArrayField: TLabel;
+    LabelListViewArrayField: TLabel;
+    ListBoxArrayField: TListBox;
+    SearchBoxArrayField: TSearchBox;
+    ListViewArrayField: TListView;
+    LabelStringGridArrayField: TLabel;
+    LabelGridArrayField: TLabel;
+    StringGridArrayField: TStringGrid;
+    GridArrayField: TGrid;
+    GridPanelLayoutArrayFieldAutoCompleteEdit: TGridPanelLayout;
+    EditArrayField: TEdit;
+    ComboEditArrayField: TComboEdit;
+    GridPanelLayoutArrayFieldLabels: TGridPanelLayout;
+    LabelEditArrayField: TLabel;
+    LabelComboEditArrayField: TLabel;
+    GroupBoxComponentsArrayAssoc: TGroupBox;
+    GridPanelLayoutArrayAssoc: TGridPanelLayout;
+    LabelComboBoxArrayAssoc: TLabel;
+    ComboBoxArrayAssoc: TComboBox;
+    LabelListBoxArrayAssoc: TLabel;
+    LabelListViewArrayAssoc: TLabel;
+    ListBoxArrayAssoc: TListBox;
+    SearchBoxArrayAssoc: TSearchBox;
+    ListViewArrayAssoc: TListView;
+    LabelStringGridArrayAssoc: TLabel;
+    LabelGridArrayAssoc: TLabel;
+    StringGridArrayAssoc: TStringGrid;
+    GridArrayAssoc: TGrid;
+    GridPanelLayoutArrayAssocAutoCompleteEdit: TGridPanelLayout;
+    EditArrayAssoc: TEdit;
+    ComboEditArrayAssoc: TComboEdit;
+    GridPanelLayoutArrayAssocLabels: TGridPanelLayout;
+    LabelEditArrayAssoc: TLabel;
+    LabelComboEditArrayAssoc: TLabel;
+    GridPanelLayout1: TGridPanelLayout;
+    GroupBox1: TGroupBox;
+    GridPanelLayout2: TGridPanelLayout;
+    BindNavigator1: TBindNavigator;
+    Edit1: TEdit;
+    SearchEditButton1: TSearchEditButton;
+    Grid1: TGrid;
+    GridPanelLayout3: TGridPanelLayout;
+    GroupBox2: TGroupBox;
+    GridPanelLayout5: TGridPanelLayout;
+    Edit2: TEdit;
+    SearchEditButton2: TSearchEditButton;
+    Grid2: TGrid;
+    PagPanelLayout: TGridPanelLayout;
+    PagButtonFirst: TCornerButton;
+    PagButtonPrior: TCornerButton;
+    PagButtonNext: TCornerButton;
+    PagButtonLast: TCornerButton;
+    GroupBox3: TGroupBox;
+    GridPanelLayout4: TGridPanelLayout;
+    Edit3: TEdit;
+    SearchEditButton3: TSearchEditButton;
+    Grid3: TGrid;
+    NavPanelLayout: TGridPanelLayout;
+    NavButtonFirst: TCornerButton;
+    NavButtonPrior: TCornerButton;
+    NavButtonNext: TCornerButton;
+    NavButtonLast: TCornerButton;
+    NavButtonInsert: TCornerButton;
+    NavButtonDelete: TCornerButton;
+    NavButtonEdit: TCornerButton;
+    NavButtonPost: TCornerButton;
+    NavButtonCancel: TCornerButton;
+    NavButtonRefresh: TCornerButton;
+    EditOracle: TEdit;
     procedure TabDBSQLiteClick(Sender: TObject);
     procedure TabDBFirebirdClick(Sender: TObject);
     procedure TabDBMySQLClick(Sender: TObject);
@@ -280,9 +403,12 @@ type
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure TabDBSQLServerClick(Sender: TObject);
+    procedure EditSQLitePresentationNameChoosing(Sender: TObject; var PresenterName: string);
+    procedure TabDBOracleClick(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
+    procedure PresentationNameChoosing(Sender: TObject; var PresenterName: string);
     function ArrayStringTest(const MethodName : String) : String;
     function ArrayVariantTest(const MethodName : String) : String;
     function ArrayFieldTest(const MethodName : String) : String;
@@ -302,6 +428,7 @@ uses
   Float,
   &Array,
   MimeType,
+  EventDriven,
   Connection,
   Connector;
 
@@ -626,6 +753,17 @@ begin
   //TEdit(Sender).SetMaskMoneyKeyDown(KeyChar, Key);
 end;
 
+procedure TGenericDatabaseForm.PresentationNameChoosing(Sender: TObject; var PresenterName: string);
+begin
+  inherited;
+  PresenterName := 'SuggestEdit-Style';
+end;
+
+procedure TGenericDatabaseForm.EditSQLitePresentationNameChoosing(Sender: TObject; var PresenterName: string);
+begin
+  Self.PresentationNameChoosing(Sender, PresenterName);
+end;
+
 procedure TGenericDatabaseForm.ComboBoxDataTypeTArrayStringChange(Sender: TObject);
 var
   Value : String;
@@ -887,6 +1025,70 @@ begin
   end;
 end;
 
+procedure TGenericDatabaseForm.TabDBOracleClick(Sender: TObject);
+var
+  DBOracle : TConnection;
+  SQL: TQuery;
+  Query: TQueryBuilder;
+  Connector: TConnector;
+begin
+  DBOracle := TConnection.Create;
+  //DBOracle := TConnectionClass.GetInstance();
+  try
+    DBOracle.Driver := ORACLE;
+    DBOracle.Host := 'localhost';
+    DBOracle.Port := 1521;
+    DBOracle.Schema := 'XE';
+    DBOracle.Username := 'hr';
+    DBOracle.Password := 'masterkey';
+
+    if not DBOracle.GetInstance.Connection.Connected then
+      DBOracle.GetInstance.Connection.Connected := True;
+
+    SQL := TQuery.Create;
+    try
+      SQL := Query.View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM HR."estado" ORDER BY "id"');
+
+      Connector := TConnector.Create(SQL);
+      try
+
+//        Connector.ToCombo(ComboBoxOracle, 'Codigo', 'Estado', 1);
+//        Connector.ToCombo(EditOracle, 'Codigo', 'Estado', 2);
+//        Connector.ToCombo(ComboEditOracle, 'Codigo', 'Estado', 5);
+//        Connector.ToListBox(ListBoxOracle, 'Codigo', 'Estado', 7);
+//        Connector.ToGrid(StringGridOracle, 3);
+//        Connector.ToGrid(GridOracle, 6);
+//        Connector.ToListView(ListViewOracle, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], 13);
+
+//        Connector.ToCombo(ComboBoxOracle, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[1]]));
+//        Connector.ToCombo(EditOracle, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Codigo', 3]]));
+//        Connector.ToCombo(ComboEditOracle, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[5]]));
+//        Connector.ToListBox(ListBoxOracle, 'Codigo', 'Estado', TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Espírito Santo']]));
+//        Connector.ToGrid(StringGridOracle, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'AP']]));
+//        Connector.ToGrid(GridOracle, TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Estado', 'Distrito Federal']]));
+//        Connector.ToListView(ListViewOracle, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [['Sigla', 'PA']]));
+
+        Connector.ToCombo(ComboBoxOracle, 'Codigo', 'Estado', '{"Index":1}');
+        Connector.ToCombo(EditOracle, 'Codigo', 'Estado', '{"Field":{"Codigo":3}}');
+        Connector.ToCombo(ComboEditOracle, 'Codigo', 'Estado', '{"Index":5}');
+        Connector.ToListBox(ListBoxOracle, 'Codigo', 'Estado', '{"Field":{"Estado":"Espírito Santo"}}');
+        Connector.ToGrid(StringGridOracle, '{"Field":{"Sigla":"AP"}}');
+        Connector.ToGrid(GridOracle, '{"Field":{"Estado":"Distrito Federal"}}');
+        Connector.ToListView(ListViewOracle, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
+
+       finally
+        Connector.Destroy;
+      end;
+
+    finally
+      SQL.Destroy;
+    end;
+
+  finally
+    DBOracle.Destroy;
+  end;
+end;
+
 procedure TGenericDatabaseForm.TabDBPostgreSQLClick(Sender: TObject);
 var
   DBPostgreSQL : TConnection;
@@ -897,11 +1099,11 @@ begin
   DBPostgreSQL := TConnection.Create;
   //DBPostgreSQL := TConnectionClass.GetInstance();
   try
-    DBPostgreSQL.Driver := POSTGRES;
+    DBPostgreSQL.Driver := POSTGRESQL;
     DBPostgreSQL.Host := '127.0.0.1';
     DBPostgreSQL.Port := 5432;
     DBPostgreSQL.Database := 'postgres';
-    DBPostgreSQL.Schema := 'demodev';
+    DBPostgreSQL.Schema := 'public';
     DBPostgreSQL.Username := 'postgres';
     DBPostgreSQL.Password := 'masterkey';
 
@@ -1032,6 +1234,7 @@ var
 begin
   DBSQLite := TConnection.Create;
   //DBSQLite := TConnectionClass.GetInstance();
+
   try
     DBSQLite.Driver := SQLITE;
     DBSQLite.Database :=

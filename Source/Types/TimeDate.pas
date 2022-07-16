@@ -24,27 +24,6 @@
   no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
-
-//  Showmessage(TTimeDate.ToArray('2020-02-28 10:23:59 +02:00').ToList(True));
-//  Showmessage(TTimeDate.ToArray('29/02/2020 10:23:59 AM').ToList(True));
-
-  
-  https://stackoverflow.com/questions/34425123/how-to-handle-tregex-named-capture-groups-that-might-be-empty
-  https://stackoverflow.com/questions/15362556/regular-expressions-and-tmatch-groups-count
-  https://stackoverflow.com/questions/30804569/get-which-capture-group-matched-a-result-using-delphis-tregex
-
-
-  https://stackoverflow.com/questions/16467919/regex-matching-a-date-and-time
-  https://stackoverflow.com/questions/51224/regular-expression-to-match-valid-dates
-  https://forum.imasters.com.br/topic/429416-resolvido%C2%A0converter-data-mysqldelphi/
-  https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy
-  https://stackoverflow.com/questions/15196451/regular-expression-to-validate-datetime-format-mm-dd-yyyy
-  https://stackoverflow.com/questions/37732/what-is-the-regex-pattern-for-datetime-2008-09-01-123545
-  https://stackoverflow.com/questions/51224/regular-expression-to-match-valid-dates/8768241#8768241
-
-  https://stackoverflow.com/questions/20767011/how-do-i-get-the-named-groups-of-a-regex-in-delphi
-  https://stackoverflow.com/questions/39841797/how-to-use-delphi-tregex-to-replace-a-particular-capture-group
-  https://www.finalbuilder.com/resources/blogs/getting-started-with-delphi-xes-regular-expressio  
 }
 
 unit TimeDate;

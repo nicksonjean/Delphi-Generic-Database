@@ -1,7 +1,7 @@
-{
+ï»¿{
   &Array.
   ------------------------------------------------------------------------------
-  Objetivo : Simplificar a criação de matrizes php-like em Delphi.
+  Objetivo : Simplificar a criaï¿½ï¿½o de matrizes php-like em Delphi.
   Suporta 1 Tipo de Matriz Associativa Unidimensional Baseada em TStringList;
   Suporta 2 Tipos de Matrizes Associativas Unidimensionais Baseadas em TDicionary;
   Suporte 2 Tipos de Matrizes Associativas Multidimensional Baseadas em TDicionary;
@@ -14,18 +14,18 @@
   Autor : Nickson Jeanmerson
   Colaborador : Ramon Ruan
   ------------------------------------------------------------------------------
-  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
-  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
-  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
-  qualquer versão posterior.
-  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
-  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
-  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
-  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
-  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
-  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
-  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
-  Você também pode obter uma copia da licença em:
+  Esta biblioteca ï¿½ software livre; vocï¿½ pode redistribuï¿½-la e/ou modificï¿½-la
+  sob os termos da Licenï¿½a Pï¿½blica Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versï¿½o 3.29 da Licenï¿½a, ou (a seu critï¿½rio)
+  qualquer versï¿½o posterior.
+  Esta biblioteca ï¿½ distribuï¿½da na expectativa de que seja ï¿½til, porï¿½m, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implï¿½cita de COMERCIABILIDADE OU
+  ADEQUAï¿½ï¿½O A UMA FINALIDADE ESPECï¿½FICA. Consulte a Licenï¿½a Pï¿½blica Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENï¿½A.TXT ou LICENSE.TXT)
+  Vocï¿½ deve ter recebido uma cï¿½pia da Licenï¿½a Pï¿½blica Geral Menor do GNU junto
+  com esta biblioteca; se nï¿½o, escreva para a Free Software Foundation, Inc.,
+  no endereï¿½o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Vocï¿½ tambï¿½m pode obter uma copia da licenï¿½a em:
   http://www.opensource.org/licenses/lgpl-license.php
 }
 
@@ -56,7 +56,7 @@ uses
   TODO 3 -oNickson Jeanmerson -cProgrammer :
   1) Padronizar a Classes TArrayString e TArrayVariant; //OK
   2) Padronizar a Classe TArrayField;
-  3) Criar Métodos Ausentes;
+  3) Criar Mï¿½todos Ausentes;
 }
 
 type
@@ -76,7 +76,7 @@ type
     destructor Destroy; override;
     procedure Assign(Collection: TArrayString); reintroduce;
     function ToKeys(Prettify : Boolean = False): string;
-    function ToValues(Prettify : Boolean = False): string;
+    function ToValues(Prettify : Boolean = False): string;  
     function ToList(Prettify : Boolean = False): string;
     function ToTags(Prettify : Boolean = False): string;
     function ToXML(Prettify : Boolean = False): string;
@@ -370,6 +370,8 @@ class function TArrayStringHelper.StrToStr(Value: String; Quote : String = #39):
 begin
   if TArrayVariantHelper.IsNullOrEmpty(Value) then
     Result := NUL
+  else if TString.IsZeroFilled(Value) then
+    Result := TString.Quote(Value, Quote)
   else if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
     Result := TString.Quote(TFloat.ToSQL(Value), Quote)
   else if TTimeDate.IsValid(Value) then
@@ -602,6 +604,8 @@ begin
       Result := TString.Quote(TBase64.ToEncode(TEncoding.UTF8.GetString(Value)), Quote)
     else
       Result := TString.Quote(Trim(TEncoding.UTF8.GetString(Value)), Quote)
+  else if TString.IsZeroFilled(Value) then
+    Result := TString.Quote(Value, Quote)
   else if TString.IsNumeric(Value) or TString.IsDecimal(Value) then
     Result := TString.Quote(TFloat.ToSQL(Value), Quote)
   else if TTimeDate.IsValid(Value) then
@@ -847,7 +851,7 @@ begin
         Result := QuotedStr(FormatDateTime('yyyy-mm-dd hh:nn:ss', DT, FmtSet));
       end;
     else
-      Result := QuotedStr(TString.EscapeStrings(Field.Value));
+      Result := QuotedStr(TString.RealEscapeStrings(Field.Value));
     end;
   end;
 end;
@@ -880,7 +884,7 @@ begin
     if(fDict.ContainsKey(Index)) then
     begin
       if(fStrict = true) then
-        raise Exception.Create('A Matriz está em estrito, a chave "'+ Index +'" já estava definida.')
+        raise Exception.Create('A Matriz estï¿½ em estrito, a chave "'+ Index +'" jï¿½ estava definida.')
     end
     else
     begin
@@ -923,7 +927,7 @@ begin
     else
     begin
       if (fStrict) then
-        raise Exception.Create('A Matriz está em estrito, a chave "'+ Index +'" não foi definida.')
+        raise Exception.Create('A Matriz estï¿½ em estrito, a chave "'+ Index +'" nï¿½o foi definida.')
       else
       begin
         Result := TArrayAssoc.Create(fStrict);
@@ -934,7 +938,7 @@ begin
   else
   begin
     if(fStrict) then
-      raise Exception.Create('A Matriz está em estrito, a chave "'+ Index +'" não foi definida.')
+      raise Exception.Create('A Matriz estï¿½ em estrito, a chave "'+ Index +'" nï¿½o foi definida.')
     else
     begin
       fDict := TDictionary<Variant,TArrayAssoc>.Create(1);

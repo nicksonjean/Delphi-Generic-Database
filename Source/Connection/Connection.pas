@@ -136,7 +136,6 @@ uses
   FireDAC.Phys.Intf,
   FireDAC.Phys.SQLite,
   FireDAC.Phys.SQLiteDef,
-{$IFDEF MSWINDOWS}
   FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef,
   FireDAC.Phys.FB,
@@ -145,7 +144,8 @@ uses
   FireDAC.Phys.PGDef,
   FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef,
-{$ENDIF}
+  FireDAC.Phys.Oracle,
+  FireDAC.Phys.OracleDef,
 {$ENDIF}
 
   MimeType,
@@ -165,8 +165,8 @@ uses
 {$ENDIF}
   System.UITypes;
 
-type        // OK     OK       OK                 OK       OK            
-  TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, MSSQL, POSTGRES, ORACLE);
+type        // OK     OK       OK                 OK        OK        OK
+  TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, MSSQL, POSTGRESQL, ORACLE);
 
   { Design Pattern Singleton }
 type
@@ -453,7 +453,7 @@ begin
       if not SQL.Query.IsEmpty then
         Result := True;
     end;
-    POSTGRES:
+    POSTGRESQL:
     begin
       SQL := Query.View('SELECT 1 AS result FROM pg_database WHERE datname = ' + QuotedStr(FInstance.Database));
       if not SQL.Query.IsEmpty then
@@ -880,7 +880,7 @@ begin
     for I := 0 to TArrayString(Columns).Count - 1 do
     begin
       FieldsStr := FieldsStr + COMMA + TArrayString(Columns).Names[I] + EmptyStr;
-      ValuesStr := Self.ReservedWord<TArrayString>(TArrayString(Columns).ValuesAtIndex[I], TArrayStringHelper.StrToStr(TArrayString(Columns).ValuesAtIndex[I], SQUOTE));
+      ValuesStr := Self.ReservedWord<TArrayString>(TArrayString(Columns).ValuesAtIndex[I], TArrayStringHelper.StrToStr(TString.RealEscapeStrings(TArrayString(Columns).ValuesAtIndex[I]), SQUOTE));
     end;
   end
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
@@ -888,7 +888,7 @@ begin
     for I := 0 to TArrayVariant(Columns).Count - 1 do
     begin
       FieldsStr := FieldsStr + COMMA + TArrayVariant(Columns).Key[I] + EmptyStr;
-      ValuesStr := Self.ReservedWord<TArrayVariant>(TArrayVariant(Columns).ValuesAtIndex[I], TArrayVariantHelper.VarToStr(TArrayVariant(Columns).ValuesAtIndex[I], SQUOTE, TBinaryMode.Write));
+      ValuesStr := Self.ReservedWord<TArrayVariant>(TArrayVariant(Columns).ValuesAtIndex[I], TArrayVariantHelper.VarToStr(TString.RealEscapeStrings(TArrayVariant(Columns).ValuesAtIndex[I]), SQUOTE, TBinaryMode.Write));
     end;
   end
   else
@@ -896,7 +896,7 @@ begin
     for I := 0 to TArrayField(Columns).Count - 1 do
     begin
       FieldsStr := FieldsStr + COMMA + TArrayField(Columns).Key[I] + EmptyStr;
-      ValuesStr := Self.ReservedWord<TArrayField>(TArrayField(Columns).ValuesAtIndex[I].AsString, TArrayVariantHelper.VarToStr(TArrayField(Columns).ValuesAtIndex[I].AsVariant, SQUOTE, TBinaryMode.Write));
+      ValuesStr := Self.ReservedWord<TArrayField>(TArrayField(Columns).ValuesAtIndex[I].AsString, TArrayVariantHelper.VarToStr(TString.RealEscapeStrings(TArrayField(Columns).ValuesAtIndex[I].AsVariant), SQUOTE, TBinaryMode.Write));
     end;
   end;
   System.Delete(FieldsStr, 1, 1);
@@ -910,13 +910,13 @@ begin
   ValuesStr := EmptyStr;
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
     for I := 0 to TArrayString(Columns).Count - 1 do
-      ValuesStr := Self.ReservedWord<TArrayString>(TArrayString(Columns).Names[I], TArrayString(Columns).ValuesAtIndex[I], TArrayStringHelper.StrToStr(TArrayString(Columns).ValuesAtIndex[I], SQUOTE))
+      ValuesStr := Self.ReservedWord<TArrayString>(TArrayString(Columns).Names[I], TArrayString(Columns).ValuesAtIndex[I], TArrayStringHelper.StrToStr(TString.RealEscapeStrings(TArrayString(Columns).ValuesAtIndex[I]), SQUOTE))
   else if (TypeInfo(T) = TypeInfo(TArrayVariant)) then
     for I := 0 to TArrayVariant(Columns).Count - 1 do
-      ValuesStr := Self.ReservedWord<TArrayVariant>(TArrayVariant(Columns).Key[I], TArrayVariant(Columns).ValuesAtIndex[I], TArrayVariantHelper.VarToStr(TArrayVariant(Columns).ValuesAtIndex[I], SQUOTE, TBinaryMode.Write))
+      ValuesStr := Self.ReservedWord<TArrayVariant>(TArrayVariant(Columns).Key[I], TArrayVariant(Columns).ValuesAtIndex[I], TArrayVariantHelper.VarToStr(TString.RealEscapeStrings(TArrayVariant(Columns).ValuesAtIndex[I]), SQUOTE, TBinaryMode.Write))
   else
     for I := 0 to TArrayField(Columns).Count - 1 do
-      ValuesStr := Self.ReservedWord<TArrayField>(TArrayField(Columns).Key[I], TArrayField(Columns).ValuesAtIndex[I].AsString, TArrayVariantHelper.VarToStr(TArrayField(Columns).ValuesAtIndex[I].AsVariant, SQUOTE, TBinaryMode.Write));
+      ValuesStr := Self.ReservedWord<TArrayField>(TArrayField(Columns).Key[I], TArrayField(Columns).ValuesAtIndex[I].AsString, TArrayVariantHelper.VarToStr(TString.RealEscapeStrings(TArrayField(Columns).ValuesAtIndex[I].AsVariant), SQUOTE, TBinaryMode.Write));
   System.Delete(ValuesStr, 1, 1);
 end;
 
