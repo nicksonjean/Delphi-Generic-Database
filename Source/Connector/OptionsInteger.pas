@@ -107,7 +107,6 @@ uses
   ArrayHelper,
   EventDriven,
   Connection,
-  &Array,
   Connector
   ;
 

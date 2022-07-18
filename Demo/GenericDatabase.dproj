@@ -218,10 +218,18 @@
         <DCCReference Include="..\Source\Types\TimeDate.pas"/>
         <DCCReference Include="..\Source\Types\Float.pas"/>
         <DCCReference Include="..\Source\Types\String.pas"/>
+        <DCCReference Include="..\Source\Types\Array\ArrayAssoc.pas"/>
+        <DCCReference Include="..\Source\Types\Array\ArrayField.pas"/>
+        <DCCReference Include="..\Source\Types\Array\ArrayString.pas"/>
+        <DCCReference Include="..\Source\Types\Array\ArrayVariant.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Helpers\ArrayFieldHelper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Helpers\ArrayStringHelper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Helpers\ArrayVariantHelper.pas"/>
         <DCCReference Include="..\Source\Types\Array.pas"/>
         <DCCReference Include="GenericDatabaseForm.pas">
             <Form>FGenericDatabaseForm</Form>
         </DCCReference>
+        <DCCReference Include="..\Source\Types\ArrayInterface.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

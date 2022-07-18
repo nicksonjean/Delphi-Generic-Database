@@ -33,13 +33,21 @@ uses
   TimeDate in '..\Source\Types\TimeDate.pas',
   Float in '..\Source\Types\Float.pas',
   &String in '..\Source\Types\String.pas',
+  ArrayAssoc in '..\Source\Types\Array\ArrayAssoc.pas',
+  ArrayField in '..\Source\Types\Array\ArrayField.pas',
+  ArrayString in '..\Source\Types\Array\ArrayString.pas',
+  ArrayVariant in '..\Source\Types\Array\ArrayVariant.pas',
+  ArrayFieldHelper in '..\Source\Types\Array\Helpers\ArrayFieldHelper.pas',
+  ArrayStringHelper in '..\Source\Types\Array\Helpers\ArrayStringHelper.pas',
+  ArrayVariantHelper in '..\Source\Types\Array\Helpers\ArrayVariantHelper.pas',
   &Array in '..\Source\Types\Array.pas',
-  GenericDatabaseForm in 'GenericDatabaseForm.pas' {FGenericDatabaseForm};
+  GenericDatabaseForm in 'GenericDatabaseForm.pas' {FGenericDatabaseForm},
+  ArrayInterface in '..\Source\Types\ArrayInterface.pas';
 
 {$R *.res}
 
 begin
-  //ReportMemoryLeaksOnShutdown := True;
+  //ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.CreateForm(TGenericDatabaseForm, FGenericDatabaseForm);
   Application.Run;

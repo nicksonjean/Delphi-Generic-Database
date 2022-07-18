@@ -1,0 +1,1737 @@
+<!doctype html public "-//w3c//dtd html 4.0 Transitional//en">
+<html>
+<head>
+  <title>dbExpress Driver for Oracle ReadMe</title>
+<meta http-equiv="Content-Type" content="text/html">
+<style>
+body {
+  overflow: hidden; 
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  background: #ffffff; 
+  color: #000000;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 70%;
+  width: 100%;
+  }
+p
+    {
+    margin: .5em 0em .5em 0em;
+    }
+ol, ul
+    {
+    margin-top: .5em; 
+    }
+li
+    {
+    margin-bottom: .5em;
+    }
+ul p, ol p, dl p
+    {
+    margin-left: 0em;
+    }
+blockquote.dxOverload
+    {
+    margin: .5em 1.5em .5em 1.5em;
+    }
+h1, h2, h3, h4
+    {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin-bottom: .4em; 
+    margin-top: 1em;
+    font-weight: bold;
+    }
+h1
+    {
+    font-size: 120%;
+    margin-top: 0em;
+    }
+h2
+    {
+    font-size: 130%;
+    }
+h3
+    {
+    font-size: 115%;
+    }
+h4
+    {
+    font-size: 120%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    }
+.dxH1, .dxH2, .dxH3, .dxH4
+    {
+    margin-left: -18px;    
+    }
+A
+  {
+  color: #0000FF;
+  }
+A:link
+  {
+  color: #0000FF;
+  }
+A:active
+  {
+  color: #000080;
+  }
+A:visited
+  {
+  color: #800080;
+  }
+A:hover
+  {
+  color: #FF0000;
+  }
+pre
+  {
+  font-family: Courier New;
+  font-size: 9pt;
+  color: #000060;
+  margin-top: 0px;
+  }
+code, p.example, p.sourcecode, table.sourcecode, tr.sourcecode, td.sourcecode
+  {
+  font-family: Courier New;
+  font-size: 9pt;
+  color: #000060;
+  }
+div#pagetop {
+  margin: 0px;
+  padding: 0px;
+  background-color: #99ccff;   
+  height: 44;
+  width: 100%;
+  border-bottom: 1px solid #999999;
+  }
+div#pagebody {
+  margin: 0px 0px 0px 0px;
+  padding: 5px 10px 0px 22px;
+  height: 90%;
+  width: 100%;
+  overflow: auto;
+  background-color: #FFFFFF;
+  vertical-align: top;
+  }
+table#BannerTable
+  {
+  width: 100%;
+  height: 100%;
+  border-collapse:collapse;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+table#BannerTable td
+  {
+  padding-left: 8px;
+  padding-right: 8px;
+  }
+tr#BannerTopRow
+  {
+  font-style: italic;
+  font-size: 70%;
+  }
+tr#BannerTopRow td
+  {
+  padding-top: 4px;
+  }
+tr#Banner2ndRow
+  {
+  font-weight: bold;
+  font-size: 80%;
+  }
+tr#Banner2ndRow td
+  {
+  padding-bottom: 4px;
+  }
+td#BannerCol
+  {
+  font-style: italic;
+  font-size: 70%;
+  padding-bottom: 4px;
+  }
+td#Banner2ndCol
+  {
+  font-weight: bold;
+  font-size: 80%;
+  padding-bottom: 4px;
+  }
+table.filtereditemlisttable, table.xmldoctable
+    {
+    width: 95%; 
+    margin-top: .6em;
+    margin-bottom: .3em;
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #999999;
+    background-color: #999999; 
+    font-size: 100%;
+  border-collapse:collapse;
+    }
+table.filtereditemlisttable th, table.filtereditemlisttable td, table.xmldoctable th, table.xmldoctable td
+    { 
+    border-width: 0px 0px 1px 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+    }
+table.filtereditemlisttable th, table.xmldoctable th
+    { 
+    background: #cccccc; 
+    vertical-align: bottom;
+    }
+table.filtereditemlisttable td, table.xmldoctable td
+    {
+    background-color: #ffffff;
+    vertical-align: top;
+    }
+
+table.desctable {
+    width: 95%;
+    margin-top: .6em;
+    margin-bottom: .3em;
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #999999;
+    background-color: #999999;
+    font-size: 100%;
+}
+table.desctable th, table.desctable td {
+    border-style: solid;
+    border-width: 0px 0px 1px 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+}
+table.desctable th {
+    background: #cccccc;
+    vertical-align: bottom;
+}
+table.desctable td {
+    background: #ffffff;
+    vertical-align: top;
+    }
+
+</style>
+
+<script>
+
+var Engine;
+var enOpera = 'Opera';
+var enIE = 'IE';
+var enGecko = 'Gecko';
+
+function TestEngine()
+{
+  if (document.all) {
+    if (window.opera) {
+      Engine = enOpera;
+    }
+    else {
+      Engine = enIE;
+    }
+  }
+  else {
+    Engine = enGecko;
+  }
+}
+
+
+function AdjustContentSize()
+{
+  var cDiv = document.getElementById("pagebody");
+  if ((Engine == enGecko)||(Engine == enOpera))//amend padding
+    {
+      var w = document.body.clientWidth;
+      cDiv.style.width = w - 32;
+    }
+  var h = document.body.clientHeight;
+  var diff = 44;
+  if ((Engine == enGecko)||(Engine == enOpera)) diff = diff + 6;
+  cDiv.style.height = h - diff;
+}
+
+
+function Startup()
+{
+  //add startup code here
+}
+</script>
+
+</head>
+
+
+<body onresize="AdjustContentSize()" onload="Startup()">
+
+<div id="pagetop">
+  <table id="BannerTable">
+    <tr id="BannerTopRow">
+      <td>dbExpress Driver for Oracle</td>
+      <td align="right"><i><a href="History.html">History</a></i></td>
+    </tr>
+    <tr>
+      <td id="Banner2ndCol">Readme</td>
+      <td id="BannerCol" align="right"><i><a href="Support.html">Support</a></i></td>
+    </tr>
+  </table>
+</div>
+
+<div id="pagebody">
+
+<!-- begin content -->
+
+<p>
+dbExpress is database-independent layer that defines a common
+interface to provide fast access to SQL database servers. For
+each supported server, dbExpress provides a driver as an
+independent library that implements the common dbExpress interfaces
+for processing queries and stored procedures. As data-access layer
+is thin and simple, dbExpress provides high performance database
+connectivity and is easy to deploy. dbExpress drivers are available
+for Windows as dynamic-link libraries. 
+</p>
+
+<p>
+Devart dbExpress Driver for Oracle provides direct access to Oracle database server
+based on Borland dbExpress data access technology. It can work
+using Oracle Call Interface (OCI) or SQL*Net directly.
+</p>
+
+<br>
+
+<ul>
+  <li><a href="#key_features">Key features</a></li>
+  <li><a href="#compatibility">Compatibility</a></li>
+  <li><a href="#windows_installation_notes">Windows installation notes</a></li>
+  <li><a href="#using">Using</a></li>
+  <li><a href="#examples">Connection examples</a></li>
+  <li><a href="#type_map">Type map</a></li>
+  <li><a href="#extended_driver_options">Extended driver options</a></li>
+  <li><a href="#tcrsqlconnection">TCRSQLConnection</a></li>
+  <li><a href="#dbmon">Using DBMonitor</a></li>
+  <li><a href="#64bit">Compiling for 64-bit platforms</a></li>
+  <li><a href="#linux_development">Running on Linux</a></li>
+  <li><a href="#deployment">Deployment</a></li>
+  <li><a href="#embedded_dbexpress">Built-in dbExpress Driver</a></li>
+  <li><a href="#direct_mode_limitations">Direct mode limitations</a></li>
+  <li><a href="#trial_limitations">Trial limitations</a></li>
+  <li><a href="#notes">Notes</a></li>
+  <li><a href="#known_problems">Known problems</a></li>
+  <li><a href="#demo_projects">Demo projects</a></li>
+</ul>
+
+<br>
+
+<h4><a name="key_features"></a>Key features</h4>
+
+<p>
+Following is list of Devart dbExpress Driver for Oracle main features
+</p>
+
+<ul>
+  <li>Direct SQL*Net protocol support. This feature allows driver to work in Direct mode without Oracle client software</li>
+  <li>High performance</li>
+  <li>Supports Oracle 19c, 18c, 12c, 11g, 10g, 9i, 8i, and 8.0</li>
+  <li>Ability of monitoring query execution with <a href="#dbmon">DBMonitor</a> </li>
+  <li><a href="#extended_driver_options">Extended options</a> for advanced behaviour</li>
+  <li>Complete support for dbExpress version 4</li>
+  <li>Source code available</li>
+  <li>Free support for registered users</li>
+  <li>Licensed per a developer without royalty fee</li>
+</ul>
+
+<h4><a name="compatibility"></a>Compatibility</h4>
+
+<p>
+DbxOda works with RAD Studio 10.4 Sydney, RAD Studio 10.3 Rio, RAD Studio 10.2 Tokyo, RAD Studio 10.1 Berlin, RAD Studio 10 Seattle, RAD Studio XE8,
+RAD Studio XE7, RAD Studio XE6, RAD Studio XE5, RAD Studio XE4, RAD Studio XE3, 
+RAD Studio XE2, RAD Studio XE, RAD Studio 2010, RAD Studio 2009, RAD Studio 2007, 
+Turbo Delphi, Turbo C++, Delphi 2006, Delphi 7, Delphi 6, C++ Builder 6.
+</p>
+
+<p>
+DbxOda supports Oracle servers 19c, 18c, 12c, 11g, 10g, 9i, 8i, and 8.0, including
+Oracle 10g Express and Oracle 8i Personal and Lite editions.
+DbxOda supports both x86 and x64 versions of the following Oracle clients: 19c, 18c, 12c, 11g, 10g, 9i, 8i, and
+8.0.
+Driver requires Oracle software installed on client side to access
+through OCI. In case of working through SQL*Net TCP/IP protocol
+required only.
+</p>
+
+<u>You should also pay attention to the following notes:</u> 
+<ol>
+  <li>
+    It is strongly recommended to use the corresponding library with your IDE. Please take a look at <a href="#lib_names">this table</a> for more details.
+  </li>
+  <li>
+    Update Pack 3 is required for C++Builder 2007 and Delphi 2007 for Win32.
+  </li>
+</ol>
+
+<h4><a name="windows_installation_notes"></a>Windows installation notes</h4>
+<u>RAD Studio 2007 and higher</u>
+<p>
+The standard TSQLConnection component in RAD Studio 2007 and higher provides
+exactly the same functionality like TCRSQLConnection does. Therefore
+TCRSQLConnection component is not registered automatically. But source code of
+the package containing this component is installed for providing backward
+compatibility. If you need to use TCRSQLConnection, you should compile and
+install its packages manually. They are located in the
+&lt;Driver_Installation_Directory&gt;\Source\DelphiXX\ directory.
+The <i>dclcrdbxXXX.dproj</i> package is used with Delphi for Win32 and C++Builder.
+</p>
+
+<p>
+If you have only C++Builder installed, you can compile the package from the
+command line using one of the following commands:
+<pre>C:\Program Files\CodeGear\RAD Studio\5.0\bin\dcc32.exe" dclcrdbx105.dpk</pre>
+<pre>C:\Program Files\CodeGear\RAD Studio\6.0\bin\dcc32.exe" dclcrdbx120.dpk</pre>
+ 
+To compile an application that uses TCRSQLConnection components, it is necessary to add the path to TCRSQLConnection sources to the Search path in Project Options or to the Library path in Environment Options:
+<ul>
+  <li>in Delphi for Win32 add &lt;Driver_Installation_Directory&gt;\Source;</li>
+  <li>in C++Builder add &lt;Driver_Installation_Directory&gt;\Source to the Library path and to the Include path in Project Options.</li>
+</ul>
+</p>
+
+<u>Delphi 2006</u>
+<p>
+If you use TCRSQLConnection in applications developed with C++Builder Personality of Delphi 2006 
+or Turbo C++, you should add the path to the DbxIda folder to Project Options|Library and Project Options|Include.
+</p>
+
+<h4><a name="using"></a>Using</h4>
+
+<p>
+The use of DbxOda is the very same as one of standard dbExpress
+drivers supplied by Borland. For additional information refer to 
+help on TSQLConnection component.
+</p>
+
+<p>
+To setup SQLConnection for using DbxOda just set at design-time
+ConnectionName property to "Devart Oracle" connection 
+configurations:
+</p>
+
+<p>
+Set connection parameters such as User_Name, Password and Database
+to provide login information. You need to set name of your TNS alias
+to Database parameter for standard connection. For Direct connection
+you need assign string, that specifies database, in such format
+host:port:sid. Where host is the address of server, port is the
+number of port that server listens and sid is system identifier
+that specifies instance name.
+</p>
+
+ <p>
+Borland Turbo products and Delphi 2006 introduce dbExpress 3.0 interfaces,
+CodeGear RAD Studio 2007 and higher introduce dbExpress 4.0. They are implemented
+in dbexpoda30.dll, dbexpoda40.dll and dbexpoda41.dll correspondingly, 
+and we highly recommend using the correspondent driver.
+</p>
+
+<h4><a name="examples"></a>Connection examples</h4>
+
+<p>
+	For Direct connection:
+</p>
+<pre>
+  SQLConnection.LibraryName := &lt;library name&gt;; // &lt;library name&gt; depends on your IDE version. See the <a href="#lib_names">table below</a>.
+  SQLConnection.VendorLib := &lt;library name&gt;; // &lt;library name&gt; depends on your IDE version. See the <a href="#lib_names">table below</a>.
+  SQLConnection.GetDriverFunc := 'getSQLDriverORADirect';
+  SQLConnection.Params.Clear;
+  SQLConnection.Params.Add('User_Name=scott');
+  SQLConnection.Params.Add('Password=tiger');
+  SQLConnection.Params.Add('Database=host:1521:ora')
+  SQLConnection.Open;
+</pre>
+
+<p>
+For connection with OCI:
+</p>
+
+<pre>
+  SQLConnection.LibraryName := &lt;library name&gt;; // &lt;library name&gt; depends on your IDE version. See the See the <a href="#lib_names">table below</a>.
+  SQLConnection.VendorLib := 'oci.dll';
+  SQLConnection.GetDriverFunc := 'getSQLDriverORA';
+  SQLConnection.Params.Clear;
+  SQLConnection.Params.Add('User_Name=scott');
+  SQLConnection.Params.Add('Password=tiger');
+  SQLConnection.Params.Add('Database=ora')
+  SQLConnection.Open;
+</pre>
+
+<p>
+If User_Name parameter of the SQLConnection is not set
+(User_Name='') OS Authentication connection mode is used.
+</p>
+<br>
+<p>
+	For connection using Service Name:
+</p>
+<pre>
+...
+  SQLConnection.Params.Add('Database=host:1521/ora') 
+  SQLConnection.Params.Add('Database=host:1521:sn=ora') (deprecated format)
+...
+</pre>
+
+<p>
+	For connection using SID:
+</p>
+<pre>
+...
+  SQLConnection.Params.Add('Database=host:1521:ora')
+  SQLConnection.Params.Add('Database=host:1521:sid=ora') (deprecated format) 
+...
+</pre>
+
+<p>
+Since CodeGear RAD Studio 2007, the HostName parameter is used instead of the DataBase parameter
+</p>
+<pre>
+...
+  SQLConnection.Params.Add('Hostname=host:1521:ora')
+  SQLConnection.Params.Add('Hostname=host:1521:sid=ora')
+  SQLConnection.Params.Add('Hostname=host:1521/ora') 
+  SQLConnection.Params.Add('Hostname=host:1521:sn=ora')
+...
+</pre>
+
+
+<a name="lib_names"> </a>
+<p>
+The following table determines how library name depends on the used IDE version:
+</p>
+<table class="desctable" cellspacing="0" style="width: 500">
+<tr>
+  <th width="30%">Library name</th>
+  <th width="70%">IDE version</th>
+</tr>
+
+<tr>
+  <td>dbexpoda<b>41</b>.dll</td>
+  <td>RAD Studio 10.3 and higher</td>
+</tr>
+
+<tr>
+  <td>dbexpoda<b>40</b>.dll</td>
+  <td>RAD Studio 2007 up to RAD Studio 10.2</td>
+</tr>
+
+<tr>
+  <td>dbexpoda<b>30</b>.dll</td>
+  <td>Delphi 2006 and Turbo products</td>
+</tr>
+
+<tr>
+  <td>dbexpoda.dll</td>
+  <td>Delphi 6 and Delphi 7</td>
+</tr>
+
+</table>
+
+
+<h4><a name="type_map"></a>Type map</h4>
+
+<p>
+Oracle data types map to TFieldType in the following way
+(by default, if EnableBCD property is True):
+</p>
+
+<table class="desctable" cellspacing="0">
+
+<tr>
+<th width="40%">Oracle type</th>
+<th width="30%">Field type</th>
+<th width="30%">Field class</th>
+</tr>
+
+<tr>
+<td>NUMBER(&lt;15,&lt;5)</td>
+<td>ftBCD</td>
+<td>TBCDField</td>
+</tr>
+
+<tr>
+<td>NUMBER(&gt;14,&gt;4)</td>
+<td>ftFMTBCD</td>
+<td>TFMTBCDField</td>
+</tr>
+
+<tr>
+<td>FLOAT</td>
+<td>ftFMTBCD</td>
+<td>TFMTBCDField</td>
+</tr>
+
+<tr>
+<td>VARCHAR2</td>
+<td>ftString</td>
+<td>TStringField</td>
+</tr>
+
+<tr>
+<td>VARCHAR</td>
+<td>ftString</td>
+<td>TStringField</td>
+</tr>
+
+<tr>
+<td>RAW</td>
+<td>ftVarBytes</td>
+<td>TVarBytesField</td>
+</tr>
+
+<tr>
+<td>CHAR</td>
+<td>ftString</td>
+<td>TStringField</td>
+</tr>
+
+<tr>
+<td>DATE</td>
+<td>ftTimeStamp</td>
+<td>TSQLTimeStampField</td>
+</tr>
+
+<tr>
+<td>CLOB</td>
+<td>ftOraClob</td>
+<td>TMemoField</td>
+</tr>
+
+<tr>
+<td>BLOB</td>
+<td>ftOraBlob</td>
+<td>TBlobField</td>
+</tr>
+
+<tr>
+<td>LONG</td>
+<td>ftMemo</td>
+<td>TMemoField</td>
+</tr>
+
+<tr>
+<td>LONG RAW</td>
+<td>ftBlob</td>
+<td>TBlobField</td>
+</tr>
+
+</table>
+
+<p>
+When EnableBCD option is False dataset maps number fields as following:
+</p>
+
+
+<table class="desctable" cellspacing="0">
+
+<tr>
+<th width="40%">Oracle type</th>
+<th width="30%">Field type</th>
+<th width="30%">Field class</th>
+</tr>
+
+<tr>
+<td>NUMBER(&lt;10)</td>
+<td>ftInteger</td>
+<td>TIntegerField</td>
+</tr>
+
+<tr>
+<td class="desctable">NUMBER(&gt;=10), NUMBER</td>
+<td class="desctable">ftFloat</td>
+<td class="desctable">TFloatField</td>
+</tr>
+
+</table>
+
+<p>
+<b>Note:</b> Type map, beginning from version 1.80 to correspond Borland dbExpress 
+driver for Oracle was changed for number types to ftBCD, ftFMTBCD.
+To recover previous behaviour you should set EnableBCD option to False.
+To simplify setting driver options it's recommended to use an additional
+component - TCRSQLConnection.
+</p>
+
+<h4><a name="extended_driver_options"></a>Extended driver options</h4>
+<p>
+Devart dbExpress Driver for Oracle provides several extended options that expand functionality of the driver.
+In order to overcome restrictions of dbExpress on several IDEs, Devart dbExpress Driver for Oracle provides the 
+TCRSQLConnection component. It simplifies working with extended driver options.
+</p>
+
+<p>
+The dbExpress technology version 4 in CodeGear RAD Studio 2007 and higher does
+not have such restrictions, so the TCRSQLConnection component has no sense for
+these IDEs.
+</p>
+
+<p>
+Starting with CodeGear RAD Studio 2007 you should assign parameter values to 
+TSQLConnection and TCRSQLConnection at run time in this way:
+<pre>SQLConnection.Params.Values['Option Name'] := 'Option Value';</pre>
+</p>
+
+<p>In versions prior to CodeGear RAD Studio 2007 it is recommended that you use TCRSQLConnection instead of a standard 
+TSQLConnection. The extended options in TSQLConnection are only available at run time.</p>
+
+<p>
+To setup these options at design time, you should use the Params property
+of TCRSQLConnection.
+</p>
+
+<p>
+To use an option with TSQLConnection in Delphi 2006 and lower IDE versions, you should define constants and set
+appropriate option values using event handlers like:
+<pre>
+TSQLConnection.AfterConnect
+TSQLQuery.BeforeOpen
+</pre>
+</p>
+
+<p>
+Below is the example that demonstrates setting extended driver options in Delphi 2006 and lower IDE versions:
+</p>
+
+<pre>
+const
+  coFetchAll = TSQLConnectionOption(301);
+
+procedure TForm1.SQLQuery1BeforeOpen(DataSet: TDataSet);
+begin
+  SQLConnection1.SQLConnection.SetOption(coFetchAll, Integer(True));
+end;
+</pre>
+
+ <p>
+If you compile the application for CLR, you should use
+</p>
+
+<pre>
+  ISQLConnection_SetOption(SQLConnection1, ...)
+</pre>
+
+ <p>
+instead of
+</p>
+
+<pre>
+  SQLConnection1.SQLConnection.SetOption(...)
+</pre>
+
+<p>
+Here is the description of the options and how to use them.
+</p>
+<br>
+
+<p><i><b>
+BCDPrecision
+</b></i></p>
+
+<p>
+This string option allows dataset to represent fields as
+TBCDField if NUMBER field precision and scale less or equal than precision and
+scale specified in BCDPrecision. String value is interpreted like two coma 
+separated digits (BCD precision and scale). The default value of this option 
+is '0,0' (do not use TBCDField). The value of BCDPrecision cannot be greater 
+then '14,4'.
+</p>
+
+<pre>
+const
+  coBCDPrecision = TSQLConnectionOption(208); // string
+. . .
+  SQLConnection1.SQLConnection.SetOption(coBCDPrecision, Integer(PChar('14,4')));
+</pre>
+
+<p><i><b>
+CharLength
+</b></i></p>
+
+<p>
+Specifies the size in bytes of a single character. Set this option with the 
+number in range [0..6] to reflect Oracle support for the national languages. 
+Setting CharLength to zero will instruct Oracle driver to interrogate Oracle 
+server for the actual character length.
+Default value is 0.
+</p>
+
+<pre>
+const
+  coCharLength = TSQLConnectionOption(203); // integer
+. . .
+  with SQLConnection1.SQLConnection do begin
+    SetOption(coCharLength, 3);
+  end;
+</pre>
+
+
+<p><i><b>
+ServerCharset
+</b></i></p>
+
+<p>
+Sets character set that driver uses to read and write character data.
+</p>
+
+<pre>
+. . .
+  SQLConnection1.SQLConnection.SetOption(eConnServerCharSet, Integer(PChar('WE8ISO8859P1')));
+</pre>
+
+
+<p><i><b>
+Charset
+</b></i></p>
+
+<p>
+Sets character set that driver uses to read and write character data. 
+</p>
+
+<pre>
+const
+  coCharset = TSQLConnectionOption(204); //string
+. . .
+  SQLConnection1.SQLConnection.SetOption(coCharset, Integer(PChar('WE8ISO8859P1')));
+</pre>
+
+<p>
+Charset property cannot be used for "Devart Oracle Direct" connection. Please use ServerCharSet property instead.
+</p>
+
+<pre>
+SQLConnection.Params.Add('ServerCharSet=WE8ISO8859P1');
+</pre>
+
+
+<p><i><b>
+ClobAsWideMemo
+</b></i></p>
+
+<p>
+When set to True, TWideMemoField is created for CLOB fields instead of TMemoField.
+</p>
+<p>
+Note: setting this option to True may cause some problems with updating data because parameters of an update query are mapped to Oracle LONG data type instead of CLOB.
+</p>
+<p>
+This option is available for Delphi 2006 and higher IDE versions.
+</p>
+<p>
+Default value of this option is False.
+</p>
+
+<pre>
+const
+  coClobAsWideMemo = TSQLConnectionOption(213); //boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coClobAsWideMemo, Integer(True));
+</pre>
+
+
+
+<p><i><b>
+DBMonitorHost
+</b></i></p>
+
+<p>
+Set this option to the host name where dbMonitor runs to enable remote monitoring.
+</p>
+
+<pre>
+const
+  coDBMonitorHost = TSQLConnectionOption(106); //string
+. . .
+  SQLConnection1.SQLConnection.SetOption(coDBMonitorHost, Integer(PChar('MyHost')));
+</pre>
+
+
+
+<p><i><b>
+DBMonitorPort
+</b></i></p>
+
+<p>
+Set this option to the port number of dbMonitor.
+</p>
+
+<pre>
+const
+  coDBMonitorPort = TSQLConnectionOption(107); //integer
+. . .
+  SQLConnection1.SQLConnection.SetOption(coDBMonitorPort, 1001);
+</pre>
+
+
+<p><i><b>
+EnableBCD
+</b></i></p>
+This boolean option with True value allows dataset to represent number
+fields as TBCDField and TFMTBCDField. It sets the following precision values
+values
+
+SmallIntPrecision = 0<br>
+IntegerPrecision = 0<br>
+FloatPrecision = 0<br>
+BCDPrecision = '14,4'<br>
+(TFMTBCDField's are all NUMBER's greater then NUMBER(14,4) )<br>
+
+<p>
+The default value of this option is True (beginning from version 1.80).
+If you assign EnableBCD to False it establishes the following values
+</p>
+
+SmallIntPrecision = 0<br>
+IntegerPrecision = 9<br>
+FloatPrecision = 39 (maximum possible precision)<br>
+BCDPrecision = '0'<br>
+
+<p>
+To use this option with TCRSQLConnection you may set it in Params property
+of TCRSQLConnection. In this case EnableBCD will be applied first before
+SmallIntPrecision, IntegerPrecision, FloatPrecision, BCDPrecision.
+</p>
+
+<pre>
+const
+  coEnableBCD = TSQLConnectionOption(102); // boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coEnableBCD, Integer(False));
+</pre>
+
+
+<p><i><b>
+FetchAll
+</b></i></p>
+
+<p>
+Set FetchAll to True to request all records of the query from database server
+when the dataset is opening. When set to False, records are retrieved when a
+data-aware component or a program requests it. If a query can return a lot of
+records, set this property to False if initial response time is important.
+</p>
+
+<pre>
+const
+  coFetchAll = TSQLConnectionOption(301); //boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coFetchAll, Integer(True));
+</pre>
+
+
+<p><i><b>
+FloatPrecision
+</b></i></p>
+
+<p>
+This integer option allows dataset to represent fields as
+TFloatField if NUMBER field precision less or equal than FloatPrecision.
+The default value of this option is 0 (do not use TFloatField).
+</p>
+
+<p>
+To use this option with TSQLConnection you should define following constant.
+</p>
+
+<pre>
+const
+  coFloatPrecision = TSQLConnectionOption(207); //integer
+. . .
+  SQLConnection1.SQLConnection.SetOption(coFloatPrecision, Integer(15));
+</pre>
+
+<p><i><b>
+HomeName
+</b></i></p>
+
+<p>
+Used to select the Oracle client to use with the application. 
+</p>
+
+<p>
+This option is available for Delphi 2007 and higher IDE versions.
+</p>
+<br>
+
+<p><i><b>
+IntegerPrecision
+</b></i></p>
+
+<p>
+This integer option allows dataset to represent fields as
+TIntegerField if NUMBER field precision less or equal than IntegerPrecision.
+The default value of this option is 9.
+</p>
+
+<pre>
+const
+  coIntegerPrecision = TSQLConnectionOption(205); //integer
+. . .
+  SQLConnection1.SQLConnection.SetOption(coIntegerPrecision, Integer(10));
+</pre>
+
+
+<p><i><b>
+InternalName
+</b></i></p>
+
+<p>
+This options sets internal client database name. Setting this option
+can improve performace of Execute call, but it has unwanted effect
+with commit or rollback inside PL/SQL block. Also To use this option you
+must set property LoginPrompt = true in TSQLConnection object.
+Default value of this option is ''.
+</p>
+
+<pre>
+const
+  coInternalName = TSQLConnectionOption(201); // string
+. . .
+  with SQLConnection1.SQLConnection do begin
+    SetOption(coInternalName, Integer(PChar('DBXORA')));
+  end;
+</pre>
+
+
+<p><i><b>
+IPVersion
+</b></i></p>
+
+<p>
+Use IPVersion to specify which IP protocol version to use in the Direct mode 
+when a user connects to the server.</p>
+
+<p>
+The following values are supported for this property:
+</p>
+
+IPv4 - default<br>
+IPv6<br>
+IPBoth - try to connect by IPv6, if it is unavailable, then try by IPv4<br>
+
+<p>
+This option is available for Delphi 2007 and higher IDE versions.
+</p>
+<br>
+
+
+<p><i><b>
+LongStrings
+</b></i></p>
+
+<p>
+This boolean option when turned on allows dataset to represent long 
+strings (more than 255 symbols) as memo. 
+
+Default value of this option is True.
+</p>
+
+<pre>
+const
+  coLongStrings = TSQLConnectionOption(101); // boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coLongStrings, Integer(False));
+</pre>
+
+
+<p><i><b>
+Prepared
+</b></i></p>
+
+<p>
+This boolean option allows all dataset to be prepared.
+If you execute the query or stored procedure more than once, you can improve performance by setting Prepared to true before opening the dataset. Setting Prepared to true prepares the dataset at once, rather than waiting until the dataset is opened. 
+</p>
+
+<pre>
+const
+  coPrepared = TSQLConnectionOption(302);
+. . .
+  SQLConnection1.SQLConnection.SetOption(coPrepared, Integer(True));
+</pre>
+
+
+<p><i><b>
+Reconnect
+</b></i></p>
+
+<p>
+This boolean option controls if automatic reconnection should be performed if the connection is broken. Setting the Reconnect option to False disables automatic reconnection.
+</p>
+<p>
+Default value of this option is True.
+</p>
+
+<pre>
+const
+  coReconnect = TSQLConnectionOption(105);
+. . .
+  SQLConnection1.SQLConnection.SetOption(coReconnect, Integer(False));
+</pre>
+
+
+<p><i><b>
+RoleName
+</b></i></p>
+
+<p>
+Use RoleName to specify which system priviledges to use when the 
+user connects to the server.
+</p>
+
+<p>
+The following values are supported for this property:
+</p>
+
+NORMAL (default) Connect as an ordinary user.<br>
+SYSOPER	Connect with SYSOPER role.<br>
+SYSDBA	Connect with SYSDBA role.<br>
+
+<p>
+To use this option with TCRSQLConnection you may set it in Params property
+of TCRSQLConnection.
+
+You must set this option before establishing connection. 
+Sample code looks like this.
+</p>
+
+<pre>
+  SQLConnection1.Params.Values['RoleName'] := 'SYSDBA';
+  SQLConnection1.Connected := True;
+</pre>
+
+
+<p><i><b>
+SmallIntPrecision
+</b></i></p>
+
+<p>
+This integer option allows dataset to represent fields as 
+TSmallIntField if NUMBER field precision less or equal than SmallIntPrecision.
+The default value of this option is 0 (do not use TSmallIntField). 
+</p>
+
+<pre>
+const
+  coSmallIntPrecision = TSQLConnectionOption(206); //integer
+. . .
+  SQLConnection1.SQLConnection.SetOption(coSmallIntPrecision, Integer(4));
+</pre>
+
+
+<p><i><b>
+TrimFixedChar
+</b></i></p>
+
+<p>
+Specifies whether to discard all trailing spaces in string fields
+of the dataset.
+</p>
+
+<pre>
+const
+  coTrimFixedChar = TSQLConnectionOption(103); // boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coTrimFixedChar, Integer(True));
+</pre>
+
+<p><i><b>
+UseDateParams
+</b></i></p>
+
+<p>
+When set to True, this boolean option enables mapping parameters with
+DataType = ftTimeStamp to the Oracle DATE data type. When this option is set
+to False, parameters with the ftTimeStamp type are mapped to the TIMESTAMP
+Oracle data type. Default value of this option is False.
+</p>
+<p>
+Starting with RAD Studio 2007 dbExpress does not support parameters of the
+ftDateTime data type. So programmer can use only ftTimeStamp parameters. Set
+the UseDateParams option to True, to use DATE parameters in RAD Studio 2007
+and higher.
+</p>
+
+<pre>
+const
+  coUseDateParams = TSQLConnectionOption(212); // boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coUseDateParams, Integer(True));
+</pre>
+
+<p><i><b>
+UseQuoteChar 
+</b></i></p>
+
+<p>
+This boolean option when turned on allows use QuoteChar = '"' by
+SQL express.
+
+Default value of this option is False.
+</p>
+
+<pre>
+const
+  coUseQuoteChar = TSQLConnectionOption(202); // boolean
+. . .
+  with SQLConnection1.SQLConnection do begin
+    SetOption(coUseQuoteChar, Integer(True));
+  end;
+</pre>
+
+In Delphi versions till 2007 this option can be set to TCRSQLConnection only
+
+<p><i><b>
+UnicodeClobParams
+</b></i></p>
+ 
+<p>
+This option determines whether the user assigns values to ftOraClob parameters in the UTF-16 or in default client encoding. When UnicodeClobParams is True the user must always assign values in the UTF-16 encoding. When UnicodeClobParams is False the user must always assign values in the default client encoding.
+</p>
+
+<p>
+Note: setting this option to True is incompatible with updating using TClientDataSet or TSimpleDataSet.<br> TParam.LoadFromFile will not work also unless the encoding of your file is UFT-16.
+</p>
+
+<p>
+Default value of this option is False.
+</p>
+ 
+<pre>
+const
+  coUnicodeClobParams = TSQLConnectionOption(214); // boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coUnicodeClobParams, Integer(True));
+</pre>
+
+
+<p><i><b>
+UnicodeEnvironment
+</b></i></p>
+ 
+<p>
+Enables or disables using OCI Unicode Environment. When this option is enabled,
+Unicode characters can be used in SQL statements. Disable this option if you
+have encountered some problems with Unicode Environment.
+</p>
+ 
+<p>
+This option is available for Delphi 2009 and higher IDE versions.
+</p>
+ 
+<p>
+Default value of this option is True.
+</p>
+ 
+<pre>
+  SQLConnection1.Params.Values['UnicodeEnvironment'] := 'True';
+</pre>
+
+<p><i><b>
+UseUnicode 
+</b></i></p>
+ 
+<p>
+Enables or disables Unicode support. Affects character data 
+fetched from the server. When set to True all character data is 
+stored as WideStrings and TStringField is replaced with TWideStringFiled. 
+</p>
+
+<p>
+Note: To enable using TWideMemoField for CLOB fields, you need to set ClobAsWideMemo option to True.
+</p>
+
+<p>
+This option is available for Delphi 2006 and higher IDE versions.
+</p>
+ 
+<p>
+Default value of this option is True for Delphi 2009 and higher IDE versions,
+and False for Delphi 2006 and 2007.
+</p>
+ 
+<pre>
+const
+  coUseUnicode = TSQLConnectionOption(209); // boolean
+. . .
+  SQLConnection1.SQLConnection.SetOption(coUseUnicode, Integer(True));
+</pre>
+<br>
+
+<p><i><b>
+UnicodeAsNational
+</b></i></p>
+
+<p>
+Enables or disables sending all Unicode parameters in national charset to the server. Sometimes (for example, for stored procedures) parameters with the NVARCHAR data type can be sent to the server correctly with this option set to True only.
+</p>
+
+<p>
+This option is available for Delphi 2007 and higher IDE versions.
+</p>
+<br>
+
+<h4><a name="tcrsqlconnection"></a>TCRSQLConnection</h4>
+
+<p>
+TCRSQLConnection component serves to support additional options of
+dbExpress Drivers for Oracle (DbxOda), SQL Server (DbxSda) and 
+MySQL (DbxMda). Option configuration can be made in dbExpress 
+configuration files (dbxconnections.ini) or in Params list of 
+TCRSQLConnection.
+</p>
+
+<p>
+You can use the following options:
+</p>
+ 
+<ul>
+  <li>BCDPrecision</li>
+  <li>CharLength</li>
+  <li>Charset</li>
+  <li>EnableBCD</li>
+  <li>FetchAll</li>
+  <li>FloatPrecision</li>
+  <li>IntegerPrecision</li>
+  <li>InternalName</li>
+  <li>LongStrings</li>
+  <li>SmallIntPrecision</li>
+  <li>TrimFixedChar</li>
+  <li>UseQuoteChar</li>
+  <li>RoleName</li>
+</ul>
+
+<p>
+For example
+</p>
+
+<pre>
+var
+  SQLConnection1: TCRSQLConnection;
+...
+  SQLConnection1.Params.Values['EnableBCD'] := 'False';
+  SQLConnection1.Connected := True;
+</pre>
+
+<p>
+<b>Note:</b> for quick replacement of TSQLConnection to TCRSQLConnection 
+at design-time it's enough to use context menu of the component.
+</p>
+
+<h4><a name="dbmon"></a>Using DBMonitor</h4>
+
+<p>
+To extend monitoring capabilities of dbExpress applications with Devart dbExpress Driver 
+for Oracle, you can use an additional freeware tool called <a href="https://www.devart.com/dbmonitor/">DBMonitor</a>.
+It is provided as an addition to a monitoring procedure with using
+SQLMonitor component.
+</p>
+
+<p>
+DBMonitor is easy-to-use tool to provide visual monitoring of your
+database applications.
+</p>
+
+<p>
+DBMonitor has following features:
+</p>
+
+<ul>
+  <li>Multiple client processes tracing;</li>
+  <li>SQL event filtering (by sender objects);</li>
+  <li>SQL parameter and error tracing.</li>
+</ul>
+
+<p>
+DBMonitor is intended to hamper application being monitored as less as
+possible.
+</p>
+
+<p>
+To trace your application with DBMonitor you should follow these steps:
+</p>
+
+<ul>
+  <li>drop TSQLMonitor component onto the form;</li>
+  <li>start DBMonitor before running your program.</li>
+</ul>
+
+<p>
+<b>Note:</b> if you are Delphi Pro version user, then you don't have TSQLMonitor
+component installed on the palette, but it is included in SQLExpr.pas unit and
+you need to install it on the components palette manually.
+</p>
+<br>
+
+<h4><a name="64bit"></a>Compiling for 64-bit platforms</h4>
+
+<p>
+RAD Studio version XE2 or higher is a 32-bit application. It means that it cannot load 64-bit 
+packages at design-time. So, all design-time packages in RAD Studio are 32-bit.
+</p>
+
+<p>
+Therefore, if you develop your own components, you should remember that for the purpose 
+of developing components with the 64-bit platform support, you have to compile run-time 
+packages both for the 32- and 64-bit platforms, while design-time packages need to be 
+compiled only for the 32-bit platform. This might be a source of difficulties if your 
+package is simultaneously both a run-time and a design-time package, as it is more than 
+likely that this package won't be compiled for the 64-bit platform. In this case, you 
+will have to separate your package into two packages, one of which will be used as 
+run-time only, and the other as design-time only.
+</p>
+
+<p>
+For the same reason, if your design-time packages require that certain DLLs be loaded, 
+you should remember that design-time packages can be only 32-bit and that is why they 
+can load only 32-bit versions of these DLLs, while at run-time 64-bit versions of the 
+DLLs will be loaded. Correspondingly, if there are only 64-bit versions of the DLL on 
+your computer, you won't be able to use all functions at design-time and, vice versa, 
+if you have only 32-bit versions of the DLLs, your application won't be able to work 
+at run-time.
+</p>
+
+<p>
+OCI mode:
+</p>
+
+<p>
+Since at design-time RAD Studio works only with x32 libraries and if a connection 
+to the server is needed at design-time, you need to install Oracle Client (x32) regardless 
+of the intended platform. (If the x32 client is needed only for development, you can 
+use only Oracle Instant Client). By default, dbExpress Driver for Oracle uses DEFAULT of Oracle Client, 
+that is why, if a x64 client is the default client at design-time, you need to specify 
+a x32 client. To prevent conflicts between different versions of Oracle Client on the 
+end-user side, you can leave the Home property empty, in this case, the default client 
+will be used.
+</p>
+
+<p>
+DIRECT mode:
+</p>
+
+<p>
+Since there is no need to install Oracle Client for the DIRECT mode, the development of 
+applications for the x64 platform does not differ from the development of application 
+for Windows x86.
+</p>
+
+<h4><a name="linux_development"></a>Running on Linux</h4>
+
+<p>To run a dbExpress database application on the Linux target platform, you need to assign the value of 'libdbexpoda41.so' to the LibraryName connection parameter. This requirement exists because RAD Studio seems to have unresolved issues with support for dbExpress technology on Linux.</p>
+
+<h4><a name="deployment"></a>Deployment</h4>
+<p>
+The following additional files are required on the target Windows computer:
+<table class="desctable" cellspacing="0">
+  <tr>
+    <th width="35%">File</th>
+    <th width="35%">When required</th>
+    <th width="30%">Where to find</th>
+  </tr>
+  <tr>
+    <td>
+      dbexpoda.dll for Delphi 6 and Delphi 7<br>
+      dbexpoda30.dll for Delphi 2006 or Turbo products<br>
+      dbexpoda40.dll for RAD Studio 2007 up to RAD Studio 10.2<br>
+      dbexpoda41.dll for RAD Studio 10.3 and higher
+    </td>
+    <td>
+      Required for any application
+    </td>
+    <td>
+      Devart dbExpress Driver installation directory
+    </td>
+  </tr>
+  <tr>
+    <td>
+      midas.dll
+    </td>
+    <td>
+      Required by database applications that use client datasets
+    </td>
+    <td>
+      IDE installation directory
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+The following additional files are required on the target OSX computer:
+<table class="desctable" cellspacing="0">
+  <tr>
+    <th width="35%">File</th>
+    <th width="35%">When required</th>
+    <th width="30%">Where to find</th>
+  </tr>
+  <tr>
+    <td>
+      libdbexpoda40.dylib for RAD Studio XE2 up to RAD Studio 10.2<br>
+      libdbexpoda41.dylib for RAD Studio 10.3 and higher
+    </td>
+    <td>
+      Required for any application
+    </td>
+    <td>
+      Devart dbExpress Driver installation directory
+    </td>
+  </tr>
+  <tr>
+    <td>
+      libmidas.dylib
+    </td>
+    <td>
+      Required by database applications that use client datasets
+    </td>
+    <td>
+      IDE installation directory
+    </td>
+  </tr>
+</table>
+</p>
+ 
+<p>
+The following additional files are required on the target Linux computer:
+<table class="desctable" cellspacing="0">
+  <tr>
+    <th width="35%">File</th>
+    <th width="35%">When required</th>
+    <th width="30%">Where to find</th>
+  </tr>
+  <tr>
+    <td>
+      libdbexpoda41.so for RAD Studio 10.3 and higher
+    </td>
+    <td>
+      Required for any application
+    </td>
+    <td>
+      Devart dbExpress Driver installation directory
+    </td>
+  </tr>
+  <tr>
+    <td>
+      libmidas.so
+    </td>
+    <td>
+      Required by database applications that use client datasets
+    </td>
+    <td>
+      IDE installation directory
+    </td>
+  </tr>
+</table>
+</p>
+
+<h4><a name="embedded_dbexpress"></a>Built-in dbExpress Driver</h4>
+
+<p>If you are using dbExpress as the data access technology in your application, you can deploy a database application with dbExpress Driver, or you can embed the driver into the application to avoid deploying dbExpress libraries.</p>
+<br>
+<p>To use the built-in dbExpress Driver in Delphi versions earlier than 2007, perform the following steps: </p>
+<p>1. Add the dbxoda unit to the USES section:</p>
+<pre>
+  uses
+    dbxoda;
+</pre>		
+<p>2. Add the below string to the initialization section.</p>
+<p>For the OCI mode, use:</p>
+<pre>
+  initialization
+    RegisterDbXpressLib(@getSQLDriverORA);
+</pre>
+<p>For the Direct mode, use:</p>
+<pre>
+  initialization
+    RegisterDbXpressLib(@getSQLDriverORADirect);
+</pre>
+<br>
+<p>To use the built-in dbExpress Driver in RAD Studio 2007 or newer, follow the steps:</p>
+
+<p>1. Add the dbxoda unit to the USES section:</p>
+<pre>
+  uses
+    DbxOdaDriverLoader;
+</pre>
+<p>2. Append 'Builtin' to the driver name.</p>
+<p>For the OCI mode, use:</p>
+<pre>
+  SQLConnection1.DriverName := 'DevartOracleBuiltin';
+</pre>
+<p>For the Direct mode, use:</p>
+<pre>
+  SQLConnection1.DriverName := 'DevartOracleDirectBuiltin';
+</pre>
+<br>
+<p>Note: To embed the driver into an application, you have to use dbExpress Driver Standard Edition with Source code.</p>
+
+<h4><a name="direct_mode_limitations"></a>Direct mode limitations</h4>
+
+<ul>
+  <li>Connect using TCP/IP protocol only.</li>
+  <li>Oracle 8 objects, arrays, refs are not supported.</li>
+  <li>Some types are not available, like OBJECT, ARRAY, REF, XML, BINARY_DOUBLE, BINARY_FLOAT.</li>
+  <li>RowsAffected are not returned correctly for queries with RETURNING clause.</li>
+  <li>Please note that we don't guarantee Direct compatibility with all Oracle servers
+      and in every network. We have tested Direct option for all versions of Oracle servers 
+      for Windows and Linux since 7.3 in local network. Other platforms may cause some 
+      incompatibility issues.</li>
+  <li>Certain problems may occur when using firewalls.</li>
+  <li>Direct does not support NLS conversion on client side.</li>
+  <li>OS authentication feature is not available.</li>
+  <li>We don't guarantee stable working in multithread applications.</li>
+</ul>
+
+<h4><a name="trial_limitations"></a>Trial limitations</h4>
+
+<p>
+Windows DbxOda trial version can be used within 30 days starting from the moment of installation.
+</p>
+
+<p>
+Mac OS Trial version of the driver is limited by number of the returned table
+columns. DbxOda trial version returns cursors with maximum 6 columns. Extra
+select-list columns are truncated.
+</p>
+
+<h4><a name="notes"></a>Notes</h4>
+
+<p>
+Database object names that contain spaces or national language
+characters should be always quoted. For example,
+</p>
+
+<pre>
+  SQLStoredProc.StoredProcName := '&quot;My stored proc&quot;';
+</pre>
+
+<h4><a name="known_problems"></a>Known Problems</h4>
+
+<ul>
+<li><p>
+When performing describe of stored procedure dbExpress components
+interpret Oracle BLOB and CLOB types as ftBlob. That is not
+correct. Driver in its turn interprets ftBlob as LONG RAW type.
+So to avoid error on execution appropriate parameter data type
+should be manually set to ftOraClob of ftOraBlob.
+</p>
+</li>
+
+<li><p>
+DbxOda supports fields of OBJECT and ARRAY datatypes in tables. You must set TSQLQuery.ObjectView property to True. But TClientDataSet.ObjectView must have any value. 
+Due to the peculiarity of Borland dbExpress we do not support OBJECT types with nested OBJECTs or ARRAYs. If you need to use SDO_GEOMETRY or other compound type you must do the following changes.
+</p>
+ 
+<p>
+Find procedure in TCustomSQLDataSet.AddFieldDesc in SqlExpr.pas.
+Find "LoadFieldDef(Word(FieldNo + I), FieldDescs[1]);" lines near the ftArray and ftADT case branches.
+Replace by the following "LoadFieldDef(FieldID, FieldDescs[1]);"
+</p>
+ 
+<p>
+Find procedure TSQLResolver.GenUpdateSQL in Provider.pas
+Find "SQL.Add(Format('%s = %s(',[Field.FullName, TObjectField(Field).ObjectType]));" line
+Replace by the following "SQL.Add(Format('%s.%s = %s(',[Alias, Field.FullName, TObjectField(Field).ObjectType]));"
+</p>
+</li>
+
+<li><p>
+When executing stored procedure using TSQLStoredProc component or TSQLDataSet with CommandType property set to ctStoredProc under Delphi 2006 CLR, dbExpress passes invalid length of BLOB parameters to the driver. That's why values of BLOB parameters are truncated. To avoid this problem execute your stored  procedure in BEGIN END; PL/SQL block as query (set ctQuery for CommandType property of TSQLDataset or use TSQLQuery).
+</p>
+</li>
+</ul>
+
+<h4><a name="demo_projects"></a>Demo projects</h4>
+
+<p>
+Following demo projects accompany DbxOda and provide a good bootstrap to
+start working with it. They are located inside DbxOda\Demos folder.
+</p>
+
+<table class="desctable" cellspacing="0">
+
+<tr>
+<th>Sample</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td><b>BlobPictures</b></td>
+<td>
+This sample project demonstrates how to work with Oracle8 BLOB type to store
+binary images and display in TDBImage
+</td>
+</tr>
+
+<tr>
+<td><b>ClientDataSet</b></td>
+<td>
+This sample project demonstrates working with TSQLClientDataSet in Delphi 6
+</td>
+</tr>
+
+<tr>
+<td><b>Clob</b></td>
+<td>
+This sample project demonstrates working with CLOB fields using TClientDataSet
+</td>
+</tr>
+
+<tr>
+<td><b>Objects</b></td>
+<td>
+This sample project demonstrates working with OBJECT, ARRAY fields using TClientDataSet
+</td>
+</tr>
+
+<tr>
+<td><b>Query</b></td>
+<td>
+This sample project allows to get result record set using TSQLQuery component
+</td>
+</tr>
+
+<tr>
+<td><b>SimpleDataSet</b></td>
+<td>
+This sample project demonstrates working with TSimpleDataSet in Delphi 7
+</td>
+</tr>
+
+<tr>
+<td><b>StoredProc</b></td>
+<td>
+This sample project demonstrates execution of stored procedure for data
+insertion and viewing entered data
+</td>
+</tr>
+
+</table>
+
+<p>
+<b>Note:</b> Before running sample projects make sure that your database has objects of schema Scott.
+</p>
+
+<!-- end content -->
+
+
+<p>&nbsp;</p><p>&nbsp;</p><hr size=1> 
+<p>&copy; 2000-2021 Devart. All rights reserved.</p>
+
+</div>
+
+<script>
+TestEngine();
+AdjustContentSize();
+</script>
+</body>
+</html>

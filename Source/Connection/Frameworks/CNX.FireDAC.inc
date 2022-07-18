@@ -100,8 +100,37 @@
             end;
           INTERBASE:
             begin
+              {$IFDEF MSWINDOWS}
+              TFDPhysFBDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'gds32.dll';
+              {$ENDIF}
               ConnectionName := 'DBInterbase';
-
+              DriverName := 'IB';
+              Connected := False;
+              with ResourceOptions as TFDTopResourceOptions do
+              begin
+                KeepConnection := True;
+                Persistent := True;
+                SilentMode := True;
+                DirectExecute := True;
+              end;
+              with FetchOptions as TFDFetchOptions do
+              begin
+                RecordCountMode := cmVisible;
+              end;
+              LoginPrompt := False;
+              with Params as TFDPhysFBConnectionDefParams do
+              begin
+                BeginUpdate();
+                Clear;
+                DriverID := 'IB';
+                Server := FHost;
+                Port := IfThen(FPort = 3050, 3050, FPort);
+                Database := FDatabase;
+                UserName := FUsername;
+                Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+                EndUpdate();
+              end;
+              Params.Values['Protocol'] := 'ipTCPIP';
             end;
           MSSQL:
             begin
@@ -200,13 +229,10 @@
                 Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
                 MetaDefSchema := FUsername;
                 MetaCurSchema := FUsername;
-                DriverID:= 'Ora';
                 Name := FUsername;
                 CharacterSet := TFDOracleCharacterSet.csUTF8;
                 EndUpdate();
               end;
-
-
             end;
         end;
       end;

@@ -388,6 +388,7 @@ type
     NavButtonCancel: TCornerButton;
     NavButtonRefresh: TCornerButton;
     EditOracle: TEdit;
+    Button2: TButton;
     procedure TabDBSQLiteClick(Sender: TObject);
     procedure TabDBFirebirdClick(Sender: TObject);
     procedure TabDBMySQLClick(Sender: TObject);
@@ -405,6 +406,7 @@ type
     procedure TabDBSQLServerClick(Sender: TObject);
     procedure EditSQLitePresentationNameChoosing(Sender: TObject; var PresenterName: string);
     procedure TabDBOracleClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -427,6 +429,13 @@ uses
   TimeDate,
   Float,
   &Array,
+  ArrayString,
+  ArrayStringHelper,
+  ArrayVariant,
+  ArrayVariantHelper,
+  ArrayField,
+  ArrayFieldHelper,
+  ArrayAssoc,
   MimeType,
   EventDriven,
   Connection,
@@ -654,6 +663,17 @@ begin
   finally
     FreeAndNil(DB);
   end;
+end;
+
+procedure TGenericDatabaseForm.Button2Click(Sender: TObject);
+var
+  Arr: TArray<TArrayVariant>;
+begin
+  Arr := TArray<TArrayVariant>.Create;
+  Arr['field_copied'] := 'field_copied';
+  Showmessage(Arr.ToList(True));
+//  Arr.Access['field_copied'] := 'field_copied';
+//  Showmessage(Arr.Access.ToList(True));
 end;
 
 function TGenericDatabaseForm.ArrayFieldTest(const MethodName : String) : String;

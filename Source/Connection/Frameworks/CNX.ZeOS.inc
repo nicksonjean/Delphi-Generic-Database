@@ -44,7 +44,19 @@
             end;
           INTERBASE:
             begin
-
+              {$IFDEF MSWINDOWS}
+              LibraryLocation := ExtractFilePath(ParamStr(0)) + 'gds32.dll';
+              {$ENDIF}
+              HostName := FHost;
+              Protocol := 'interbase';
+              Port     := IfThen(FPort = 3050, 3050, FPort);
+              Database := FDatabase;
+              User     := FUsername;
+              Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+              AutoCommit := False;
+              Properties.Clear;
+              Properties.Add('CLIENT_MULTI_STATEMENTS=1');
+              Properties.Add('controls_cp=GET_ACP');
             end;
           MSSQL:
             begin
@@ -85,7 +97,20 @@
             end;
           ORACLE:
             begin
-
+              {$IFDEF MSWINDOWS}
+              LibraryLocation := ExtractFilePath(ParamStr(0)) + 'oci.dll';
+              {$ENDIF}
+              Database := System.SysUtils.Format('%s/%s', [FHost, FSchema]);
+              HostName := FSchema;
+              Catalog  := '';
+              Port     := IfThen(FPort = 1521, 1521, FPort);
+              User := FUsername;
+              Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+              Protocol := 'oracle';
+              AutoCommit := False;
+              Properties.Clear;
+              Properties.Add('codepage=utf8');
+              Properties.Add('charset=utf8');
             end;
         end;
       end;

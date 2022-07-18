@@ -4,7 +4,8 @@
   Objetivo : Simplificar a conexão à Bancos de Dados via codigos livre de
   componentes de terceiros.
   Suporta 3 Framework de Banco de Dados: dbExpres, ZeosLib e FireDAC.
-  Suporta 4 Tipos de Banco de Dados: SQLite, MySQL/MariaDB, Firebird e PostgreSQL
+  Suporta 5 Tipos de Banco de Dados: SQLite, MySQL/MariaDB, Firebird, Interbase,
+  SQLServer, Firebird, PostgreSQL, Oracle
   ------------------------------------------------------------------------------
   Autor : Nickson Jeanmerson
   Colaborador : Ramon Ruan
@@ -84,11 +85,11 @@ uses
 {$IFDEF MSWINDOWS}
   Data.DBXMySql,
   Data.DBXMSSQL,
-  Data.DBXOracle,
   Data.DBXFirebird,
   Data.DBXInterBase,
 {$IFDEF DBXDevartLib}
   DBXDevartPostgreSQL,
+  DBXDevartOracle,
 {$ENDIF}
 {$ENDIF}
 {$ENDIF}
@@ -149,8 +150,14 @@ uses
 {$ENDIF}
 
   MimeType,
-  &Array,
   &String,
+  ArrayString,
+  ArrayStringHelper,
+  ArrayVariant,
+  ArrayVariantHelper,
+  ArrayField,
+  ArrayFieldHelper,
+  ArrayAssoc,
   Float,
 
   System.Types,
@@ -165,7 +172,7 @@ uses
 {$ENDIF}
   System.UITypes;
 
-type        // OK     OK       OK                 OK        OK        OK
+type        // OK     OK       OK        OK       OK        OK        OK
   TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, MSSQL, POSTGRESQL, ORACLE);
 
   { Design Pattern Singleton }
@@ -832,7 +839,7 @@ begin
       Result := Result + CTag + 'root' + RTag;
     end
     else
-      Result := '';
+      Result := EmptyStr;
   end;
 end;
 

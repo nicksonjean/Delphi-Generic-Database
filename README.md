@@ -1,11 +1,11 @@
-# Generica-Database para Delphi
+﻿# generic-dbal
 ![Delphi Supported Versions](https://img.shields.io/badge/Vers%C3%B5es%20do%20Delphi%20Suportadas-XE10%20Seatle%20..%20XE10.4%20Sydney-blue.svg)
 ![Platforms](https://img.shields.io/badge/Plataformas%20Suportadas-Win32%20..%20Win64-red.svg)
  
-Generic-Database é um Conjunto de Classes para Conexão Genérica à Bancos de Dados e Exibição dos Dados em Componentes Nativos da IDE de Forma Rápida, Simples e Prática
+generic-dbal é um Conjunto de Classes para Conexão Genérica à Bancos de Dados e Exibição dos Dados em Componentes Nativos da IDE de Forma Rápida, Simples e Prática
 
-- RMDB/SGDB Suportados Atualmente: SQLite, MySQL/MariaDB, PostgreSQL, SQLServer, FireBird e Oracle ¹
-- DataBase Frameworks Suportados Atualmente: dbExpress, ZeOsLib e FireDAC ²
+- RMDB/SGDB Suportados Atualmente: SQLite, Firebird/Interbase, MySQL/MariaDB, PostgreSQL, SQLServer e Oracle
+- DBAL Suportados Atualmente: FireDAC, dbExpress e ZeOsLib
 
 ## Classes Adicionais
 - Array.pas - Esta Classe Fornece a Capacidade de Criar Matrizes Associativas e Multidimensionais PHP-Like, Possuindo Quatro Variantes;
@@ -25,39 +25,45 @@ Generic-Database é um Conjunto de Classes para Conexão Genérica à Bancos de 
  
 ## Instalação Usando Boss (Gerenciador de Dependências para Aplicações em Delphi)
 ```
-boss install github.com/nicksonjean/Generic-Database
+boss install github.com/nicksonjean/generic-dbal
 ```
 
 ## Instalação Manual
 1) Clone este Repositório com a Linha de Comando Abaixo:
 ```
-git clone https://github.com/nicksonjean/Generic-Database.git
+git clone https://github.com/nicksonjean/generic-dbal.git
 ```
 
 2) Em Seguida execute o arquivo install.bat com a Linha de Comando Abaixo:
 ```
-.\Generic-Database\install.bat
+.\generic-dbal\install.bat
 ```
 
 3) Opcionalmente Adicione as Seguintes Pastas ao Seu Projeto, em *Project > Options > Resource Compiler > Directories and Conditionals > Include file search path*
 ```
-../Generic-Database/Source/Connection
-../Generic-Database/Source/Connector
-../Generic-Database/Source/EventDriven
-../Generic-Database/Source/Extensions
-../Generic-Database/Source/Helpers
-../Generic-Database/Source/Reflection
-../Generic-Database/Source/Types
-../Generic-Database/Source/Types/Locale
+../generic-dbal/Source/Connection
+../generic-dbal/Source/Connector
+../generic-dbal/Source/EventDriven
+../generic-dbal/Source/Extensions
+../generic-dbal/Source/Helpers
+../generic-dbal/Source/Reflection
+../generic-dbal/Source/Types
+../generic-dbal/Source/Types/Locale
 ```
 ### ToDo
 
-- [x] Suportar o Oracle (Apenas FireDAC)
-- [ ] Suportar o InterBase
 - [ ] Suportar o UniDAC
-- [ ] Suportar o Component TeeGrid em ComponentConnector
-- [ ] Refator Types/Array.pas
-- [ ] Refator Types/TimeDate.pas
+  - [ ] Suportar o SQLite
+  - [ ] Suportar o Firebird/Interbase
+  - [ ] Suportar o MySQL/MariaDB
+  - [ ] Suportar o PostgreSQL
+  - [ ] Suportar o SQLServer
+  - [ ] Suportar o Oracle
+- [ ] Suportar o Component TeeGrid em Connector
+- [ ] Refatorar Removendo Arquivos *.inc
+  - [ ] Refatorar Connection.pas
+  - [X] Refatorar Types/Array.pas
+  - [ ] Refatorar Types/TimeDate.pas
 - [ ] Criar um DBNavigator para TGrid e TStringGrid
 - [ ] Criar a Funcionalidade de Carregar Mais on Scroll para ListBox e ListView
 - [ ] Criar a Paginação para Carregar Mais para ListBox e ListView

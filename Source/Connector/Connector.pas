@@ -108,7 +108,7 @@ uses
   EventDriven,
   Connection,
   RTTI,
-  &Array
+  ArrayVariant
   ;
 
   { Classe Utilizada para Armazenamento de Dados }

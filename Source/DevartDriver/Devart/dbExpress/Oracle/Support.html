@@ -1,0 +1,349 @@
+<!doctype html public "-//w3c//dtd html 4.0 Transitional//en">
+<html>
+<head>
+  <title>dbExpress Driver for Oracle</title>
+<meta http-equiv="Content-Type" content="text/html">
+<style>
+body {
+  overflow: hidden; 
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  background: #ffffff; 
+  color: #000000;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 70%;
+  width: 100%;
+  }
+p
+    {
+    margin: .5em 0em .5em 0em;
+    }
+ol, ul
+    {
+    margin-top: .5em; 
+    }
+li
+    {
+    margin-bottom: .5em;
+    }
+ul p, ol p, dl p
+    {
+    margin-left: 0em;
+    }
+blockquote.dxOverload
+    {
+    margin: .5em 1.5em .5em 1.5em;
+    }
+h1, h2, h3, h4
+    {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin-bottom: .4em; 
+    margin-top: 1em;
+    font-weight: bold;
+    }
+h1
+    {
+    font-size: 120%;
+    margin-top: 0em;
+    }
+h2
+    {
+    font-size: 130%;
+    }
+h3
+    {
+    font-size: 115%;
+    }
+h4
+    {
+    font-size: 100%;
+    }
+.dxH1, .dxH2, .dxH3, .dxH4
+    {
+    margin-left: -18px;    
+    }
+A
+  {
+  color: #0000FF;
+  }
+A:link
+  {
+  color: #0000FF;
+  }
+A:active
+  {
+  color: #000080;
+  }
+A:visited
+  {
+  color: #800080;
+  }
+A:hover
+  {
+  color: #FF0000;
+  }
+pre
+  {
+  font-family: Courier New;
+  font-size: 9pt;
+  color: #000060;
+  margin-top: 0px;
+  }
+code, p.example, p.sourcecode, table.sourcecode, tr.sourcecode, td.sourcecode
+  {
+  font-family: Courier New;
+  font-size: 9pt;
+  color: #000060;
+  }
+div#pagetop {
+  margin: 0px;
+  padding: 0px;
+  background-color: #99ccff;   
+  height: 44;
+  width: 100%;
+  border-bottom: 1px solid #999999;
+  }
+div#pagebody {
+  margin: 0px 0px 0px 0px;
+  padding: 5px 10px 0px 22px;
+  height: 90%;
+  width: 100%;
+  overflow: auto;
+  background-color: #FFFFFF;
+  vertical-align: top;
+  }
+table#BannerTable
+  {
+  width: 100%;
+  height: 100%;
+  border-collapse:collapse;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+table#BannerTable td
+  {
+  padding-left: 8px;
+  padding-right: 8px;
+  }
+tr#BannerTopRow
+  {
+  font-style: italic;
+  font-size: 70%;
+  }
+tr#BannerTopRow td
+  {
+  padding-top: 4px;
+  }
+tr#Banner2ndRow
+  {
+  font-weight: bold;
+  font-size: 80%;
+  }
+tr#Banner2ndRow td
+  {
+  padding-bottom: 4px;
+  }
+td#BannerCol
+  {
+  font-style: italic;
+  font-size: 70%;
+  padding-bottom: 4px;
+  }
+td#Banner2ndCol
+  {
+  font-weight: bold;
+  font-size: 80%;
+  padding-bottom: 4px;
+  }
+table.filtereditemlisttable, table.xmldoctable
+    {
+    width: 95%; 
+    margin-top: .6em;
+    margin-bottom: .3em;
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #999999;
+    background-color: #999999; 
+    font-size: 100%;
+  border-collapse:collapse;
+    }
+table.filtereditemlisttable th, table.filtereditemlisttable td, table.xmldoctable th, table.xmldoctable td
+    { 
+    border-width: 0px 0px 1px 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+    }
+table.filtereditemlisttable th, table.xmldoctable th
+    { 
+    background: #cccccc; 
+    vertical-align: bottom;
+    }
+table.filtereditemlisttable td, table.xmldoctable td
+    {
+    background-color: #ffffff;
+    vertical-align: top;
+    }
+
+table.desctable {
+    width: 95%;
+    margin-top: .6em;
+    margin-bottom: .3em;
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #999999;
+    background-color: #999999;
+    font-size: 100%;
+}
+table.desctable th, table.desctable td {
+    border-style: solid;
+    border-width: 0px 0px 1px 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+}
+table.desctable th {
+    background: #cccccc;
+    vertical-align: bottom;
+}
+table.desctable td {
+    background: #ffffff;
+    vertical-align: top;
+    }
+
+</style>
+
+<script>
+
+var Engine;
+var enOpera = 'Opera';
+var enIE = 'IE';
+var enGecko = 'Gecko';
+
+function TestEngine()
+{
+  if (document.all) {
+    if (window.opera) {
+      Engine = enOpera;
+    }
+    else {
+      Engine = enIE;
+    }
+  }
+  else {
+    Engine = enGecko;
+  }
+}
+
+
+function AdjustContentSize()
+{
+  var cDiv = document.getElementById("pagebody");
+  if ((Engine == enGecko)||(Engine == enOpera))//amend padding
+    {
+      var w = document.body.clientWidth;
+      cDiv.style.width = w - 32;
+    }
+  var h = document.body.clientHeight;
+  var diff = 44;
+  if ((Engine == enGecko)||(Engine == enOpera)) diff = diff + 6;
+  cDiv.style.height = h - diff;
+}
+
+
+function Startup()
+{
+  //add startup code here
+}
+</script>
+
+</head>
+
+
+<body onresize="AdjustContentSize()" onload="Startup()">
+
+<div id="pagetop">
+  <table id="BannerTable">
+    <tr id="BannerTopRow">
+      <td>dbExpress Driver for Oracle</td>
+    </tr>
+    <tr id="Banner2ndRow">
+      <td >Support</td>
+    </tr>
+  </table>
+</div>
+
+<div id="pagebody">
+
+<!-- begin content -->
+
+<p>
+  This document describes how you can get help with dbExpress Driver for Oracle, including the Priority Support Program.
+</p>
+
+<h4>Resources and Support Channels</h4>
+<ul>
+    <li>
+      Find out more about the dbExpress Driver installation and licensing in the <a href="Readme.html">Readme</a> and <a href="FAQ.html">FAQ</a> documents.
+    </li>
+    <li>
+      Get help from the developer community and technical support on the <a href="https://forums.devart.com/viewforum.php?f=9" target="_blank">Devart Forum</a>
+    </li>
+    <li>Get advanced technical assistance from the dbExpress Driver developers through the Priority Support Program.
+  </ul>
+
+<h4>Subscriptions</h4>
+
+<p>
+  The dbExpress Driver Subscription Program is an annual maintenance and support service for dbExpress Driver users.
+</p>
+<p>
+  Users with a valid dbExpress Driver subscription get the following benefits:
+  <ul>
+    <li>Technical support through the Priority Support Program</li>
+    <li>Access to new versions of dbExpress Driver when they are released</li>
+    <li>Access to all dbExpress Driver updates and hotfixes</li>
+    <li>Notifications of new product versions</li>
+  </ul>
+</p>
+
+
+<h4>Priority Support</h4>
+
+<p>
+  dbExpress Driver priority support is an advanced product support service that provides individual assistance with dbExpress Driver-related questions from the developers. Priority support is provided over email and has a two business day response policy. Priority support is available for users with an active dbExpress Driver subscription.
+</p>
+
+<p>
+  To get help through the Priority Support Program, please send us an email at <a href="mailto:dbxoda@devart.com">dbxoda@devart.com</a> with a description of the issue. Make sure to include the following information:
+  <ul>
+    <li>Your version of Delphi or C++Builder.</li>
+    <li>Your dbExpress Driver license number.</li>
+    <li>Your edition and full version number of dbExpress Driver. You can find the version number in the DLL version information.</li>
+    <li>Your versions of Oracle server and client.</li>
+    <li>A detailed description of the issue.</li>
+    <li>If possible, attach a sample project demonstrating the issue. Please include definitions for all database objects and avoid using other third-party components in the sample project.</li>
+  </ul>
+</p>
+
+<p>
+  If you have any questions regarding the licensing or subscriptions, please see the FAQ or contact us at <a href="mailto:sales@devart.com">sales@devart.com</a>
+</p>
+
+
+<!-- end content -->
+
+<p>&nbsp;</p><p>&nbsp;</p><hr size=1> 
+<p>&copy; 2000-2021 Devart. All rights reserved.</p>
+
+</div>
+
+<script>
+TestEngine();
+AdjustContentSize();
+</script>
+</body>
+</html>

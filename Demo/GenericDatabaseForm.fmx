@@ -448,7 +448,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Size.PlatformDefault = False
               StyleLookup = ''
               TabOrder = 0
-              Text = 'Firebird'
+              Text = 'Firebird/Interbase'
               OnClick = TabDBFirebirdClick
               ExplicitSize.cx = 50.000000000000000000
               ExplicitSize.cy = 50.000000000000000000
@@ -791,7 +791,7 @@ object GenericDatabaseForm: TGenericDatabaseForm
               Size.PlatformDefault = False
               StyleLookup = ''
               TabOrder = 0
-              Text = 'MySQL'
+              Text = 'MySQL/MariaDB'
               OnClick = TabDBMySQLClick
               ExplicitSize.cx = 50.000000000000000000
               ExplicitSize.cy = 50.000000000000000000
@@ -4276,6 +4276,13 @@ object GenericDatabaseForm: TGenericDatabaseForm
           Text = 'Strings'
           ExplicitSize.cx = 50.000000000000000000
           ExplicitSize.cy = 50.000000000000000000
+          object Button2: TButton
+            Position.X = 352.000000000000000000
+            Position.Y = 231.000000000000000000
+            TabOrder = 0
+            Text = 'Button2'
+            OnClick = Button2Click
+          end
         end
         object TabFloats: TTabItem
           CustomIcon = <

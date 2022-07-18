@@ -42,7 +42,7 @@ uses
   FMX.Dialogs,
 
   Locale,
-  &Array
+  ArrayVariant
   ;
 
 type
