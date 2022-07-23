@@ -81,7 +81,7 @@ type
 implementation
 
 uses
-  &String,
+  Strings,
   Float,
   TimeDate,
   ArrayString,

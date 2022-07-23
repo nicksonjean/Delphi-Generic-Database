@@ -260,6 +260,6 @@ GFonts := TDictionary<TComboEdit, TTextSettings>.Create;
 finalization
 
 GListBoxes.DisposeOf;
-GFonts.Clear;
+GFonts.DisposeOf;
 
 end.

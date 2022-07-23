@@ -1,0 +1,728 @@
+object GenericPagNavForm: TGenericPagNavForm
+  Left = 0
+  Top = 0
+  Caption = 'GenericPagNavForm'
+  ClientHeight = 640
+  ClientWidth = 800
+  WindowState = wsMaximized
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TabControlSQLConnectors: TTabControl
+    Align = Client
+    FullSize = True
+    Size.Width = 800.000000000000000000
+    Size.Height = 640.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 15
+    TabPosition = PlatformDefault
+    Sizes = (
+      800s
+      590s)
+    object TabDBConnectorsNavigators: TTabItem
+      AutoSize = False
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 798.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Paginators && Navigators'
+      ExplicitSize.cx = 274.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
+      object GridPanelLayout1: TGridPanelLayout
+        Align = Client
+        Size.Width = 800.000000000000000000
+        Size.Height = 590.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        ColumnCollection = <
+          item
+            Value = 50.000000000000000000
+          end
+          item
+            Value = 50.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = GroupBox1
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = GridPanelLayout3
+            Row = 0
+          end>
+        ExpandStyle = FixedSize
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end>
+        object GroupBox1: TGroupBox
+          Align = Client
+          Size.Width = 400.000000000000000000
+          Size.Height = 590.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Original'
+          TabOrder = 2
+          object GridPanelLayout2: TGridPanelLayout
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 18.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 560.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            ColumnCollection = <
+              item
+                Value = 100.000000000000000000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = BindNavigator1
+                Row = 2
+              end
+              item
+                Column = 0
+                Control = Edit1
+                Row = 0
+              end
+              item
+                Column = 0
+                Control = Grid1
+                Row = 1
+              end>
+            ExpandStyle = FixedSize
+            RowCollection = <
+              item
+                SizeStyle = Absolute
+                Value = 22.000000000000000000
+              end
+              item
+                Value = 100.000000000000000000
+              end
+              item
+                SizeStyle = Absolute
+                Value = 32.000000000000000000
+              end>
+            object BindNavigator1: TBindNavigator
+              Align = Client
+              Size.Width = 376.000000000000000000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              xRadius = 4.000000000000000000
+              yRadius = 4.000000000000000000
+            end
+            object Edit1: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              Align = Client
+              TabOrder = 5
+              Size.Width = 376.000000000000000000
+              Size.Height = 22.000000000000000000
+              Size.PlatformDefault = False
+              object SearchEditButton1: TSearchEditButton
+                CanFocus = False
+                Cursor = crArrow
+                Size.Width = 28.000000000000000000
+                Size.Height = 18.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+            end
+            object Grid1: TGrid
+              Align = Client
+              CanFocus = True
+              ClipChildren = True
+              Size.Width = 376.000000000000000000
+              Size.Height = 506.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 6
+              Viewport.Width = 372.000000000000000000
+              Viewport.Height = 481.000000000000000000
+            end
+          end
+        end
+        object GridPanelLayout3: TGridPanelLayout
+          Align = Client
+          Size.Width = 400.000000000000000000
+          Size.Height = 590.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          ColumnCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = GroupBox2
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = GroupBox3
+              Row = 1
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              Value = 50.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
+            end>
+          object GroupBox2: TGroupBox
+            Align = Client
+            Size.Width = 400.000000000000000000
+            Size.Height = 295.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Minimal'
+            TabOrder = 0
+            object GridPanelLayout5: TGridPanelLayout
+              Align = Client
+              Margins.Left = 12.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 12.000000000000000000
+              Margins.Bottom = 12.000000000000000000
+              Size.Width = 376.000000000000000000
+              Size.Height = 265.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 100.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = Edit2
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = Grid2
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = PagPanelLayout
+                  Row = 2
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 22.000000000000000000
+                end
+                item
+                  Value = 100.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 32.000000000000000000
+                end>
+              object Edit2: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 5
+                Size.Width = 376.000000000000000000
+                Size.Height = 22.000000000000000000
+                Size.PlatformDefault = False
+                object SearchEditButton2: TSearchEditButton
+                  CanFocus = False
+                  Cursor = crArrow
+                  Size.Width = 28.000000000000000000
+                  Size.Height = 18.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                end
+              end
+              object Grid2: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 376.000000000000000000
+                Size.Height = 211.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 6
+                Viewport.Width = 372.000000000000000000
+                Viewport.Height = 186.000000000000000000
+              end
+              object PagPanelLayout: TGridPanelLayout
+                Align = Client
+                Opacity = 0.600000023841857900
+                Size.Width = 376.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    Value = 25.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = PagButtonFirst
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = PagButtonPrior
+                    Row = 0
+                  end
+                  item
+                    Column = 2
+                    Control = PagButtonNext
+                    Row = 0
+                  end
+                  item
+                    Column = 3
+                    Control = PagButtonLast
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object PagButtonFirst: TCornerButton
+                  Align = Client
+                  Corners = [TopLeft, BottomLeft]
+                  StyledSettings = [Style, FontColor]
+                  Hint = 'Primeiro'
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 94.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 4
+                  Text = '9'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 8.000000000000000000
+                  YRadius = 8.000000000000000000
+                end
+                object PagButtonPrior: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [Style, FontColor]
+                  Hint = 'Anterior'
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 94.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 2
+                  Text = '3'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object PagButtonNext: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [Style, FontColor]
+                  Hint = 'Pr'#243'ximo'
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 94.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  Text = '4'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object PagButtonLast: TCornerButton
+                  Align = Client
+                  Corners = [TopRight, BottomRight]
+                  StyledSettings = [Style, FontColor]
+                  Hint = #218'ltimo'
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 94.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Text = ':'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 8.000000000000000000
+                  YRadius = 8.000000000000000000
+                end
+              end
+            end
+          end
+          object GroupBox3: TGroupBox
+            Align = Client
+            Size.Width = 400.000000000000000000
+            Size.Height = 295.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Full'
+            TabOrder = 1
+            object GridPanelLayout4: TGridPanelLayout
+              Align = Client
+              Margins.Left = 12.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 12.000000000000000000
+              Margins.Bottom = 12.000000000000000000
+              Size.Width = 376.000000000000000000
+              Size.Height = 265.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 100.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = Edit3
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = Grid3
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = NavPanelLayout
+                  Row = 2
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 22.000000000000000000
+                end
+                item
+                  Value = 100.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 32.000000000000000000
+                end>
+              object Edit3: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Client
+                TabOrder = 4
+                Size.Width = 376.000000000000000000
+                Size.Height = 22.000000000000000000
+                Size.PlatformDefault = False
+                object SearchEditButton3: TSearchEditButton
+                  CanFocus = False
+                  Cursor = crArrow
+                  Size.Width = 28.000000000000000000
+                  Size.Height = 18.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                end
+              end
+              object Grid3: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 376.000000000000000000
+                Size.Height = 211.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 5
+                Viewport.Width = 372.000000000000000000
+                Viewport.Height = 186.000000000000000000
+              end
+              object NavPanelLayout: TGridPanelLayout
+                Align = Client
+                Opacity = 0.600000023841857900
+                Size.Width = 376.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                ColumnCollection = <
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end
+                  item
+                    Value = 10.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = NavButtonFirst
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = NavButtonPrior
+                    Row = 0
+                  end
+                  item
+                    Column = 2
+                    Control = NavButtonNext
+                    Row = 0
+                  end
+                  item
+                    Column = 3
+                    Control = NavButtonLast
+                    Row = 0
+                  end
+                  item
+                    Column = 4
+                    Control = NavButtonInsert
+                    Row = 0
+                  end
+                  item
+                    Column = 5
+                    Control = NavButtonDelete
+                    Row = 0
+                  end
+                  item
+                    Column = 6
+                    Control = NavButtonEdit
+                    Row = 0
+                  end
+                  item
+                    Column = 7
+                    Control = NavButtonPost
+                    Row = 0
+                  end
+                  item
+                    Column = 8
+                    Control = NavButtonCancel
+                    Row = 0
+                  end
+                  item
+                    Column = 9
+                    Control = NavButtonRefresh
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object NavButtonFirst: TCornerButton
+                  Align = Client
+                  Corners = [TopLeft, BottomLeft]
+                  StyledSettings = [Style, FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.599998474121090000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 7
+                  Text = '9'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 8.000000000000000000
+                  YRadius = 8.000000000000000000
+                end
+                object NavButtonPrior: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [Style, FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.599998474121090000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 15
+                  Text = '3'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonNext: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [Style, FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.599998474121090000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 14
+                  Text = '4'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonLast: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [Style, FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.599998474121090000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 6
+                  Text = ':'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonInsert: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.600006103515630000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 9
+                  Text = #55357#57251
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonDelete: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.600006103515630000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 8
+                  Text = #8211
+                  TextSettings.Font.Family = 'Impact'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  TextSettings.Font.StyleExt = {00070000000000000004000000}
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonEdit: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [Style, FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.600006103515630000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 4
+                  Text = '3'
+                  TextSettings.Font.Family = 'Wingdings'
+                  TextSettings.Font.Size = 24.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonPost: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.600006103515630000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 5
+                  Text = #252
+                  TextSettings.Font.Family = 'Wingdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  TextSettings.Font.StyleExt = {00070000000000000004000000}
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonCancel: TCornerButton
+                  Align = Client
+                  Corners = []
+                  StyledSettings = [FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.600006103515630000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 3
+                  Text = #251
+                  TextSettings.Font.Family = 'Wingdings'
+                  TextSettings.Font.Size = 34.000000000000000000
+                  XRadius = 3.000000000000000000
+                  YRadius = 3.000000000000000000
+                end
+                object NavButtonRefresh: TCornerButton
+                  Align = Client
+                  Corners = [TopRight, BottomRight]
+                  StyledSettings = [FontColor]
+                  Locked = True
+                  Sides = [Top, Left, Bottom, Right]
+                  Size.Width = 37.600006103515630000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 2
+                  Text = 'q'
+                  TextSettings.Font.Family = 'Webdings'
+                  TextSettings.Font.Size = 26.000000000000000000
+                  XRadius = 8.000000000000000000
+                  YRadius = 8.000000000000000000
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  object Button1: TButton
+    Position.X = 704.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 80.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 17
+    Text = 'Button1'
+    OnClick = Button1Click
+  end
+end

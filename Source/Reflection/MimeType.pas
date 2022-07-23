@@ -40,7 +40,7 @@ uses
   System.RTTI,
   System.TypInfo,
   System.NetEncoding,
-  &String
+  Strings
   ;
 
 type

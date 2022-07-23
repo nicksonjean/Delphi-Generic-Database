@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/07/18 23:10:07.000.022,=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/07/18 23:11:06.000.209,F:\Projetos\Delphi\Generic-Database\Demo\Unit1.pas=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/07/18 23:11:06.000.209,F:\Projetos\Delphi\Generic-Database\Demo\Unit1.fmx=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2022/07/18 23:11:43.000.399,F:\Projetos\Delphi\Generic-Database\Demo\GenericDataTypes.dproj=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/07/18 23:47:58.000.911,F:\Projetos\Delphi\Generic-Database\Demo\Unit1.pas=</Transaction>
+    <Transaction>2022/07/19 00:02:03.000.593,F:\Projetos\Delphi\Generic-Database\Demo\GenericDataTypesForm.pas=</Transaction>
+    <Transaction>2022/07/19 00:03:18.000.521,=F:\Projetos\Delphi\Generic-Database\Demo\GenericDataTypesForm.pas</Transaction>
+    <Transaction>2022/07/19 00:03:48.000.923,F:\Projetos\Delphi\Generic-Database\Demo\GenericDataTypesForm.pas=</Transaction>
+    <Transaction>2022/07/19 22:54:11.000.140,F:\Projetos\Delphi\Generic-Database\Source\Types\IArray.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\Array.pas</Transaction>
+    <Transaction>2022/07/19 22:57:02.000.365,F:\Projetos\Delphi\Generic-Database\Source\Types\Char.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\String.pas</Transaction>
+    <Transaction>2022/07/19 22:58:23.000.949,F:\Projetos\Delphi\Generic-Database\Source\Types\Strings.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\Char.pas</Transaction>
+  </Transactions>
+</BorlandProject>

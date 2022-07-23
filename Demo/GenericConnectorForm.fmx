@@ -1,0 +1,2131 @@
+object GenericConnectorForm: TGenericConnectorForm
+  Left = 0
+  Top = 0
+  Caption = 'GenericConnectorForm'
+  ClientHeight = 640
+  ClientWidth = 800
+  Position = DesktopCenter
+  WindowState = wsMaximized
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TabControl: TTabControl
+    Align = Client
+    FullSize = True
+    Size.Width = 800.000000000000000000
+    Size.Height = 640.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 15
+    TabPosition = PlatformDefault
+    Sizes = (
+      800s
+      591s)
+    object TabDBConnectors: TTabItem
+      AutoSize = False
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 798.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Database Connectors'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
+      object TabControlSQLConnection: TTabControl
+        Align = Client
+        FullSize = True
+        Size.Width = 800.000000000000000000
+        Size.Height = 591.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'tabcontrolstyle'
+        TabHeight = 49.000000000000000000
+        TabIndex = 0
+        TabOrder = 15
+        TabPosition = PlatformDefault
+        Sizes = (
+          800s
+          542s
+          800s
+          542s
+          800s
+          542s
+          800s
+          542s
+          800s
+          542s
+          800s
+          542s)
+        object TabDBSQLite: TTabItem
+          AutoSize = False
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 133.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'SQLite'
+          OnClick = TabDBSQLiteClick
+          ExplicitSize.cx = 50.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GroupBoxComponentsSQLite: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Components'
+            TabOrder = 0
+            object GridPanelLayoutSQLite: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 504.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 49.999999999999990000
+                end
+                item
+                  Value = 50.000000000000010000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelComboBoxSQLite
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxSQLite
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = LabelListBoxSQLite
+                  Row = 2
+                end
+                item
+                  Column = 1
+                  Control = LabelListViewSQLite
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = ListBoxSQLite
+                  Row = 3
+                end
+                item
+                  Column = 1
+                  Control = ListViewSQLite
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = LabelStringGridSQLite
+                  Row = 4
+                end
+                item
+                  Column = 1
+                  Control = LabelGridSQLite
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = StringGridSQLite
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridSQLite
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutSQLiteAutoCompleteEdit
+                  Row = 1
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutSQLiteLabels
+                  Row = 0
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 50.001250052086370000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 49.998749947913630000
+                end>
+              object LabelComboBoxSQLite: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TComboBox'
+                TabOrder = 6
+              end
+              object ComboBoxSQLite: TComboBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 23
+              end
+              object LabelListBoxSQLite: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListBox'
+                TabOrder = 5
+              end
+              object LabelListViewSQLite: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListView'
+                TabOrder = 3
+              end
+              object ListBoxSQLite: TListBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 31
+                DisableFocusEffect = True
+                DefaultItemStyles.ItemStyle = ''
+                DefaultItemStyles.GroupHeaderStyle = ''
+                DefaultItemStyles.GroupFooterStyle = ''
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 176.000000000000000000
+                object SearchBoxSQLite: TSearchBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Top
+                  TabOrder = 0
+                  Position.X = -2.000000000000000000
+                  Position.Y = -2.000000000000000000
+                  Margins.Left = -2.000000000000000000
+                  Margins.Top = -2.000000000000000000
+                  Margins.Right = -2.000000000000000000
+                  Size.Width = 386.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object ListViewSQLite: TListView
+                ItemAppearanceClassName = 'TListItemAppearance'
+                ItemEditAppearanceClassName = 'TListItemDeleteAppearance'
+                HeaderAppearanceClassName = 'TListHeaderObjects'
+                FooterAppearanceClassName = 'TListHeaderObjects'
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 30
+                SearchVisible = True
+              end
+              object LabelStringGridSQLite: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TStringGrid'
+                TabOrder = 4
+              end
+              object LabelGridSQLite: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TGrid'
+                TabOrder = 2
+              end
+              object StringGridSQLite: TStringGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridSQLite: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPanelLayoutSQLiteAutoCompleteEdit: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 32
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = EditSQLite
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = ComboEditSQLite
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object EditSQLite: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 33
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object ComboEditSQLite: TComboEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  StyleLookup = 'suggesteditstyle'
+                  TabOrder = 25
+                  ItemHeight = 19.000000000000000000
+                  ItemIndex = -1
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object GridPanelLayoutSQLiteLabels: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 33
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LabelEditSQLite
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = LabelComboEditSQLite
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object LabelEditSQLite: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TEdit'
+                  TabOrder = 5
+                end
+                object LabelComboEditSQLite: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TComboEdit'
+                  TabOrder = 4
+                end
+              end
+            end
+          end
+        end
+        object TabDBFirebird: TTabItem
+          AutoSize = False
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 133.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Firebird/Interbase'
+          OnClick = TabDBFirebirdClick
+          ExplicitSize.cx = 50.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GroupBoxComponentsFirebird: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Components'
+            TabOrder = 0
+            object GridPanelLayoutFirebird: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 504.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 50.000000000000000000
+                end
+                item
+                  Value = 50.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelComboBoxFirebird
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = LabelListBoxFirebird
+                  Row = 2
+                end
+                item
+                  Column = 1
+                  Control = LabelListViewFirebird
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = LabelStringGridFirebird
+                  Row = 4
+                end
+                item
+                  Column = 1
+                  Control = LabelGridFirebird
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxFirebird
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = ListBoxFirebird
+                  Row = 3
+                end
+                item
+                  Column = 1
+                  Control = ListViewFirebird
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = StringGridFirebird
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridFirebird
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutFirebirdLabels
+                  Row = 0
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutFirebirdAutoCompleteEdit
+                  Row = 1
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 50.001250052086370000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 49.998749947913630000
+                end>
+              object LabelComboBoxFirebird: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TComboBox'
+                TabOrder = 6
+              end
+              object LabelListBoxFirebird: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListBox'
+                TabOrder = 5
+              end
+              object LabelListViewFirebird: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListView'
+                TabOrder = 3
+              end
+              object LabelStringGridFirebird: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TStringGrid'
+                TabOrder = 4
+              end
+              object LabelGridFirebird: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TGrid'
+                TabOrder = 1
+              end
+              object ComboBoxFirebird: TComboBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 18
+              end
+              object ListBoxFirebird: TListBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 29
+                DisableFocusEffect = True
+                DefaultItemStyles.ItemStyle = ''
+                DefaultItemStyles.GroupHeaderStyle = ''
+                DefaultItemStyles.GroupFooterStyle = ''
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 176.000000000000000000
+                object SearchBoxFirebird: TSearchBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Top
+                  TabOrder = 0
+                  Position.X = -2.000000000000000000
+                  Position.Y = -2.000000000000000000
+                  Margins.Left = -2.000000000000000000
+                  Margins.Top = -2.000000000000000000
+                  Margins.Right = -2.000000000000000000
+                  Size.Width = 386.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object ListViewFirebird: TListView
+                ItemAppearanceClassName = 'TListItemAppearance'
+                ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+                HeaderAppearanceClassName = 'TListHeaderObjects'
+                FooterAppearanceClassName = 'TListHeaderObjects'
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 28
+                SearchVisible = True
+              end
+              object StringGridFirebird: TStringGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridFirebird: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPanelLayoutFirebirdLabels: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 31
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LabelEditFirebird
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = LabelComboEditFirebird
+                    Row = 0
+                  end>
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end
+                  item
+                    SizeStyle = Auto
+                  end>
+                object LabelEditFirebird: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TEdit'
+                  TabOrder = 5
+                end
+                object LabelComboEditFirebird: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TComboEdit'
+                  TabOrder = 4
+                end
+              end
+              object GridPanelLayoutFirebirdAutoCompleteEdit: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 30
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = EditFirebird
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = ComboEditFirebird
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object EditFirebird: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  StyleLookup = 'editstyle'
+                  TabOrder = 33
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object ComboEditFirebird: TComboEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 23
+                  ItemHeight = 19.000000000000000000
+                  ItemIndex = -1
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+            end
+          end
+        end
+        object TabDBMySQL: TTabItem
+          AutoSize = False
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 133.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'MySQL/MariaDB'
+          OnClick = TabDBMySQLClick
+          ExplicitSize.cx = 50.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GroupBoxComponentsMySQL: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Components'
+            TabOrder = 0
+            object GridPanelLayoutMySQL: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 504.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 50.000000000000000000
+                end
+                item
+                  Value = 50.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelComboBoxMySQL
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = LabelListBoxMySQL
+                  Row = 2
+                end
+                item
+                  Column = 1
+                  Control = LabelListViewMySQL
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = LabelStringGridMySQL
+                  Row = 4
+                end
+                item
+                  Column = 1
+                  Control = LabelGridMySQL
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxMySQL
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = ListBoxMySQL
+                  Row = 3
+                end
+                item
+                  Column = 1
+                  Control = ListViewMySQL
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = StringGridMySQL
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridMySQL
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutMySQLLabels
+                  Row = 0
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutMySQLAutoCompleteEdit
+                  Row = 1
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 50.001250052086370000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 49.998749947913630000
+                end>
+              object LabelComboBoxMySQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TComboBox'
+                TabOrder = 6
+              end
+              object LabelListBoxMySQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListBox'
+                TabOrder = 5
+              end
+              object LabelListViewMySQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListView'
+                TabOrder = 3
+              end
+              object LabelStringGridMySQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TStringGrid'
+                TabOrder = 4
+              end
+              object LabelGridMySQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TGrid'
+                TabOrder = 1
+              end
+              object ComboBoxMySQL: TComboBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 17
+              end
+              object ListBoxMySQL: TListBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 27
+                DisableFocusEffect = True
+                DefaultItemStyles.ItemStyle = ''
+                DefaultItemStyles.GroupHeaderStyle = ''
+                DefaultItemStyles.GroupFooterStyle = ''
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 176.000000000000000000
+                object SearchBoxMySQL: TSearchBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Top
+                  TabOrder = 0
+                  Position.X = -2.000000000000000000
+                  Position.Y = -2.000000000000000000
+                  Margins.Left = -2.000000000000000000
+                  Margins.Top = -2.000000000000000000
+                  Margins.Right = -2.000000000000000000
+                  Size.Width = 386.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object ListViewMySQL: TListView
+                ItemAppearanceClassName = 'TListItemAppearance'
+                ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+                HeaderAppearanceClassName = 'TListHeaderObjects'
+                FooterAppearanceClassName = 'TListHeaderObjects'
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 26
+                SearchVisible = True
+              end
+              object StringGridMySQL: TStringGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridMySQL: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPanelLayoutMySQLLabels: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 29
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LabelEditMySQL
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = LabelComboEditMySQL
+                    Row = 0
+                  end>
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end
+                  item
+                    SizeStyle = Auto
+                  end>
+                object LabelEditMySQL: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TEdit'
+                  TabOrder = 5
+                end
+                object LabelComboEditMySQL: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TComboEdit'
+                  TabOrder = 4
+                end
+              end
+              object GridPanelLayoutMySQLAutoCompleteEdit: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 28
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 1
+                    Control = ComboEditMySQL
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = EditMySQL
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end
+                  item
+                    SizeStyle = Auto
+                  end>
+                object ComboEditMySQL: TComboEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 22
+                  ItemHeight = 19.000000000000000000
+                  ItemIndex = -1
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object EditMySQL: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  StyleLookup = 'editstyle'
+                  TabOrder = 33
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+            end
+          end
+        end
+        object TabDBPostgreSQL: TTabItem
+          AutoSize = False
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 133.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'PostgreSQL'
+          OnClick = TabDBPostgreSQLClick
+          ExplicitSize.cx = 50.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GroupBoxComponentsPostgreSQL: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Components'
+            TabOrder = 0
+            object GridPanelLayoutPostgreSQL: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 504.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 50.000000000000000000
+                end
+                item
+                  Value = 50.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelComboBoxPostgreSQL
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = LabelListBoxPostgreSQL
+                  Row = 2
+                end
+                item
+                  Column = 1
+                  Control = LabelListViewPostgreSQL
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = LabelStringGridPostgreSQL
+                  Row = 4
+                end
+                item
+                  Column = 1
+                  Control = LabelGridPostgreSQL
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxPostgreSQL
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = ListBoxPostgreSQL
+                  Row = 3
+                end
+                item
+                  Column = 1
+                  Control = ListViewPostgreSQL
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = StringGridPostgreSQL
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPostgreSQL
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutPostgreSQLLabels
+                  Row = 0
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutPostgreSQLAutoCompleteEdit
+                  Row = 1
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 50.001250052086370000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 49.998749947913630000
+                end>
+              object LabelComboBoxPostgreSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TComboBox'
+                TabOrder = 6
+              end
+              object LabelListBoxPostgreSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListBox'
+                TabOrder = 5
+              end
+              object LabelListViewPostgreSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListView'
+                TabOrder = 3
+              end
+              object LabelStringGridPostgreSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TStringGrid'
+                TabOrder = 4
+              end
+              object LabelGridPostgreSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TGrid'
+                TabOrder = 1
+              end
+              object ComboBoxPostgreSQL: TComboBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 16
+              end
+              object ListBoxPostgreSQL: TListBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 27
+                DisableFocusEffect = True
+                DefaultItemStyles.ItemStyle = ''
+                DefaultItemStyles.GroupHeaderStyle = ''
+                DefaultItemStyles.GroupFooterStyle = ''
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 176.000000000000000000
+                object SearchBoxPostgreSQL: TSearchBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Top
+                  TabOrder = 0
+                  Position.X = -2.000000000000000000
+                  Position.Y = -2.000000000000000000
+                  Margins.Left = -2.000000000000000000
+                  Margins.Top = -2.000000000000000000
+                  Margins.Right = -2.000000000000000000
+                  Size.Width = 386.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object ListViewPostgreSQL: TListView
+                ItemAppearanceClassName = 'TListItemAppearance'
+                ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+                HeaderAppearanceClassName = 'TListHeaderObjects'
+                FooterAppearanceClassName = 'TListHeaderObjects'
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 26
+                SearchVisible = True
+              end
+              object StringGridPostgreSQL: TStringGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPostgreSQL: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPanelLayoutPostgreSQLLabels: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 29
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LabelEditPostgreSQL
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = LabelComboEditPostgreSQL
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object LabelEditPostgreSQL: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TEdit'
+                  TabOrder = 5
+                end
+                object LabelComboEditPostgreSQL: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TComboEdit'
+                  TabOrder = 4
+                end
+              end
+              object GridPanelLayoutPostgreSQLAutoCompleteEdit: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 28
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 1
+                    Control = ComboEditPostgreSQL
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = EditPostgreSQL
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object ComboEditPostgreSQL: TComboEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 21
+                  ItemHeight = 19.000000000000000000
+                  ItemIndex = -1
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object EditPostgreSQL: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 33
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+            end
+          end
+        end
+        object TabDBSQLServer: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 133.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'SQLServer'
+          OnClick = TabDBSQLServerClick
+          ExplicitSize.cx = 89.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GroupBoxComponentsMSSQL: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Components'
+            TabOrder = 0
+            object GridPanelLayoutMSSQL: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 504.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 49.999999999999990000
+                end
+                item
+                  Value = 50.000000000000010000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelComboBoxMSSQL
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxMSSQL
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = LabelListBoxMSSQL
+                  Row = 2
+                end
+                item
+                  Column = 1
+                  Control = LabelListViewMSSQL
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = ListBoxMSSQL
+                  Row = 3
+                end
+                item
+                  Column = 1
+                  Control = ListViewMSSQL
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = LabelStringGridMSSQL
+                  Row = 4
+                end
+                item
+                  Column = 1
+                  Control = LabelGridMSSQL
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = StringGridMSSQL
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridMSSQL
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutMSSQLAutoCompleteEdit
+                  Row = 1
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutMSSQLLabels
+                  Row = 0
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 50.001250052086370000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 49.998749947913630000
+                end>
+              object LabelComboBoxMSSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TComboBox'
+                TabOrder = 6
+              end
+              object ComboBoxMSSQL: TComboBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 23
+              end
+              object LabelListBoxMSSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListBox'
+                TabOrder = 5
+              end
+              object LabelListViewMSSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListView'
+                TabOrder = 3
+              end
+              object ListBoxMSSQL: TListBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 31
+                DisableFocusEffect = True
+                DefaultItemStyles.ItemStyle = ''
+                DefaultItemStyles.GroupHeaderStyle = ''
+                DefaultItemStyles.GroupFooterStyle = ''
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 176.000000000000000000
+                object SearchBoxMSSQL: TSearchBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Top
+                  TabOrder = 0
+                  Position.X = -2.000000000000000000
+                  Position.Y = -2.000000000000000000
+                  Margins.Left = -2.000000000000000000
+                  Margins.Top = -2.000000000000000000
+                  Margins.Right = -2.000000000000000000
+                  Size.Width = 386.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object ListViewMSSQL: TListView
+                ItemAppearanceClassName = 'TListItemAppearance'
+                ItemEditAppearanceClassName = 'TListItemDeleteAppearance'
+                HeaderAppearanceClassName = 'TListHeaderObjects'
+                FooterAppearanceClassName = 'TListHeaderObjects'
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 30
+                SearchVisible = True
+              end
+              object LabelStringGridMSSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TStringGrid'
+                TabOrder = 4
+              end
+              object LabelGridMSSQL: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TGrid'
+                TabOrder = 2
+              end
+              object StringGridMSSQL: TStringGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridMSSQL: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPanelLayoutMSSQLAutoCompleteEdit: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 32
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = EditMSSQL
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = ComboEditMSSQL
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object EditMSSQL: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 33
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object ComboEditMSSQL: TComboEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 25
+                  ItemHeight = 19.000000000000000000
+                  ItemIndex = -1
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object GridPanelLayoutMSSQLLabels: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 33
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LabelEditMSSQL
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = LabelComboEditMSSQL
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object LabelEditMSSQL: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TEdit'
+                  TabOrder = 5
+                end
+                object LabelComboEditMSSQL: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TComboEdit'
+                  TabOrder = 4
+                end
+              end
+            end
+          end
+        end
+        object TabDBOracle: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 133.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Oracle'
+          OnClick = TabDBOracleClick
+          ExplicitSize.cx = 137.000000000000000000
+          ExplicitSize.cy = 49.000000000000000000
+          object GroupBoxComponentsOracle: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Components'
+            TabOrder = 0
+            object GridPanelLayoutOracle: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 504.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 49.999999999999990000
+                end
+                item
+                  Value = 50.000000000000010000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelComboBoxOracle
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxOracle
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = LabelListBoxOracle
+                  Row = 2
+                end
+                item
+                  Column = 1
+                  Control = LabelListViewOracle
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = ListBoxOracle
+                  Row = 3
+                end
+                item
+                  Column = 1
+                  Control = ListViewOracle
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = LabelStringGridOracle
+                  Row = 4
+                end
+                item
+                  Column = 1
+                  Control = LabelGridOracle
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = StringGridOracle
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridOracle
+                  Row = 5
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutOracleAutoCompleteEdit
+                  Row = 1
+                end
+                item
+                  Column = 1
+                  Control = GridPanelLayoutOracleLabels
+                  Row = 0
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 50.001250052086370000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  Value = 49.998749947913630000
+                end>
+              object LabelComboBoxOracle: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TComboBox'
+                TabOrder = 6
+              end
+              object ComboBoxOracle: TComboBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 23
+              end
+              object LabelListBoxOracle: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListBox'
+                TabOrder = 5
+              end
+              object LabelListViewOracle: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TListView'
+                TabOrder = 3
+              end
+              object ListBoxOracle: TListBox
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 31
+                DisableFocusEffect = True
+                DefaultItemStyles.ItemStyle = ''
+                DefaultItemStyles.GroupHeaderStyle = ''
+                DefaultItemStyles.GroupFooterStyle = ''
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 176.000000000000000000
+                object SearchBoxOracle: TSearchBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Top
+                  TabOrder = 0
+                  Position.X = -2.000000000000000000
+                  Position.Y = -2.000000000000000000
+                  Margins.Left = -2.000000000000000000
+                  Margins.Top = -2.000000000000000000
+                  Margins.Right = -2.000000000000000000
+                  Size.Width = 386.000000000000000000
+                  Size.Height = 22.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object ListViewOracle: TListView
+                ItemAppearanceClassName = 'TListItemAppearance'
+                ItemEditAppearanceClassName = 'TListItemDeleteAppearance'
+                HeaderAppearanceClassName = 'TListHeaderObjects'
+                FooterAppearanceClassName = 'TListHeaderObjects'
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 202.005065917968700000
+                Size.PlatformDefault = False
+                TabOrder = 30
+                SearchVisible = True
+              end
+              object LabelStringGridOracle: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TStringGrid'
+                TabOrder = 4
+              end
+              object LabelGridOracle: TLabel
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TGrid'
+                TabOrder = 2
+              end
+              object StringGridOracle: TStringGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridOracle: TGrid
+                Align = Client
+                CanFocus = True
+                ClipChildren = True
+                Size.Width = 386.000000000000000000
+                Size.Height = 201.994934082031300000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Viewport.Width = 382.000000000000000000
+                Viewport.Height = 177.000000000000000000
+              end
+              object GridPanelLayoutOracleAutoCompleteEdit: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 32
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 1
+                    Control = ComboEditOracle
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = EditOracle
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object ComboEditOracle: TComboEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 25
+                  ItemHeight = 19.000000000000000000
+                  ItemIndex = -1
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object EditOracle: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 33
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 40.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object GridPanelLayoutOracleLabels: TGridPanelLayout
+                Align = Client
+                Size.Width = 386.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 33
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LabelEditOracle
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = LabelComboEditOracle
+                    Row = 0
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object LabelEditOracle: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TEdit'
+                  TabOrder = 5
+                end
+                object LabelComboEditOracle: TLabel
+                  Align = Client
+                  Size.Width = 193.000000000000000000
+                  Size.Height = 20.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  Text = 'TComboEdit'
+                  TabOrder = 4
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  object Button1: TButton
+    Position.X = 704.000000000000000000
+    Position.Y = 16.000000000000000000
+    TabOrder = 0
+    Text = 'Button1'
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Position.X = 616.000000000000000000
+    Position.Y = 16.000000000000000000
+    TabOrder = 16
+    Text = 'Button2'
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Position.X = 528.000000000000000000
+    Position.Y = 16.000000000000000000
+    TabOrder = 17
+    Text = 'Button3'
+    OnClick = Button3Click
+  end
+end

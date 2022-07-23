@@ -50,8 +50,6 @@ type
   TArrayString = class(TStringList)
   private
     { Private declarations }
-  public
-    { Public declarations }
     function GetKey(Index: Integer): String;
     function GetValues(Index: String): String;
     function GetValuesAtIndex(Index: Integer): String;
@@ -59,7 +57,8 @@ type
     function GetItem(Index: String): String;
     procedure SetItem(Index: String; Const Value: String);
     procedure DoCopy(Collection: TArrayString = nil);
-
+  public
+    { Public declarations }
     constructor Create(Collection: TArrayString = nil);
     destructor Destroy; override;
     procedure Assign(Collection: TArrayString); reintroduce;
@@ -80,7 +79,7 @@ type
 implementation
 
 uses
-  &String,
+  Strings,
   Float,
   TimeDate,
   ArrayStringHelper;
@@ -89,6 +88,7 @@ uses
 
 constructor TArrayString.Create(Collection: TArrayString = nil);
 begin
+  OwnsObjects := True;
   NameValueSeparator := PIPE;
   NullStrictConvert := False;
   if Collection <> nil then

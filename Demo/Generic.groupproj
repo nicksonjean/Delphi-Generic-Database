@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{5E42930A-8851-45B2-87EA-F581BD368B4E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="GenericPagNav.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GenericConnector.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GenericDataTypes.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GenericQueryBuilder.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="GenericPagNav">
+        <MSBuild Projects="GenericPagNav.dproj"/>
+    </Target>
+    <Target Name="GenericPagNav:Clean">
+        <MSBuild Projects="GenericPagNav.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GenericPagNav:Make">
+        <MSBuild Projects="GenericPagNav.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GenericConnector">
+        <MSBuild Projects="GenericConnector.dproj"/>
+    </Target>
+    <Target Name="GenericConnector:Clean">
+        <MSBuild Projects="GenericConnector.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GenericConnector:Make">
+        <MSBuild Projects="GenericConnector.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GenericDataTypes">
+        <MSBuild Projects="GenericDataTypes.dproj"/>
+    </Target>
+    <Target Name="GenericDataTypes:Clean">
+        <MSBuild Projects="GenericDataTypes.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GenericDataTypes:Make">
+        <MSBuild Projects="GenericDataTypes.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GenericQueryBuilder">
+        <MSBuild Projects="GenericQueryBuilder.dproj"/>
+    </Target>
+    <Target Name="GenericQueryBuilder:Clean">
+        <MSBuild Projects="GenericQueryBuilder.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GenericQueryBuilder:Make">
+        <MSBuild Projects="GenericQueryBuilder.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="GenericPagNav;GenericConnector;GenericDataTypes;GenericQueryBuilder"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="GenericPagNav:Clean;GenericConnector:Clean;GenericDataTypes:Clean;GenericQueryBuilder:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="GenericPagNav:Make;GenericConnector:Make;GenericDataTypes:Make;GenericQueryBuilder:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

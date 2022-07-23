@@ -50,7 +50,7 @@ uses
   Winapi.Windows,
   Winapi.Messages,
   Locale,
-  &String
+  Strings
   ;
 
 {$I Money.Types.json.inc}

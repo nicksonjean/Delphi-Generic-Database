@@ -1,0 +1,1414 @@
+object GenericDataTypesForm: TGenericDataTypesForm
+  Left = 0
+  Top = 0
+  Caption = 'GenericDataTypesForm'
+  ClientHeight = 640
+  ClientWidth = 800
+  Position = DesktopCenter
+  WindowState = wsMaximized
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TabControl: TTabControl
+    Align = Client
+    FullSize = True
+    Size.Width = 800.000000000000000000
+    Size.Height = 640.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 15
+    TabPosition = PlatformDefault
+    Sizes = (
+      800s
+      591s)
+    object TabDataTypes: TTabItem
+      AutoSize = False
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 798.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Data Types'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
+      object TabControlDataTypes: TTabControl
+        Align = Client
+        FullSize = True
+        Size.Width = 800.000000000000000000
+        Size.Height = 591.000000000000000000
+        Size.PlatformDefault = False
+        TabHeight = 49.000000000000000000
+        TabIndex = 0
+        TabOrder = 16
+        TabPosition = PlatformDefault
+        Sizes = (
+          800s
+          542s
+          800s
+          542s
+          800s
+          542s
+          800s
+          542s)
+        object TabStrings: TTabItem
+          AutoSize = False
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 199.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Strings'
+          ExplicitSize.cx = 50.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+        end
+        object TabFloats: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 199.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Floats'
+          ExplicitSize.cx = 99.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GridPanelLayoutFloats: TGridPanelLayout
+            Align = Client
+            Size.Width = 800.000000000000000000
+            Size.Height = 542.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 5
+            ColumnCollection = <
+              item
+                Value = 100.000000000000000000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = GroupBoxFloatFormat
+                Row = 0
+              end
+              item
+                Column = 0
+                Control = GroupBoxFloatCalculate
+                Row = 1
+              end>
+            ExpandStyle = FixedSize
+            RowCollection = <
+              item
+                Value = 50.000000000000000000
+              end
+              item
+                Value = 50.000000000000000000
+              end>
+            object GroupBoxFloatFormat: TGroupBox
+              Align = Client
+              Margins.Left = 12.000000000000000000
+              Margins.Top = 6.000000000000000000
+              Margins.Right = 12.000000000000000000
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 776.000000000000000000
+              Size.Height = 257.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'FloatFormat'
+              TabOrder = 4
+              object GridPanelLayoutFloatFormat: TGridPanelLayout
+                Align = Client
+                Margins.Left = 2.000000000000000000
+                Margins.Top = 18.000000000000000000
+                Margins.Right = 2.000000000000000000
+                Margins.Bottom = 2.000000000000000000
+                Size.Width = 772.000000000000000000
+                Size.Height = 237.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest1
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest2
+                    Row = 1
+                  end
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest3
+                    Row = 2
+                  end
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest4
+                    Row = 3
+                  end
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest5
+                    Row = 4
+                  end
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest6
+                    Row = 5
+                  end
+                  item
+                    Column = 0
+                    Control = LayoutFloatFormatTest7
+                    Row = 6
+                  end
+                  item
+                    Column = 0
+                    Control = MemoResultFormat
+                    Row = 8
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatFormatActions
+                    Row = 7
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 30.000000000000000000
+                  end
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object LayoutFloatFormatTest1: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 20
+                  object EditLength1: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '15649846989.7654'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal1: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 1
+                    Text = '2'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult1: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object LayoutFloatFormatTest2: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 18
+                  object EditLength2: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 6
+                    Text = '15649846989,7654'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal2: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 15
+                    Text = '2'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult2: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object LayoutFloatFormatTest3: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 21
+                  object EditLength3: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 3
+                    Text = '15.649.846.989,7654'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal3: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 13
+                    Text = '2'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult3: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object LayoutFloatFormatTest4: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 19
+                  object EditLength4: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 3
+                    Text = '15,649,846,989.7654'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal4: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 11
+                    Text = '2'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult4: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object LayoutFloatFormatTest5: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 17
+                  object EditLength5: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 3
+                    Text = '15649846989'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal5: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 8
+                    Text = '0'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult5: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object LayoutFloatFormatTest6: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 16
+                  object EditLength6: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 3
+                    Text = 'R$ 7.75'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal6: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 7
+                    Text = '2'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult6: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object LayoutFloatFormatTest7: TLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 15
+                  object EditLength7: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 8
+                    Text = '5,15%'
+                    Size.Width = 647.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditDecimal7: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Right
+                    TabOrder = 7
+                    Text = '2'
+                    Position.X = 747.000000000000000000
+                    Size.Width = 25.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object ComboBoxResult7: TComboBox
+                    Align = Right
+                    Items.Strings = (
+                      'Truncate'
+                      'Round')
+                    ItemIndex = 0
+                    Position.X = 647.000000000000000000
+                    Size.Width = 100.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 2
+                  end
+                end
+                object MemoResultFormat: TMemo
+                  Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+                  DataDetectorTypes = []
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 22
+                  Viewport.Width = 768.000000000000000000
+                  Viewport.Height = 28.000000000000000000
+                end
+                object GridPanelLayoutFloatFormatActions: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 30.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 23
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = FormatExplicit
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = FormatImplicit
+                      Row = 0
+                    end>
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object FormatExplicit: TButton
+                    Align = Client
+                    Size.Width = 386.000000000000000000
+                    Size.Height = 30.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 1
+                    Text = 'Format Explicit'
+                    OnClick = FormatExplicitClick
+                  end
+                  object FormatImplicit: TButton
+                    Align = Client
+                    Size.Width = 386.000000000000000000
+                    Size.Height = 30.000000000000000000
+                    Size.PlatformDefault = False
+                    TabOrder = 0
+                    Text = 'Format Implicit'
+                    OnClick = FormatImplicitClick
+                  end
+                end
+              end
+            end
+            object GroupBoxFloatCalculate: TGroupBox
+              Align = Client
+              Margins.Left = 12.000000000000000000
+              Margins.Top = 6.000000000000000000
+              Margins.Right = 12.000000000000000000
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 776.000000000000000000
+              Size.Height = 257.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'FloatCalculate'
+              TabOrder = 3
+              object GridPanelLayoutFloatCalculate: TGridPanelLayout
+                Align = Client
+                Margins.Left = 2.000000000000000000
+                Margins.Top = 18.000000000000000000
+                Margins.Right = 2.000000000000000000
+                Margins.Bottom = 2.000000000000000000
+                Size.Width = 772.000000000000000000
+                Size.Height = 237.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = Calculate
+                    Row = 7
+                  end
+                  item
+                    Column = 0
+                    Control = MemoResultCalculate
+                    Row = 8
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate1
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate2
+                    Row = 1
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate3
+                    Row = 2
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate4
+                    Row = 3
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate5
+                    Row = 4
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate6
+                    Row = 5
+                  end
+                  item
+                    Column = 0
+                    Control = GridPanelLayoutFloatCalculate7
+                    Row = 6
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 25.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 30.000000000000000000
+                  end
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                object Calculate: TButton
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 30.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Text = 'Calculate'
+                  OnClick = CalculateClick
+                end
+                object MemoResultCalculate: TMemo
+                  Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+                  DataDetectorTypes = []
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 16
+                  Viewport.Width = 768.000000000000000000
+                  Viewport.Height = 28.000000000000000000
+                end
+                object GridPanelLayoutFloatCalculate1: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 23
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate1
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount1
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation1
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate1: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount1: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation1: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+                object GridPanelLayoutFloatCalculate2: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 22
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate2
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount2
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation2
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate2: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount2: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation2: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+                object GridPanelLayoutFloatCalculate3: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 21
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate3
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount3
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation3
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate3: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount3: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation3: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+                object GridPanelLayoutFloatCalculate4: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 20
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate4
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount4
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation4
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate4: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount4: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation4: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+                object GridPanelLayoutFloatCalculate5: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 19
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate5
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount5
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation5
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate5: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount5: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation5: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+                object GridPanelLayoutFloatCalculate6: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 18
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate6
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount6
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation6
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate6: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount6: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation6: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+                object GridPanelLayoutFloatCalculate7: TGridPanelLayout
+                  Align = Client
+                  Size.Width = 772.000000000000000000
+                  Size.Height = 25.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 17
+                  ColumnCollection = <
+                    item
+                      Value = 50.000000000000000000
+                    end
+                    item
+                      SizeStyle = Absolute
+                      Value = 20.000000000000000000
+                    end
+                    item
+                      Value = 50.000000000000000000
+                    end>
+                  ControlCollection = <
+                    item
+                      Column = 0
+                      Control = EditCalculate7
+                      Row = 0
+                    end
+                    item
+                      Column = 2
+                      Control = EditAmount7
+                      Row = 0
+                    end
+                    item
+                      Column = 1
+                      Control = EditOperation7
+                      Row = 0
+                    end>
+                  ExpandStyle = FixedSize
+                  RowCollection = <
+                    item
+                      Value = 100.000000000000000000
+                    end
+                    item
+                      SizeStyle = Auto
+                    end>
+                  object EditCalculate7: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 1
+                    Text = '2.79'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditAmount7: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 0
+                    Text = '0.345'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 376.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                  object EditOperation7: TEdit
+                    Touch.InteractiveGestures = [LongTap, DoubleTap]
+                    Align = Client
+                    TabOrder = 2
+                    ReadOnly = True
+                    Text = '*'
+                    TextSettings.HorzAlign = Center
+                    Size.Width = 20.000000000000000000
+                    Size.Height = 25.000000000000000000
+                    Size.PlatformDefault = False
+                  end
+                end
+              end
+            end
+          end
+        end
+        object TabDateTime: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 199.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'DateTime'
+          ExplicitSize.cx = 99.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object Button1: TButton
+            Position.X = 368.000000000000000000
+            Position.Y = 239.000000000000000000
+            TabOrder = 0
+            Text = 'Button1'
+            OnClick = Button1Click
+          end
+        end
+        object TabArrays: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 201.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Arrays'
+          ExplicitSize.cx = 101.000000000000000000
+          ExplicitSize.cy = 50.000000000000000000
+          object GroupBoxDataTypeArray: TGroupBox
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 6.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 12.000000000000000000
+            Size.Width = 776.000000000000000000
+            Size.Height = 524.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Arrays'
+            TabOrder = 16
+            object GridPanelLayoutDataTypeArray: TGridPanelLayout
+              Align = Client
+              Margins.Left = 2.000000000000000000
+              Margins.Top = 18.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 180.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 100.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LabelDataTypeArrayString
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = LabelDataTypeArrayVariant
+                  Row = 2
+                end
+                item
+                  Column = 0
+                  Control = LabelDataTypeArrayField
+                  Row = 4
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxDataTypeTArrayString
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxDataTypeTArrayVariant
+                  Row = 3
+                end
+                item
+                  Column = 0
+                  Control = ComboBoxDataTypeTArrayField
+                  Row = 5
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 20.000000000000000000
+                end
+                item
+                  SizeStyle = Absolute
+                  Value = 40.000000000000000000
+                end>
+              object LabelDataTypeArrayString: TLabel
+                Align = Client
+                Size.Width = 772.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TArrayString'
+                TabOrder = 2
+              end
+              object LabelDataTypeArrayVariant: TLabel
+                Align = Client
+                Size.Width = 772.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TArrayVariant'
+                TabOrder = 1
+              end
+              object LabelDataTypeArrayField: TLabel
+                Align = Client
+                Size.Width = 772.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.HorzAlign = Center
+                Text = 'TArrayField'
+                TabOrder = 0
+              end
+              object ComboBoxDataTypeTArrayString: TComboBox
+                Align = Client
+                Items.Strings = (
+                  'Fetch'
+                  'Copy'
+                  'Clone'
+                  'ToList'
+                  'ToTags'
+                  'ToXML'
+                  'ToJSON'
+                  'ToYAML')
+                Size.Width = 772.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 16
+                OnChange = ComboBoxDataTypeTArrayStringChange
+              end
+              object ComboBoxDataTypeTArrayVariant: TComboBox
+                Align = Client
+                Items.Strings = (
+                  'Fetch'
+                  'Copy'
+                  'Clone'
+                  'ToList'
+                  'ToTags'
+                  'ToXML'
+                  'ToJSON'
+                  'ToYAML')
+                Size.Width = 772.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 15
+                OnChange = ComboBoxDataTypeTArrayVariantChange
+              end
+              object ComboBoxDataTypeTArrayField: TComboBox
+                Align = Client
+                Items.Strings = (
+                  'Fetch'
+                  'Copy'
+                  'Clone'
+                  'ToList'
+                  'ToTags'
+                  'ToXML'
+                  'ToJSON'
+                  'ToYAML')
+                Size.Width = 772.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 14
+                OnChange = ComboBoxDataTypeTArrayFieldChange
+              end
+            end
+            object MemoDataTypeArrayResult: TMemo
+              Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+              DataDetectorTypes = []
+              Align = Bottom
+              Margins.Left = 2.000000000000000000
+              Margins.Top = -3.000000000000000000
+              Margins.Right = 2.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 2.000000000000000000
+              Position.Y = 197.000000000000000000
+              Size.Width = 772.000000000000000000
+              Size.Height = 325.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 17
+              Viewport.Width = 768.000000000000000000
+              Viewport.Height = 321.000000000000000000
+            end
+          end
+        end
+      end
+    end
+  end
+end

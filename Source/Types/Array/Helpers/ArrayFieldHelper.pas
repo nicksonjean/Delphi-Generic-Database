@@ -1,4 +1,4 @@
-{
+﻿{
   ArrayFieldHelper.
   ------------------------------------------------------------------------------
   Objetivo : Simplificar a criação de matrizes php-like em Delphi.
@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  &String,
+  Strings,
   Float,
   TimeDate,
   ArrayField;

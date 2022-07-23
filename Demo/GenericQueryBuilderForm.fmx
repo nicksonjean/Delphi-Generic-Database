@@ -1,0 +1,208 @@
+object GenericQueryBuilderForm: TGenericQueryBuilderForm
+  Left = 0
+  Top = 0
+  Caption = 'GenericQueryBuilderForm'
+  ClientHeight = 640
+  ClientWidth = 800
+  Position = DesktopCenter
+  WindowState = wsMaximized
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object TabControl: TTabControl
+    Align = Client
+    FullSize = True
+    Size.Width = 800.000000000000000000
+    Size.Height = 640.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 16
+    TabPosition = PlatformDefault
+    Sizes = (
+      800s
+      591s)
+    object TabQueryBuilder: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 798.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Query Builder'
+      ExplicitSize.cx = 134.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
+      object GroupBoxQueryBuilderArrays: TGroupBox
+        Align = Client
+        Margins.Left = 12.000000000000000000
+        Margins.Top = 6.000000000000000000
+        Margins.Right = 12.000000000000000000
+        Margins.Bottom = 12.000000000000000000
+        Size.Width = 776.000000000000000000
+        Size.Height = 573.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Query Arrays'
+        TabOrder = 16
+        object GridPanelLayoutQueryBuilderArray: TGridPanelLayout
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 18.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 772.000000000000000000
+          Size.Height = 180.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = LabelQueryBuilderArrayString
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = LabelQueryBuilderArrayVariant
+              Row = 2
+            end
+            item
+              Column = 0
+              Control = LabelQueryBuilderArrayField
+              Row = 4
+            end
+            item
+              Column = 0
+              Control = ComboBoxQueryBuilderArrayString
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = ComboBoxQueryBuilderArrayVariant
+              Row = 3
+            end
+            item
+              Column = 0
+              Control = ComboBoxQueryBuilderArrayField
+              Row = 5
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 20.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 40.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 20.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 40.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 20.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 40.000000000000000000
+            end>
+          object LabelQueryBuilderArrayString: TLabel
+            Align = Client
+            Size.Width = 772.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'TArrayString'
+            TabOrder = 2
+          end
+          object LabelQueryBuilderArrayVariant: TLabel
+            Align = Client
+            Size.Width = 772.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'TArrayVariant'
+            TabOrder = 1
+          end
+          object LabelQueryBuilderArrayField: TLabel
+            Align = Client
+            Size.Width = 772.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.HorzAlign = Center
+            Text = 'TArrayField'
+            TabOrder = 0
+          end
+          object ComboBoxQueryBuilderArrayString: TComboBox
+            Align = Client
+            Items.Strings = (
+              'Insert'
+              'Update'
+              'Delete'
+              'Replace'
+              'Upsert')
+            Size.Width = 772.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 16
+          end
+          object ComboBoxQueryBuilderArrayVariant: TComboBox
+            Align = Client
+            Items.Strings = (
+              'Insert'
+              'Update'
+              'Delete'
+              'Replace'
+              'Upsert')
+            Size.Width = 772.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 15
+          end
+          object ComboBoxQueryBuilderArrayField: TComboBox
+            Align = Client
+            Items.Strings = (
+              'Insert'
+              'Update'
+              'Delete'
+              'Replace'
+              'Upsert')
+            Size.Width = 772.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 14
+          end
+        end
+        object MemoQueryBuilderArrayResult: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Bottom
+          Margins.Left = 2.000000000000000000
+          Margins.Top = -3.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 197.000000000000000000
+          Size.Width = 772.000000000000000000
+          Size.Height = 374.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 16
+          Viewport.Width = 768.000000000000000000
+          Viewport.Height = 370.000000000000000000
+        end
+      end
+    end
+  end
+end

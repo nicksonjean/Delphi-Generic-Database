@@ -1,11 +1,14 @@
       {$IFDEF FireDACLib}
       with TConnection.FInstance.FSQLInstance do
+//      with Self.Connection2 do
       begin
         case FDriver of
           SQLITE:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysSQLiteDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlite3.dll';
+              var FDPhysSQLiteDriverLink: TFDPhysSQLiteDriverLink;
+              FDPhysSQLiteDriverLink := ISmartPointer<TFDPhysSQLiteDriverLink>(TFDPhysSQLiteDriverLink.Create(nil));
+              FDPhysSQLiteDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlite3.dll';
               {$ENDIF}
               ConnectionName := 'DBSQLite';
               DriverName := 'SQLite';
@@ -33,7 +36,9 @@
           MYSQL:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysMySQLDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'libmysql.dll';
+              var FDPhysMySQLDriverLink: TFDPhysMySQLDriverLink;
+              FDPhysMySQLDriverLink := ISmartPointer<TFDPhysMySQLDriverLink>(TFDPhysMySQLDriverLink.Create(nil));
+              FDPhysMySQLDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'libmysql.dll';
               {$ENDIF}
               ConnectionName := 'DBMySQL';
               DriverName := 'MySQL';
@@ -67,7 +72,9 @@
           FIREBIRD:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysFBDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'fbclient.dll';
+              var FDPhysFBDriverLink: TFDPhysFBDriverLink;
+              FDPhysFBDriverLink := ISmartPointer<TFDPhysFBDriverLink>(TFDPhysFBDriverLink.Create(nil));
+              FDPhysFBDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'libmysql.dll';
               {$ENDIF}
               ConnectionName := 'DBFirebird';
               DriverName := 'FB';
@@ -94,14 +101,18 @@
                 Database := FDatabase;
                 UserName := FUsername;
                 Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+                Protocol := ipTCPIP;
+                SQLDialect := 3;
+                CharacterSet := TIBCharacterSet.csUTF8;
                 EndUpdate();
               end;
-              Params.Values['Protocol'] := 'ipTCPIP';
             end;
           INTERBASE:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysFBDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'gds32.dll';
+              var FDPhysIBDriverLink: TFDPhysFBDriverLink;
+              FDPhysIBDriverLink := ISmartPointer<TFDPhysFBDriverLink>(TFDPhysFBDriverLink.Create(nil));
+              FDPhysIBDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'gds32.dll';
               {$ENDIF}
               ConnectionName := 'DBInterbase';
               DriverName := 'IB';
@@ -128,14 +139,18 @@
                 Database := FDatabase;
                 UserName := FUsername;
                 Password := System.StrUtils.IfThen(FPassword = '', #0, FPassword);
+                Protocol := ipTCPIP;
+                SQLDialect := 3;
+                CharacterSet := TIBCharacterSet.csUTF8;
                 EndUpdate();
               end;
-              Params.Values['Protocol'] := 'ipTCPIP';
             end;
           MSSQL:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysMSSQLDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlncli11.dll';
+              var FDPhysMSSQLDriverLink: TFDPhysMSSQLDriverLink;
+              FDPhysMSSQLDriverLink := ISmartPointer<TFDPhysMSSQLDriverLink>(TFDPhysMSSQLDriverLink.Create(nil));
+              FDPhysMSSQLDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlncli11.dll';
               {$ENDIF}
               ConnectionName := 'DBMSSQL';
               DriverName := 'MSSQL';
@@ -168,7 +183,9 @@
           POSTGRESQL:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysPgDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'libpq.dll';
+              var FDPhysPgDriverLink: TFDPhysPgDriverLink;
+              FDPhysPgDriverLink := ISmartPointer<TFDPhysPgDriverLink>(TFDPhysPgDriverLink.Create(nil));
+              FDPhysPgDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'libpq.dll';
               {$ENDIF}
               ConnectionName := 'DBPostgreSQL';
               DriverName := 'PG';
@@ -202,7 +219,9 @@
           ORACLE:
             begin
               {$IFDEF MSWINDOWS}
-              TFDPhysOracleDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'oci.dll';
+              var FDPhysOracleDriverLink: TFDPhysOracleDriverLink;
+              FDPhysOracleDriverLink := ISmartPointer<TFDPhysOracleDriverLink>(TFDPhysOracleDriverLink.Create(nil));
+              FDPhysOracleDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'libpq.dll';
               {$ENDIF}
               ConnectionName := 'DBOracle';
               DriverName := 'ORA';

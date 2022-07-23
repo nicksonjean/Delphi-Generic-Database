@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+	<Transactions>
+    <Transaction>2020/06/07 21:03:23.000.065,D:\Projetos\DELPHI\Generic-Database\Demo\GenerateClassForm.pas=</Transaction>
+    <Transaction>2020/06/07 21:03:32.000.945,=D:\Projetos\DELPHI\Generic-Database\Demo\GenerateClassForm.pas</Transaction>
+    <Transaction>2022/07/18 19:43:36.000.279,=F:\Projetos\Delphi\Generic-Database\Demo\Unit1.pas</Transaction>
+    <Transaction>2022/07/18 19:48:50.000.194,F:\Projetos\Delphi\Generic-Database\Demo\Unit1.pas=F:\Projetos\Delphi\Generic-Database\Source\SmartGuard\ISmartGuard.pas</Transaction>
+    <Transaction>2022/07/18 19:49:51.000.623,=F:\Projetos\Delphi\Generic-Database\Demo\Unit1.pas</Transaction>
+    <Transaction>2022/07/18 19:56:26.000.964,F:\Projetos\Delphi\Generic-Database\Demo\Unit1.pas=F:\Projetos\Delphi\Generic-Database\Source\SmartGuard\TSmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 20:23:38.000.060,F:\Projetos\Delphi\Generic-Database\Source\SmartGuard\ISmartGuard.pas=</Transaction>
+    <Transaction>2022/07/18 20:23:41.000.164,F:\Projetos\Delphi\Generic-Database\Source\SmartGuard\TSmartPointer.pas=</Transaction>
+    <Transaction>2022/07/18 20:24:30.000.529,=F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\ISmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 20:24:30.000.514,=F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\CSmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 20:28:53.000.002,F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\ISmartPointer.pas=F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\TSmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 20:35:06.000.280,F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\TSmartPointer.pas=F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\ISmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 20:41:32.000.334,F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\ISmartPointer.pas=</Transaction>
+    <Transaction>2022/07/18 20:52:32.000.794,=F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\ISmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 22:06:03.000.492,F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\CSmartPointer.pas=F:\Projetos\Delphi\Generic-Database\Source\SmartPointer\TSmartPointer.pas</Transaction>
+    <Transaction>2022/07/18 23:14:01.000.913,F:\Projetos\Delphi\Generic-Database\Demo\GenericClass.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenerateClass.dproj</Transaction>
+    <Transaction>2022/07/18 23:14:16.000.258,F:\Projetos\Delphi\Generic-Database\Demo\GenericClassGenerator.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericClass.dproj</Transaction>
+    <Transaction>2022/07/19 01:03:00.000.117,F:\Projetos\Delphi\Generic-Database\Demo\GenerateClassForm.fmx=F:\Projetos\Delphi\Generic-Database\Demo\GenericPagNavForm.fmx</Transaction>
+    <Transaction>2022/07/19 01:03:00.000.117,F:\Projetos\Delphi\Generic-Database\Demo\GenerateClassForm.pas=F:\Projetos\Delphi\Generic-Database\Demo\GenericPagNavForm.pas</Transaction>
+    <Transaction>2022/07/19 01:03:46.000.009,F:\Projetos\Delphi\Generic-Database\Demo\GenericClassGenerator.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericP.dproj</Transaction>
+    <Transaction>2022/07/19 01:04:26.000.174,F:\Projetos\Delphi\Generic-Database\Demo\GenericP.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericPagNav.dproj</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="android-support-v4.dex.jar"/>
+    <File Path="cloud-messaging.dex.jar"/>
+    <File Path="fmx.dex.jar"/>
+    <File Path="google-analytics-v2.dex.jar"/>
+    <File Path="google-play-billing.dex.jar"/>
+    <File Path="google-play-licensing.dex.jar"/>
+    <File Path="google-play-services.dex.jar"/>
+    <File Path="android-support-v4.dex.jar"/>
+    <File Path="cloud-messaging.dex.jar"/>
+    <File Path="fmx.dex.jar"/>
+    <File Path="google-analytics-v2.dex.jar"/>
+    <File Path="google-play-billing.dex.jar"/>
+    <File Path="google-play-licensing.dex.jar"/>
+    <File Path="google-play-services.dex.jar"/>
+    <File Path="..\..\Generic-Database"/>
+    <File Path="..\Source"/>
+    <File Path="..\Source\Helpers"/>
+    <File Path="..\Source\Helpers\ArrayHelper"/>
+    <File Path="..\Source\Helpers\ArrayHelper\ArrayHelper.pas"/>
+    <File Path="..\Source\Helpers\DictionaryHelper"/>
+    <File Path="..\Source\Helpers\DictionaryHelper\DictionaryHelper.pas"/>
+    <File Path="..\Source\Reflection"/>
+    <File Path="..\Source\Reflection\MimeType.pas"/>
+    <File Path="..\Source\SmartPointer"/>
+    <File Path="..\Source\SmartPointer\TSmartPointer.pas"/>
+    <File Path="..\Source\SmartPointer\ISmartPointer.pas"/>
+    <File Path="..\Source\Types"/>
+    <File Path="..\Source\Types\Array"/>
+    <File Path="..\Source\Types\Array\Helpers"/>
+    <File Path="..\Source\Types\Array\Helpers\ArrayFieldHelper.pas"/>
+    <File Path="..\Source\Types\Array\Helpers\ArrayStringHelper.pas"/>
+    <File Path="..\Source\Types\Array\Helpers\ArrayVariantHelper.pas"/>
+    <File Path="..\Source\Types\Array\ArrayAssoc.pas"/>
+    <File Path="..\Source\Types\Array\ArrayField.pas"/>
+    <File Path="..\Source\Types\Array\ArrayString.pas"/>
+    <File Path="..\Source\Types\Array\ArrayVariant.pas"/>
+    <File Path="..\Source\Types\Locale"/>
+    <File Path="..\Source\Types\Locale\Locale.pas"/>
+    <File Path="..\Source\Types\Float.pas"/>
+    <File Path="..\Source\Types\IArray.pas"/>
+    <File Path="..\Source\Types\Strings.pas"/>
+    <File Path="..\Source\Types\TimeDate.pas"/>
+    <File Path="GenericPagNavForm.pas"/>
+    <File Path="GenericPagNavForm.fmx"/>
+  </ProjectSortOrder>
+</BorlandProject>

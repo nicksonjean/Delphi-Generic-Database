@@ -53,8 +53,6 @@ type
   TArrayVariant = class(TDictionary<Variant, Variant>)
   private
     { Private declarations }
-  public
-    { Public declarations }
     function GetKey(Index: Integer): String;
     function GetValues(Name: String): Variant;
     function GetValuesAtIndex(Index: Integer): Variant;
@@ -62,7 +60,8 @@ type
     function GetItem(Index: String): Variant;
     procedure SetItem(Index: String; const Value: Variant);
     procedure DoCopy<T: Class>(Collection : T);
-
+  public
+    { Public declarations }
     constructor Create(Collection: TList<TPair<Variant,Variant>>); overload;
     destructor Destroy; override;
     procedure Assign<T: Class>(Collection : T);
@@ -83,7 +82,7 @@ type
 implementation
 
 uses
-  &String,
+  Strings,
   Float,
   TimeDate,
   ArrayString,

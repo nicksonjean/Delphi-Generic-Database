@@ -104,10 +104,15 @@ uses
   FMX.ComboEdit.Helper,
   FMX.ComboBox.Helper,
   DictionaryHelper,
-  ArrayHelper,
   EventDriven,
   Connection,
+  Query,
+  QueryHelper,
+  QueryBuilder,
   RTTI,
+  IArray,
+  ArrayHelper,
+  ArrayString,
   ArrayVariant
   ;
 
@@ -498,13 +503,14 @@ begin
         end;
 
         // Armazena Todo o ResultRow da Query SQL
-        JSONData := TArrayVariant.Create;
+//        JSONData := TArrayVariant.Create;
+        JSONData := IArray<TArrayVariant>(TArrayVariant.Create());
         JSONData.Clear;
         for I := 0 to DataSet.FieldDefs.Count - 1 do
           JSONData[DataSet.FieldDefs[I].Name] := DataSet.FieldByName(DataSet.FieldDefs[I].Name).Value;
         Self.SetJSONData(IndexField, ValueField, JSONData.ToJSON);
         Item.Data[TMultiDetailAppearanceNames.Detail4] := Self.GetJSONData;
-        JSONData.Destroy;
+//        JSONData.Destroy;
 
   { TODO -oNickson Jeanmerson -cProgrammer :
   1) Adicionar Suporte à Imagens via Blog com TImage/TBitmap e ImageString em Base64;
@@ -723,7 +729,7 @@ end;
 procedure TConnector.ToFillList<F>(AOwner: TComponent; IndexField, ValueField: String; Options : F);
 var
   I: Integer;
-  Items : TStringList;
+  Items : TArrayString;
   DataSet : {$I CNC.Type.inc};
 begin
   if (AOwner is TEdit) and (TEdit(AOwner) <> nil) and (TEdit(AOwner).Items.Count > 0) then
@@ -753,7 +759,8 @@ begin
 
   if DataSet.RecordCount > 0 then
   begin
-    Items := TStringList.Create(True);
+//    Items := TArrayString.Create(True);
+    Items := IArray<TArrayString>(TArrayString.Create());
 
     DataSet.First;
     while not(DataSet.Eof) do
@@ -774,7 +781,7 @@ begin
       else if AOwner Is TListBox then
         Self.AddObject<TListBox, F>(AOwner, [IndexField, ValueField], [Items.Names[I], Items.ValueFromIndex[I]], Options)
     end;
-    Items.Destroy;
+//    Items.Destroy;
 
     if AOwner Is TComboBox then
       TListBox(TComboBox(AOwner).ListBox).AlternatingRowBackground := True

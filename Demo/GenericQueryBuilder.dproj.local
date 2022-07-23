@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/07/19 00:20:52.000.054,F:\Projetos\Delphi\Generic-Database\Demo\GenericQueryBuilderForma.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericQueryBuilderForm.dproj</Transaction>
+    <Transaction>2022/07/19 00:20:55.000.812,F:\Projetos\Delphi\Generic-Database\Demo\GenericQueryBuilderForm.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericQueryBuilderForma.dproj</Transaction>
+    <Transaction>2022/07/19 00:22:17.000.834,F:\Projetos\Delphi\Generic-Database\Demo\GenericQueryBuilderForm.dproj=F:\Projetos\Delphi\Generic-Database\Demo\maconha.dproj</Transaction>
+    <Transaction>2022/07/19 00:22:32.000.303,F:\Projetos\Delphi\Generic-Database\Demo\maconha.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericQueryBuilder.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

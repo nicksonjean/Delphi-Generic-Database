@@ -58,7 +58,7 @@ uses
   FMX.Objects,
   FMX.Types,
   Float,
-  &String;
+  Strings;
 
 { TEditHelper }
 

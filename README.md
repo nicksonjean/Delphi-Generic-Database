@@ -47,12 +47,13 @@ git clone https://github.com/nicksonjean/generic-dbal.git
 ../generic-dbal/Source/Extensions
 ../generic-dbal/Source/Helpers
 ../generic-dbal/Source/Reflection
+../generic-dbal/Source/SmartPointer
 ../generic-dbal/Source/Types
 ../generic-dbal/Source/Types/Locale
 ```
 ### ToDo
 
-- [ ] Suportar o UniDAC
+- [ ] Suportar o UniDAC  e AnyDAC
   - [ ] Suportar o SQLite
   - [ ] Suportar o Firebird/Interbase
   - [ ] Suportar o MySQL/MariaDB
@@ -62,10 +63,20 @@ git clone https://github.com/nicksonjean/generic-dbal.git
 - [ ] Suportar o Component TeeGrid em Connector
 - [ ] Refatorar Removendo Arquivos *.inc
   - [ ] Refatorar Connection.pas
+  - [ ] Refatorar Connector.pas
   - [X] Refatorar Types/Array.pas
   - [ ] Refatorar Types/TimeDate.pas
 - [ ] Criar um DBNavigator para TGrid e TStringGrid
 - [ ] Criar a Funcionalidade de Carregar Mais on Scroll para ListBox e ListView
 - [ ] Criar a Paginação para Carregar Mais para ListBox e ListView
+- [ ] Criar Testes Unitário
+
+### Bugs
+
+- [ ] Criar Testes Unitário
+- [ ] Corrigir Warnings para o Framework dbExpress
+  [dcc32 Warning] Connection.pas(292): W1000 Symbol 'StartTransaction' is deprecated
+  [dcc32 Warning] Connection.pas(306): W1000 Symbol 'Commit' is deprecated
+  [dcc32 Warning] Connection.pas(319): W1000 Symbol 'Rollback' is deprecated
 
 ⁰¹²³⁴⁵⁶⁷⁸⁹

@@ -53,8 +53,6 @@ type
   TArrayField = class(TDictionary<Variant, TField>)
   private
     { Private declarations }
-  public
-    { Public declarations }
     function GetKey(Index: Integer): String;
     function GetValues(Name: String): TField;
     function GetValuesAtIndex(Index: Integer): TField;
@@ -62,7 +60,8 @@ type
     function GetItem(Index: String): TField;
     procedure SetItem(Index: String; Const Value: TField);
     procedure DoCopy(Collection : TDictionary<Variant, TField>);
-
+  public
+    { Public declarations }
     constructor Create(Collection: TList<TPair<Variant,TField>>); overload;
     destructor Destroy; override;
     procedure Assign(Collection : TDictionary<Variant, TField>);
@@ -83,7 +82,7 @@ type
 implementation
 
 uses
-  &String,
+  Strings,
   Float,
   TimeDate,
   ArrayVariantHelper;
