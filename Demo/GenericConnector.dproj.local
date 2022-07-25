@@ -2,19 +2,19 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2022/07/18 22:31:49.000.784,=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2022/07/18 22:33:56.000.148,C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\GenerateConnector.dproj=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/07/18 22:33:56.000.148,C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\GenerateConnector.dproj</Transaction>
     <Transaction>2022/07/18 22:35:15.000.953,=F:\Projetos\Delphi\Generic-Database\Demo\GenericConnectorForm.pas</Transaction>
-    <Transaction>2022/07/18 22:35:32.000.902,F:\Projetos\Delphi\Generic-Database\Demo\GenerateConnector.dproj=C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\GenerateConnector.dproj</Transaction>
+    <Transaction>2022/07/18 22:35:32.000.902,C:\Users\Cliente\OneDrive\Documentos\Embarcadero\Studio\Projects\GenerateConnector.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenerateConnector.dproj</Transaction>
     <Transaction>2022/07/18 22:40:59.000.667,=F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas</Transaction>
     <Transaction>2022/07/18 22:41:12.000.949,=F:\Projetos\Delphi\Generic-Database\Source\Connector\OptionsArray.pas</Transaction>
     <Transaction>2022/07/18 22:41:12.000.973,=F:\Projetos\Delphi\Generic-Database\Source\Connector\OptionsJSON.pas</Transaction>
-    <Transaction>2022/07/18 22:41:12.000.942,=F:\Projetos\Delphi\Generic-Database\Source\Connector\Connector.pas</Transaction>
     <Transaction>2022/07/18 22:41:12.000.965,=F:\Projetos\Delphi\Generic-Database\Source\Connector\OptionsInteger.pas</Transaction>
+    <Transaction>2022/07/18 22:41:12.000.942,=F:\Projetos\Delphi\Generic-Database\Source\Connector\Connector.pas</Transaction>
     <Transaction>2022/07/18 22:50:26.000.831,F:\Projetos\Delphi\Generic-Database\Source\Types\ArrayInterface.pas=</Transaction>
-    <Transaction>2022/07/18 23:58:22.000.536,F:\Projetos\Delphi\Generic-Database\Demo\GenericConnector.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenerateConnector.dproj</Transaction>
-    <Transaction>2022/07/19 22:54:11.000.137,F:\Projetos\Delphi\Generic-Database\Source\Types\IArray.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\Array.pas</Transaction>
-    <Transaction>2022/07/19 22:57:02.000.362,F:\Projetos\Delphi\Generic-Database\Source\Types\Char.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\String.pas</Transaction>
-    <Transaction>2022/07/19 22:58:23.000.946,F:\Projetos\Delphi\Generic-Database\Source\Types\Strings.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\Char.pas</Transaction>
+    <Transaction>2022/07/18 23:58:22.000.536,F:\Projetos\Delphi\Generic-Database\Demo\GenerateConnector.dproj=F:\Projetos\Delphi\Generic-Database\Demo\GenericConnector.dproj</Transaction>
+    <Transaction>2022/07/19 22:54:11.000.137,F:\Projetos\Delphi\Generic-Database\Source\Types\Array.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\IArray.pas</Transaction>
+    <Transaction>2022/07/19 22:57:02.000.362,F:\Projetos\Delphi\Generic-Database\Source\Types\String.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\Char.pas</Transaction>
+    <Transaction>2022/07/19 22:58:23.000.946,F:\Projetos\Delphi\Generic-Database\Source\Types\Char.pas=F:\Projetos\Delphi\Generic-Database\Source\Types\Strings.pas</Transaction>
     <Transaction>2022/07/21 10:35:53.000.755,=F:\Projetos\Delphi\Generic-Database\Source\Connection\QueryHelper.pas</Transaction>
     <Transaction>2022/07/21 10:39:34.000.579,=F:\Projetos\Delphi\Generic-Database\Source\Connection\Helpers\QueryHelper.pas</Transaction>
     <Transaction>2022/07/21 15:46:53.000.760,=F:\Projetos\Delphi\Generic-Database\Source\Connection\QueryBuilder.pas</Transaction>
@@ -23,9 +23,11 @@
     <Transaction>2022/07/21 16:06:07.000.919,F:\Projetos\Delphi\Generic-Database\Source\Connection\Singleton.Connection.pas=</Transaction>
     <Transaction>2022/07/21 16:06:34.000.225,=F:\Projetos\Delphi\Generic-Database\Source\Connection\InstanceConnection.pas</Transaction>
     <Transaction>2022/07/21 16:16:46.000.342,F:\Projetos\Delphi\Generic-Database\Source\Connection\InstanceConnection.pas=</Transaction>
-    <Transaction>2022/07/22 12:50:06.925,=F:\Projetos\Delphi\Generic-Database\Source\Connection\Connexion.pas</Transaction>
-    <Transaction>2022/07/22 18:15:13.638,F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas=</Transaction>
-    <Transaction>2022/07/22 18:15:40.548,F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas=F:\Projetos\Delphi\Generic-Database\Source\Connection\Connexion.pas</Transaction>
+    <Transaction>2022/07/22 12:50:06.000.925,=F:\Projetos\Delphi\Generic-Database\Source\Connection\Connexion.pas</Transaction>
+    <Transaction>2022/07/22 18:15:13.000.638,F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas=</Transaction>
+    <Transaction>2022/07/22 18:15:40.000.548,F:\Projetos\Delphi\Generic-Database\Source\Connection\Connexion.pas=F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas</Transaction>
+    <Transaction>2022/07/24 15:48:11.000.232,F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas=</Transaction>
+    <Transaction>2022/07/24 15:48:30.000.147,=F:\Projetos\Delphi\Generic-Database\Source\Connection\Connection.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="android-support-v4.dex.jar"/>

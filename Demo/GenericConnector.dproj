@@ -164,6 +164,8 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
+        <DCC_MapFile>3</DCC_MapFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -222,16 +224,14 @@
         <DCCReference Include="..\Source\Types\Array\Helpers\ArrayVariantHelper.pas"/>
         <DCCReference Include="..\Source\SmartPointer\ISmartPointer.pas"/>
         <DCCReference Include="..\Source\SmartPointer\TSmartPointer.pas"/>
-        <DCCReference Include="..\Source\Connection\Helpers\QueryHelper.pas"/>
-        <DCCReference Include="..\Source\Connection\QueryBuilder.pas"/>
-        <DCCReference Include="..\Source\Connection\Query.pas"/>
         <DCCReference Include="..\Source\Connector\Connector.pas"/>
         <DCCReference Include="..\Source\Connector\OptionsInteger.pas"/>
         <DCCReference Include="..\Source\Connector\OptionsArray.pas"/>
         <DCCReference Include="..\Source\Connector\OptionsJSON.pas"/>
-        <DCCReference Include="..\Source\Connection\Connection.pas">
-            <Form>$R *.res</Form>
-        </DCCReference>
+        <DCCReference Include="..\Source\Connection\Query.pas"/>
+        <DCCReference Include="..\Source\Connection\Helpers\QueryHelper.pas"/>
+        <DCCReference Include="..\Source\Connection\QueryBuilder.pas"/>
+        <DCCReference Include="..\Source\Connection\Connection.pas"/>
         <DCCReference Include="GenericConnectorForm.pas">
             <Form>GenericConnectorForm</Form>
         </DCCReference>

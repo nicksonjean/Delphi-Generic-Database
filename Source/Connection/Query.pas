@@ -142,12 +142,16 @@ uses
 {$ENDIF}
   System.UITypes;
 
+type
+  IQuery = interface['{9B8F735D-7B55-44AB-A390-CE896F27BE26}']
+  end;
+
   { Classe TQuery Herdada de TConnection }
 type
-  TQuery = class(TConnection)
+//  TQuery = class(TInterfacedObject, IQuery)
+  TQuery = class
   private
     { Private declarations }
-    FInstance: TConnection;
     FQuery: {$I CNX.Query.Type.inc};
   public
     { Public declarations }
@@ -162,22 +166,23 @@ implementation
 
 constructor TQuery.Create;
 begin
-  FInstance := TConnection.Create;
+  inherited Create;
   Self.FQuery := {$I CNX.Query.Type.inc}.Create(nil);
 {$IFDEF dbExpressLib}
-  Self.FQuery.SQLConnection := FInstance.GetInstance.Connection;
+  Self.FQuery.SQLConnection := TConnection(Self).Instance.Connection;
 {$ENDIF}
 {$IFDEF FireDACLib}
-  Self.FQuery.Connection := FInstance.GetInstance.Connection;
+  Self.FQuery.Connection := TConnection(Self).Instance.Connection;
 {$ENDIF}
 {$IFDEF ZeOSLib}
-  Self.FQuery.Connection := FInstance.GetInstance.Connection;
+  Self.FQuery.Connection := TConnection(Self).Instance.Connection;
 {$ENDIF}
 end;
 
 destructor TQuery.Destroy;
 begin
-  inherited;
+//  Self.FQuery.Destroy;
+  inherited Destroy;
 end;
 
 end.

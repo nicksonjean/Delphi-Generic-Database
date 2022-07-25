@@ -227,7 +227,7 @@ object GenericConnectorForm: TGenericConnectorForm
               object ListBoxSQLite: TListBox
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 31
                 DisableFocusEffect = True
@@ -257,7 +257,7 @@ object GenericConnectorForm: TGenericConnectorForm
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 30
                 SearchVisible = True
@@ -585,7 +585,7 @@ object GenericConnectorForm: TGenericConnectorForm
               object ListBoxFirebird: TListBox
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 29
                 DisableFocusEffect = True
@@ -615,7 +615,7 @@ object GenericConnectorForm: TGenericConnectorForm
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 28
                 SearchVisible = True
@@ -927,7 +927,7 @@ object GenericConnectorForm: TGenericConnectorForm
               object ListBoxMySQL: TListBox
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 27
                 DisableFocusEffect = True
@@ -957,7 +957,7 @@ object GenericConnectorForm: TGenericConnectorForm
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 26
                 SearchVisible = True
@@ -1272,7 +1272,7 @@ object GenericConnectorForm: TGenericConnectorForm
               object ListBoxPostgreSQL: TListBox
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 27
                 DisableFocusEffect = True
@@ -1302,7 +1302,7 @@ object GenericConnectorForm: TGenericConnectorForm
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 26
                 SearchVisible = True
@@ -1592,7 +1592,7 @@ object GenericConnectorForm: TGenericConnectorForm
               object ListBoxMSSQL: TListBox
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 31
                 DisableFocusEffect = True
@@ -1622,7 +1622,7 @@ object GenericConnectorForm: TGenericConnectorForm
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 30
                 SearchVisible = True
@@ -1930,7 +1930,7 @@ object GenericConnectorForm: TGenericConnectorForm
               object ListBoxOracle: TListBox
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 31
                 DisableFocusEffect = True
@@ -1960,7 +1960,7 @@ object GenericConnectorForm: TGenericConnectorForm
                 FooterAppearanceClassName = 'TListHeaderObjects'
                 Align = Client
                 Size.Width = 386.000000000000000000
-                Size.Height = 202.005065917968700000
+                Size.Height = 202.005065917968800000
                 Size.PlatformDefault = False
                 TabOrder = 30
                 SearchVisible = True
@@ -2120,12 +2120,5 @@ object GenericConnectorForm: TGenericConnectorForm
     TabOrder = 16
     Text = 'Button2'
     OnClick = Button2Click
-  end
-  object Button3: TButton
-    Position.X = 528.000000000000000000
-    Position.Y = 16.000000000000000000
-    TabOrder = 17
-    Text = 'Button3'
-    OnClick = Button3Click
   end
 end

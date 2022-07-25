@@ -161,8 +161,10 @@ uses
 {$ENDIF}
   System.UITypes;
 
-type        // OK     OK       OK        OK       OK        OK        OK
+type
   TDriver = (SQLite, MySQL, FIREBIRD, INTERBASE, MSSQL, POSTGRESQL, ORACLE);
+  TEngine = (FireDAC, dbExpress, ZeOS);
+  TEnvironment = (Local, Developer, Stage, Production);
 
   { Design Pattern Singleton }
 type
@@ -174,42 +176,103 @@ type
     class procedure ReleaseInstance();
   end;
 
-  { Classe TConnection Herdada de TObject }
 type
-  TConnection = class(TObject)
+  IConnection = interface['{B9F7FE0A-EAFC-48F3-85A0-E1219AD17076}']
+    function GetConnection: {$I CNX.Type.inc};
+    function GetInstance: IConnection;
+    procedure SetInstance;
+    function GetDriver: TDriver;
+    procedure SetDriver(const Value: TDriver);
+    function GetHost: String;
+    procedure SetHost(const Value: String);
+    function GetPort: Integer;
+    procedure SetPort(const Value: Integer);
+    function GetSchema: String;
+    procedure SetSchema(const Value: String);
+    function GetDatabase: String;
+    procedure SetDatabase(const Value: String);
+    function GetUsername: String;
+    procedure SetUsername(const Value: String);
+    function GetPassword: String;
+    procedure SetPassword(const Value: String);
+    function GetConnected: Boolean;
+    procedure SetConnected(const Value: Boolean);
+    procedure SetConnect(const Value: Boolean);
+    procedure StartTransaction;
+    procedure Commit;
+    procedure Rollback;
+    function CheckDatabase: Boolean;
+    property Driver: TDriver read GetDriver write SetDriver;
+    property Host: String read GetHost write SetHost;
+    property Schema: String read GetSchema write SetSchema;
+    property Database: String read GetDatabase write SetDatabase;
+    property Username: String read GetUsername write SetUsername;
+    property Password: String read GetPassword write SetPassword;
+    property Port: Integer read GetPort write SetPort;
+    property Instance: IConnection read GetInstance;
+    property Connection: {$I CNX.Type.inc} read GetConnection;
+    property Connected: Boolean read GetConnected write SetConnected;
+    property Connect: Boolean write SetConnect;
+  end;
+
+{ Classe TConnexion Herdada de IConnexion }
+type
+  TConnection = class(TInterfacedObject, IConnection)
+//  TConnection = class
   private
     { Private declarations }
-    class var FInstance: TConnection;
-    class var FSQLInstance: {$I CNX.Type.inc};
-    class var FDriver: TDriver;
-    class var FHost: String;
-    class var FSchema: String;
-    class var FDatabase: String;
-    class var FUsername: String;
-    class var FPassword: String;
-    class var FPort: Integer;
-    class procedure SetDriver(const Value: TDriver); static;
-    class function GetConnection: {$I CNX.Type.inc}; static;
+    class var FInstance: IConnection;
+    FConnection: {$I CNX.Type.inc};
+    FConnected: Boolean;
+    FDriver: TDriver;
+    FHost: String;
+    FPort: Integer;
+    FSchema: String;
+    FDatabase: String;
+    FUsername: String;
+    FPassword: String;
+    function GetDriver: TDriver;
+    procedure SetDriver(const Value: TDriver);
+    function GetHost: String;
+    procedure SetHost(const Value: String);
+    function GetPort: Integer;
+    procedure SetPort(const Value: Integer);
+    function GetSchema: String;
+    procedure SetSchema(const Value: String);
+    function GetDatabase: String;
+    procedure SetDatabase(const Value: String);
+    function GetUsername: String;
+    procedure SetUsername(const Value: String);
+    function GetPassword: String;
+    procedure SetPassword(const Value: String);
+    function GetConnected: Boolean;
+    procedure SetConnected(const Value: Boolean);
+    procedure SetConnect(const Value: Boolean);
+    function GetInstance: IConnection;
+    procedure SetInstance;
+    function GetConnection: {$I CNX.Type.inc};
 {$IFDEF dbExpressLib}
-    class var FTransaction: TTransactionDesc;
+    FTransaction: TTransactionDesc;
 {$ENDIF}
   public
     { Public declarations }
     constructor Create;
     destructor Destroy; override;
-    class property Driver: TDriver read FDriver write SetDriver default SQLite;
-    class property Host: String read FHost write FHost;
-    class property Schema: String read FSchema write FSchema;
-    class property Database: String read FDatabase write FDatabase;
-    class property Username: String read FUsername write FUsername;
-    class property Password: String read FPassword write FPassword;
-    class property Port: Integer read FPort write FPort;
-    class property Connection: {$I CNX.Type.inc} read GetConnection;
-    class function GetInstance: TConnection;
-    class procedure StartTransaction;
-    class procedure Commit;
-    class procedure Rollback;
-    class function CheckDatabase : Boolean;
+    procedure StartTransaction;
+    procedure Commit;
+    procedure Rollback;
+    function CheckDatabase: Boolean;
+    property Driver: TDriver read GetDriver write SetDriver default SQLite;
+    property Host: String read GetHost write SetHost;
+    property Schema: String read GetSchema write SetSchema;
+    property Database: String read GetDatabase write SetDatabase;
+    property Username: String read GetUsername write SetUsername;
+    property Password: String read GetPassword write SetPassword;
+    property Port: Integer read GetPort write SetPort;
+    property Instance: IConnection read GetInstance;
+    property Connection: {$I CNX.Type.inc} read GetConnection;
+    property Connected: Boolean read GetConnected write SetConnected;
+    property Connect: Boolean write SetConnect;
   end;
 
   { Cria Instancia Singleton da Classe TConnection }
@@ -245,107 +308,197 @@ end;
 constructor TConnection.Create;
 begin
   inherited Create;
+  Self.SetInstance;
 end;
 
 destructor TConnection.Destroy;
 begin
-  if Assigned(FInstance) then
-    FreeAndNil(FInstance);
-  if Assigned(FSQLInstance) then
-    FreeAndNil(FSQLInstance);
-
-  inherited;
+//  if Assigned(Self.FConnection) then
+//    FreeAndNil(Self.FConnection);
+  inherited Destroy;
 end;
 
-class procedure TConnection.SetDriver(const Value: TDriver);
+procedure TConnection.SetInstance;
 begin
-  FDriver := Value;
+  FInstance := Self;
 end;
 
-class function TConnection.GetConnection: {$I CNX.Type.inc};
+function TConnection.GetInstance: IConnection;
 begin
-  Result := FSQLInstance;
-end;
-
-class function TConnection.GetInstance: TConnection;
-begin
-  try
-    if not Assigned(FInstance) then
-    begin
-      FInstance := TConnection.Create;
-      TConnection.FInstance.FSQLInstance := {$I CNX.Type.inc}.Create(nil);
-{$I CNX.Params.inc}
-    end;
-  except
-    on E: Exception do
-      raise Exception.Create(E.Message);
-  end;
   Result := FInstance;
 end;
 
-class procedure TConnection.StartTransaction;
+function TConnection.GetDriver: TDriver;
+begin
+  Result := Self.FDriver;
+end;
+
+procedure TConnection.SetDriver(const Value: TDriver);
+begin
+  Self.FDriver := Value;
+end;
+
+function TConnection.GetPort: Integer;
+begin
+  Result := Self.FPort;
+end;
+
+procedure TConnection.SetPort(const Value: Integer);
+begin
+  Self.FPort := Value;
+end;
+
+function TConnection.GetHost: String;
+begin
+  Result := Self.FHost;
+end;
+
+procedure TConnection.SetHost(const Value: String);
+begin
+  Self.FHost := Value;
+end;
+
+function TConnection.GetSchema: String;
+begin
+  Result := Self.FSchema;
+end;
+
+procedure TConnection.SetSchema(const Value: String);
+begin
+  Self.FSchema := Value;
+end;
+
+function TConnection.GetDatabase: String;
+begin
+  Result := Self.FDatabase;
+end;
+
+procedure TConnection.SetDatabase(const Value: String);
+begin
+  Self.FDatabase := Value;
+end;
+
+function TConnection.GetUsername: String;
+begin
+  Result := Self.FUsername;
+end;
+
+procedure TConnection.SetUsername(const Value: String);
+begin
+  Self.FUsername := Value;
+end;
+
+function TConnection.GetPassword: String;
+begin
+  Result := Self.FPassword;
+end;
+
+procedure TConnection.SetPassword(const Value: String);
+begin
+  Self.FPassword := Value;
+end;
+
+procedure TConnection.SetConnected(const Value: Boolean);
+begin
+  Self.FConnected := Value;
+  Self.FConnection.Connected := Self.FConnected;
+end;
+
+function TConnection.GetConnected: Boolean;
+begin
+  Result := Self.FConnected;
+end;
+
+procedure TConnection.SetConnect(const Value: Boolean);
+begin
+  if Value then
+  begin
+    try
+      if not Assigned(Self.FConnection) then
+      begin
+        Self.FConnection := {$I CNX.Type.inc}.Create(nil);
+{$I CNX.Params.inc}
+        Self.SetConnected(Value);
+      end;
+    except
+      on E: Exception do
+      begin
+        Self.SetConnected(False);
+        raise Exception.Create(E.Message);
+      end;
+    end;
+  end;
+  Self.SetConnected(Value);
+end;
+
+function TConnection.GetConnection: {$I CNX.Type.inc};
+begin
+  Result := Self.FConnection;
+end;
+
+procedure TConnection.StartTransaction;
 begin
   if Assigned(FInstance) then
   begin
 {$IFDEF dbExpressLib}
-    FTransaction.IsolationLevel := xilREADCOMMITTED;
-    FInstance.Connection.StartTransaction(FTransaction);
+    Self.FTransaction.IsolationLevel := xilREADCOMMITTED;
+    Self.Connection.StartTransaction(FTransaction);
 {$ENDIF}
 {$IFDEF FireDACLib}
-    FInstance.Connection.StartTransaction;
+    Self.Connection.StartTransaction;
 {$ENDIF}
 {$IFDEF ZeOSLib}
-    FInstance.Connection.StartTransaction;
+    Self.Connection.StartTransaction;
 {$ENDIF}
   end;
 end;
 
-class procedure TConnection.Commit;
+procedure TConnection.Commit;
 begin
 {$IFDEF dbExpressLib}
-    FInstance.Connection.Commit(FTransaction);
+  Self.Connection.Commit(FTransaction);
 {$ENDIF}
 {$IFDEF FireDACLib}
-    FInstance.Connection.Commit;
+  Self.Connection.Commit;
 {$ENDIF}
 {$IFDEF ZeOSLib}
-    FInstance.Connection.Commit;
+  Self.Connection.Commit;
 {$ENDIF}
 end;
 
-class procedure TConnection.Rollback;
+procedure TConnection.Rollback;
 begin
 {$IFDEF dbExpressLib}
-    FInstance.Connection.Rollback(FTransaction);
+  Self.Connection.Rollback(FTransaction);
 {$ENDIF}
 {$IFDEF FireDACLib}
-    FInstance.Connection.Rollback;
+  Self.Connection.Rollback;
 {$ENDIF}
 {$IFDEF ZeOSLib}
-    FInstance.Connection.Rollback;
+  Self.Connection.Rollback;
 {$ENDIF}
 end;
 
-class function TConnection.CheckDatabase: Boolean;
+function TConnection.CheckDatabase: Boolean;
 var
   Query: TQueryBuilder;
   SQL: TQuery;
 begin
   Result := false;
-  case FInstance.Driver of
+  case Self.Driver of
     MySQL :
     begin
-      SQL := Query.View('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ' + QuotedStr(FInstance.Database));
+      SQL := Query.View('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ' + QuotedStr(Self.Database));
       if not SQL.Query.IsEmpty then
         Result := True;
     end;
     POSTGRESQL:
     begin
-      SQL := Query.View('SELECT 1 AS result FROM pg_database WHERE datname = ' + QuotedStr(FInstance.Database));
+      SQL := Query.View('SELECT 1 AS result FROM pg_database WHERE datname = ' + QuotedStr(Self.Database));
       if not SQL.Query.IsEmpty then
         Result := True;
     end;
-    ORACLE :
+    ORACLE:
     begin
 
     end;
@@ -359,5 +512,11 @@ begin
     end;
   end;
 end;
+
+initialization
+
+finalization
+
+TConnectionClass.ReleaseInstance();
 
 end.

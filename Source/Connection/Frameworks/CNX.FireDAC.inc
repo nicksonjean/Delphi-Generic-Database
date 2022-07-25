@@ -1,6 +1,5 @@
       {$IFDEF FireDACLib}
-      with TConnection.FInstance.FSQLInstance do
-//      with Self.Connection2 do
+      with Self.Connection do
       begin
         case FDriver of
           SQLITE:
@@ -9,6 +8,7 @@
               var FDPhysSQLiteDriverLink: TFDPhysSQLiteDriverLink;
               FDPhysSQLiteDriverLink := ISmartPointer<TFDPhysSQLiteDriverLink>(TFDPhysSQLiteDriverLink.Create(nil));
               FDPhysSQLiteDriverLink.VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlite3.dll';
+//              TFDPhysSQLiteDriverLink.Create(nil).VendorLib := ExtractFilePath(ParamStr(0)) + 'sqlite3.dll';
               {$ENDIF}
               ConnectionName := 'DBSQLite';
               DriverName := 'SQLite';

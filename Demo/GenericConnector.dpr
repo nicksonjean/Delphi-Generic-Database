@@ -38,13 +38,13 @@ uses
   ArrayVariantHelper in '..\Source\Types\Array\Helpers\ArrayVariantHelper.pas',
   ISmartPointer in '..\Source\SmartPointer\ISmartPointer.pas',
   TSmartPointer in '..\Source\SmartPointer\TSmartPointer.pas',
-  QueryHelper in '..\Source\Connection\Helpers\QueryHelper.pas',
-  QueryBuilder in '..\Source\Connection\QueryBuilder.pas',
-  Query in '..\Source\Connection\Query.pas',
   Connector in '..\Source\Connector\Connector.pas',
   OptionsInteger in '..\Source\Connector\OptionsInteger.pas',
   OptionsArray in '..\Source\Connector\OptionsArray.pas',
   OptionsJSON in '..\Source\Connector\OptionsJSON.pas',
+  Query in '..\Source\Connection\Query.pas',
+  QueryHelper in '..\Source\Connection\Helpers\QueryHelper.pas',
+  QueryBuilder in '..\Source\Connection\QueryBuilder.pas',
   Connection in '..\Source\Connection\Connection.pas',
   GenericConnectorForm in 'GenericConnectorForm.pas' {GenericConnectorForm};
 

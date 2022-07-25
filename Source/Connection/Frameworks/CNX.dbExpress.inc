@@ -1,5 +1,5 @@
 ﻿      {$IFDEF dbExpressLib}
-      with TConnection.FInstance.FSQLInstance do
+      with Self.Connection do
       begin
         case FDriver of
           SQLITE:
