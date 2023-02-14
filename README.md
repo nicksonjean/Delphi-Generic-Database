@@ -1,4 +1,4 @@
-﻿# generic-dbal
+﻿# Delphi-Generic-Database
 ![Delphi Supported Versions](https://img.shields.io/badge/Vers%C3%B5es%20do%20Delphi%20Suportadas-XE10%20Seatle%20..%20XE10.4%20Sydney-blue.svg)
 ![Platforms](https://img.shields.io/badge/Plataformas%20Suportadas-Win32%20..%20Win64-red.svg)
  
