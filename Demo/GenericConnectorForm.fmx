@@ -1,6 +1,7 @@
 object GenericConnectorForm: TGenericConnectorForm
   Left = 0
   Top = 0
+  ActiveControl = TabDBSQLite
   Caption = 'GenericConnectorForm'
   ClientHeight = 640
   ClientWidth = 800
@@ -9,7 +10,6 @@ object GenericConnectorForm: TGenericConnectorForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object TabControl: TTabControl
     Align = Client

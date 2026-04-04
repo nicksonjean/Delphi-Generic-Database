@@ -1,188 +1,149 @@
 ﻿unit Query;
 
-interface
+{
+  Query
+  ------------------------------------------------------------------------------
+  Objetivo : Encapsular a execução de queries de forma agnóstica à engine.
+  Construção apenas com IConnectionStrategy explícito — sem conexão implícita.
+  Sem IFDEF de engine — zero acoplamento a FireDAC, dbExpress, ZeOS ou UniDAC.
+  ------------------------------------------------------------------------------
+  Autor: Nickson Jeanmerson
+}
 
-{ Carrega a Interface Padrão }
-{$I CNX.Default.inc}
+interface
 
 uses
   System.SysUtils,
-  System.IOUtils,
-  System.StrUtils,
-  System.DateUtils,
-  System.Classes,
-  System.Math,
-
-  System.SyncObjs,
-  System.Threading,
-  System.Generics.Collections,
-  System.RTLConsts,
-  System.Variants,
-  System.JSON,
-  System.RTTI,
-  System.TypInfo,
-  System.NetEncoding,
-
-  Data.DBConsts,
   Data.DB,
-  Data.FMTBcd,
-  Data.SqlExpr,
-  Data.SqlTimSt,
-  Data.DBCommonTypes,
-
-  FMX.Types,
-  FMX.Forms,
-  FMX.Grid,
-  FMX.ComboEdit,
-  FMX.ListBox,
-  FMX.ListView.Types,
-  FMX.ListView.Appearances,
-  FMX.ListView.Adapters.Base,
-  FMX.ListView,
-  FMX.SearchBox,
-  FMX.StdCtrls,
-
-  FMX.Dialogs,
-
-  Datasnap.DBClient,
-  Datasnap.Provider,
-
-  {dbExpress}
-{$IFDEF dbExpressLib}
-  Data.DBXSqlite,
-{$IFDEF MSWINDOWS}
-  Data.DBXMySql,
-  Data.DBXMSSQL,
-  Data.DBXFirebird,
-  Data.DBXInterBase,
-{$IFDEF DBXDevartLib}
-  DBXDevartPostgreSQL,
-  DBXDevartOracle,
-{$ENDIF}
-{$ENDIF}
-{$ENDIF}
-  {ZeOSLib}
-{$IFDEF MSWINDOWS}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-  ZConnection,
-  ZAbstractTable,
-  ZDbcConnection,
-  ZClasses,
-  ZDbcIntfs,
-  ZTokenizer,
-  ZCompatibility,
-  ZGenericSqlToken,
-  ZGenericSqlAnalyser,
-  ZPlainDriver,
-  ZURL,
-  ZCollections,
-  ZVariant,
-{$ENDIF}
-{$ENDIF}
-  {FireDAC}
-{$IFDEF FireDACLib}
-  FireDAC.DatS,
-  FireDAC.DApt,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.Client,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.UI,
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Error,
-  FireDAC.Stan.Def,
-  FireDAC.Stan.Pool,
-  FireDAC.Stan.Async,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.ExprFuncs,
-  FireDAC.UI.Intf,
-  FireDAC.FMXUI.Wait,
-  FireDAC.Phys,
-  FireDAC.Phys.Intf,
-  FireDAC.Phys.SQLite,
-  FireDAC.Phys.SQLiteDef,
-  FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef,
-  FireDAC.Phys.FB,
-  FireDAC.Phys.IBWrapper,
-  FireDAC.Phys.FBDef,
-  FireDAC.Phys.PG,
-  FireDAC.Phys.PGDef,
-  FireDAC.Phys.MSSQL,
-  FireDAC.Phys.MSSQLDef,
-  FireDAC.Phys.Oracle,
-  FireDAC.Phys.OracleDef,
-{$ENDIF}
-
-  Float,
-  Strings,
-  MimeType,
-  ArrayString,
-  ArrayStringHelper,
-  ArrayVariant,
-  ArrayVariantHelper,
-  ArrayField,
-  ArrayFieldHelper,
-  ArrayAssoc,
-  Connection,
-
-  System.Types,
-{$IFDEF MSWINDOWS}
-  Winapi.Windows,
-  Winapi.Messages,
-  FMX.Platform.Win,
-{$ELSE}
-  System.ByteStrings,
-  FMX.Platform.Android,
-  FMX.Helpers.Android,
-{$ENDIF}
-  System.UITypes;
+  Connection.IQueryStrategy,
+  Connection.IConnectionStrategy,
+  EngineRegistry;
 
 type
-  IQuery = interface['{9B8F735D-7B55-44AB-A390-CE896F27BE26}']
+  IQuery = interface
+    ['{9B8F735D-7B55-44AB-A390-CE896F27BE26}']
   end;
 
-  { Classe TQuery Herdada de TConnection }
-type
-//  TQuery = class(TInterfacedObject, IQuery)
   TQuery = class
   private
-    { Private declarations }
-    FQuery: {$I CNX.Query.Type.inc};
+    FStrategy:           IQueryStrategy;
+    FConnectionStrategy: IConnectionStrategy;
+    function  GetDataSet: TDataSet;
   public
-    { Public declarations }
-    constructor Create;
-    destructor Destroy; override;
-    property Query: {$I CNX.Query.Type.inc} read FQuery write FQuery;
+    constructor Create(const AConnStrategy: IConnectionStrategy);
+    destructor  Destroy; override;
+    procedure Open(const ASQL: String);
+    procedure ExecSQL(const ASQL: String);
+    procedure Close;
+    function  IsEmpty: Boolean;
+    function  EOF: Boolean;
+    procedure First;
+    procedure Next;
+    function  FieldCount: Integer;
+    function  Fields: TFields;
+    function  FieldDefs: TFieldDefs;
+    function  AsDataSet: TDataSet;
+    function  AsInMemoryDataSet: TDataSet;
+    function  RecordCount: Integer;
+    { Compatibilidade retroativa: Query retorna o TDataSet ativo }
+    property  Query: TDataSet read GetDataSet;
+    property  Strategy: IQueryStrategy read FStrategy;
+    property  ConnectionStrategy: IConnectionStrategy read FConnectionStrategy;
   end;
 
 implementation
 
+uses
+  Connection.Types;
+
 { TQuery }
 
-constructor TQuery.Create;
+constructor TQuery.Create(const AConnStrategy: IConnectionStrategy);
+var
+  Engine: TEngine;
 begin
   inherited Create;
-  Self.FQuery := {$I CNX.Query.Type.inc}.Create(nil);
-{$IFDEF dbExpressLib}
-  Self.FQuery.SQLConnection := TConnection(Self).Instance.Connection;
-{$ENDIF}
-{$IFDEF FireDACLib}
-  Self.FQuery.Connection := TConnection(Self).Instance.Connection;
-{$ENDIF}
-{$IFDEF ZeOSLib}
-  Self.FQuery.Connection := TConnection(Self).Instance.Connection;
-{$ENDIF}
+  FConnectionStrategy := AConnStrategy;
+  Engine    := AConnStrategy.Engine;
+  FStrategy := TEngineRegistry.CreateQueryStrategy(Engine);
+  FStrategy.SetConnection(AConnStrategy);
 end;
 
 destructor TQuery.Destroy;
 begin
-//  Self.FQuery.Destroy;
+  FStrategy := nil;
+  FConnectionStrategy := nil;
   inherited Destroy;
+end;
+
+function TQuery.GetDataSet: TDataSet;
+begin
+  Result := FStrategy.AsDataSet;
+end;
+
+procedure TQuery.Open(const ASQL: String);
+begin
+  FStrategy.Open(ASQL);
+end;
+
+procedure TQuery.ExecSQL(const ASQL: String);
+begin
+  FStrategy.ExecSQL(ASQL);
+end;
+
+procedure TQuery.Close;
+begin
+  FStrategy.Close;
+end;
+
+function TQuery.IsEmpty: Boolean;
+begin
+  Result := FStrategy.IsEmpty;
+end;
+
+function TQuery.EOF: Boolean;
+begin
+  Result := FStrategy.EOF;
+end;
+
+procedure TQuery.First;
+begin
+  FStrategy.First;
+end;
+
+procedure TQuery.Next;
+begin
+  FStrategy.Next;
+end;
+
+function TQuery.FieldCount: Integer;
+begin
+  Result := FStrategy.FieldCount;
+end;
+
+function TQuery.Fields: TFields;
+begin
+  Result := FStrategy.Fields;
+end;
+
+function TQuery.FieldDefs: TFieldDefs;
+begin
+  Result := FStrategy.FieldDefs;
+end;
+
+function TQuery.AsDataSet: TDataSet;
+begin
+  Result := FStrategy.AsDataSet;
+end;
+
+function TQuery.AsInMemoryDataSet: TDataSet;
+begin
+  Result := FStrategy.AsInMemoryDataSet;
+end;
+
+function TQuery.RecordCount: Integer;
+begin
+  Result := FStrategy.RecordCount;
 end;
 
 end.

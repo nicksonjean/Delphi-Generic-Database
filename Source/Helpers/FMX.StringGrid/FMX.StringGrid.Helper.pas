@@ -1,66 +1,29 @@
-﻿unit FMX.StringGrid.Helper;
+unit FMX.StringGrid.Helper;
 
 interface
 
-{$I CNC.Default.inc}
-
 uses
   System.SysUtils,
-  System.IOUtils,
-  System.StrUtils,
-  System.DateUtils,
   System.Classes,
   System.Math,
-  System.SyncObjs,
-  System.Threading,
   System.Generics.Collections,
-  System.RTLConsts,
   System.Variants,
-  System.JSON,
   System.RTTI,
-  System.TypInfo,
   System.Types,
   System.UITypes,
   FMX.Grid,
   FMX.Controls,
   FMX.Graphics,
-
   Data.DB,
-
-{$IFDEF FireDACLib}
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,
-{$ENDIF}
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  Datasnap.Provider,
-  Datasnap.DBClient,
-  Data.FMTBcd,
-  Data.SqlExpr,
-{$ENDIF}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-{$ENDIF}
-
   EventDriven;
 
 type
   TStringGridHelper = class helper for TStringGrid
   private
-    class var FData : {$I CNC.Type.inc};
-    function GetData : {$I CNC.Type.inc};
-    procedure SetData(Data : {$I CNC.Type.inc});
-    procedure DoFillData(Data: {$I CNC.Type.inc});
+    class var FData : TDataSet;
+    function GetData : TDataSet;
+    procedure SetData(Data : TDataSet);
+    procedure DoFillData(Data: TDataSet);
     class var FAutoSizeColumns: Boolean;
     function GetAutoSizeColumns : Boolean;
     procedure SetAutoSizeColumns(Value : Boolean);
@@ -68,7 +31,7 @@ type
   public
     procedure RemoveRows(RowIndex, RCount: Integer);
     procedure Clear;
-    property FillData: {$I CNC.Type.inc} read GetData write SetData;
+    property FillData: TDataSet read GetData write SetData;
     property AutoSizeColumns: Boolean read GetAutoSizeColumns write SetAutoSizeColumns default false;
   end;
 
@@ -83,6 +46,8 @@ var
   SizeMax: Single;
   Column : Integer;
 begin
+  if (FData = nil) or not FData.Active then
+    Exit;
   SizeMax := Self.Width;
   for Column := 0 to Self.ColumnCount-1 do
   begin
@@ -108,11 +73,15 @@ begin
   end;
 end;
 
-procedure TStringGridHelper.DoFillData(Data: {$I CNC.Type.inc});
+procedure TStringGridHelper.DoFillData(Data: TDataSet);
 var
   I : Integer;
   Column : TColumn;
 begin
+  if (Data = nil) then
+    Exit;
+  if not Data.Active then
+    Data.Open;
   Self.RowCount := Data.RecordCount;
 
   for I := 0 to Data.FieldCount - 1 do
@@ -133,13 +102,14 @@ begin
   Data.Last;
 end;
 
-procedure TStringGridHelper.SetData(Data: {$I CNC.Type.inc});
+procedure TStringGridHelper.SetData(Data: TDataSet);
 begin
+  TGrid(Self).OnGetValue := nil;
   FData := Data;
   Self.DoFillData(Data);
 end;
 
-function TStringGridHelper.GetData: {$I CNC.Type.inc};
+function TStringGridHelper.GetData: TDataSet;
 begin
   Result := FData;
 end;

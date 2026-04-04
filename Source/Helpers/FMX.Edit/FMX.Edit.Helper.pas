@@ -41,6 +41,8 @@ type
     procedure AssignItems(const S: TStrings);
     procedure ForceDropDown;
     procedure PressEnter;
+    procedure RefreshSuggestionList;
+    procedure ClearSuggestionListBox;
     function SelectedItem: TSelectedItem;
     property OnItemChange: TNotifyEvent write SetOnItemChange;
     property ItemIndex: Integer read GetIndex write SetIndex;
@@ -66,6 +68,18 @@ procedure TEditHelper.PressEnter;
 begin
   if HasPresentationProxy then
     PresentationProxy.SendMessage(PM_PRESSENTER);
+end;
+
+procedure TEditHelper.RefreshSuggestionList;
+begin
+  if HasPresentationProxy then
+    PresentationProxy.SendMessage(PM_REBUILD_SUGGESTIONS);
+end;
+
+procedure TEditHelper.ClearSuggestionListBox;
+begin
+  if HasPresentationProxy then
+    PresentationProxy.SendMessage(PM_CLEAR_SUGGESTION_LISTBOX);
 end;
 
 function TEditHelper.SelectedItem: TSelectedItem;

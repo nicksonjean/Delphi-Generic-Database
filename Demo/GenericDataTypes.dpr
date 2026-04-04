@@ -3,6 +3,22 @@ program GenericDataTypes;
 uses
   System.StartUpCopy,
   FMX.Forms,
+  Connection.Types in '..\Source\Connection\Connection.Types.pas',
+  Connection.IConnectionStrategy in '..\Source\Connection\Strategy\Connection.IConnectionStrategy.pas',
+  Connection.IQueryStrategy in '..\Source\Connection\Strategy\Connection.IQueryStrategy.pas',
+  Connection.IEngineFactory in '..\Source\Connection\Strategy\Connection.IEngineFactory.pas',
+  Connection.IDriverConfigurator in '..\Source\Connection\Strategy\Connection.IDriverConfigurator.pas',
+  EngineRegistry in '..\Source\Connection\Registry\EngineRegistry.pas',
+  FireDAC.Factory in '..\Source\Connection\Adapters\FireDAC\FireDAC.Factory.pas',
+  FireDAC.ConnectionStrategy in '..\Source\Connection\Adapters\FireDAC\FireDAC.ConnectionStrategy.pas',
+  FireDAC.QueryStrategy in '..\Source\Connection\Adapters\FireDAC\FireDAC.QueryStrategy.pas',
+  FireDAC.Driver.SQLite in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.SQLite.pas',
+  FireDAC.Driver.MySQL in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.MySQL.pas',
+  FireDAC.Driver.Firebird in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Firebird.pas',
+  FireDAC.Driver.Interbase in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Interbase.pas',
+  FireDAC.Driver.MSSQL in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.MSSQL.pas',
+  FireDAC.Driver.PostgreSQL in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.PostgreSQL.pas',
+  FireDAC.Driver.Oracle in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Oracle.pas',
   Connection in '..\Source\Connection\Connection.pas',
   EventDriven in '..\Source\EventDriven\EventDriven.pas',
   Locale in '..\Source\Types\Locale\Locale.pas',
@@ -43,7 +59,10 @@ uses
   IArray in '..\Source\Types\IArray.pas',
   ISmartPointer in '..\Source\SmartPointer\ISmartPointer.pas',
   TSmartPointer in '..\Source\SmartPointer\TSmartPointer.pas',
-  GenericDataTypesForm in 'GenericDataTypesForm.pas' {GenericDataTypesForm};
+  GenericDataTypesForm in 'GenericDataTypesForm.pas' {GenericDataTypesForm},
+  Query in '..\Source\Connection\Query.pas',
+  QueryHelper in '..\Source\Connection\Helpers\QueryHelper.pas',
+  QueryBuilder in '..\Source\Connection\QueryBuilder.pas';
 
 {$R *.res}
 

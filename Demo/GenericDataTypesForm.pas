@@ -131,7 +131,10 @@ uses
   MimeType,
   EventDriven,
   Connection,
-  Connector;
+  Connection.Types,
+  Connector,
+  Query,
+  QueryBuilder;
 
 {$R *.fmx}
 
@@ -147,8 +150,7 @@ var
   SQL: TQuery;
   DB: TConnection;
 begin
-  DB := TConnection.Create;
-  //DB := TConnectionClass.GetInstance();
+  DB := TConnection.Create(TEngine.FireDAC);
   try
     DB.Driver := MYSQL;
     DB.Host := '127.0.0.1';
@@ -157,9 +159,10 @@ begin
     DB.Username := 'root';
     DB.Password := '';
 
-    if not DB.GetInstance.Connection.Connected then
-      DB.GetInstance.Connection.Connected := True;
+    if not DB.Connected then
+      DB.Connected := True;
 
+    Query := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
     Array1 := TArrayString.Create();
     try
       Array1.Clear;
@@ -184,7 +187,7 @@ begin
         Array1['field_bit'] := SQL.Query.FieldByName('field_bit').Value;
         Array1['field_binary'] := Trim(TEncoding.UTF8.GetString(SQL.Query.FieldByName('field_binary').Value));
         Array1['field_blob'] := Trim(TEncoding.UTF8.GetString(SQL.Query.FieldByName('field_blob').Value)); // Leitura
-        //Array1['field_blob'] := TBase64.ToEncode(TEncoding.UTF8.GetString(SQL.Query.FieldByName('field_blob').Value)); // Gravação
+        //Array1['field_blob'] := TBase64.ToEncode(TEncoding.UTF8.GetString(SQL.Query.FieldByName('field_blob').Value)); // Gravaï¿½ï¿½o
         Array1['field_base64'] := SQL.Query.FieldByName('field_base64').Value;
         Array1['field_varbinary'] := Trim(TEncoding.UTF8.GetString(SQL.Query.FieldByName('field_varbinary').Value));
         Array1['field_null'] := System.StrUtils.IfThen(SQL.Query.FieldByName('field_null').Value = NULL, 'null', SQL.Query.FieldByName('field_null').Value);
@@ -234,8 +237,7 @@ var
   SQL: TQuery;
   DB: TConnection;
 begin
-  DB := TConnection.Create;
-  //DB := TConnectionClass.GetInstance();
+  DB := TConnection.Create(TEngine.FireDAC);
   try
     DB.Driver := MYSQL;
     DB.Host := '127.0.0.1';
@@ -244,9 +246,10 @@ begin
     DB.Username := 'root';
     DB.Password := '';
 
-    if not DB.GetInstance.Connection.Connected then
-      DB.GetInstance.Connection.Connected := True;
+    if not DB.Connected then
+      DB.Connected := True;
 
+    Query := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
     Array1 := TArrayVariant.Create;
     try
       Array1.Clear;
@@ -322,8 +325,7 @@ var
 //  Item: TPair<Variant, TArrayAssoc>;
 //  Enum: TPair<Variant, TArrayAssoc>;
 begin
-  DB := TConnection.Create;
-  //DB := TConnectionClass.GetInstance();
+  DB := TConnection.Create(TEngine.FireDAC);
   try
     DB.Driver := MYSQL;
     DB.Host := '127.0.0.1';
@@ -332,9 +334,10 @@ begin
     DB.Username := 'root';
     DB.Password := '';
 
-    if not DB.GetInstance.Connection.Connected then
-      DB.GetInstance.Connection.Connected := True;
+    if not DB.Connected then
+      DB.Connected := True;
 
+    Query := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
     Array1 := TArrayAssoc.Create;
     try
       Array1.Clear;
@@ -370,8 +373,7 @@ var
   SQL: TQuery;
   DB: TConnection;
 begin
-  DB := TConnection.Create;
-  //DB := TConnectionClass.GetInstance();
+  DB := TConnection.Create(TEngine.FireDAC);
   try
     DB.Driver := MYSQL;
     DB.Host := '127.0.0.1';
@@ -380,9 +382,10 @@ begin
     DB.Username := 'root';
     DB.Password := '';
 
-    if not DB.GetInstance.Connection.Connected then
-      DB.GetInstance.Connection.Connected := True;
+    if not DB.Connected then
+      DB.Connected := True;
 
+    Query := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
     Array1 := TArrayField.Create;
     try
       Array1.Clear;
@@ -545,31 +548,31 @@ procedure TGenericDataTypesForm.CalculateClick(Sender: TObject);
 begin
   MemoResultCalculate.Lines.Clear;
   MemoResultCalculate.Lines.Append(
-    'Cálculo com ToCurrency: ' + TFloat.ToString(EditCalculate1.Text) + ' * ' + TFloat.ToString(EditAmount1.Text)
+    'Cï¿½lculo com ToCurrency: ' + TFloat.ToString(EditCalculate1.Text) + ' * ' + TFloat.ToString(EditAmount1.Text)
      + ' - Truncando: ' + TFloat.ToString(CurrToStr(TFloat.ToCurrency(EditCalculate1.Text) * TFloat.ToCurrency(EditAmount1.Text)), 4, TResultMode.Truncate)
      + ' - Arredondando: ' + TFloat.ToString(CurrToStr(TFloat.ToCurrency(EditCalculate1.Text) * TFloat.ToCurrency(EditAmount1.Text)), 4, TResultMode.Round)
   );
   MemoResultCalculate.Lines.Append('------------------------------------------------------------------------------');
   MemoResultCalculate.Lines.Append(
-    'Cálculo com Double: ' + TFloat.ToString(EditCalculate2.Text) + ' * ' + TFloat.ToString(EditAmount2.Text)
+    'Cï¿½lculo com Double: ' + TFloat.ToString(EditCalculate2.Text) + ' * ' + TFloat.ToString(EditAmount2.Text)
      + ' - Truncando: ' + TFloat.ToString(FloatToStr(TFloat.ToDouble(EditCalculate2.Text) * TFloat.ToDouble(EditAmount2.Text)), 4, TResultMode.Truncate)
      + ' - Arredondando: ' + TFloat.ToString(FloatToStr(TFloat.ToDouble(EditCalculate2.Text) * TFloat.ToDouble(EditAmount2.Text)), 4, TResultMode.Round)
   );
   MemoResultCalculate.Lines.Append('------------------------------------------------------------------------------');
   MemoResultCalculate.Lines.Append(
-    'Cálculo com Extended: ' + TFloat.ToString(EditCalculate3.Text) + ' * ' + TFloat.ToString(EditAmount3.Text)
+    'Cï¿½lculo com Extended: ' + TFloat.ToString(EditCalculate3.Text) + ' * ' + TFloat.ToString(EditAmount3.Text)
      + ' - Truncando: ' + TFloat.ToString(FloatToStr(TFloat.ToExtended(EditCalculate3.Text) * TFloat.ToExtended(EditAmount3.Text)), 4, TResultMode.Truncate)
      + ' - Arredondando: ' + TFloat.ToString(FloatToStr(TFloat.ToExtended(EditCalculate3.Text) * TFloat.ToExtended(EditAmount3.Text)), 4, TResultMode.Round)
   );
   MemoResultCalculate.Lines.Append('------------------------------------------------------------------------------');
   MemoResultCalculate.Lines.Append(
-    'Cálculo com ToMoney: ' + TFloat.ToString(EditCalculate4.Text) + ' * ' + TFloat.ToString(EditAmount4.Text)
+    'Cï¿½lculo com ToMoney: ' + TFloat.ToString(EditCalculate4.Text) + ' * ' + TFloat.ToString(EditAmount4.Text)
      + ' - Truncando: ' + TFloat.ToMoney(FloatToStr(TFloat.ToCurrency(EditCalculate4.Text) * TFloat.ToCurrency(EditAmount4.Text)), 4, TResultMode.Truncate)
      + ' - Arredondando: ' + TFloat.ToMoney(FloatToStr(TFloat.ToCurrency(EditCalculate4.Text) * TFloat.ToCurrency(EditAmount4.Text)), 4, TResultMode.Round)
   );
   MemoResultCalculate.Lines.Append('------------------------------------------------------------------------------');
   MemoResultCalculate.Lines.Append(
-    'Cálculo com ToSQL: ' + TFloat.ToString(EditCalculate5.Text) + ' * ' + TFloat.ToString(EditAmount5.Text)
+    'Cï¿½lculo com ToSQL: ' + TFloat.ToString(EditCalculate5.Text) + ' * ' + TFloat.ToString(EditAmount5.Text)
      + ' - Truncando: ' + TFloat.ToSQL(FloatToStr(TFloat.ToCurrency(EditCalculate5.Text) * TFloat.ToCurrency(EditAmount5.Text)), 4, TResultMode.Truncate)
      + ' - Arredondando: ' + TFloat.ToSQL(FloatToStr(TFloat.ToCurrency(EditCalculate5.Text) * TFloat.ToCurrency(EditAmount5.Text)), 4, TResultMode.Round)
   );

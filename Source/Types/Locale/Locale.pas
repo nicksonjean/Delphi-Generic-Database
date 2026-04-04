@@ -54,7 +54,7 @@ var
   Size: Integer;
 begin
   Size := GetLocaleInfo(LOCALE_USER_DEFAULT, LCTYPE, nil, 0);
-  GetMem(Buffer, Size);
+  GetMem(Buffer, Size * SizeOf(Char));
   try
     GetLocaleInfo(LOCALE_USER_DEFAULT, LCTYPE, Buffer, Size);
     Result := String(Buffer);

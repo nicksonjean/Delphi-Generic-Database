@@ -2,9 +2,6 @@
 
 interface
 
-{ Carrega a Interface Padrão }
-{$I CNX.Default.inc}
-
 uses
   System.SysUtils,
   System.IOUtils,
@@ -12,111 +9,18 @@ uses
   System.DateUtils,
   System.Classes,
   System.Math,
-
-  System.SyncObjs,
-  System.Threading,
   System.Generics.Collections,
-  System.RTLConsts,
   System.Variants,
   System.JSON,
   System.RTTI,
   System.TypInfo,
-  System.NetEncoding,
+  System.Types,
+  System.UITypes,
 
-  Data.DBConsts,
   Data.DB,
   Data.FMTBcd,
-  Data.SqlExpr,
-  Data.SqlTimSt,
-  Data.DBCommonTypes,
 
-  FMX.Types,
-  FMX.Forms,
-  FMX.Grid,
-  FMX.ComboEdit,
-  FMX.ListBox,
-  FMX.ListView.Types,
-  FMX.ListView.Appearances,
-  FMX.ListView.Adapters.Base,
-  FMX.ListView,
-  FMX.SearchBox,
-  FMX.StdCtrls,
-
-  FMX.Dialogs,
-
-  Datasnap.DBClient,
-  Datasnap.Provider,
-
-  {dbExpress}
-{$IFDEF dbExpressLib}
-  Data.DBXSqlite,
-{$IFDEF MSWINDOWS}
-  Data.DBXMySql,
-  Data.DBXMSSQL,
-  Data.DBXFirebird,
-  Data.DBXInterBase,
-{$IFDEF DBXDevartLib}
-  DBXDevartPostgreSQL,
-  DBXDevartOracle,
-{$ENDIF}
-{$ENDIF}
-{$ENDIF}
-  {ZeOSLib}
-{$IFDEF MSWINDOWS}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-  ZConnection,
-  ZAbstractTable,
-  ZDbcConnection,
-  ZClasses,
-  ZDbcIntfs,
-  ZTokenizer,
-  ZCompatibility,
-  ZGenericSqlToken,
-  ZGenericSqlAnalyser,
-  ZPlainDriver,
-  ZURL,
-  ZCollections,
-  ZVariant,
-{$ENDIF}
-{$ENDIF}
-  {FireDAC}
-{$IFDEF FireDACLib}
-  FireDAC.DatS,
-  FireDAC.DApt,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.Client,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.UI,
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Error,
-  FireDAC.Stan.Def,
-  FireDAC.Stan.Pool,
-  FireDAC.Stan.Async,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.ExprFuncs,
-  FireDAC.UI.Intf,
-  FireDAC.FMXUI.Wait,
-  FireDAC.Phys,
-  FireDAC.Phys.Intf,
-  FireDAC.Phys.SQLite,
-  FireDAC.Phys.SQLiteDef,
-  FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef,
-  FireDAC.Phys.FB,
-  FireDAC.Phys.IBWrapper,
-  FireDAC.Phys.FBDef,
-  FireDAC.Phys.PG,
-  FireDAC.Phys.PGDef,
-  FireDAC.Phys.MSSQL,
-  FireDAC.Phys.MSSQLDef,
-  FireDAC.Phys.Oracle,
-  FireDAC.Phys.OracleDef,
-{$ENDIF}
+  Connection.IConnectionStrategy,
 
   Float,
   Strings,
@@ -128,20 +32,7 @@ uses
   ArrayField,
   ArrayFieldHelper,
   ArrayAssoc,
-  Query,
-  QueryHelper,
-
-  System.Types,
-{$IFDEF MSWINDOWS}
-  Winapi.Windows,
-  Winapi.Messages,
-  FMX.Platform.Win,
-{$ELSE}
-  System.ByteStrings,
-  FMX.Platform.Android,
-  FMX.Helpers.Android,
-{$ENDIF}
-  System.UITypes;
+  Query;
 
   { Record TQueryBuilder para Criação de Consultas para a Classe TQuery }
 type
@@ -150,6 +41,8 @@ type
     FieldTypes: Array [TFieldType] of String = ('ftUnknown', 'ftString', 'ftSmallint', 'ftInteger', 'ftWord', 'ftBoolean', 'ftFloat', 'ftCurrency', 'ftBCD', 'ftDate', 'ftTime', 'ftDateTime', 'ftBytes', 'ftVarBytes', 'ftAutoInc', 'ftBlob', 'ftMemo', 'ftGraphic', 'ftFmtMemo', 'ftParadoxOle', 'ftDBaseOle', 'ftTypedBinary', 'ftCursor', 'ftFixedChar', 'ftWideString', 'ftLargeint', 'ftADT', 'ftArray', 'ftReference', 'ftDataSet', 'ftOraBlob', 'ftOraClob', 'ftVariant', 'ftInterface', 'ftIDispatch', 'ftGuid', 'ftTimeStamp', 'ftFMTBcd', 'ftFixedWideChar', 'ftWideMemo', 'ftOraTimeStamp', 'ftOraInterval', 'ftLongWord', 'ftShortint', 'ftByte', 'ftExtended', 'ftConnection', 'ftParams', 'ftStream', 'ftTimeStampOffset', 'ftObject', 'ftSingle');
     ReservedWords: Array of String = ['NOW()', 'CURTIME()', 'CURDATE()', 'CURRENT_DATE', 'CURRENT_TIME', 'CURRENT_TIMESTAMP'];
   strict private
+    FConn: IConnectionStrategy;
+    function RequireConnection: IConnectionStrategy;
     { Strict Private declarations }
     function ReservedWord<T: Class>(Value : String; Helper: String): String; overload;
     function ReservedWord<T: Class>(Key: String; Value : String; Helper: String): String; overload;
@@ -172,6 +65,8 @@ type
     function Delete<T: Class>(Table: String; Filters: T; Run: Boolean = False) : String; overload;
   public
     { Public declarations }
+    { Liga o builder à conexão (strategy) — obrigatório antes de View/Exec/Fetch/ToJSON etc. }
+    class function ForConnection(const AConn: IConnectionStrategy): TQueryBuilder; static;
     procedure StartTransaction;
     procedure Commit;
     procedure Rollback;
@@ -216,29 +111,37 @@ implementation
 
 { TQueryBuilder }
 
-function TQueryBuilder.Query(Input: String; Mode: Boolean = False): TQuery;
-var
-  SQL: TQuery;
+class function TQueryBuilder.ForConnection(const AConn: IConnectionStrategy): TQueryBuilder;
 begin
-  SQL := TQuery.Create;
-  SQL.Query.Close;
-  SQL.Query.SQL.Clear;
-  SQL.Query.SQL.Text := Input;
+  if not Assigned(AConn) then
+    raise EArgumentException.Create('TQueryBuilder.ForConnection: IConnectionStrategy required.');
+  Result.FConn := AConn;
+end;
+
+function TQueryBuilder.RequireConnection: IConnectionStrategy;
+begin
+  if not Assigned(FConn) then
+    raise EInvalidOpException.Create(
+      'TQueryBuilder: bind a connection with TQueryBuilder.ForConnection(conn.GetConnectionStrategy) before View/Exec/Fetch/ToJSON.');
+  Result := FConn;
+end;
+
+function TQueryBuilder.Query(Input: String; Mode: Boolean = False): TQuery;
+begin
+  Result := TQuery.Create(RequireConnection);
   if not Mode then
-    SQL.Query.Open
+    Result.Open(Input)
   else
-    SQL.Query.ExecSQL;
-  Result := SQL;
+    Result.ExecSQL(Input);
 end;
 
 function TQueryBuilder.FetchOne<T>(Input : String; out &Array: T): TQuery;
 var
   I : Integer;
   SQL: TQuery;
-  Query: TQueryBuilder;
 begin
-  SQL := Query.View(Input);
-  if not(SQL.Query.IsEmpty) then
+  SQL := Self.View(Input);
+  if not SQL.IsEmpty then
   begin
     if (TypeInfo(T) = TypeInfo(TArrayString)) then
       TArrayString(&Array).Clear
@@ -280,10 +183,10 @@ function TQueryBuilder.FetchAll<T>(Input : String; out &Array: T): TQuery;
 var
   I, J : Integer;
   SQL: TQuery;
-  Query: TQueryBuilder;
 begin
-  SQL := Query.View(Input);
-  if not(SQL.Query.IsEmpty) then
+  J := 0;
+  SQL := Self.View(Input);
+  if not SQL.IsEmpty then
   begin
     if (TypeInfo(T) = TypeInfo(TArrayAssoc)) then
       TArrayAssoc(&Array).Clear;
@@ -313,7 +216,6 @@ end;
 function TQueryBuilder.Insert<T>(Table: String; Columns: T; Run: Boolean = False; Ignore: Boolean = False): String;
 var
   I: Integer;
-  Query: TQueryBuilder;
   DBFields, DBValues: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -326,13 +228,12 @@ begin
   Result := 'INSERT' + (System.StrUtils.IfThen(Ignore = True, ' IGNORE', EmptyStr)) + ' INTO ' + Trim(Table) + ' (' + Trim(DBFields) + ') VALUES (' + Trim(DBValues) + ');';
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Update<T>(Table: String; Columns: T; Run: Boolean = False): String;
 var
   I: Integer;
-  Query: TQueryBuilder;
   DBValues: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -345,13 +246,12 @@ begin
   Result := 'UPDATE ' + Trim(Table) + ' SET ' + Trim(DBValues);
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Update<T, F>(Table: String; Columns: T; Filters: F; Run: Boolean = False): String;
 var
   I: Integer;
-  Query: TQueryBuilder;
   DBValues, DBFilters: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -369,23 +269,20 @@ begin
   Result := 'UPDATE ' + Trim(Table) + ' SET ' + Trim(DBValues) + ' WHERE ' + Trim(DBFilters);
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Delete<T>(Table: String; Run: Boolean = False) : String;
-var
-  Query: TQueryBuilder;
 begin
   Result := 'DELETE FROM ' + Trim(Table);
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Delete<T>(Table: String; Filters: T; Run: Boolean = False) : String;
 var
   I : Integer;
-  Query: TQueryBuilder;
   DBFilters: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -396,13 +293,12 @@ begin
   Result := 'DELETE FROM ' + Trim(Table) + ' WHERE ' + Trim(DBFilters);
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Replace<T>(Table: String; Columns: T; Run: Boolean = False): String;
 var
   I: Integer;
-  Query: TQueryBuilder;
   DBFields, DBValues: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -415,13 +311,12 @@ begin
   Result := 'REPLACE INTO ' + Trim(Table) + ' (' + Trim(DBFields) + ') VALUES (' + Trim(DBValues) + ')';
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Replace<T, F>(Table: String; Columns: T; Filters: F; Run: Boolean = False): String;
 var
   I: Integer;
-  Query: TQueryBuilder;
   DBFields, DBValues, DBFilters: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -439,13 +334,12 @@ begin
   Result := 'REPLACE INTO ' + Trim(Table) + ' (' + Trim(DBFields) + ') VALUES (' + Trim(DBValues) + ')' + ' WHERE ' + Trim(DBFilters);
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.Upsert<T>(Table: String; Columns: T; Run: Boolean = False; Ignore: Boolean = False; Duplicate: Boolean = False): String;
 var
   I: Integer;
-  Query: TQueryBuilder;
   DBFields, DBValues, DBReplaces: String;
 begin
   if (TypeInfo(T) = TypeInfo(TArrayString)) then
@@ -465,7 +359,7 @@ begin
   Result := 'INSERT' + (System.StrUtils.IfThen(Ignore = True, ' IGNORE', EmptyStr)) + ' INTO ' + Trim(Table) + ' (' + Trim(DBFields) + ') VALUES (' + Trim(DBValues) + ')' + Trim(DBReplaces);
 
   if Run then
-    Query.Exec(Result);
+    Self.Exec(Result);
 end;
 
 function TQueryBuilder.View(Input: String; const Mode: Boolean = False): TQuery;

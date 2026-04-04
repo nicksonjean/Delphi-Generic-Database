@@ -45,6 +45,8 @@ uses
     procedure PMGetSelectedItem(var AMEssage: TDispatchMessageWithValue<TSelectedItem>); message PM_GET_SELECTEDITEM;
     procedure PMSetItemChangeEvent(var AMessage: TDispatchMessageWithValue<TNotifyEvent>); message PM_SET_ITEMCHANGE_EVENT;
     procedure PMPressEnter(var AMessage: TDispatchMessage); message PM_PRESSENTER;
+    procedure PMRebuildSuggestions(var AMessage: TDispatchMessage); message PM_REBUILD_SUGGESTIONS;
+    procedure PMClearSuggestionListBox(var AMessage: TDispatchMessage); message PM_CLEAR_SUGGESTION_LISTBOX;
     procedure DoChangeTracking; override;
     procedure RebuildSuggestionList(AText: String);
     procedure RecalculatePopupHeight;
@@ -89,6 +91,7 @@ constructor TStyledSuggestEdit.Create(AOwner: TComponent);
 begin
   inherited;
   FItems := TStringList.Create;
+  TStringList(FItems).OwnsObjects := True;
   FItemIndex := -1;
   FPopup := TPopup.Create(self);
   FPopup.Parent := Self;
@@ -193,7 +196,11 @@ var
 begin
   Data := AMessage.Value;
   if Data.Value.IsType <TStrings> and (Data.Key = 'suggestions') then
-    FItems.Assign(Data.Value.AsType<TStrings>)
+  begin
+    FItems.Assign(Data.Value.AsType<TStrings>);
+    RebuildSuggestionList('');
+    RecalculatePopupHeight;
+  end;
 end;
 
 procedure TStyledSuggestEdit.OnItemClick(const Sender: TCustomListBox; const Item: TListBoxItem);
@@ -212,6 +219,20 @@ begin
   K := vkReturn;
   KC := #13;
   KeyDown(K, KC, []);
+end;
+
+procedure TStyledSuggestEdit.PMRebuildSuggestions(var AMessage: TDispatchMessage);
+begin
+  { Items são alterados diretamente (ex.: Connector); FListBox guarda Data := FItems.Objects[I] — sem rebuild, Data fica dangling após Free dos TValueObject. }
+  RebuildSuggestionList('');
+  RecalculatePopupHeight;
+end;
+
+procedure TStyledSuggestEdit.PMClearSuggestionListBox(var AMessage: TDispatchMessage);
+begin
+  { Antes de libertar TValueObject em FItems: destruir ListItems enquanto Data ainda é ponteiro válido (evita AV no destructor do item). }
+  FListBox.Clear;
+  RecalculatePopupHeight;
 end;
 
 procedure TStyledSuggestEdit.PMDropDown(var AMessage: TDispatchMessage);
@@ -338,9 +359,13 @@ end;
 
 destructor TStyledSuggestEdit.Destroy;
 begin
+  { ListItems.Data aponta para Objects[I]: esvaziar popup antes de FItems.Destroy (OwnsObjects liberta TValueObject). }
+  if FListBox <> nil then
+    FListBox.Clear;
   FPopup := nil;
   FListBox := nil;
   FItems.Free;
+  FItems := nil;
   inherited;
 end;
 

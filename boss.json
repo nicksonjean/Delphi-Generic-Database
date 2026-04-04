@@ -1,0 +1,17 @@
+{
+	"name": "Delphi-Generic-Database",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./Source/",
+	"projects": [],
+	"dependencies": {
+		"pleriche/FastMM4": "github.com/pleriche/FastMM4",
+		"pleriche/FastMM5": "github.com/pleriche/FastMM5",
+		"onryldz/x-superobject": "github.com/onryldz/x-superobject",
+		"zeoslib/zeoslib": "github.com/zeoslib/zeoslib",
+		"neslib/Neslib.Yaml": "github.com/neslib/Neslib.Yaml",
+		"paolo-rossi/delphi-neon": "github.com/paolo-rossi/delphi-neon",
+		"SilenceCCF/DelphiTOML": "github.com/SilenceCCF/DelphiTOML"
+	}
+}

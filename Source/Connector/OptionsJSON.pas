@@ -1,4 +1,4 @@
-{
+ï»¿{
   OptionsJSON.
   ------------------------------------------------------------------------------
   Objetivo : Conectar o Objeto TQuery aos Componentes TGrid, TStringGrid,
@@ -6,27 +6,24 @@
   ------------------------------------------------------------------------------
   Autor : Nickson Jeanmerson
   ------------------------------------------------------------------------------
-  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
-  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
-  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
-  qualquer versão posterior.
-  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
-  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
-  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
-  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
-  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
-  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
-  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
-  Você também pode obter uma copia da licença em:
+  Esta biblioteca ï¿½ software livre; vocï¿½ pode redistribuï¿½-la e/ou modificï¿½-la
+  sob os termos da Licenï¿½a Pï¿½blica Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versï¿½o 3.29 da Licenï¿½a, ou (a seu critï¿½rio)
+  qualquer versï¿½o posterior.
+  Esta biblioteca ï¿½ distribuï¿½da na expectativa de que seja ï¿½til, porï¿½m, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implï¿½cita de COMERCIABILIDADE OU
+  ADEQUAï¿½ï¿½O A UMA FINALIDADE ESPECï¿½FICA. Consulte a Licenï¿½a Pï¿½blica Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENï¿½A.TXT ou LICENSE.TXT)
+  Vocï¿½ deve ter recebido uma cï¿½pia da Licenï¿½a Pï¿½blica Geral Menor do GNU junto
+  com esta biblioteca; se nï¿½o, escreva para a Free Software Foundation, Inc.,
+  no endereï¿½o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Vocï¿½ tambï¿½m pode obter uma copia da licenï¿½a em:
   http://www.opensource.org/licenses/lgpl-license.php
 }
 
 unit OptionsJSON;
 
 interface
-
-{ Carrega as Variáveis Padrão }
-{$I CNC.Default.inc}
 
 uses
   System.SysUtils,
@@ -69,31 +66,6 @@ uses
   Data.DB,
   FMX.Dialogs,
 
-{$IFDEF FireDACLib}
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,
-{$ENDIF}
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  Datasnap.Provider,
-  Datasnap.DBClient,
-  Data.FMTBcd,
-  Data.SqlExpr,
-{$ENDIF}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-{$ENDIF}
-
   FMX.ListView.Extension,
   FMX.Edit.Extension,
   FMX.Edit.Helper,
@@ -114,74 +86,77 @@ uses
 type
   TOptionsJSON = class(TConnector)
   private
-    { Public declarations }
-    procedure AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+    class procedure AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
   public
-    { Public declarations }
-    procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
-    procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
-    procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
-    procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
-    procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: String = '');
-    procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: String = '');
-    procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = '');
+    class procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+    class procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+    class procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+    class procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+    class procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: TDataSet; Options: String = '');
+    class procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: TDataSet; Options: String = '');
+    class procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = '');
   end;
-
-var
-  InstanceOptionsJSON : TOptionsJSON;
 
 implementation
 
 { TOptionsJSON }
 
-procedure TOptionsJSON.AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+class procedure TOptionsJSON.AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
 var
   JSONItem : TJSONItem;
 begin
   JSONItem := TJSONItem.Create;
-  JSONItem.AddItem<T>(AOwner, DataSet, IndexField, ValueField, DetailFields);
-  JSONItem.Destroy;
+  try
+    JSONItem.AddItem<T>(AOwner, DataSet, IndexField, ValueField, DetailFields);
+  finally
+    JSONItem.Free;
+  end;
 end;
 
-procedure TOptionsJSON.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+class procedure TOptionsJSON.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
 var
   JSONPairs, JSONField : Integer;
   JSONObject, JSONFields, JSONPagination, JSONNavigation : TJSONObject;
 begin
   TEdit(AOwner).Items.BeginUpdate;
   try
-    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(TEdit(AOwner), IndexValue[1]));
 
     if Options <> EmptyStr then
     begin
-      JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
-      if JSONObject <> nil then
-      begin
-        for JSONPairs := 0 to JSONObject.Count - 1 do
+      JSONObject := nil;
+      try
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
+        if JSONObject <> nil then
         begin
-          if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
+          for JSONPairs := 0 to JSONObject.Count - 1 do
           begin
-            if TEdit(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
-              TEdit(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
-          end
-          else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
-          begin
-            JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
-            for JSONField := 0 to JSONFields.Count - 1 do
+            if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
             begin
-              if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[0] then
+              if TEdit(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
+                TEdit(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
+            end
+            else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
+            begin
+              JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
+              for JSONField := 0 to JSONFields.Count - 1 do
               begin
-                if IndexValue[1] = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
-              end
-              else if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[1] then
-              begin
-                if IndexValue[0] = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+                if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[0] then
+                begin
+                  if IndexValue[1] = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+                end
+                else if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[1] then
+                begin
+                  if IndexValue[0] = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    TEdit(AOwner).ItemIndex := TEdit(AOwner).Items.IndexOf(IndexValue[0]);
+                end;
               end;
             end;
           end;
         end;
+      finally
+        JSONObject.Free;
       end;
     end;
 
@@ -190,148 +165,186 @@ begin
   end;
 end;
 
-procedure TOptionsJSON.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+class procedure TOptionsJSON.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
 var
   I, J : Integer;
   JSONObject, JSONFields, JSONPagination, JSONNavigation : TJSONObject;
+  LB: TCustomListBox;
+  Item: TListBoxItem;
 begin
   TComboEdit(AOwner).Items.BeginUpdate;
   try
-    TComboEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TComboEdit(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> EmptyStr then
     begin
-      JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
-      if JSONObject <> nil then
-      begin
-        for I := 0 to JSONObject.Count - 1 do
+      JSONObject := nil;
+      try
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
+        if JSONObject <> nil then
         begin
-          if JSONObject.Pairs[I].JsonString.Value = 'Index' then
+          for I := 0 to JSONObject.Count - 1 do
           begin
-            if TComboEdit(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
-              TComboEdit(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
-          end
-          else if JSONObject.Pairs[I].JsonString.Value = 'Field' then
-          begin
-            JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
-            for J := 0 to JSONFields.Count - 1 do
+            if JSONObject.Pairs[I].JsonString.Value = 'Index' then
             begin
-              if JSONFields.Pairs[J].JsonString.Value = FieldIndexValue[0] then
+              if TComboEdit(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
+                TComboEdit(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
+            end
+            else if JSONObject.Pairs[I].JsonString.Value = 'Field' then
+            begin
+              JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
+              for J := 0 to JSONFields.Count - 1 do
               begin
-                if IndexValue[1] = JSONFields.Pairs[J].JsonValue.Value then
-                  TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
-              end
-              else if JSONFields.Pairs[J].JsonString.Value = FieldIndexValue[1] then
-              begin
-                if IndexValue[0] = JSONFields.Pairs[J].JsonValue.Value then
-                  TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+                if JSONFields.Pairs[J].JsonString.Value = FieldIndexValue[0] then
+                begin
+                  if IndexValue[1] = JSONFields.Pairs[J].JsonValue.Value then
+                    TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+                end
+                else if JSONFields.Pairs[J].JsonString.Value = FieldIndexValue[1] then
+                begin
+                  if IndexValue[0] = JSONFields.Pairs[J].JsonValue.Value then
+                    TComboEdit(AOwner).ItemIndex := TComboEdit(AOwner).Items.IndexOf(IndexValue[0]);
+                end;
               end;
             end;
           end;
         end;
+      finally
+        JSONObject.Free;
       end;
     end;
 
   finally
     TComboEdit(AOwner).Items.EndUpdate;
   end;
+  { TValueObject criado com o TListBoxItem como Owner: liberado automaticamente pelo FMX ao destruir o item. }
+  LB := TComboEdit(AOwner).ListBox;
+  if (LB <> nil) and (TComboEdit(AOwner).Count > 0) then
+  begin
+    Item := LB.ListItems[TComboEdit(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsJSON.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+class procedure TOptionsJSON.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
 var
   JSONPairs, JSONField : Integer;
   JSONObject, JSONFields, JSONPagination, JSONNavigation : TJSONObject;
+  LB: TCustomListBox;
+  Item: TListBoxItem;
 begin
   TComboBox(AOwner).Items.BeginUpdate;
   try
-    TComboBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TComboBox(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> EmptyStr then
     begin
-      JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
-      if JSONObject <> nil then
-      begin
-        for JSONPairs := 0 to JSONObject.Count - 1 do
+      JSONObject := nil;
+      try
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
+        if JSONObject <> nil then
         begin
-          if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
+          for JSONPairs := 0 to JSONObject.Count - 1 do
           begin
-            if TComboBox(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
-              TComboBox(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
-          end
-          else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
-          begin
-            JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
-            for JSONField := 0 to JSONFields.Count - 1 do
+            if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
             begin
-              if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[0] then
+              if TComboBox(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
+                TComboBox(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
+            end
+            else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
+            begin
+              JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
+              for JSONField := 0 to JSONFields.Count - 1 do
               begin
-                if IndexValue[1] = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
-              end
-              else if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[1] then
-              begin
-                if IndexValue[0] = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+                if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[0] then
+                begin
+                  if IndexValue[1] = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+                end
+                else if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[1] then
+                begin
+                  if IndexValue[0] = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    TComboBox(AOwner).ItemIndex := TComboBox(AOwner).Items.IndexOf(IndexValue[0]);
+                end;
               end;
             end;
           end;
         end;
+      finally
+        JSONObject.Free;
       end;
     end;
 
   finally
     TComboBox(AOwner).Items.EndUpdate;
   end;
+  LB := TComboBox(AOwner).ListBox;
+  if (LB <> nil) and (TComboBox(AOwner).Count > 0) then
+  begin
+    Item := LB.ListItems[TComboBox(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsJSON.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
+class procedure TOptionsJSON.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: String = '');
 var
   JSONPairs, JSONField : Integer;
   JSONObject, JSONFields, JSONPagination, JSONNavigation : TJSONObject;
+  Item: TListBoxItem;
 begin
   TListBox(AOwner).Items.BeginUpdate;
   try
-    TListBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TListBox(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> EmptyStr then
     begin
-      JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
-      if JSONObject <> nil then
-      begin
-        for JSONPairs := 0 to JSONObject.Count - 1 do
+      JSONObject := nil;
+      try
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
+        if JSONObject <> nil then
         begin
-          if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
+          for JSONPairs := 0 to JSONObject.Count - 1 do
           begin
-            if TListBox(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
-              TListBox(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
-          end
-          else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
-          begin
-            JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
-            for JSONField := 0 to JSONFields.Count - 1 do
+            if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
             begin
-              if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[0] then
+              if TListBox(AOwner).Items.IndexOf(IndexValue[0]) = StrToInt(JSONObject.GetValue('Index').Value) then
+                TListBox(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
+            end
+            else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
+            begin
+              JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
+              for JSONField := 0 to JSONFields.Count - 1 do
               begin
-                if IndexValue[1] = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
-              end
-              else if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[1] then
-              begin
-                if IndexValue[0] = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
+                if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[0] then
+                begin
+                  if IndexValue[1] = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
+                end
+                else if JSONFields.Pairs[JSONField].JsonString.Value = FieldIndexValue[1] then
+                begin
+                  if IndexValue[0] = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    TListBox(AOwner).ItemIndex := TListBox(AOwner).Items.IndexOf(IndexValue[0]);
+                end;
               end;
             end;
           end;
         end;
+      finally
+        JSONObject.Free;
       end;
     end;
 
   finally
     TListBox(AOwner).Items.EndUpdate;
   end;
+  if TListBox(AOwner).Count > 0 then
+  begin
+    Item := TListBox(AOwner).ListItems[TListBox(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsJSON.AddToGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: String = '');
+class procedure TOptionsJSON.AddToGrid<T>(AOwner: TComponent; DataSet: TDataSet; Options: String = '');
 var
   Row, Column: Integer;
   JSONPairs, JSONField : Integer;
@@ -343,57 +356,67 @@ begin
 
   if Options <> EmptyStr then
   begin
-    JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
-    if JSONObject <> nil then
-    begin
-      for JSONPairs := 0 to JSONObject.Count - 1 do
+    JSONObject := nil;
+    try
+      JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
+      if JSONObject <> nil then
       begin
-        if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
+        for JSONPairs := 0 to JSONObject.Count - 1 do
         begin
-          for Row := 0 to TGrid(AOwner).RowCount - 1 do
+          if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
           begin
-            if (Row = StrToInt(JSONObject.GetValue('Index').Value)) then
+            for Row := 0 to TGrid(AOwner).RowCount - 1 do
             begin
-              TGrid(AOwner).Row := StrToInt(JSONObject.GetValue('Index').Value);
-              TGrid(AOwner).Col := 0;
-              Break;
-            end;
-          end;
-        end
-        else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
-        begin
-          JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
-          for JSONField := 0 to JSONFields.Count - 1 do
-          begin
-            for Column := 0 to TGrid(AOwner).ColumnCount - 1 do
-            begin
-              if TGrid(AOwner).ColumnByIndex(Column).Header = JSONFields.Pairs[JSONField].JsonString.Value then
+              if (Row = StrToInt(JSONObject.GetValue('Index').Value)) then
               begin
-                Row := 0;
-                DataSet.First;
-                while not DataSet.Eof do
+                TGrid(AOwner).Row := StrToInt(JSONObject.GetValue('Index').Value);
+                TGrid(AOwner).Col := 0;
+                Break;
+              end;
+            end;
+          end
+          else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
+          begin
+            JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
+            for JSONField := 0 to JSONFields.Count - 1 do
+            begin
+              for Column := 0 to TGrid(AOwner).ColumnCount - 1 do
+              begin
+                if TGrid(AOwner).ColumnByIndex(Column).Header = JSONFields.Pairs[JSONField].JsonString.Value then
                 begin
-                  if DataSet.Fields[Column].AsString = JSONFields.Pairs[JSONField].JsonValue.Value then
+                  Row := 0;
+                  if not DataSet.Active then
+                    DataSet.Open;
+                  DataSet.First;
+                  while not DataSet.Eof do
                   begin
-                    TGrid(AOwner).Row := Row;
-                    TGrid(AOwner).Col := 0;
-                    Break;
+                    if DataSet.Fields[Column].AsString = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    begin
+                      TGrid(AOwner).Row := Row;
+                      TGrid(AOwner).Col := 0;
+                      Break;
+                    end;
+                    Inc(Row);
+                    DataSet.Next;
                   end;
-                  Inc(Row);
-                  DataSet.Next;
+                  DataSet.Last;
                 end;
-                DataSet.Last;
               end;
             end;
           end;
         end;
       end;
+    finally
+      JSONObject.Free;
     end;
   end;
 
+  if TGrid(AOwner).Model <> nil then
+    TGrid(AOwner).Model.ClearCache;
+
 end;
 
-procedure TOptionsJSON.AddToStringGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: String = '');
+class procedure TOptionsJSON.AddToStringGrid<T>(AOwner: TComponent; DataSet: TDataSet; Options: String = '');
 var
   Row, Column: Integer;
   JSONPairs, JSONField : Integer;
@@ -405,70 +428,8 @@ begin
 
   if Options <> EmptyStr then
   begin
-    JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
-    if JSONObject <> nil then
-    begin
-      for JSONPairs := 0 to JSONObject.Count - 1 do
-      begin
-        if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
-        begin
-          for Row := 0 to TStringGrid(AOwner).RowCount - 1 do
-          begin
-            if (Row = StrToInt(JSONObject.GetValue('Index').Value)) then
-            begin
-              TStringGrid(AOwner).Row := StrToInt(JSONObject.GetValue('Index').Value);
-              TStringGrid(AOwner).Col := 0;
-              Break;
-            end;
-          end;
-        end
-        else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
-        begin
-          JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
-          for JSONField := 0 to JSONFields.Count - 1 do
-          begin
-            for Column := 0 to TStringGrid(AOwner).ColumnCount - 1 do
-            begin
-              if TStringGrid(AOwner).ColumnByIndex(Column).Header = JSONFields.Pairs[JSONField].JsonString.Value then
-              begin
-                Row := 0;
-                DataSet.First;
-                while not DataSet.Eof do
-                begin
-                  if DataSet.Fields[Column].AsString = JSONFields.Pairs[JSONField].JsonValue.Value then
-                  begin
-                    TStringGrid(AOwner).Row := Row;
-                    TStringGrid(AOwner).Col := 0;
-                    Break;
-                  end;
-                  Inc(Row);
-                  DataSet.Next;
-                end;
-                DataSet.Last;
-              end;
-            end;
-          end;
-        end;
-      end;
-    end;
-  end;
-
-end;
-
-procedure TOptionsJSON.AddToListView<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = '');
-var
-  Row, Column: Integer;
-  JSONString: String;
-  JSONDataObject, JSONDataBase: TJSONObject;
-  JSONPairs, JSONField : Integer;
-  JSONObject, JSONFields, JSONPagination, JSONNavigation : TJSONObject;
-begin
-  TListView(AOwner).BeginUpdate;
-  try
-    Self.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
-
-    if Options <> EmptyStr then
-    begin
+    JSONObject := nil;
+    try
       JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
       if JSONObject <> nil then
       begin
@@ -476,11 +437,12 @@ begin
         begin
           if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
           begin
-            for Row := 0 to TListView(AOwner).Items.Count - 1 do
+            for Row := 0 to TStringGrid(AOwner).RowCount - 1 do
             begin
               if (Row = StrToInt(JSONObject.GetValue('Index').Value)) then
               begin
-                TListView(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
+                TStringGrid(AOwner).Row := StrToInt(JSONObject.GetValue('Index').Value);
+                TStringGrid(AOwner).Col := 0;
                 Break;
               end;
             end;
@@ -490,31 +452,113 @@ begin
             JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
             for JSONField := 0 to JSONFields.Count - 1 do
             begin
-              for Row := 0 to TListView(AOwner).Items.Count - 1 do
+              for Column := 0 to TStringGrid(AOwner).ColumnCount - 1 do
               begin
-                JSONString := TListView(AOwner).Items.AppearanceItem[Row].Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail4).Text;
-                JSONDataObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(JSONString), 0) as TJSONObject;
-                if JSONDataObject.Get('ValueField').JsonValue.Value = JSONFields.Pairs[JSONField].JsonString.Value then
+                if TStringGrid(AOwner).ColumnByIndex(Column).Header = JSONFields.Pairs[JSONField].JsonString.Value then
                 begin
-                  TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(JSONFields.Pairs[JSONField].JsonValue.Value);
-                  Break;
-                end
-                else
-                begin
-                  JSONDataBase := JSONDataObject.Get('DataFields').JsonValue as TJSONObject;
-                  for Column := 0 to JSONDataBase.Count - 1 do
+                  Row := 0;
+                  if not DataSet.Active then
+                    DataSet.Open;
+                  DataSet.First;
+                  while not DataSet.Eof do
                   begin
-                    if JSONDataBase.Pairs[Column].JsonValue.Value = JSONFields.Pairs[JSONField].JsonValue.Value then
+                    if DataSet.Fields[Column].AsString = JSONFields.Pairs[JSONField].JsonValue.Value then
                     begin
-                      TListView(AOwner).ItemIndex := Row;
+                      TStringGrid(AOwner).Row := Row;
+                      TStringGrid(AOwner).Col := 0;
                       Break;
                     end;
+                    Inc(Row);
+                    DataSet.Next;
+                  end;
+                  DataSet.Last;
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    finally
+      JSONObject.Free;
+    end;
+  end;
+
+end;
+
+class procedure TOptionsJSON.AddToListView<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: String = '');
+var
+  Row, Column: Integer;
+  JSONString: String;
+  JSONDataObject, JSONDataBase: TJSONObject;
+  JSONPairs, JSONField : Integer;
+  JSONObject, JSONFields, JSONPagination, JSONNavigation : TJSONObject;
+begin
+  TListView(AOwner).BeginUpdate;
+  try
+    TOptionsJSON.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
+
+    if Options <> EmptyStr then
+    begin
+      JSONObject := nil;
+      try
+        JSONObject := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Options), 0) as TJSONObject;
+        if JSONObject <> nil then
+        begin
+          for JSONPairs := 0 to JSONObject.Count - 1 do
+          begin
+            if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Index' then
+            begin
+              for Row := 0 to TListView(AOwner).Items.Count - 1 do
+              begin
+                if (Row = StrToInt(JSONObject.GetValue('Index').Value)) then
+                begin
+                  TListView(AOwner).ItemIndex := StrToInt(JSONObject.GetValue('Index').Value);
+                  Break;
+                end;
+              end;
+            end
+            else if JSONObject.Pairs[JSONPairs].JsonString.Value = 'Field' then
+            begin
+              JSONFields := JSONObject.Get('Field').JsonValue as TJSONObject;
+              for JSONField := 0 to JSONFields.Count - 1 do
+              begin
+                for Row := 0 to TListView(AOwner).Items.Count - 1 do
+                begin
+                  JSONString := TListView(AOwner).Items.AppearanceItem[Row].Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail4).Text;
+                  JSONDataObject := nil;
+                  try
+                    JSONDataObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(JSONString), 0) as TJSONObject;
+                    if (JSONDataObject <> nil) and (JSONDataObject.Get('ValueField') <> nil) and
+                      (JSONDataObject.Get('ValueField').JsonValue.Value = JSONFields.Pairs[JSONField].JsonString.Value) then
+                    begin
+                      TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(JSONFields.Pairs[JSONField].JsonValue.Value);
+                      Break;
+                    end
+                    else if JSONDataObject <> nil then
+                    begin
+                      JSONDataBase := JSONDataObject.Get('DataFields').JsonValue as TJSONObject;
+                      if JSONDataBase <> nil then
+                      begin
+                        for Column := 0 to JSONDataBase.Count - 1 do
+                        begin
+                          if JSONDataBase.Pairs[Column].JsonValue.Value = JSONFields.Pairs[JSONField].JsonValue.Value then
+                          begin
+                            TListView(AOwner).ItemIndex := Row;
+                            Break;
+                          end;
+                        end;
+                      end;
+                    end;
+                  finally
+                    JSONDataObject.Free;
                   end;
                 end;
               end;
             end;
           end;
         end;
+      finally
+        JSONObject.Free;
       end;
     end;
 

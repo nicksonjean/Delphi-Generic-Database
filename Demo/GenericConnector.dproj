@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{99BF0FA3-2DA6-45AC-AD39-A5A517127D96}</ProjectGuid>
-        <ProjectVersion>19.1</ProjectVersion>
+        <ProjectVersion>19.2</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
@@ -108,6 +108,7 @@
         <Android_NotificationIcon72>$(BDS)\bin\Artwork\Android\FM_NotificationIcon_72x72.png</Android_NotificationIcon72>
         <Android_NotificationIcon96>$(BDS)\bin\Artwork\Android\FM_NotificationIcon_96x96.png</Android_NotificationIcon96>
         <EnabledSysJars>android-support-v4.dex.jar;cloud-messaging.dex.jar;com-google-android-gms.play-services-ads-base.17.2.0.dex.jar;com-google-android-gms.play-services-ads-identifier.16.0.0.dex.jar;com-google-android-gms.play-services-ads-lite.17.2.0.dex.jar;com-google-android-gms.play-services-ads.17.2.0.dex.jar;com-google-android-gms.play-services-analytics-impl.16.0.8.dex.jar;com-google-android-gms.play-services-analytics.16.0.8.dex.jar;com-google-android-gms.play-services-base.16.0.1.dex.jar;com-google-android-gms.play-services-basement.16.2.0.dex.jar;com-google-android-gms.play-services-gass.17.2.0.dex.jar;com-google-android-gms.play-services-identity.16.0.0.dex.jar;com-google-android-gms.play-services-maps.16.1.0.dex.jar;com-google-android-gms.play-services-measurement-base.16.4.0.dex.jar;com-google-android-gms.play-services-measurement-sdk-api.16.4.0.dex.jar;com-google-android-gms.play-services-stats.16.0.1.dex.jar;com-google-android-gms.play-services-tagmanager-v4-impl.16.0.8.dex.jar;com-google-android-gms.play-services-tasks.16.0.1.dex.jar;com-google-android-gms.play-services-wallet.16.0.1.dex.jar;com-google-firebase.firebase-analytics.16.4.0.dex.jar;com-google-firebase.firebase-common.16.1.0.dex.jar;com-google-firebase.firebase-iid-interop.16.0.1.dex.jar;com-google-firebase.firebase-iid.17.1.1.dex.jar;com-google-firebase.firebase-measurement-connector.17.0.1.dex.jar;com-google-firebase.firebase-messaging.17.5.0.dex.jar;fmx.dex.jar;google-play-billing.dex.jar;google-play-licensing.dex.jar</EnabledSysJars>
+        <Android_LauncherIcon192>$(BDS)\bin\Artwork\Android\FM_LauncherIcon_192x192.png</Android_LauncherIcon192>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android64)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;RESTComponents;DBXInterBaseDriver;emsclientfiredac;tethering;DataSnapFireDAC;bindcompfmx;FmxTeeUI;fmx;FireDACIBDriver;FireDACDBXDriver;dbexpress;IndyCore;dsnap;emsclient;DataSnapCommon;FireDACCommon;RESTBackendComponents;soapserver;bindengine;CloudService;FireDACCommonDriver;DataSnapClient;inet;IndyIPCommon;bindcompdbx;IndyIPServer;IndySystem;fmxFireDAC;FireDAC;FireDACSqliteDriver;ibmonitor;FMXTee;soaprtl;DbxCommonDriver;ibxpress;xmlrtl;soapmidas;DataSnapNativeClient;FireDACDSDriver;rtl;DbxClientDriver;ibxbindings;CustomIPTransport;bindcomp;IndyIPClient;dbxcds;dsnapxml;DataSnapProviderClient;dbrtl;IndyProtocols;$(DCC_UsePackage)</DCC_UsePackage>
@@ -129,6 +130,7 @@
         <Android_NotificationIcon72>$(BDS)\bin\Artwork\Android\FM_NotificationIcon_72x72.png</Android_NotificationIcon72>
         <Android_NotificationIcon96>$(BDS)\bin\Artwork\Android\FM_NotificationIcon_96x96.png</Android_NotificationIcon96>
         <EnabledSysJars>android-support-v4.dex.jar;cloud-messaging.dex.jar;com-google-android-gms.play-services-ads-base.17.2.0.dex.jar;com-google-android-gms.play-services-ads-identifier.16.0.0.dex.jar;com-google-android-gms.play-services-ads-lite.17.2.0.dex.jar;com-google-android-gms.play-services-ads.17.2.0.dex.jar;com-google-android-gms.play-services-analytics-impl.16.0.8.dex.jar;com-google-android-gms.play-services-analytics.16.0.8.dex.jar;com-google-android-gms.play-services-base.16.0.1.dex.jar;com-google-android-gms.play-services-basement.16.2.0.dex.jar;com-google-android-gms.play-services-gass.17.2.0.dex.jar;com-google-android-gms.play-services-identity.16.0.0.dex.jar;com-google-android-gms.play-services-maps.16.1.0.dex.jar;com-google-android-gms.play-services-measurement-base.16.4.0.dex.jar;com-google-android-gms.play-services-measurement-sdk-api.16.4.0.dex.jar;com-google-android-gms.play-services-stats.16.0.1.dex.jar;com-google-android-gms.play-services-tagmanager-v4-impl.16.0.8.dex.jar;com-google-android-gms.play-services-tasks.16.0.1.dex.jar;com-google-android-gms.play-services-wallet.16.0.1.dex.jar;com-google-firebase.firebase-analytics.16.4.0.dex.jar;com-google-firebase.firebase-common.16.1.0.dex.jar;com-google-firebase.firebase-iid-interop.16.0.1.dex.jar;com-google-firebase.firebase-iid.17.1.1.dex.jar;com-google-firebase.firebase-measurement-connector.17.0.1.dex.jar;com-google-firebase.firebase-messaging.17.5.0.dex.jar;fmx.dex.jar;google-play-billing.dex.jar;google-play-licensing.dex.jar</EnabledSysJars>
+        <Android_LauncherIcon192>$(BDS)\bin\Artwork\Android\FM_LauncherIcon_192x192.png</Android_LauncherIcon192>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;RESTComponents;fmxase;DBXDb2Driver;DBXInterBaseDriver;ZComponent;vclactnband;ZCore;vclFireDAC;bindcompvclsmp;emsclientfiredac;tethering;svnui;DataSnapFireDAC;FireDACADSDriver;DBXMSSQLDriver;DatasnapConnectorsFreePascal;FireDACMSSQLDriver;vcltouch;vcldb;bindcompfmx;svn;DBXOracleDriver;inetdb;FmxTeeUI;emsedge;fmx;FireDACIBDriver;fmxdae;vcledge;vclib;FireDACDBXDriver;dbexpress;IndyCore;vclx;ZParseSql;dsnap;emsclient;DataSnapCommon;FireDACCommon;RESTBackendComponents;DataSnapConnectors;VCLRESTComponents;soapserver;vclie;bindengine;DBXMySQLDriver;CloudService;FireDACOracleDriver;FireDACMySQLDriver;DBXFirebirdDriver;FireDACCommonODBC;FireDACCommonDriver;DataSnapClient;inet;IndyIPCommon;bindcompdbx;vcl;IndyIPServer;DBXSybaseASEDriver;DbxDevartOracleDriver270;IndySystem;FireDACDb2Driver;dsnapcon;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;ZDbc;TeeDB;FireDAC;emshosting;DbxDevartPostgreSQLDriver270;FireDACSqliteDriver;FireDACPgDriver;ibmonitor;FireDACASADriver;DBXOdbcDriver;FireDACTDataDriver;FMXTee;soaprtl;DbxCommonDriver;ibxpress;Tee;DataSnapServer;xmlrtl;soapmidas;DataSnapNativeClient;fmxobj;vclwinx;FireDACDSDriver;rtl;emsserverresource;DbxClientDriver;ibxbindings;DBXSybaseASADriver;CustomIPTransport;vcldsnap;bindcomp;appanalytics;ZPlain;DBXInformixDriver;IndyIPClient;bindcompvcl;TeeUI;dbxcds;VclSmp;adortl;FireDACODBCDriver;DataSnapIndy10ServerTransport;dsnapxml;DataSnapProviderClient;dbrtl;IndyProtocols;inetdbxpress;FireDACMongoDBDriver;DataSnapServerMidas;$(DCC_UsePackage)</DCC_UsePackage>
@@ -189,6 +191,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="..\Source\Vendor\FastMM5\FastMM5.pas"/>
         <DCCReference Include="..\Source\EventDriven\EventDriven.pas"/>
         <DCCReference Include="..\Source\Types\Locale\Locale.pas"/>
         <DCCReference Include="..\Source\Reflection\RTTI.pas"/>
@@ -231,7 +234,56 @@
         <DCCReference Include="..\Source\Connection\Query.pas"/>
         <DCCReference Include="..\Source\Connection\Helpers\QueryHelper.pas"/>
         <DCCReference Include="..\Source\Connection\QueryBuilder.pas"/>
+        <DCCReference Include="..\Source\Connection\Connection.Types.pas"/>
         <DCCReference Include="..\Source\Connection\Connection.pas"/>
+        <DCCReference Include="..\Source\Connection\Strategy\Connection.IConnectionStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Strategy\Connection.IQueryStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Strategy\Connection.IEngineFactory.pas"/>
+        <DCCReference Include="..\Source\Connection\Strategy\Connection.IDriverConfigurator.pas"/>
+        <DCCReference Include="..\Source\Connection\Registry\EngineRegistry.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Factory.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.ConnectionStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.QueryStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.SQLite.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.MySQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.Firebird.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.Interbase.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.MSSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.PostgreSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.Oracle.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Factory.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.ConnectionStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.QueryStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.SQLite.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.MySQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Firebird.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Interbase.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.MSSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.PostgreSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Oracle.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Factory.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.ConnectionStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.QueryStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.SQLite.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.MySQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.Firebird.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.Interbase.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.MSSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.PostgreSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.Oracle.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Factory.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.ConnectionStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.QueryStrategy.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.SQLite.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.MySQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.Firebird.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.Interbase.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.MSSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.PostgreSQL.pas"/>
+        <DCCReference Include="..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.Oracle.pas"/>
+        <DCCReference Include="..\Source\Connection\Config\Connection.Config.JSON.pas"/>
+        <DCCReference Include="..\Source\Connection\Config\Connection.Config.INI.pas"/>
+        <DCCReference Include="..\Source\Connection\Config\Connection.Config.XML.pas"/>
         <DCCReference Include="GenericConnectorForm.pas">
             <Form>GenericConnectorForm</Form>
         </DCCReference>
@@ -415,6 +467,16 @@
                     </Platform>
                     <Platform Name="Android64">
                         <RemoteDir>res\drawable-xxhdpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="Android_LauncherIcon192">
+                    <Platform Name="Android">
+                        <RemoteDir>res\drawable-xxxhdpi</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>res\drawable-xxxhdpi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
@@ -1045,6 +1107,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

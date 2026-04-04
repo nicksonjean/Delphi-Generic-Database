@@ -25,9 +25,6 @@ unit OptionsInteger;
 
 interface
 
-{ Carrega as Variáveis Padrão }
-{$I CNC.Default.inc}
-
 uses
   System.SysUtils,
   System.IOUtils,
@@ -69,31 +66,6 @@ uses
   Data.DB,
   FMX.Dialogs,
 
-{$IFDEF FireDACLib}
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,
-{$ENDIF}
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  Datasnap.Provider,
-  Datasnap.DBClient,
-  Data.FMTBcd,
-  Data.SqlExpr,
-{$ENDIF}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-{$ENDIF}
-
   FMX.ListView.Extension,
   FMX.Edit.Extension,
   FMX.Edit.Helper,
@@ -114,40 +86,38 @@ uses
 type
   TOptionsInteger = class(TConnector)
   private
-    { Public declarations }
-    procedure AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+    class procedure AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
   public
-    { Public declarations }
-    procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
-    procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
-    procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
-    procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
-    procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: Integer = -1);
-    procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: Integer = -1);
-    procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1);
+    class procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+    class procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+    class procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+    class procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+    class procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: TDataSet; Options: Integer = -1);
+    class procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: TDataSet; Options: Integer = -1);
+    class procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1);
   end;
-
-var
-  InstanceOptionsInteger : TOptionsInteger;
 
 implementation
 
 { TOptionsInteger }
 
-procedure TOptionsInteger.AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+class procedure TOptionsInteger.AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
 var
   JSONItem : TJSONItem;
 begin
   JSONItem := TJSONItem.Create;
-  JSONItem.AddItem<T>(AOwner, DataSet, IndexField, ValueField, DetailFields);
-  JSONItem.Destroy;
+  try
+    JSONItem.AddItem<T>(AOwner, DataSet, IndexField, ValueField, DetailFields);
+  finally
+    JSONItem.Free;
+  end;
 end;
 
-procedure TOptionsInteger.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+class procedure TOptionsInteger.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
 begin
   TEdit(AOwner).Items.BeginUpdate;
   try
-    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(TEdit(AOwner), IndexValue[1]));
 
     if Options <> -1 then
     begin
@@ -160,11 +130,14 @@ begin
   end;
 end;
 
-procedure TOptionsInteger.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+class procedure TOptionsInteger.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+var
+  LB: TCustomListBox;
+  Item: TListBoxItem;
 begin
   TComboEdit(AOwner).Items.BeginUpdate;
   try
-    TComboEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TComboEdit(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> -1 then
     begin
@@ -175,13 +148,22 @@ begin
   finally
     TComboEdit(AOwner).Items.EndUpdate;
   end;
+  LB := TComboEdit(AOwner).ListBox;
+  if (LB <> nil) and (TComboEdit(AOwner).Count > 0) then
+  begin
+    Item := LB.ListItems[TComboEdit(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsInteger.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+class procedure TOptionsInteger.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+var
+  LB: TCustomListBox;
+  Item: TListBoxItem;
 begin
   TComboBox(AOwner).Items.BeginUpdate;
   try
-    TComboBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TComboBox(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> -1 then
     begin
@@ -192,13 +174,21 @@ begin
   finally
     TComboBox(AOwner).Items.EndUpdate;
   end;
+  LB := TComboBox(AOwner).ListBox;
+  if (LB <> nil) and (TComboBox(AOwner).Count > 0) then
+  begin
+    Item := LB.ListItems[TComboBox(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsInteger.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+class procedure TOptionsInteger.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: Integer = -1);
+var
+  Item: TListBoxItem;
 begin
   TListBox(AOwner).Items.BeginUpdate;
   try
-    TListBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TListBox(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> -1 then
     begin
@@ -209,9 +199,14 @@ begin
   finally
     TListBox(AOwner).Items.EndUpdate;
   end;
+  if TListBox(AOwner).Count > 0 then
+  begin
+    Item := TListBox(AOwner).ListItems[TListBox(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsInteger.AddToGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: Integer = -1);
+class procedure TOptionsInteger.AddToGrid<T>(AOwner: TComponent; DataSet: TDataSet; Options: Integer = -1);
 begin
   if (TypeInfo(T) = TypeInfo(TGrid)) then
   begin
@@ -224,10 +219,12 @@ begin
       TGrid(AOwner).Row := Options;
       TGrid(AOwner).Col := 0;
     end;
+    if TGrid(AOwner).Model <> nil then
+      TGrid(AOwner).Model.ClearCache;
   end;
 end;
 
-procedure TOptionsInteger.AddToStringGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: Integer = -1);
+class procedure TOptionsInteger.AddToStringGrid<T>(AOwner: TComponent; DataSet: TDataSet; Options: Integer = -1);
 begin
   if (TypeInfo(T) = TypeInfo(TStringGrid)) then
   begin
@@ -243,14 +240,14 @@ begin
   end;
 end;
 
-procedure TOptionsInteger.AddToListView<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1);
+class procedure TOptionsInteger.AddToListView<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: Integer = -1);
 begin
   if (TypeInfo(T) = TypeInfo(TListView)) then
   begin
     TListView(AOwner).BeginUpdate;
     try
 
-      Self.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
+      TOptionsInteger.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
 
       if Options <> -1 then
         TListView(AOwner).ItemIndex := Options;

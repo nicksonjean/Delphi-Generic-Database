@@ -1,4 +1,4 @@
-{
+ï»¿{
   OptionsArray.
   ------------------------------------------------------------------------------
   Objetivo : Conectar o Objeto TQuery aos Componentes TGrid, TStringGrid,
@@ -6,27 +6,24 @@
   ------------------------------------------------------------------------------
   Autor : Nickson Jeanmerson
   ------------------------------------------------------------------------------
-  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la
-  sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela
-  Free Software Foundation; tanto a versão 3.29 da Licença, ou (a seu critério)
-  qualquer versão posterior.
-  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM
-  NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU
-  ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor
-  do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)
-  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto
-  com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,
-  no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
-  Você também pode obter uma copia da licença em:
+  Esta biblioteca ï¿½ software livre; vocï¿½ pode redistribuï¿½-la e/ou modificï¿½-la
+  sob os termos da Licenï¿½a Pï¿½blica Geral Menor do GNU conforme publicada pela
+  Free Software Foundation; tanto a versï¿½o 3.29 da Licenï¿½a, ou (a seu critï¿½rio)
+  qualquer versï¿½o posterior.
+  Esta biblioteca ï¿½ distribuï¿½da na expectativa de que seja ï¿½til, porï¿½m, SEM
+  NENHUMA GARANTIA; nem mesmo a garantia implï¿½cita de COMERCIABILIDADE OU
+  ADEQUAï¿½ï¿½O A UMA FINALIDADE ESPECï¿½FICA. Consulte a Licenï¿½a Pï¿½blica Geral Menor
+  do GNU para mais detalhes. (Arquivo LICENï¿½A.TXT ou LICENSE.TXT)
+  Vocï¿½ deve ter recebido uma cï¿½pia da Licenï¿½a Pï¿½blica Geral Menor do GNU junto
+  com esta biblioteca; se nï¿½o, escreva para a Free Software Foundation, Inc.,
+  no endereï¿½o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.
+  Vocï¿½ tambï¿½m pode obter uma copia da licenï¿½a em:
   http://www.opensource.org/licenses/lgpl-license.php
 }
 
 unit OptionsArray;
 
 interface
-
-{ Carrega as Variáveis Padrão }
-{$I CNC.Default.inc}
 
 uses
   System.SysUtils,
@@ -69,31 +66,6 @@ uses
   Data.DB,
   FMX.Dialogs,
 
-{$IFDEF FireDACLib}
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,
-{$ENDIF}
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  Datasnap.Provider,
-  Datasnap.DBClient,
-  Data.FMTBcd,
-  Data.SqlExpr,
-{$ENDIF}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-{$ENDIF}
-
   FMX.ListView.Extension,
   FMX.Edit.Extension,
   FMX.Edit.Helper,
@@ -114,42 +86,40 @@ uses
 type
   TOptionsArray = class(TConnector)
   private
-    { Public declarations }
-    procedure AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+    class procedure AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
   public
-    { Public declarations }
-    procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: TDictionary<String, TArray<Variant>> = nil);
-    procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToComboEdit<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToComboBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToListBox<T: Class>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToGrid<T: Class>(AOwner: TComponent; DataSet: TDataSet; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToStringGrid<T: Class>(AOwner: TComponent; DataSet: TDataSet; Options: TDictionary<String, TArray<Variant>> = nil);
+    class procedure AddToListView<T: Class>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil);
   end;
-
-var
-  InstanceOptionsArray : TOptionsArray;
 
 implementation
 
 { TOptionsArray }
 
-procedure TOptionsArray.AddItem<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []);
+class procedure TOptionsArray.AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
 var
   JSONItem : TJSONItem;
 begin
   JSONItem := TJSONItem.Create;
-  JSONItem.AddItem<T>(AOwner, DataSet, IndexField, ValueField, DetailFields);
-  JSONItem.Destroy;
+  try
+    JSONItem.AddItem<T>(AOwner, DataSet, IndexField, ValueField, DetailFields);
+  finally
+    JSONItem.Free;
+  end;
 end;
 
-procedure TOptionsArray.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Pair: TPair<String, TArray<Variant>>;
 begin
   TEdit(AOwner).Items.BeginUpdate;
   try
-    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(TEdit(AOwner), IndexValue[1]));
 
     if Options <> nil then
     begin
@@ -181,13 +151,15 @@ begin
   end;
 end;
 
-procedure TOptionsArray.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToComboEdit<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Pair: TPair<String, TArray<Variant>>;
+  LB: TCustomListBox;
+  Item: TListBoxItem;
 begin
   TComboEdit(AOwner).Items.BeginUpdate;
   try
-    TComboEdit(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TComboEdit(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> nil then
     begin
@@ -217,15 +189,23 @@ begin
   finally
     TComboEdit(AOwner).Items.EndUpdate;
   end;
+  LB := TComboEdit(AOwner).ListBox;
+  if (LB <> nil) and (TComboEdit(AOwner).Count > 0) then
+  begin
+    Item := LB.ListItems[TComboEdit(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsArray.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToComboBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Pair: TPair<String, TArray<Variant>>;
+  LB: TCustomListBox;
+  Item: TListBoxItem;
 begin
   TComboBox(AOwner).Items.BeginUpdate;
   try
-    TComboBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TComboBox(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> nil then
     begin
@@ -255,15 +235,22 @@ begin
   finally
     TComboBox(AOwner).Items.EndUpdate;
   end;
+  LB := TComboBox(AOwner).ListBox;
+  if (LB <> nil) and (TComboBox(AOwner).Count > 0) then
+  begin
+    Item := LB.ListItems[TComboBox(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsArray.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToListBox<T>(AOwner: TComponent; FieldIndexValue, IndexValue: TArray<String>; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Pair: TPair<String, TArray<Variant>>;
+  Item: TListBoxItem;
 begin
   TListBox(AOwner).Items.BeginUpdate;
   try
-    TListBox(AOwner).Items.AddObject(IndexValue[0], TValueObject.Create(IndexValue[1]));
+    TListBox(AOwner).Items.Add(IndexValue[0]);
 
     if Options <> nil then
     begin
@@ -293,9 +280,14 @@ begin
   finally
     TListBox(AOwner).Items.EndUpdate;
   end;
+  if TListBox(AOwner).Count > 0 then
+  begin
+    Item := TListBox(AOwner).ListItems[TListBox(AOwner).Count - 1];
+    Item.Data := TValueObject.Create(Item, IndexValue[1]);
+  end;
 end;
 
-procedure TOptionsArray.AddToGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToGrid<T>(AOwner: TComponent; DataSet: TDataSet; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Row, Column: Integer;
   Pair: TPair<String, TArray<Variant>>;
@@ -327,6 +319,8 @@ begin
           if TGrid(AOwner).ColumnByIndex(Column).Header = Pair.Value[0] then
           begin
             Row := 0;
+            if not DataSet.Active then
+              DataSet.Open;
             DataSet.First;
             while not DataSet.Eof do
             begin
@@ -346,9 +340,12 @@ begin
     end;
   end;
 
+  if TGrid(AOwner).Model <> nil then
+    TGrid(AOwner).Model.ClearCache;
+
 end;
 
-procedure TOptionsArray.AddToStringGrid<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToStringGrid<T>(AOwner: TComponent; DataSet: TDataSet; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Row, Column: Integer;
   Pair: TPair<String, TArray<Variant>>;
@@ -380,6 +377,8 @@ begin
           if TStringGrid(AOwner).ColumnByIndex(Column).Header = Pair.Value[0] then
           begin
             Row := 0;
+            if not DataSet.Active then
+              DataSet.Open;
             DataSet.First;
             while not DataSet.Eof do
             begin
@@ -401,7 +400,7 @@ begin
 
 end;
 
-procedure TOptionsArray.AddToListView<T>(AOwner: TComponent; DataSet: {$I CNC.Type.inc}; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil);
+class procedure TOptionsArray.AddToListView<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []; Options: TDictionary<String, TArray<Variant>> = nil);
 var
   Row, Column: Integer;
   Pair: TPair<String, TArray<Variant>>;
@@ -410,7 +409,7 @@ var
 begin
   TListView(AOwner).BeginUpdate;
   try
-    Self.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
+    TOptionsArray.AddItem<TListView>(AOwner, DataSet, IndexField, ValueField, DetailFields);
 
     if Options <> nil then
     begin
@@ -432,23 +431,32 @@ begin
           for Row := 0 to TListView(AOwner).Items.Count - 1 do
           begin
             JSONString := TListView(AOwner).Items.AppearanceItem[Row].Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail4).Text;
-            JSONDataObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(JSONString), 0) as TJSONObject;
-            if JSONDataObject.Get('ValueField').JsonValue.Value = Pair.Value[0] then
-            begin
-              TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(Pair.Value[1]);
-              Break;
-            end
-            else
-            begin
-              JSONDataBase := JSONDataObject.Get('DataFields').JsonValue as TJSONObject;
-              for Column := 0 to JSONDataBase.Count - 1 do
+            JSONDataObject := nil;
+            try
+              JSONDataObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(JSONString), 0) as TJSONObject;
+              if (JSONDataObject <> nil) and (JSONDataObject.Get('ValueField') <> nil) and
+                 (JSONDataObject.Get('ValueField').JsonValue.Value = Pair.Value[0]) then
               begin
-                if JSONDataBase.Pairs[Column].JsonValue.Value = Pair.Value[1] then
+                TListView(AOwner).ItemIndex := TListView(AOwner).FindItemByValue(Pair.Value[1]);
+                Break;
+              end
+              else if JSONDataObject <> nil then
+              begin
+                JSONDataBase := JSONDataObject.Get('DataFields').JsonValue as TJSONObject;
+                if JSONDataBase <> nil then
                 begin
-                  TListView(AOwner).ItemIndex := Row;
-                  Break;
+                  for Column := 0 to JSONDataBase.Count - 1 do
+                  begin
+                    if JSONDataBase.Pairs[Column].JsonValue.Value = Pair.Value[1] then
+                    begin
+                      TListView(AOwner).ItemIndex := Row;
+                      Break;
+                    end;
+                  end;
                 end;
               end;
+            finally
+              JSONDataObject.Free;
             end;
           end;
         end;

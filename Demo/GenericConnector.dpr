@@ -1,6 +1,7 @@
 program GenericConnector;
 
 uses
+  FastMM5 in '..\Source\Vendor\FastMM5\FastMM5.pas',
   System.StartUpCopy,
   FMX.Forms,
   EventDriven in '..\Source\EventDriven\EventDriven.pas',
@@ -45,13 +46,66 @@ uses
   Query in '..\Source\Connection\Query.pas',
   QueryHelper in '..\Source\Connection\Helpers\QueryHelper.pas',
   QueryBuilder in '..\Source\Connection\QueryBuilder.pas',
+  Connection.Types in '..\Source\Connection\Connection.Types.pas',
   Connection in '..\Source\Connection\Connection.pas',
+  Connection.IConnectionStrategy in '..\Source\Connection\Strategy\Connection.IConnectionStrategy.pas',
+  Connection.IQueryStrategy in '..\Source\Connection\Strategy\Connection.IQueryStrategy.pas',
+  Connection.IEngineFactory in '..\Source\Connection\Strategy\Connection.IEngineFactory.pas',
+  Connection.IDriverConfigurator in '..\Source\Connection\Strategy\Connection.IDriverConfigurator.pas',
+  EngineRegistry in '..\Source\Connection\Registry\EngineRegistry.pas',
+  dbExpress.Factory in '..\Source\Connection\Adapters\dbExpress\dbExpress.Factory.pas',
+  dbExpress.ConnectionStrategy in '..\Source\Connection\Adapters\dbExpress\dbExpress.ConnectionStrategy.pas',
+  dbExpress.QueryStrategy in '..\Source\Connection\Adapters\dbExpress\dbExpress.QueryStrategy.pas',
+  dbExpress.Driver.SQLite in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.SQLite.pas',
+  dbExpress.Driver.MySQL in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.MySQL.pas',
+  dbExpress.Driver.Firebird in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.Firebird.pas',
+  dbExpress.Driver.Interbase in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.Interbase.pas',
+  dbExpress.Driver.MSSQL in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.MSSQL.pas',
+  dbExpress.Driver.PostgreSQL in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.PostgreSQL.pas',
+  dbExpress.Driver.Oracle in '..\Source\Connection\Adapters\dbExpress\dbExpress.Driver.Oracle.pas',
+  FireDAC.Factory in '..\Source\Connection\Adapters\FireDAC\FireDAC.Factory.pas',
+  FireDAC.ConnectionStrategy in '..\Source\Connection\Adapters\FireDAC\FireDAC.ConnectionStrategy.pas',
+  FireDAC.QueryStrategy in '..\Source\Connection\Adapters\FireDAC\FireDAC.QueryStrategy.pas',
+  FireDAC.Driver.SQLite in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.SQLite.pas',
+  FireDAC.Driver.MySQL in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.MySQL.pas',
+  FireDAC.Driver.Firebird in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Firebird.pas',
+  FireDAC.Driver.Interbase in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Interbase.pas',
+  FireDAC.Driver.MSSQL in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.MSSQL.pas',
+  FireDAC.Driver.PostgreSQL in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.PostgreSQL.pas',
+  FireDAC.Driver.Oracle in '..\Source\Connection\Adapters\FireDAC\FireDAC.Driver.Oracle.pas',
+  ZeOs.Factory in '..\Source\Connection\Adapters\ZeOs\ZeOs.Factory.pas',
+  ZeOs.ConnectionStrategy in '..\Source\Connection\Adapters\ZeOs\ZeOs.ConnectionStrategy.pas',
+  ZeOs.QueryStrategy in '..\Source\Connection\Adapters\ZeOs\ZeOs.QueryStrategy.pas',
+  ZeOs.Driver.SQLite in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.SQLite.pas',
+  ZeOs.Driver.MySQL in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.MySQL.pas',
+  ZeOs.Driver.Firebird in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.Firebird.pas',
+  ZeOs.Driver.Interbase in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.Interbase.pas',
+  ZeOs.Driver.MSSQL in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.MSSQL.pas',
+  ZeOs.Driver.PostgreSQL in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.PostgreSQL.pas',
+  ZeOs.Driver.Oracle in '..\Source\Connection\Adapters\ZeOs\ZeOs.Driver.Oracle.pas',
+  UniDAC.Factory in '..\Source\Connection\Adapters\UniDAC\UniDAC.Factory.pas',
+  UniDAC.ConnectionStrategy in '..\Source\Connection\Adapters\UniDAC\UniDAC.ConnectionStrategy.pas',
+  UniDAC.QueryStrategy in '..\Source\Connection\Adapters\UniDAC\UniDAC.QueryStrategy.pas',
+  UniDAC.Driver.SQLite in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.SQLite.pas',
+  UniDAC.Driver.MySQL in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.MySQL.pas',
+  UniDAC.Driver.Firebird in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.Firebird.pas',
+  UniDAC.Driver.Interbase in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.Interbase.pas',
+  UniDAC.Driver.MSSQL in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.MSSQL.pas',
+  UniDAC.Driver.PostgreSQL in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.PostgreSQL.pas',
+  UniDAC.Driver.Oracle in '..\Source\Connection\Adapters\UniDAC\UniDAC.Driver.Oracle.pas',
+  Connection.Config.JSON in '..\Source\Connection\Config\Connection.Config.JSON.pas',
+  Connection.Config.INI in '..\Source\Connection\Config\Connection.Config.INI.pas',
+  Connection.Config.XML in '..\Source\Connection\Config\Connection.Config.XML.pas',
   GenericConnectorForm in 'GenericConnectorForm.pas' {GenericConnectorForm};
 
 {$R *.res}
 
 begin
+  FastMM_EnterDebugMode;
+  FastMM_MessageBoxEvents := [];
+  FastMM_LogToFileEvents := FastMM_LogToFileEvents + [mmetUnexpectedMemoryLeakDetail, mmetUnexpectedMemoryLeakSummary];
   Application.Initialize;
   Application.CreateForm(TGenericConnectorForm, FGenericConnectorForm);
   Application.Run;
+  ReportMemoryLeaksOnShutdown := True;
 end.

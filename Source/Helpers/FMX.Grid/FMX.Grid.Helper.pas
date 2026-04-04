@@ -2,77 +2,107 @@
 
 interface
 
-{$I CNC.Default.inc}
-
 uses
   System.SysUtils,
-  System.IOUtils,
-  System.StrUtils,
-  System.DateUtils,
   System.Classes,
   System.Math,
-  System.SyncObjs,
-  System.Threading,
   System.Generics.Collections,
-  System.RTLConsts,
   System.Variants,
-  System.JSON,
   System.RTTI,
-  System.TypInfo,
   System.Types,
   System.UITypes,
   FMX.Grid,
   FMX.Controls,
   FMX.Graphics,
+  FMX.Consts,
+  Data.DB;
 
-  Data.DB,
-
-{$IFDEF FireDACLib}
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,
-{$ENDIF}
-{$IF DEFINED(dbExpressLib) OR DEFINED(ZeOSLib)}
-  Datasnap.Provider,
-  Datasnap.DBClient,
-  Data.FMTBcd,
-  Data.SqlExpr,
-{$ENDIF}
-{$IFDEF ZeOSLib}
-  ZAbstractConnection,
-  ZConnection,
-  ZAbstractRODataset,
-  ZAbstractDataset,
-  ZDataset,
-{$ENDIF}
-
-  EventDriven;
+procedure ReleaseFMXGridVirtualDataBinding(AGrid: TGrid);
 
 type
   TGridHelper = class helper for TGrid
   private
-    class var FData : {$I CNC.Type.inc};
-    function GetData : {$I CNC.Type.inc};
-    procedure SetData(Data : {$I CNC.Type.inc});
-    procedure DoFillData(Data: {$I CNC.Type.inc});
+    class var FData: TDataSet;
+    function GetData: TDataSet;
+    procedure SetData(Data: TDataSet);
+    procedure DoFillData(Data: TDataSet);
     class var FAutoSizeColumns: Boolean;
-    function GetAutoSizeColumns : Boolean;
-    procedure SetAutoSizeColumns(Value : Boolean);
+    function GetAutoSizeColumns: Boolean;
+    procedure SetAutoSizeColumns(Value: Boolean);
     procedure DoAutoSizeColumns;
   public
     procedure RemoveRows(RowIndex, RCount: Integer);
     procedure Clear;
-    property FillData: {$I CNC.Type.inc} read GetData write SetData;
+    property FillData: TDataSet read GetData write SetData;
     property AutoSizeColumns: Boolean read GetAutoSizeColumns write SetAutoSizeColumns default false;
   end;
 
 implementation
+
+type
+  TGridOnGetBridge = class(TComponent)
+  strict private
+    FData: TDataSet;
+  public
+    destructor Destroy; override;
+    procedure GridOnGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: System.Rtti.TValue);
+    procedure GridOnSetValue(Sender: TObject; const ACol, ARow: Integer; const Value: System.Rtti.TValue);
+    property SourceData: TDataSet read FData write FData;
+  end;
+
+procedure DisposeGridGetBridge(AGrid: TGrid);
+var
+  I: Integer;
+begin
+  AGrid.OnGetValue := nil;
+  AGrid.OnSetValue := nil;
+  for I := AGrid.ComponentCount - 1 downto 0 do
+    if AGrid.Components[I] is TGridOnGetBridge then
+      AGrid.Components[I].Free;
+end;
+
+procedure ReleaseFMXGridVirtualDataBinding(AGrid: TGrid);
+begin
+  if AGrid <> nil then
+    DisposeGridGetBridge(AGrid);
+end;
+
+destructor TGridOnGetBridge.Destroy;
+begin
+  if Assigned(FData) then
+    FreeAndNil(FData);
+  inherited;
+end;
+
+procedure TGridOnGetBridge.GridOnSetValue(Sender: TObject; const ACol, ARow: Integer; const Value: System.Rtti.TValue);
+begin
+ //
+end;
+
+procedure TGridOnGetBridge.GridOnGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: System.Rtti.TValue);
+var
+  G: TGrid;
+  FieldIx: Integer;
+begin
+  Value := System.Rtti.TValue.Empty;
+  if (FData = nil) or not FData.Active then
+    Exit;
+  if not (Owner is TGrid) then
+    Exit;
+  G := TGrid(Owner);
+  if (ACol < 0) or (ACol >= G.ColumnCount) then
+    Exit;
+  FieldIx := G.ColumnByIndex(ACol).Tag;
+  if (FieldIx < 0) or (FieldIx >= FData.FieldCount) or (ARow < 0) then
+    Exit;
+
+  FData.First;
+  if ARow > 0 then
+    FData.MoveBy(ARow);
+  if FData.Eof and (ARow > 0) then
+    Exit;
+  Value := System.Rtti.TValue.From<String>(FData.Fields[FieldIx].Text);
+end;
 
 { TGridHelper }
 
@@ -81,67 +111,98 @@ var
   W: Integer;
   WMax: Single;
   SizeMax: Single;
-  Column : Integer;
+  ColIdx: Integer;
+  FieldIx: Integer;
 begin
-  SizeMax := Self.Width;
-  for Column := 0 to Self.ColumnCount-1 do
+  if (FData = nil) or not FData.Active then
+    Exit;
+  SizeMax := Max(80, Self.Width * 0.95);
+  for ColIdx := 0 to Self.ColumnCount - 1 do
   begin
-    if Self.ColumnByIndex(Column).Width > 0 then
+    FieldIx := Self.ColumnByIndex(ColIdx).Tag;
+    if (FieldIx < 0) or (FieldIx >= FData.FieldCount) then
+      Continue;
+    WMax := Max(8, Round(Canvas.TextWidth(Self.ColumnByIndex(ColIdx).Header)));
+    FData.First;
+    while not FData.Eof do
     begin
-      WMax := Round(Canvas.TextWidth(Self.ColumnByIndex(Column).Header));
-      FData.First;
-      while not FData.Eof do
-      begin
-        W := Round(Canvas.TextWidth(FData.Fields[Column].AsString));
-        if W > WMax then
-          WMax := W;
-        if WMax > SizeMax then
-        begin
-          Self.ColumnByIndex(Column).Width := SizeMax + 10;
-          Break;
-        end;
-        Self.ColumnByIndex(Column).Width := WMax + 10;
-        FData.Next;
-      end;
-      FData.Last;
+      W := Round(Canvas.TextWidth(FData.Fields[FieldIx].AsString));
+      if W > WMax then
+        WMax := W;
+      FData.Next;
     end;
+    FData.Last;
+    WMax := Max(WMax + 12, 56);
+    if WMax > SizeMax then
+      Self.ColumnByIndex(ColIdx).Width := SizeMax
+    else
+      Self.ColumnByIndex(ColIdx).Width := WMax;
   end;
 end;
 
-procedure TGridHelper.DoFillData(Data: {$I CNC.Type.inc});
+procedure TGridHelper.DoFillData(Data: TDataSet);
 var
-  I : Integer;
-  Column : TColumn;
+  I: Integer;
+  Column: TColumn;
+  GridInst: TGrid;
+  Bridge: TGridOnGetBridge;
 begin
-  Self.RowCount := Data.RecordCount;
+  if Data = nil then
+    Exit;
+  if not Data.Active then
+    Data.Open;
+  if Data.RecordCount > 0 then
+    Data.First;
 
-  for I := 0 to Data.FieldCount - 1 do
+  GridInst := TGrid(Self);
+  DisposeGridGetBridge(GridInst);
+
+  if GridInst.Model <> nil then
   begin
-    Column := TColumn.Create(nil);
-    Column.Header := Data.FieldDefs[I].Name;
-    Column.Tag := I;
-    Column.Data := Data.Fields[I].AsString;
-    Self.AddObject(Column);
+    GridInst.Model.DefaultDrawing := True;
+    GridInst.Model.DataStored := False;
+    if GridInst.Model.RowHeight < 8 then
+      GridInst.Model.RowHeight := 22;
+    GridInst.Model.DefaultTextSettings.FontColor := $FF000000;
   end;
 
-  Self.OnGetValue := DelegateOnGetValueEvent(
-    Self,
-    procedure(Sender: TObject; const ACol, ARow: Integer; var Value: System.Rtti.TValue)
+  if GridInst.Model <> nil then
+    GridInst.Model.BeginUpdate;
+  try
+    Self.RowCount := Data.RecordCount;
+    for I := 0 to Data.FieldCount - 1 do
     begin
-      Data.First;
-      Data.MoveBy(ARow);
-      Value := Data.Fields[ACol].Text;
-    end
-  );
+      Column := TStringColumn.Create(nil);
+      Column.Header := Data.FieldDefs[I].Name;
+      Column.Tag := I;
+      Column.Data := Data.Fields[I].FieldName;
+      Column.Width := 72;
+      Self.AddObject(Column);
+    end;
+  finally
+    if GridInst.Model <> nil then
+      GridInst.Model.EndUpdate;
+  end;
+
+  Bridge := TGridOnGetBridge.Create(GridInst);
+  Bridge.SourceData := Data;
+  GridInst.OnGetValue := Bridge.GridOnGetValue;
+  GridInst.OnSetValue := Bridge.GridOnSetValue;
+
+  if GridInst.Model <> nil then
+    GridInst.Model.ClearCache;
+
+  GridInst.Repaint;
 end;
 
-procedure TGridHelper.SetData(Data: {$I CNC.Type.inc});
+procedure TGridHelper.SetData(Data: TDataSet);
 begin
+  DisposeGridGetBridge(TGrid(Self));
   FData := Data;
   Self.DoFillData(Data);
 end;
 
-function TGridHelper.GetData: {$I CNC.Type.inc};
+function TGridHelper.GetData: TDataSet;
 begin
   Result := FData;
 end;
@@ -149,7 +210,7 @@ end;
 procedure TGridHelper.SetAutoSizeColumns(Value: Boolean);
 begin
   FAutoSizeColumns := Value;
-  if FAutoSizeColumns = True then
+  if FAutoSizeColumns then
     Self.DoAutoSizeColumns;
 end;
 

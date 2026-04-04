@@ -3,7 +3,7 @@ unit TSmartPointer;
 interface
 
 uses
-  Generics.Defaults;
+  Generics.Defaults, System.SysUtils;
 
 type
   TSmartPointer<T: class, constructor> = record
@@ -14,9 +14,16 @@ type
     function GetValues: T;
   private
     type
-      TGuard = class (TInterfacedObject)
+      { TGuard gerencia o ciclo de vida do objeto.
+        Se o objeto suporta IInterface (ex: TInterfacedObject), usa _Release
+        da interface para decrementar o refcount corretamente, evitando
+        double-free quando FInstance ou outra variavel de interface ainda
+        segura uma referencia.
+        Se nao suporta IInterface, chama Free diretamente como antes. }
+      TGuard = class(TInterfacedObject)
       private
         FObject: TObject;
+        FIntf: IInterface;
       public
         constructor Create(AObject: TObject);
         destructor Destroy; override;
@@ -25,7 +32,7 @@ type
     procedure Create; overload;
     constructor Create(GuardedObject: T); overload;
     class operator Implicit(GuardedObject: T): TSmartPointer<T>;
-    class operator Implicit(Smart: TSmartPointer <T>): T;
+    class operator Implicit(Smart: TSmartPointer<T>): T;
     property Ref: T read GetValues write SetValues;
   end;
 
@@ -36,11 +43,28 @@ implementation
 constructor TSmartPointer<T>.TGuard.Create(AObject: TObject);
 begin
   FObject := AObject;
+  { Tenta obter IInterface do objeto.
+    Se obtiver, o refcount sera gerenciado via interface (TInterfacedObject).
+    O FIntf segura a referencia durante a vida do TGuard. }
+  if not Supports(AObject, IInterface, FIntf) then
+    FIntf := nil;
 end;
 
 destructor TSmartPointer<T>.TGuard.Destroy;
 begin
-  FObject.Free;
+  if Assigned(FIntf) then
+  begin
+    { Objeto e TInterfacedObject: libera via interface.
+      Ao zerar FIntf o refcount decrementa — se chegar a 0, o objeto
+      e destruido automaticamente pelo TInterfacedObject._Release.
+      Nao chamamos Free diretamente para evitar double-free. }
+    FIntf := nil;
+  end
+  else
+  begin
+    { Objeto nao suporta IInterface: Free direto como antes. }
+    FObject.Free;
+  end;
   inherited;
 end;
 
