@@ -212,6 +212,8 @@
     <File Path="..\Source\Types\Strings.pas"/>
     <File Path="..\Source\Types\TimeDate.pas"/>
     <File Path="..\Source\Vendor"/>
+    <File Path="..\Source\Vendor\FastMM5"/>
+    <File Path="..\Source\Vendor\FastMM5\FastMM5.pas"/>
     <File Path="..\Source\Vendor\XSuperObject"/>
     <File Path="..\Source\Vendor\XSuperObject\XSuperJSON.pas"/>
     <File Path="..\Source\Vendor\XSuperObject\XSuperObject.pas"/>
