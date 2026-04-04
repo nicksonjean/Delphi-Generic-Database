@@ -1,0 +1,30 @@
+# IDE / Ferramentas
+.claude/
+.qodo/
+
+# Binários de compilação Delphi
+Demo/Win32/
+Demo/Win64/
+*.exe
+*.dll
+*.bpl
+*.dcp
+*.dcu
+*.obj
+*.map
+*.rsm
+*.local
+*.identcache
+*.stat
+*.dproj.local
+
+# dbExpress resources gerados
+Resources/dbExpress/
+
+# Boss (gerenciador de dependências)
+modules/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+__history/
