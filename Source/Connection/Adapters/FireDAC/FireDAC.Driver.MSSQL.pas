@@ -1,4 +1,4 @@
-﻿unit FireDAC.Driver.MSSQL;
+unit FireDAC.Driver.MSSQL;
 
 interface
 
@@ -24,8 +24,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Phys.MSSQL,
   FireDAC.Phys.MSSQLDef,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer;
 
 function TFireDAC_MSSQLConfigurator.DriverName: TDriver;
 begin

@@ -1,4 +1,4 @@
-﻿unit FMX.Grid.Helper;
+unit FMX.Grid.Helper;
 
 interface
 

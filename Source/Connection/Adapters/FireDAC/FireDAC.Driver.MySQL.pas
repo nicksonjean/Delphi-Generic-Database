@@ -1,4 +1,4 @@
-﻿unit FireDAC.Driver.MySQL;
+unit FireDAC.Driver.MySQL;
 
 interface
 
@@ -24,8 +24,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer;
 
 function TFireDAC_MySQLConfigurator.DriverName: TDriver;
 begin

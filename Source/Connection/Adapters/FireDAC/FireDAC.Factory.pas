@@ -1,4 +1,4 @@
-﻿unit FireDAC.Factory;
+unit FireDAC.Factory;
 
 {
   FireDAC.Factory

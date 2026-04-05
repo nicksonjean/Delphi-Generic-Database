@@ -168,12 +168,11 @@ uses
   Connection,
   Connector,
   Query,
-  QueryHelper,
   QueryBuilder,
   Connection.Types,
   IArray,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer,
+  SmartPointer.TSmartPointer;
 
 {$R *.fmx}
 
@@ -684,3 +683,4 @@ begin
 end;
 
 end.
+

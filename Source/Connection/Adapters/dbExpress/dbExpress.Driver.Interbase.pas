@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.Interbase;
+unit dbExpress.Driver.Interbase;
 
 interface
 

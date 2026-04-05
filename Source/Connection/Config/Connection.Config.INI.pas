@@ -1,4 +1,4 @@
-{
+﻿{
   Connection.Config.INI
   ------------------------------------------------------------------------------
   Objetivo : Criar e configurar um TConnection a partir de um arquivo INI.

@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.MySQL;
+unit ZeOS.Driver.MySQL;
 
 interface
 

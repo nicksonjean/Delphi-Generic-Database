@@ -1,14 +1,14 @@
-﻿unit Connection.Types;
+unit Connection.Types;
 
 {
   Connection.Types
   ------------------------------------------------------------------------------
-  Tipos base compartilhados por todas as camadas do projeto:
+  Objetivo: Compartilhar tipos base por todas as camadas do projeto:
     TDriver    — identificador do banco de dados (independente de engine)
     TEngine    — identificador da biblioteca de acesso (FireDAC, dbExpress, ZeOS, UniDAC)
     TConnectionParams — record com todos os parâmetros de uma conexão
   ------------------------------------------------------------------------------
-  Não importa nenhuma unit de engine específica — zero $IFDEF de biblioteca.
+  Não importa nenhuma unit de engine específica.
 }
 
 interface

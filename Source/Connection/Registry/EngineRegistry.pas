@@ -1,4 +1,4 @@
-﻿unit EngineRegistry;
+unit EngineRegistry;
 
 {
   EngineRegistry
@@ -8,7 +8,6 @@
   Inclusão da unit no projeto = engine disponível — sem alteração neste arquivo.
   ------------------------------------------------------------------------------
   Thread-safe para registro e lookup.
-  Zero $IFDEF de engine.
   Não há engine “padrão”: TConnection e TQuery exigem engine / conexão explícitas.
 }
 

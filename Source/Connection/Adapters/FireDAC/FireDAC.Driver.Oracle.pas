@@ -1,4 +1,4 @@
-﻿unit FireDAC.Driver.Oracle;
+unit FireDAC.Driver.Oracle;
 
 interface
 
@@ -24,8 +24,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Phys.Oracle,
   FireDAC.Phys.OracleDef,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer;
 
 function TFireDAC_OracleConfigurator.DriverName: TDriver;
 begin

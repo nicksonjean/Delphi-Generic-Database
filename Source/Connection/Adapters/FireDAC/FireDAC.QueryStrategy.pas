@@ -1,12 +1,11 @@
-﻿unit FireDAC.QueryStrategy;
+unit FireDAC.QueryStrategy;
 
 {
   FireDAC.QueryStrategy
   ------------------------------------------------------------------------------
   Implementação de IQueryStrategy para FireDAC.
   Gerencia TFDQuery e produz TFDMemTable (cópia) em AsInMemoryDataSet — caller libera.
-  O método Open usa TTask para execução assíncrona (comportamento anterior
-  do QueryHelper mantido).
+  O método Open usa TTask para execução assíncrona.
 }
 
 interface

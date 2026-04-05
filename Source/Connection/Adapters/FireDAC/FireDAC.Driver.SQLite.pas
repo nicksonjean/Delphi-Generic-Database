@@ -1,4 +1,4 @@
-﻿unit FireDAC.Driver.SQLite;
+unit FireDAC.Driver.SQLite;
 
 {
   FireDAC.Driver.SQLite
@@ -33,8 +33,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Phys.SQLite,
   FireDAC.Phys.SQLiteDef,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer;
 
 function TFireDAC_SQLiteConfigurator.DriverName: TDriver;
 begin

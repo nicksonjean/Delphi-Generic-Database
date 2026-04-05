@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.Interbase;
+unit UniDAC.Driver.Interbase;
 
 interface
 

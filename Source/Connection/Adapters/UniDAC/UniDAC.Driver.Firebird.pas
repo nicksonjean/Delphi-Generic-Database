@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.Firebird;
+unit UniDAC.Driver.Firebird;
 
 interface
 

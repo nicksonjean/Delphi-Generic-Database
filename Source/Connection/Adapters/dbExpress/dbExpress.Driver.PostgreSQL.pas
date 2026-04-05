@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.PostgreSQL;
+unit dbExpress.Driver.PostgreSQL;
 
 {
   dbExpress.Driver.PostgreSQL

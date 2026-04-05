@@ -1,4 +1,4 @@
-﻿unit UniDAC.Factory;
+unit UniDAC.Factory;
 
 {
   UniDAC.Factory

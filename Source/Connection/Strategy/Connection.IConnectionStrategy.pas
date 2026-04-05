@@ -1,4 +1,4 @@
-﻿unit Connection.IConnectionStrategy;
+unit Connection.IConnectionStrategy;
 
 {
   IConnectionStrategy
@@ -7,7 +7,7 @@
   Cada engine (FireDAC, dbExpress, ZeOS, UniDAC) possui uma implementação
   concreta. TConnection delega toda a lógica de engine para esta interface.
   ------------------------------------------------------------------------------
-  Zero $IFDEF de engine — apenas tipos base e Data.DB.
+  Não importa nenhuma unit de engine — apenas tipos base e Data.DB.
 }
 
 interface

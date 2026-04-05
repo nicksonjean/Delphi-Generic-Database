@@ -129,7 +129,6 @@ uses
   ArrayFieldHelper,
   ArrayAssoc,
   MimeType,
-  EventDriven,
   Connection,
   Connection.Types,
   Connector,

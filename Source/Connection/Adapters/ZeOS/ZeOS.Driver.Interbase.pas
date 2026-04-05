@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.Interbase;
+unit ZeOS.Driver.Interbase;
 
 interface
 

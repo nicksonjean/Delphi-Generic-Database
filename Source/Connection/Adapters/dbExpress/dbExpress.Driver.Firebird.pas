@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.Firebird;
+unit dbExpress.Driver.Firebird;
 
 interface
 

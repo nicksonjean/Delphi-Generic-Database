@@ -1,4 +1,4 @@
-﻿unit Connection.IQueryStrategy;
+unit Connection.IQueryStrategy;
 
 {
   IQueryStrategy
@@ -7,7 +7,7 @@
   Cada engine possui uma implementação concreta.
   TQuery delega toda operação de banco para esta interface.
   ------------------------------------------------------------------------------
-  Zero $IFDEF de engine — usa apenas Data.DB como tipo base.
+  Não importa nenhuma unit de engine — apenas tipos base e Data.DB.
 }
 
 interface

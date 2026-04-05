@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.SQLite;
+unit UniDAC.Driver.SQLite;
 
 interface
 

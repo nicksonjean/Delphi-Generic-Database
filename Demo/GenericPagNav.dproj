@@ -205,8 +205,11 @@
         <DCCReference Include="..\Source\Types\Array\Helpers\ArrayFieldHelper.pas"/>
         <DCCReference Include="..\Source\Types\Array\Helpers\ArrayStringHelper.pas"/>
         <DCCReference Include="..\Source\Types\Array\Helpers\ArrayVariantHelper.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\TSmartPointer.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\ISmartPointer.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.IGuard.Intf.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.Guard.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.ISmartPointer.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.RefGuard.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.TSmartPointer.pas"/>
         <DCCReference Include="GenericPagNavForm.pas">
             <Form>FGenericPagNavForm</Form>
         </DCCReference>

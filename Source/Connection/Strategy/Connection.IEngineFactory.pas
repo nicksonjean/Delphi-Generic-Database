@@ -1,4 +1,4 @@
-﻿unit Connection.IEngineFactory;
+unit Connection.IEngineFactory;
 
 {
   IEngineFactory
@@ -7,7 +7,7 @@
   Cada adapter registra sua fábrica concreta no TEngineRegistry.
   Inclusão da unit do adapter no projeto = engine disponível em runtime.
   ------------------------------------------------------------------------------
-  Zero $IFDEF de engine.
+  Não importa nenhuma unit de engine — apenas tipos base e Data.DB.
 }
 
 interface

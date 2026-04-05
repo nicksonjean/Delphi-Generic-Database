@@ -8,10 +8,8 @@ uses
   System.Types,
   System.UITypes,
   System.Classes,
-  FMX.Edit;
-
-  {$I Consts.inc}
-  {$I Record.inc}
+  FMX.Edit,
+  FMX.Edit.Suggest.Messages;
 
 type
   TEditHelper = class helper for TEdit

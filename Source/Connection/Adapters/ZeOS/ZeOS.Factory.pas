@@ -1,4 +1,4 @@
-﻿unit ZeOS.Factory;
+unit ZeOS.Factory;
 
 interface
 

@@ -14,8 +14,7 @@ uses
   FMX.Grid,
   FMX.Controls,
   FMX.Graphics,
-  Data.DB,
-  EventDriven;
+  Data.DB;
 
 type
   TStringGridHelper = class helper for TStringGrid

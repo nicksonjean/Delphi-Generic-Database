@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.PostgreSQL;
+unit ZeOS.Driver.PostgreSQL;
 
 interface
 

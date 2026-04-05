@@ -603,7 +603,7 @@ object GenericConnectorForm: TGenericConnectorForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 386.000000000000000000
+                  Size.Width = 390.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -628,8 +628,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridFirebird: TGrid
                 Align = Client
@@ -639,8 +639,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridPanelLayoutFirebirdLabels: TGridPanelLayout
                 Align = Client
@@ -945,7 +945,7 @@ object GenericConnectorForm: TGenericConnectorForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 386.000000000000000000
+                  Size.Width = 390.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -970,8 +970,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridMySQL: TGrid
                 Align = Client
@@ -981,8 +981,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridPanelLayoutMySQLLabels: TGridPanelLayout
                 Align = Client
@@ -1290,7 +1290,7 @@ object GenericConnectorForm: TGenericConnectorForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 386.000000000000000000
+                  Size.Width = 390.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1315,8 +1315,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridPostgreSQL: TGrid
                 Align = Client
@@ -1326,8 +1326,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridPanelLayoutPostgreSQLLabels: TGridPanelLayout
                 Align = Client
@@ -1610,7 +1610,7 @@ object GenericConnectorForm: TGenericConnectorForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 386.000000000000000000
+                  Size.Width = 390.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1653,8 +1653,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 1
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridMSSQL: TGrid
                 Align = Client
@@ -1664,8 +1664,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridPanelLayoutMSSQLAutoCompleteEdit: TGridPanelLayout
                 Align = Client
@@ -1948,7 +1948,7 @@ object GenericConnectorForm: TGenericConnectorForm
                   Margins.Left = -2.000000000000000000
                   Margins.Top = -2.000000000000000000
                   Margins.Right = -2.000000000000000000
-                  Size.Width = 386.000000000000000000
+                  Size.Width = 390.000000000000000000
                   Size.Height = 22.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1991,8 +1991,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 1
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridOracle: TGrid
                 Align = Client
@@ -2002,8 +2002,8 @@ object GenericConnectorForm: TGenericConnectorForm
                 Size.Height = 201.994934082031300000
                 Size.PlatformDefault = False
                 TabOrder = 0
-                Viewport.Width = 382.000000000000000000
-                Viewport.Height = 177.000000000000000000
+                Viewport.Width = 386.000000000000000000
+                Viewport.Height = 202.000000000000000000
               end
               object GridPanelLayoutOracleAutoCompleteEdit: TGridPanelLayout
                 Align = Client

@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.SQLite;
+unit dbExpress.Driver.SQLite;
 
 interface
 

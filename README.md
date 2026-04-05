@@ -308,9 +308,7 @@ begin
     QBuilder := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
     SQL := nil;
     try
-      SQL := QBuilder.View(
-        'SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" ' +
-        'FROM "estado" ORDER BY "id"');
+      SQL := QBuilder.View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM "estado" ORDER BY "id"');
 
       Conn := TConnector.Create(SQL);
       try
@@ -327,8 +325,7 @@ begin
         // TGrid — filtra por nome completo
         Conn.ToGrid(GridFirebird,      '{"Field":{"Estado":"Distrito Federal"}}');
         // TListView — múltiplos campos visíveis, filtra por sigla
-        Conn.ToListView(ListViewFirebird, 'Codigo', 'Estado',
-          ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
+        Conn.ToListView(ListViewFirebird, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
       finally
         Conn.Destroy;
       end;
@@ -345,8 +342,12 @@ end;
 
 ```delphi
 DB := TConnection.Create(TEngine.FireDAC);
-DB.Driver := TDriver.MySQL;  DB.Host := 'localhost';  DB.Port := 3306;
-DB.Database := 'demodev';    DB.Username := 'root';   DB.Password := 'masterkey';
+DB.Driver := TDriver.MySQL;
+DB.Host := 'localhost';
+DB.Port := 3306;
+DB.Database := 'demodev';
+DB.Username := 'root';
+DB.Password := 'masterkey';
 DB.Connected := True;
 
 QBuilder := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
@@ -356,17 +357,20 @@ Conn := TConnector.Create(SQL);
 Conn.ToCombo(ComboBoxMySQL,  'Codigo', 'Estado', '{"Index":1}');
 Conn.ToListBox(ListBoxMySQL, 'Codigo', 'Estado', '{"Field":{"Estado":"Bahia"}}');
 Conn.ToGrid(GridMySQL,       '{"Field":{"Estado":"Distrito Federal"}}');
-Conn.ToListView(ListViewMySQL, 'Codigo', 'Estado',
-  ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
+Conn.ToListView(ListViewMySQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
 ```
 
 **Exemplo — PostgreSQL via FireDAC:**
 
 ```delphi
 DB := TConnection.Create(TEngine.FireDAC);
-DB.Driver := TDriver.PostgreSQL;  DB.Host := 'localhost';  DB.Port := 5432;
-DB.Schema := 'public';  DB.Database := 'demodev';
-DB.Username := 'postgres';  DB.Password := 'masterkey';
+DB.Driver := TDriver.PostgreSQL;
+DB.Host := 'localhost';
+DB.Port := 5432;
+DB.Schema := 'public';
+DB.Database := 'demodev';
+DB.Username := 'postgres';
+DB.Password := 'masterkey';
 DB.Connected := True;
 
 SQL := TQueryBuilder.ForConnection(DB.GetConnectionStrategy).View(
@@ -381,34 +385,38 @@ Conn.ToGrid(GridPostgreSQL,       '{"Field":{"Estado":"Distrito Federal"}}');
 
 ```delphi
 DB := TConnection.Create(TEngine.FireDAC);
-DB.Driver := TDriver.MSSQL;  DB.Host := 'localhost';  DB.Port := 1433;
-DB.Database := 'demodev';    DB.Username := 'sa';     DB.Password := 'masterkey';
+DB.Driver := TDriver.MSSQL;
+DB.Host := 'localhost';
+DB.Port := 1433;
+DB.Database := 'demodev';
+DB.Username := 'sa';
+DB.Password := 'masterkey';
 DB.Connected := True;
 
-SQL := TQueryBuilder.ForConnection(DB.GetConnectionStrategy).View(
-  'SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM "estado" ORDER BY "id"');
+SQL := TQueryBuilder.ForConnection(DB.GetConnectionStrategy).View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM "estado" ORDER BY "id"');
 
 Conn := TConnector.Create(SQL);
-Conn.ToListView(ListViewMSSQL, 'Codigo', 'Estado',
-  ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
+Conn.ToListView(ListViewMSSQL, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
 ```
 
 **Exemplo — Oracle via FireDAC:**
 
 ```delphi
 DB := TConnection.Create(TEngine.FireDAC);
-DB.Driver := TDriver.Oracle;  DB.Host := 'localhost';  DB.Port := 1521;
-DB.Schema := 'HR';  DB.Database := 'ORCL';
-DB.Username := 'hr';  DB.Password := 'masterkey';
+DB.Driver := TDriver.Oracle;
+DB.Host := 'localhost';
+DB.Port := 1521;
+DB.Schema := 'HR';
+DB.Database := 'ORCL';
+DB.Username := 'hr';
+DB.Password := 'masterkey';
 DB.Connected := True;
 
-SQL := TQueryBuilder.ForConnection(DB.GetConnectionStrategy).View(
-  'SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM HR."estado" ORDER BY "id"');
+SQL := TQueryBuilder.ForConnection(DB.GetConnectionStrategy).View('SELECT "id" AS "Codigo", "nome" AS "Estado", "sigla" AS "Sigla" FROM HR."estado" ORDER BY "id"');
 
 Conn := TConnector.Create(SQL);
 Conn.ToGrid(GridOracle, '{"Field":{"Estado":"Distrito Federal"}}');
-Conn.ToListView(ListViewOracle, 'Codigo', 'Estado',
-  ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
+Conn.ToListView(ListViewOracle, 'Codigo', 'Estado', ['Codigo', 'Estado', 'Sigla'], '{"Field":{"Sigla":"PA"}}');
 ```
 
 ---

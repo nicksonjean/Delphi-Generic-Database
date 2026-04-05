@@ -1,4 +1,4 @@
-﻿unit ZeOS.QueryStrategy;
+unit ZeOS.QueryStrategy;
 
 interface
 

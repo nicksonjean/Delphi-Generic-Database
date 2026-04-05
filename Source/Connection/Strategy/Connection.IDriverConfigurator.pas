@@ -1,4 +1,4 @@
-﻿unit Connection.IDriverConfigurator;
+unit Connection.IDriverConfigurator;
 
 {
   IDriverConfigurator
@@ -7,7 +7,7 @@
   de um driver específico. Cada combinação engine+driver possui sua própria
   implementação concreta dentro do adapter correspondente.
   ------------------------------------------------------------------------------
-  Não importa nenhuma unit de engine — apenas os tipos base do projeto.
+  Não importa nenhuma unit de engine.
 }
 
 interface

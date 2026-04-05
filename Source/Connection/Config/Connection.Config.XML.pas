@@ -1,4 +1,4 @@
-{
+﻿{
   Connection.Config.XML
   ------------------------------------------------------------------------------
   Objetivo : Criar e configurar um TConnection a partir de um documento XML.

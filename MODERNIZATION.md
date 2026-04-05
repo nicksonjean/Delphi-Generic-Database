@@ -110,7 +110,7 @@ impactam a camada dbExpress na nova arquitetura:
 | Criação de adapters | **Abstract Factory** | `IEngineFactory` instancia objetos da engine certa |
 | Registro dinâmico | **Registry** | Permite registrar novas engines sem alterar código existente |
 | Generics | `TQuery<TDataSet>` | Desacopla o tipo do dataset da camada de negócio |
-| Ciclo de vida | **Smart Pointer** | `TSmartPointer<T>` já existente, mantido |
+| Ciclo de vida | **Smart Pointer** | `TSmartPointer<T>` / `ISmartPointer<T>` — units `SmartPointer.TSmartPointer` e `SmartPointer.ISmartPointer` (ver §5.3) |
 
 ### 2.2 Diagrama de camadas
 
@@ -746,6 +746,26 @@ function TConnector.ToDataSet: TDataSet;
 Mesmo contrato público. Mudança interna: substituir `TClientDataSet`/`TFDMemTable` por
 `TDataSet` e chamar `FQuery.Strategy.AsInMemoryDataSet`.
 
+### 5.3 `Source\SmartPointer` — um tipo por unit (padrão `*.Intf` / implementação)
+
+A API pública (`ISmartPointer<T>`, `TSmartPointer<T>`, operadores implícitos, propriedade `Ref`)
+permanece a mesma. O que mudou é apenas o **layout físico**, alinhado a `Connection.Intf`,
+`Query.Intf`, etc.:
+
+| Unit | Conteúdo |
+|------|----------|
+| `SmartPointer.IGuard.Intf.pas` | `IGuard` |
+| `SmartPointer.Guard.pas` | `TGuard` — `TInterfacedObject` que dá `Free` ao `TObject` no `Destroy` |
+| `SmartPointer.ISmartPointer.pas` | record `ISmartPointer<T>` |
+| `SmartPointer.RefGuard.pas` | `TSmartPointerRefGuard` — libera via `IInterface` quando o objeto suporta, senão `Free` |
+| `SmartPointer.TSmartPointer.pas` | record `TSmartPointer<T>` |
+
+**Ordem de compilação sugerida:** `SmartPointer.IGuard.Intf` → `SmartPointer.Guard` → `SmartPointer.ISmartPointer` → `SmartPointer.RefGuard` → `SmartPointer.TSmartPointer`.
+
+Nos `uses` do código de aplicação, usar `SmartPointer.ISmartPointer` e/ou `SmartPointer.TSmartPointer`
+(em vez dos antigos units `ISmartPointer` e `TSmartPointer`). Os drivers FireDAC que só precisam do
+cast implícito para `ISmartPointer<T>` referenciam apenas `SmartPointer.ISmartPointer`.
+
 ---
 
 ## 6. Compatibilidade com Casos de Uso Existentes
@@ -891,7 +911,9 @@ Connector.ToListView(ListViewSQLite, ['Codigo', 'Estado', 'Sigla'], 13);
 11. **`TConnectionClass` (Singleton) preservado** — cria `TConnection` com
     `TEngineRegistry.DefaultEngine`.
 
-12. **`TSmartPointer<T>` inalterado.**
+12. **`TSmartPointer<T>` e `ISmartPointer<T>` inalterados na API.** A implementação foi
+    fragmentada em `Source\SmartPointer\` conforme a tabela da §5.3; demos e `.dproj` listam
+    os cinco units na ordem de dependência.
 
 ---
 

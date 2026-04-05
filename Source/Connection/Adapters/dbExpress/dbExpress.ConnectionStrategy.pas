@@ -1,4 +1,4 @@
-﻿unit dbExpress.ConnectionStrategy;
+unit dbExpress.ConnectionStrategy;
 
 {
   dbExpress.ConnectionStrategy

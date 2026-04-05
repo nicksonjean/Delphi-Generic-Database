@@ -1,4 +1,4 @@
-﻿unit QueryBuilder;
+unit QueryBuilder;
 
 interface
 

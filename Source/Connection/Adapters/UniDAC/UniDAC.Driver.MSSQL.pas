@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.MSSQL;
+unit UniDAC.Driver.MSSQL;
 
 interface
 

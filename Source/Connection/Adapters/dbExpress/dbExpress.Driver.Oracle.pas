@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.Oracle;
+unit dbExpress.Driver.Oracle;
 
 {
   dbExpress.Driver.Oracle

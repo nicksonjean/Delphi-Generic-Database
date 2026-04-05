@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.SQLite;
+unit ZeOS.Driver.SQLite;
 
 interface
 

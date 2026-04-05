@@ -27,7 +27,8 @@ unit Connection.Config.JSON;
 interface
 
 uses
-  Connection;
+  Connection,
+  System.JSON;
 
 type
   TConnectionConfigJSON = class
@@ -35,54 +36,61 @@ type
     { Lê ASource como JSON e retorna um TConnection configurado (sem conectar).
       Lança EArgumentException se o JSON for inválido ou contiver engine desconhecida. }
     class function Load(const ASource: String): TConnection;
+    { Aplica um objeto JSON já parseado (mesmo esquema de Load). Não libera AJSON. }
+    class function LoadFromJSONObject(const AJSON: TJSONObject): TConnection;
   end;
 
 implementation
 
 uses
   System.SysUtils,
-  System.JSON,
   Connection.Types;
 
-class function TConnectionConfigJSON.Load(const ASource: String): TConnection;
+class function TConnectionConfigJSON.LoadFromJSONObject(const AJSON: TJSONObject): TConnection;
 var
-  JSON:     TJSONObject;
   Engine:   TEngine;
   ArgsObj:  TJSONObject;
   Pair:     TJSONPair;
   Driver:   TDriver;
 begin
+  if not Assigned(AJSON) then
+    raise EArgumentException.Create('Connection config: JSON object is nil.');
+  if AJSON.GetValue('engine') = nil then
+    raise EArgumentException.Create('Connection config JSON: property "engine" is required.');
+  if not StringToEngine(AJSON.GetValue<String>('engine'), Engine) then
+    raise EArgumentException.CreateFmt('Unknown engine: %s',
+      [AJSON.GetValue<String>('engine')]);
+
+  Result := TConnection.Create(Engine);
+
+  if AJSON.GetValue('driver') <> nil then
+  begin
+    if StringToDriver(AJSON.GetValue<String>('driver'), Driver) then
+      Result.Driver := Driver;
+  end;
+
+  if AJSON.GetValue('host')     <> nil then Result.Host     := AJSON.GetValue<String>('host');
+  if AJSON.GetValue('port')     <> nil then Result.Port     := AJSON.GetValue<Integer>('port');
+  if AJSON.GetValue('schema')   <> nil then Result.Schema   := AJSON.GetValue<String>('schema');
+  if AJSON.GetValue('database') <> nil then Result.Database := AJSON.GetValue<String>('database');
+  if AJSON.GetValue('username') <> nil then Result.Username := AJSON.GetValue<String>('username');
+  if AJSON.GetValue('password') <> nil then Result.Password := AJSON.GetValue<String>('password');
+
+  ArgsObj := AJSON.GetValue<TJSONObject>('args');
+  if Assigned(ArgsObj) then
+    for Pair in ArgsObj do
+      Result.AddArgument(Pair.JsonString.Value, Pair.JsonValue.Value);
+end;
+
+class function TConnectionConfigJSON.Load(const ASource: String): TConnection;
+var
+  JSON: TJSONObject;
+begin
   JSON := TJSONObject.ParseJSONValue(ASource) as TJSONObject;
   if not Assigned(JSON) then
     raise EArgumentException.Create('Invalid JSON for connection config');
   try
-    if JSON.GetValue('engine') = nil then
-      raise EArgumentException.Create('Connection config JSON: property "engine" is required.');
-    if not StringToEngine(JSON.GetValue<String>('engine'), Engine) then
-      raise EArgumentException.CreateFmt('Unknown engine: %s',
-        [JSON.GetValue<String>('engine')]);
-
-    Result := TConnection.Create(Engine);
-
-    { Driver — opcional }
-    if JSON.GetValue('driver') <> nil then
-    begin
-      if StringToDriver(JSON.GetValue<String>('driver'), Driver) then
-        Result.Driver := Driver;
-    end;
-
-    if JSON.GetValue('host')     <> nil then Result.Host     := JSON.GetValue<String>('host');
-    if JSON.GetValue('port')     <> nil then Result.Port     := JSON.GetValue<Integer>('port');
-    if JSON.GetValue('schema')   <> nil then Result.Schema   := JSON.GetValue<String>('schema');
-    if JSON.GetValue('database') <> nil then Result.Database := JSON.GetValue<String>('database');
-    if JSON.GetValue('username') <> nil then Result.Username := JSON.GetValue<String>('username');
-    if JSON.GetValue('password') <> nil then Result.Password := JSON.GetValue<String>('password');
-
-    { Args extras — opcional }
-    ArgsObj := JSON.GetValue<TJSONObject>('args');
-    if Assigned(ArgsObj) then
-      for Pair in ArgsObj do
-        Result.AddArgument(Pair.JsonString.Value, Pair.JsonValue.Value);
+    Result := LoadFromJSONObject(JSON);
   finally
     JSON.Free;
   end;

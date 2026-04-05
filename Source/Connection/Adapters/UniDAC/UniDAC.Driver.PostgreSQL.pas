@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.PostgreSQL;
+unit UniDAC.Driver.PostgreSQL;
 
 interface
 

@@ -18,8 +18,11 @@ uses
   ArrayFieldHelper in '..\Source\Types\Array\Helpers\ArrayFieldHelper.pas',
   ArrayStringHelper in '..\Source\Types\Array\Helpers\ArrayStringHelper.pas',
   ArrayVariantHelper in '..\Source\Types\Array\Helpers\ArrayVariantHelper.pas',
-  TSmartPointer in '..\Source\SmartPointer\TSmartPointer.pas',
-  ISmartPointer in '..\Source\SmartPointer\ISmartPointer.pas',
+  SmartPointer.IGuard.Intf in '..\Source\SmartPointer\SmartPointer.IGuard.Intf.pas',
+  SmartPointer.Guard in '..\Source\SmartPointer\SmartPointer.Guard.pas',
+  SmartPointer.ISmartPointer in '..\Source\SmartPointer\SmartPointer.ISmartPointer.pas',
+  SmartPointer.RefGuard in '..\Source\SmartPointer\SmartPointer.RefGuard.pas',
+  SmartPointer.TSmartPointer in '..\Source\SmartPointer\SmartPointer.TSmartPointer.pas',
   GenericPagNavForm in 'GenericPagNavForm.pas' {FGenericPagNavForm};
 
 {$R GenericPagNav.res}

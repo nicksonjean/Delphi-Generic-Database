@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.Oracle;
+unit UniDAC.Driver.Oracle;
 
 interface
 

@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.Firebird;
+unit ZeOS.Driver.Firebird;
 
 interface
 

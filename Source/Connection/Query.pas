@@ -1,9 +1,9 @@
-﻿unit Query;
+unit Query;
 
 {
   Query
   ------------------------------------------------------------------------------
-  Objetivo : Encapsular a execução de queries de forma agnóstica à engine.
+  Objetivo: Encapsular a execução de queries de forma agnóstica à engine.
   Construção apenas com IConnectionStrategy explícito — sem conexão implícita.
   Sem IFDEF de engine — zero acoplamento a FireDAC, dbExpress, ZeOS ou UniDAC.
   ------------------------------------------------------------------------------
@@ -17,13 +17,10 @@ uses
   Data.DB,
   Connection.IQueryStrategy,
   Connection.IConnectionStrategy,
-  EngineRegistry;
+  EngineRegistry,
+  Query.Intf;
 
 type
-  IQuery = interface
-    ['{9B8F735D-7B55-44AB-A390-CE896F27BE26}']
-  end;
-
   TQuery = class
   private
     FStrategy:           IQueryStrategy;

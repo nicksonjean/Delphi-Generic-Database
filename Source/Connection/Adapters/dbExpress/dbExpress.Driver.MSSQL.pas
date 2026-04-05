@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.MSSQL;
+unit dbExpress.Driver.MSSQL;
 
 interface
 

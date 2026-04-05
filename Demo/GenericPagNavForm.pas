@@ -93,8 +93,7 @@ uses
   ArrayFieldHelper,
   ArrayAssoc,
   MimeType,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.TSmartPointer;
 
 {$R *.fmx}
 

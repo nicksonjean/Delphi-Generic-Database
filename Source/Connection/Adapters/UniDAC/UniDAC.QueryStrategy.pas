@@ -1,4 +1,4 @@
-﻿unit UniDAC.QueryStrategy;
+unit UniDAC.QueryStrategy;
 
 interface
 

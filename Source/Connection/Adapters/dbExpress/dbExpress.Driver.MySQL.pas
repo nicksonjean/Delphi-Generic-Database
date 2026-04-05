@@ -1,4 +1,4 @@
-﻿unit dbExpress.Driver.MySQL;
+unit dbExpress.Driver.MySQL;
 
 interface
 

@@ -1,22 +1,21 @@
-﻿unit FMX.Edit.Extension;
+unit FMX.Edit.Extension;
 
 interface
 
 uses
-  FMX.Edit.Style, 
-  FMX.Controls.Presentation, 
-  FMX.Controls.Model, 
-  FMX.Presentation.Messages, 
+  FMX.Edit.Style,
+  FMX.Controls.Presentation,
+  FMX.Controls.Model,
+  FMX.Presentation.Messages,
   FMX.Edit,
-  FMX.Controls, 
-  FMX.ListBox, 
-  System.Classes, 
+  FMX.Controls,
+  FMX.ListBox,
+  System.Classes,
   System.Types,
-  FMX.StdCtrls;
+  FMX.StdCtrls,
+  FMX.Edit.Suggest.Messages;
 
-  {$I Consts.inc}
-  {$I Record.inc}
-
+type
   TStyledSuggestEdit = class(TStyledEdit)
   private
     FItems: TStrings;
@@ -75,8 +74,7 @@ uses
   System.Math,
   System.Rtti,
   {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
-  System.UITypes,
-  FMX.Edit.Helper;
+  System.UITypes;
 
 { TStyleSuggestEditProxy }
 
@@ -369,18 +367,10 @@ begin
   inherited;
 end;
 
-{
-initialization
-  TPresentationProxyFactory.Current.Register('SuggestEditStyle', TStyleSuggestEditProxy);
-finalization
-  TPresentationProxyFactory.Current.Unregister('SuggestEditStyle');
-}
-
 initialization
   TPresentationProxyFactory.Current.Unregister('Edit-style');
   TPresentationProxyFactory.Current.Register('Edit-style', TStyleSuggestEditProxy);
 finalization
   TPresentationProxyFactory.Current.Unregister('Edit-style');
-  TPresentationProxyFactory.Current.Register('Edit-style', TStyleSuggestEditProxy);
 
 end.

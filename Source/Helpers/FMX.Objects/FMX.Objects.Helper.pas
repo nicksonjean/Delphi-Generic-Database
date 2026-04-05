@@ -17,7 +17,7 @@ uses
   FMX.Edit,
   FMX.Ani,
   FMX.Dialogs,
-  EventDriven;
+  EventDelegate;
 
 var
   VarHeight: Single;

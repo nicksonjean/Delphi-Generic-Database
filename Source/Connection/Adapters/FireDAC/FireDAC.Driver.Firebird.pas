@@ -1,4 +1,4 @@
-﻿unit FireDAC.Driver.Firebird;
+unit FireDAC.Driver.Firebird;
 
 interface
 
@@ -25,8 +25,7 @@ uses
   FireDAC.Phys.FB,
   FireDAC.Phys.IBWrapper,
   FireDAC.Phys.FBDef,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer;
 
 function TFireDAC_FirebirdConfigurator.DriverName: TDriver;
 begin

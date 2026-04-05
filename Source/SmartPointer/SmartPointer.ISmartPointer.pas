@@ -1,22 +1,15 @@
-unit ISmartPointer;
+unit SmartPointer.ISmartPointer;
+
+{
+  ISmartPointer<T> — record com conversão implícita para T; ciclo de vida via TGuard + IGuard.
+}
 
 interface
 
 uses
-  Generics.Defaults;
+  SmartPointer.IGuard.Intf;
 
 type
-  IGuard = interface
-    ['{CE522D5D-41DE-4C6F-BC84-912C2AEF66B3}']
-  end;
-  TGuard = class(TInterfacedObject, IGuard)
-  private
-    FObject: TObject;
-  public
-    constructor Create(); overload;
-    constructor Create(AObject: TObject); overload;
-    destructor Destroy; override;
-  end;
   ISmartPointer<T: class> = record
   private
     FGuard: IGuard;
@@ -28,23 +21,8 @@ type
 
 implementation
 
-{ TGuard }
-
-constructor TGuard.Create;
-begin
-  inherited;
-end;
-
-constructor TGuard.Create(AObject: TObject);
-begin
-  FObject := AObject;
-end;
-
-destructor TGuard.Destroy;
-begin
-  FObject.Free;
-  inherited;
-end;
+uses
+  SmartPointer.Guard;
 
 { ISmartPointer }
 

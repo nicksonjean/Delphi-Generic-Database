@@ -51,8 +51,11 @@
     <File Path="..\Source\Reflection"/>
     <File Path="..\Source\Reflection\MimeType.pas"/>
     <File Path="..\Source\SmartPointer"/>
-    <File Path="..\Source\SmartPointer\TSmartPointer.pas"/>
-    <File Path="..\Source\SmartPointer\ISmartPointer.pas"/>
+    <File Path="..\Source\SmartPointer\SmartPointer.Guard.pas"/>
+    <File Path="..\Source\SmartPointer\SmartPointer.IGuard.Intf.pas"/>
+    <File Path="..\Source\SmartPointer\SmartPointer.ISmartPointer.pas"/>
+    <File Path="..\Source\SmartPointer\SmartPointer.RefGuard.pas"/>
+    <File Path="..\Source\SmartPointer\SmartPointer.TSmartPointer.pas"/>
     <File Path="..\Source\Types"/>
     <File Path="..\Source\Types\Array"/>
     <File Path="..\Source\Types\Array\Helpers"/>

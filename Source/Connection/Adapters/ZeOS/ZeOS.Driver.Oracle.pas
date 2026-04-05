@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.Oracle;
+unit ZeOS.Driver.Oracle;
 
 interface
 

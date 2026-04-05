@@ -15,7 +15,7 @@ uses
   FMX.Controls.Model,
   FMX.Presentation.Messages,
   FMX.Forms,
-  EventDriven;
+  EventDelegate;
 
 type
   TComboEditHelper = class helper for TComboEdit
@@ -43,11 +43,9 @@ uses
   System.Generics.Collections,
   FMX.Graphics,
   FMX.Pickers,
-  FMX.ListBox;
-
-var
-  GFonts: TDictionary<TComboEdit, TTextSettings>;
-  GListBoxes: TDictionary<TComboEdit, TCustomListBox>;
+  FMX.ListBox,
+  FMX.Controls,
+  FMX.ListView.Types;
 
 type
   TComboTextSettings = class(TTextSettings)
@@ -59,6 +57,10 @@ type
     constructor Create(const ComboEdit: TComboEdit); reintroduce;
     destructor Destroy; override;
   end;
+
+var
+  GFonts: TDictionary<TComboEdit, TTextSettings>;
+  GListBoxes: TDictionary<TComboEdit, TCustomListBox>;
 
 { TComboTextSettings }
 
@@ -87,7 +89,7 @@ begin
   begin
     Self.OnKeyDown := DelegateKeyEvent(
       Self,
-      procedure(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState)
+      procedure(Sender: TObject; var Key: Word; var KeyChar: WideChar; Shift: TShiftState)
       begin
         FLastKey := Key;
         FLastKeyChar := KeyChar;
@@ -96,8 +98,9 @@ begin
     Self.OnTyping := DelegateEvent(Self,
     procedure(Sender: TObject)
     var
-      Search, Text: String;
+      Search, LcText: String;
       I: Integer;
+      FoundIdx: Integer;
     begin
       Search := Self.Text;
       if FLastKey = vkBack then
@@ -107,17 +110,34 @@ begin
       end;
       if (CharInSet(FLastKeyChar,[Chr(48)..Chr(57)])) or (CharInSet(FLastKeyChar,[Chr(65)..Chr(90)])) or (CharInSet(FLastKeyChar,[Chr(97)..Chr(122)])) then
       begin
-        if Length(Search)<=0 then
+        if Length(Search) <= 0 then
           Exit;
-        for I := 0 to Self.Items.Count do
+        if Self.Items.Count = 0 then
+          Exit;
+        LcText := Self.Text.ToLower;
+        FoundIdx := -1;
+        for I := 0 to Self.Items.Count - 1 do
         begin
-          Text := Self.Text.ToLower;
-          if Self.Items[I].ToLower.StartsWith(Text) then
+          if Self.Items[I].ToLower.StartsWith(LcText) then
+          begin
+            FoundIdx := I;
             Break;
+          end;
         end;
-        Self.ItemIndex := I;
-        Self.SelStart := Length(Search);
-        Self.SelLength := (Length(Self.Text) - Length(Search));
+        if FoundIdx >= 0 then
+        begin
+          Self.ItemIndex := FoundIdx;
+          Self.SelStart := Length(Search);
+          Self.SelLength := Length(Self.Text) - Length(Search);
+        end
+        else
+        begin
+          Self.ItemIndex := -1;
+          Self.SelStart := Length(Search);
+          Self.SelLength := 0;
+          if Self.Items.Count > 0 then
+            Self.DropDown;
+        end;
       end;
     end);
   end;
@@ -246,7 +266,7 @@ begin
   Self.StyledSettings := RemoveFontSettings(Self.StyledSettings);
   Self.TextSettings.Assign(Settings);
 end;
-
+
 function TComboEditHelper.RemoveFontSettings(const Settings: TStyledSettings): TStyledSettings;
 begin
   Result := Settings - [TStyledSetting.Family, TStyledSetting.Size, TStyledSetting.Style, TStyledSetting.FontColor];

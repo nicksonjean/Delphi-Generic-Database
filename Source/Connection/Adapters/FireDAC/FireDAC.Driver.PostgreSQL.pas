@@ -1,4 +1,4 @@
-﻿unit FireDAC.Driver.PostgreSQL;
+unit FireDAC.Driver.PostgreSQL;
 
 interface
 
@@ -24,8 +24,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Phys.PG,
   FireDAC.Phys.PGDef,
-  ISmartPointer,
-  TSmartPointer;
+  SmartPointer.ISmartPointer;
 
 function TFireDAC_PostgreSQLConfigurator.DriverName: TDriver;
 begin

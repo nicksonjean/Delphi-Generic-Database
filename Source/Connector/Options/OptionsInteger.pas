@@ -77,12 +77,11 @@ uses
   FMX.ComboBox.Helper,
   DictionaryHelper,
   ArrayHelper,
-  EventDriven,
   Connection,
+  Connector.Types,
   Connector
   ;
 
-  { Classe TConnector Herdade de TQuery }
 type
   TOptionsInteger = class(TConnector)
   private

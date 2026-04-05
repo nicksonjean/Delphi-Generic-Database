@@ -20,8 +20,11 @@
   Você também pode obter uma copia da licença em:
   http://www.opensource.org/licenses/lgpl-license.php
 }
+
 unit Connector;
+
 interface
+
 uses
   System.SysUtils,
   System.IOUtils,
@@ -68,13 +71,13 @@ uses
   FMX.ListBox.Helper,
   FMX.StringGrid.Helper,
   FMX.Grid.Helper,
+  EventDelegate,
   FMX.ComboEdit.Helper,
   FMX.ComboBox.Helper,
   DictionaryHelper,
-  EventDriven,
+  Connector.Types,
   Connection,
   Query,
-  QueryHelper,
   QueryBuilder,
   RTTI,
   ArrayHelper,
@@ -83,68 +86,7 @@ uses
   Vcl.Forms
   ;
 
-  { Classe Utilizada para Armazenamento de Dados }
-type
-  { TComponent como base: o TListBoxItem que for Owner libera automaticamente via FComponents ao ser destruído pelo FMX. }
-  TValueObject = class(TComponent)
-  strict private
-    FValue: TValue;
-  public
-    constructor Create(AOwner: TComponent; const aValue: TValue); reintroduce;
-    property Value: TValue read FValue;
-  end;
-
-  { Tipos Específicos Pré-Validados }
-type
-  TNavigationType = (Pages, Full);
-  TPairArray = Array[0..1] of Variant;
-  TDetailArray = Array[0..2] of Variant;
-
-  { Classe para Criação dos Itens em Formato JSON, Utilizada em ToListView }
-type
-  TJSONItem = class
-  private
-    { Private declarations }
-    FJSONData: String;
-  public
-    { Public declarations }
-    const Height = 76;
-    function GetJSONData: String;
-    procedure SetJSONData(IndexField, ValueField, DataFields: String);
-    procedure AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
-  end;
-
-  { Classe Estática para Facilitar a Alimentação do Parâmetro Options no Formato JSON }
-type
-  TJSONOptionsHelper = class
-  public
-    class function &Set(Index : Integer): String; overload;
-    class function &Set(Index : Integer; Pagination: Integer = -1): String; overload;
-    class function &Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String; overload;
-    class function &Set(Field : TArray<Variant>): String; overload;
-    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1): String; overload;
-    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String; overload;
-  end;
-
-  { Classe Estática para Facilitar a Alimentação do Parâmetro Options no Formato Array }
-type
-  TArrayOptionsHelper = class
-  public
-    class function &Set(Index : Integer): TDictionary<String, TArray<Variant>>; overload;
-    class function &Set(Index : Integer; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>; overload;
-    class function &Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>; overload;
-    class function &Set(Field : TArray<Variant>): TDictionary<String, TArray<Variant>>; overload;
-    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>; overload;
-    class function &Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>; overload;
-  end;
-
-  { AlternatingRowBackground é protected em TCustomListBox; republicar para uso em ToFillList<F>. }
-  TCustomListBoxAccess = class(TCustomListBox)
-  public
-    property AlternatingRowBackground;
-  end;
-
-  { Classe TConnector Herdade de TQuery }
+  { Classe TConnector — tipos auxiliares em Connector.Types. }
 type
   TConnector = class(TQuery)
   protected
@@ -572,183 +514,6 @@ begin
   end;
 end;
 
-{ TValueObject }
-
-constructor TValueObject.Create(AOwner: TComponent; const aValue: TValue);
-begin
-  inherited Create(AOwner);
-  FValue := aValue;
-end;
-
-{ TJSONItem }
-
-function TJSONItem.GetJSONData: String;
-begin
-  Result := FJSONData;
-end;
-
-procedure TJSONItem.SetJSONData(IndexField, ValueField, DataFields: String);
-var
-  DataColumns : String;
-begin
-  DataColumns := '{"IndexField":"' + IndexField + '","ValueField":"' + ValueField + '","DataFields":' + DataFields + '}';
-  FJSONData := DataColumns;
-end;
-
-procedure TJSONItem.AddItem<T>(AOwner: TComponent; DataSet: TDataSet; IndexField, ValueField: String; DetailFields: TArray<String> = []);
-var
-  Item: TListViewItem;
-  I, ItemHeight: Integer;
-  JSONData: TArrayVariant;
-begin
-  ItemHeight := Self.Height;
-  if Length(DetailFields) > 0 then
-    ItemHeight := 19 * (Length(DetailFields) + 1)
-  else
-    ItemHeight := 19;
-  if (TypeInfo(T) = TypeInfo(TListView)) then
-  begin
-    JSONData := TArrayVariant.Create;
-    TListView(AOwner).BeginUpdate;
-    try
-      if not DataSet.Active then
-        DataSet.Open;
-      DataSet.First;
-      while not(DataSet.Eof) do
-      begin
-        Item := TListView(AOwner).Items.Add;
-        Item.Index := DataSet.FieldByName(IndexField).AsInteger;
-        Item.Text := DataSet.FieldByName(ValueField).AsString;
-        Item.Height := ItemHeight;
-        if Length(DetailFields) > 0 then
-        begin
-          if Length(DetailFields) = 1 then
-          begin
-            if DetailFields[0] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(DetailFields[0]).AsString;
-          end;
-          if Length(DetailFields) = 2 then
-          begin
-            if DetailFields[0] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(DetailFields[0]).AsString;
-            if DetailFields[1] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail2] := DataSet.FieldByName(DetailFields[1]).AsString;
-          end;
-          if Length(DetailFields) = 3 then
-          begin
-            if DetailFields[0] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail1] := DataSet.FieldByName(DetailFields[0]).AsString;
-            if DetailFields[1] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail2] := DataSet.FieldByName(DetailFields[1]).AsString;
-            if DetailFields[2] <> EmptyStr then
-              Item.Data[TMultiDetailAppearanceNames.Detail3] := DataSet.FieldByName(DetailFields[2]).AsString;
-          end;
-        end;
-        JSONData.Clear;
-        for I := 0 to DataSet.FieldDefs.Count - 1 do
-          JSONData[DataSet.FieldDefs[I].Name] := DataSet.FieldByName(DataSet.FieldDefs[I].Name).Value;
-        Self.SetJSONData(IndexField, ValueField, JSONData.ToJSON);
-        Item.Data[TMultiDetailAppearanceNames.Detail4] := Self.GetJSONData;
-  { TODO -oNickson Jeanmerson -cProgrammer :
-  1) Adicionar Suporte à Imagens via Blog com TImage/TBitmap e ImageString em Base64;
-  2) Adicionar Suporte à Accessory; }
-        //Item.BitmapRef := ImageRAD.Bitmap;
-        DataSet.Next;
-      end;
-    finally
-      JSONData.Free;
-      TListView(AOwner).EndUpdate;
-    end;
-    TListView(AOwner).OnUpdateObjects := DelegateItemViewEvent(
-      TListView(AOwner),
-      procedure(const Sender: TObject; const AItem: TListViewItem)
-      begin
-        if Length(DetailFields) = 3 then
-        begin
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail1).PlaceOffset.Y := 0;
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail2).PlaceOffset.Y := 0;
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail3).PlaceOffset.Y := 0;
-        end
-        else if Length(DetailFields) = 2 then
-        begin
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail1).PlaceOffset.Y := 19;
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail2).PlaceOffset.Y := 19;
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail3).PlaceOffset.Y := 0;
-        end
-        else if Length(DetailFields) = 1 then
-        begin
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail1).PlaceOffset.Y := 19;
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail2).PlaceOffset.Y := 0;
-          AItem.Objects.FindObjectT<TListItemText>(TMultiDetailAppearanceNames.Detail3).PlaceOffset.Y := 0;
-        end
-      end
-    );
-  end;
-end;
-
-{ TOptionsHelper }
-
-class function TJSONOptionsHelper.&Set(Index : Integer): String;
-begin
-  Result := '{"Index":' + IntToStr(Index) + '}';
-end;
-
-class function TJSONOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1): String;
-begin
-  Result := '{"Index":' + IntToStr(Index) + ',"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '}}';
-end;
-
-class function TJSONOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String;
-begin
-  Result := '{"Index":' + IntToStr(Index) + ',"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '},"Navigation":{"Type":"' + TEnumConverter.EnumToString(Navigation) + '"}}';
-end;
-
-class function TJSONOptionsHelper.&Set(Field : TArray<Variant>): String;
-begin
-  Result := '{"Field":{"' + VarToStr(Field[0]) + '":' +  VarToStr(Field[1]) + '}}';
-end;
-
-class function TJSONOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1): String;
-begin
-  Result := '{"Field":{"' + VarToStr(Field[0]) + '":' +  VarToStr(Field[1]) + '},"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '}}';
-end;
-
-class function TJSONOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): String;
-begin
-  Result := '{"Field":{"' + VarToStr(Field[0]) + '":' +  VarToStr(Field[1]) + '},"Pagination":{"ItemsPerPage":' + IntToStr(Pagination) + '},"Navigation":{"Type":"' + TEnumConverter.EnumToString(Navigation) + '"}}';
-end;
-
-{ TOptionsHelper }
-
-class function TArrayOptionsHelper.&Set(Index : Integer): TDictionary<String, TArray<Variant>>;
-begin
-  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Index'], [[Index]]);
-end;
-
-class function TArrayOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>;
-begin
-  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Index', 'Pagination'], [[Index], ['ItemsPerPage',IntToStr(Pagination)]]);
-end;
-
-class function TArrayOptionsHelper.&Set(Index : Integer; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>;
-begin
-  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Index', 'Pagination', 'Navigation'], [[Index], ['ItemsPerPage', Pagination], ['Type', Navigation]]);
-end;
-
-class function TArrayOptionsHelper.&Set(Field : TArray<Variant>): TDictionary<String, TArray<Variant>>;
-begin
-  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Field'], [[Field[0], Field[1]]]);
-end;
-
-class function TArrayOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1): TDictionary<String, TArray<Variant>>;
-begin
-  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Field', 'Pagination'], [[Field[0], Field[1]], ['ItemsPerPage', Pagination]]);
-end;
-
-class function TArrayOptionsHelper.&Set(Field : TArray<Variant>; Pagination: Integer = -1; Navigation: TNavigationType = TNavigationType.Pages): TDictionary<String, TArray<Variant>>;
-begin
-  Result := TDictionaryHelper<String, TArray<Variant>>.Make(['Field', 'Pagination', 'Navigation'], [[Field[0], Field[1]], ['ItemsPerPage', Pagination], ['Type', Navigation]]);
-end;
 
 { TConnector }
 

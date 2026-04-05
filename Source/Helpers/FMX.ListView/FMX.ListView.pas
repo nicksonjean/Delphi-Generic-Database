@@ -79,8 +79,7 @@ type
   ///  <para><c>IGlyph</c> interface to <c>TImageList</c></para>
   ///  <para><c>IMessageSendingCompatible</c> TMessageSender object for FMX.Presentation compatibility</para>
   /// </remarks>
-  TListViewBase = class(TAdapterListView, ISearchResponder, IListItemStyleResources, IListViewController, IGlyph,
-    IMessageSendingCompatible)
+  TListViewBase = class(TAdapterListView, ISearchResponder, IListItemStyleResources, IListViewController, IGlyph, IMessageSendingCompatible)
   private const
     ChangeRepaintedIncidentDelay = 0.1; // seconds
     PhysicsProcessingInterval = 8; // 8 ms for ~120 frames per second
@@ -317,16 +316,14 @@ type
     function HasScrollingStretchGlow: Boolean;
     function HasPullRefreshStroke: Boolean;
 
-    function CanDisplaySelectionForItem(const Index: Integer; const Item: TListItem = nil;
-      const IncludeMultiSelect: Boolean = False; const IncludeCrossFaded: Boolean = False): Boolean;
+    function CanDisplaySelectionForItem(const Index: Integer; const Item: TListItem = nil; const IncludeMultiSelect: Boolean = False; const IncludeCrossFaded: Boolean = False): Boolean;
     function GetDefaultSelectionAlpha: Single;
     function GetItemSelectionAlpha(const Index: Integer): Single;
     procedure DestroyRecurrentTimer;
     procedure UpdateRecurrentTimer;
     function HasRecurrentTimerEvents: Boolean;
     procedure RecurrentTimerEvent;
-    procedure StartIncident(const Incident: TDelayedIncident; const Triggered: Boolean = True;
-      const TimeToWait: Single = 0; const CustomData: NativeInt = 0);
+    procedure StartIncident(const Incident: TDelayedIncident; const Triggered: Boolean = True; const TimeToWait: Single = 0; const CustomData: NativeInt = 0);
     procedure ProcessIncident(const Entry: TDelayedIncidentEntry);
     procedure TriggerIncidents(const Incident: TDelayedIncident; const ResetStartupTime: Boolean = True);
     procedure ProcessDelayedIncidents;
@@ -354,8 +351,7 @@ type
     procedure AniCalcStop(Sender: TObject);
     function GetItemIndex: Integer;
     procedure SetItemIndex(const Value: Integer);
-    procedure SetItemIndexInternal(const Value: Integer; const DisableSelection: Boolean = False;
-      const DisableCrossfade: Boolean = False);
+    procedure SetItemIndexInternal(const Value: Integer; const DisableSelection: Boolean = False; const DisableCrossfade: Boolean = False);
     function GetMaxScrollViewPos: Integer;
     procedure UpdateScrollViewPos(const Value: Single);
     procedure UpdateSearchEditPos;
@@ -370,13 +366,11 @@ type
 
     function GetSeparatorLineHeight: Single;
     function AlignValueToPixel(const Value: Single): Single;
-    procedure DrawItemsFill(const StartItem, EndItem: Integer; const LocRect: TRectF; const Opacity: Single;
-      const HeaderIndex: Integer = -1);
+    procedure DrawItemsFill(const StartItem, EndItem: Integer; const LocRect: TRectF; const Opacity: Single; const HeaderIndex: Integer = -1);
     procedure DrawIndexFill(const AIndex: Integer; const LocRect: TRectF; const Opacity: Single);
     procedure DrawTouchAnimation(const Index: Integer; const LocRect: TRectF; const Opacity: Single);
 
-    function GetHeaderRelRect(const StartItem, HeaderIndex: Integer; const LocRect: TRectF;
-      const SideSpace: Integer = 0): TRectF;
+    function GetHeaderRelRect(const StartItem, HeaderIndex: Integer; const LocRect: TRectF; const SideSpace: Integer = 0): TRectF;
     procedure DrawHeaderItem(const LocRect: TRectF; const StartItem, HeaderIndex: Integer; const Opacity: Single);
 
     procedure DrawListItems(const AbsOpacity: Single);

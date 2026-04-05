@@ -1,4 +1,4 @@
-﻿unit dbExpress.QueryStrategy;
+unit dbExpress.QueryStrategy;
 
 {
   dbExpress.QueryStrategy

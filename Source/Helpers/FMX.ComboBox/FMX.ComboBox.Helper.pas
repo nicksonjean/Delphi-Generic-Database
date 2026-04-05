@@ -14,7 +14,7 @@ uses
   FMX.Types,
   FMX.Controls,
   FMX.StdCtrls,
-  EventDriven;
+  EventDelegate;
 
 type
   TComboBoxHelper = class helper for TComboBox
@@ -41,7 +41,7 @@ begin
   if FAutoComplete = True then
   begin
     Self.OnKeyDown := DelegateKeyEvent(Self,
-    procedure(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState)
+    procedure(Sender: TObject; var Key: Word; var KeyChar: WideChar; Shift: TShiftState)
     var
       I: Integer;
     begin

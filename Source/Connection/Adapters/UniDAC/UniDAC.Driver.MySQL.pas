@@ -1,4 +1,4 @@
-﻿unit UniDAC.Driver.MySQL;
+unit UniDAC.Driver.MySQL;
 
 interface
 

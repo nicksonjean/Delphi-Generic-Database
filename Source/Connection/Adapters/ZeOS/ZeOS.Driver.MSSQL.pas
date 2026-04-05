@@ -1,4 +1,4 @@
-﻿unit ZeOS.Driver.MSSQL;
+unit ZeOS.Driver.MSSQL;
 
 interface
 

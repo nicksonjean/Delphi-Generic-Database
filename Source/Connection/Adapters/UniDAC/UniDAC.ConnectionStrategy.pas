@@ -1,4 +1,4 @@
-﻿unit UniDAC.ConnectionStrategy;
+unit UniDAC.ConnectionStrategy;
 
 interface
 

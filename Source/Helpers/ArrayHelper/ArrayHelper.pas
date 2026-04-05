@@ -1,6 +1,5 @@
 unit ArrayHelper;
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  ArrayHelper  version 1.3
@@ -44,10 +43,7 @@ unit ArrayHelper;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-
-{  $DEFINE TEST_FUNCTION}  // change to active test function
-
+{ $DEFINE TEST_FUNCTION}  // change to active test function
 
 interface
 
@@ -128,14 +124,11 @@ type
     // return an array filtered and converted by callback function
     class function Map<T>(const Values: TArray<T>; const Callback: TArrayMapCallback<T>): TArray<T>; static;
 
-
 {$IFDEF TEST_FUNCTION}
     // test, debug and example function
     class procedure Test_All_Helper_Functions;
 {$ENDIF TEST_FUNCTION}
-
   end;
-
 
 type
   TArrayRecord<T> = record
@@ -202,8 +195,7 @@ type
     procedure Sort; overload;
     procedure Sort(const AComparer: IComparer<T>); overload;
     procedure Sort(const AComparer: IComparer<T>; AIndex, ACount: Integer); overload;
-    function BinarySearch(const AItem: T; out AFoundIndex: Integer; const AComparer: IComparer<T>;
-      AIndex, ACount: Integer): Boolean; overload;
+    function BinarySearch(const AItem: T; out AFoundIndex: Integer; const AComparer: IComparer<T>; AIndex, ACount: Integer): Boolean; overload;
     function BinarySearch(const AItem: T; out AFoundIndex: Integer; const AComparer: IComparer<T>): Boolean; overload;
     function BinarySearch(const AItem: T; out AFoundIndex: Integer): Boolean; overload;
 
@@ -215,10 +207,7 @@ type
     class operator NotEqual(const L, R: TArrayRecord<T>): boolean;
   end;
 
-
-
 implementation
-
 
 { TArrayNativeHelper }
 
@@ -228,7 +217,6 @@ begin
   SetLength(Values,Result+1);
   Values[Result] := Item;
 end;
-
 
 class procedure TArrayNativeHelper.Delete<T>(var Values: TArray<T>; Index: integer);
 var
@@ -240,7 +228,6 @@ begin
     Values[I-1] := Values[I];
   SetLength(Values, length(Values)-1);
 end;
-
 
 class procedure TArrayNativeHelper.Insert<T>(var Values: TArray<T>; Index: integer; Value: T);
 var
@@ -254,7 +241,6 @@ begin
     Values[I+1] := Values[I];
   Values[Index] := Value;
 end;
-
 
 class procedure TArrayNativeHelper.InsertRange<T>(var Values: TArray<T>; Index: Integer; const ValuesToInsert: array of T);
 var
@@ -272,7 +258,6 @@ begin
     Values[Index+I] := ValuesToInsert[I];
 end;
 
-
 class procedure TArrayNativeHelper.AddRange<T>(var Values: TArray<T>; const ValuesToInsert: array of T);
 var
   I,Index: Integer;
@@ -282,7 +267,6 @@ begin
   for I := Low(ValuesToInsert) to High(ValuesToInsert) do
     Values[Index+I] := ValuesToInsert[I];
 end;
-
 
 class function TArrayNativeHelper.IndexOf<T>(var Values: TArray<T>; Item: T; const Comparer: IComparer<T>): integer;
 begin
@@ -295,7 +279,6 @@ class function TArrayNativeHelper.IndexOf<T>(var Values: TArray<T>; Item: T): in
 begin
   Result := IndexOf<T>(Values, Item, TComparer<T>.Default);
 end;
-
 
 class function TArrayNativeHelper.IndexOfMax<T>(var Values: TArray<T>): integer;
 begin
@@ -331,23 +314,15 @@ begin
       Result := I;
 end;
 
-
-
-
-
 class function TArrayNativeHelper.Contains<T>(var Values: TArray<T>; Item: T; const Comparer: IComparer<T>): boolean;
 begin
   Result := IndexOf<T>(Values, Item, Comparer) <> -1;
 end;
 
-
-
 class function TArrayNativeHelper.Contains<T>(var Values: TArray<T>; Item: T): boolean;
 begin
   Result := Contains<T>(Values, Item, TComparer<T>.Default);
 end;
-
-
 
 class function TArrayNativeHelper.Compare<T>(const Values, ValuesToCompare: array of T; const Comparer: IComparer<T>): boolean;
 var
@@ -359,14 +334,10 @@ begin
   Result := TRUE;
 end;
 
-
 class function TArrayNativeHelper.Compare<T>(const Values, ValuesToCompare: array of T): boolean;
 begin
   Result := Compare<T>(Values, ValuesToCompare, TComparer<T>.Default);
 end;
-
-
-
 
 class procedure TArrayNativeHelper.ForEach<T>(var Values: TArray<T>; const Callback: TArrayForEachCallback<T>);
 var
@@ -376,8 +347,6 @@ begin
     Callback(Values[I], I);
 end;
 
-
-
 class function TArrayNativeHelper.Find<T>(const Values: TArray<T>; const Callback: TArrayFindCallback<T>;
   const StartIndex: integer): integer;
 begin
@@ -386,8 +355,6 @@ begin
     if Callback(Values[Result]) then EXIT;
   Result := -1;
 end;
-
-
 
 class function TArrayNativeHelper.Map<T>(const Values: TArray<T>; const Callback: TArrayMapCallback<T>): TArray<T>;
 var
@@ -402,11 +369,6 @@ begin
       Add<T>(Result, Item);
   end;
 end;
-
-
-
-
-
 
 { TArrayRecord<T>.TEnumerator }
 
@@ -427,10 +389,7 @@ begin
   Inc(FIndex);
 end;
 
-
-
 { TArrayRecord<T> }
-
 
 constructor TArrayRecord<T>.Create(ACapacity: integer);
 begin
@@ -448,8 +407,6 @@ begin
   SetLength(Items, 0);
 end;
 
-
-
 class operator TArrayRecord<T>.Equal(const L, R: TArrayRecord<T>): boolean;
 begin
   Result := L.Compare(R);
@@ -460,8 +417,6 @@ class operator TArrayRecord<T>.NotEqual(const L, R: TArrayRecord<T>): boolean;
 begin
   Result := not L.Compare(R);
 end;
-
-
 
 function TArrayRecord<T>.GetCount: integer;
 begin
@@ -505,8 +460,6 @@ begin
   TArray.AddRange<T>(Items, ValuesToInsert.Items);
 end;
 
-
-
 function TArrayRecord<T>.BinarySearch(const AItem: T; out AFoundIndex: Integer; const AComparer: IComparer<T>; AIndex,
   ACount: Integer): Boolean;
 begin
@@ -529,8 +482,6 @@ begin
   TArray.Delete<T>(Items, Index);
 end;
 
-
-
 function TArrayRecord<T>.Remove(const AItem: T): boolean;
 var
   I: integer;
@@ -545,15 +496,12 @@ begin
   end;
 end;
 
-
 function TArrayRecord<T>.AddIfNotContians(const AItem: T): boolean;
 begin
   Result := not Contains(AItem);
   if not Result then
     Add(AItem);
 end;
-
-
 
 function TArrayRecord<T>.Find(const Callback: TArrayFindCallback<T>; const StartIndex: integer): integer;
 begin
@@ -564,8 +512,6 @@ procedure TArrayRecord<T>.ForEach(const Callback: TArrayForEachCallback<T>);
 begin
   TArray.ForEach<T>(Items, Callback);
 end;
-
-
 
 function TArrayRecord<T>.Compare(const ValuesToCompare: TArrayRecord<T>): boolean;
 begin
@@ -587,28 +533,20 @@ begin
   Result := TArray.Compare<T>(Items, ValuesToCompare, Comparer);
 end;
 
-
-
-
 function TArrayRecord<T>.Contains(Item: T; const Comparer: IComparer<T>): boolean;
 begin
   Result := TArray.Contains<T>(Items, Item, Comparer);
 end;
-
 
 function TArrayRecord<T>.Contains(Item: T): boolean;
 begin
   Result := TArray.Contains<T>(Items, Item);
 end;
 
-
-
-
 function TArrayRecord<T>.IndexOf(Item: T; const Comparer: IComparer<T>): integer;
 begin
   Result := TArray.IndexOf<T>(Items, Item, Comparer);
 end;
-
 
 function TArrayRecord<T>.IndexOfMax: integer;
 begin
@@ -635,13 +573,10 @@ begin
   Result := TArray.IndexOf<T>(Items, Item);
 end;
 
-
 procedure TArrayRecord<T>.Insert(Index: integer; Value: T);
 begin
   TArray.Insert<T>(Items, Index, Value);
 end;
-
-
 
 procedure TArrayRecord<T>.InsertRange(Index: Integer; const ValuesToInsert: TArrayRecord<T>);
 begin
@@ -653,14 +588,10 @@ begin
   TArray.InsertRange<T>(Items, Index, ValuesToInsert);
 end;
 
-
-
 function TArrayRecord<T>.Map(const Callback: TArrayMapCallback<T>): TArrayRecord<T>;
 begin
   Result.Items := TArray.Map<T>(Items, Callback);
 end;
-
-
 
 function TArrayRecord<T>.Convert<TTo>(const Callback: TArrayConvert<T,TTo>): TArrayRecord<TTo>;
 var
@@ -670,8 +601,6 @@ begin
   for I := Low(Items) to High(Items) do
     Result.Add(Callback(Items[I]));
 end;
-
-
 
 function TArrayRecord<T>.CopyArray(FromIndex: integer; Count: integer): TArrayRecord<T>;
 var
@@ -689,8 +618,6 @@ begin
       Result.Items[I] := Items[I + FromIndex];
   end;
 end;
-
-
 
 procedure TArrayRecord<T>.Sort;
 begin
@@ -727,10 +654,7 @@ begin
   end;
 end;
 
-
-
 {$IFDEF TEST_FUNCTION}
-
 
 type
   TTestRecord = record
@@ -779,7 +703,6 @@ begin
   );
 end;
 
-
 procedure Test_TestRecord;
 var
   List: TArrayRecord<TTestRecord>;
@@ -825,17 +748,12 @@ begin
   List.Sort(TTestRecord.NameComparer);
   StrList := List.Convert<string>(TTestRecord.ConvertToNames);
   assert( StrList.Compare(['Anton','Barbie','Jack','Mickey Mouse']) );
-
 end;
-
-
-
 
 function CompareJokerFunction(const Value: string): boolean;
 begin
   Result := LowerCase(Value) = 'joker';
 end;
-
 
 procedure TestArrayContainer;
 const
@@ -875,7 +793,6 @@ begin
       Result := (Left + 4) - Right;
     end
   )) = TRUE );
-
 
   // Delete
   AI.Delete(1);
@@ -931,7 +848,6 @@ begin
   AI.InsertRange( 3,[21,22]);
   assert( (AI.Count = 8) and (AI[7] = 6) and (AI[0] = 10) and (AI[3] = 21) );
 
-
   // ForEach
   AI.Items := TArray<integer>.Create(5,4,3,2,1);
   AStr.Clear;
@@ -948,7 +864,6 @@ begin
   assert( AI.Compare([10,20,30,40,50]) );
   assert( AStr.Compare(['10','20','30','40','50']) );
 
-
   // Find
   AI.Clear;
   AStr.SetItems(['4','king','joker','7','JOKER','joker','ace','joker']);
@@ -958,7 +873,6 @@ begin
     if I >= 0 then AI.Add( I);
   until I < 0;
   assert( AI.Compare([2,4,5,7]) );
-
 
   // Map
   AI.Clear;
@@ -1009,11 +923,7 @@ begin
   assert( AI.CopyArray(2).Compare([5,6]) );
   assert( AI.CopyArray(0,2).Compare([3,4]) );
   assert( AI.CopyArray(1,2).Compare([4,5]) );
-
-
 end;
-
-
 
 procedure TesTArrayNativeHelper;
 var
@@ -1079,7 +989,6 @@ begin
   TArray.InsertRange<integer>(AI, 3, TArray<integer>.Create(21,22));
   assert( (length(AI) = 8) and (AI[7] = 6) and (AI[0] = 10) and (AI[3] = 21) );
 
-
   // ForEach
   AI := TArray<integer>.Create(5,4,3,2,1);
   AStr := NIL;
@@ -1095,7 +1004,6 @@ begin
   assert( TArray.Compare<integer>(AI, TArray<integer>.Create(10,20,30,40,50)) );
   assert( TArray.Compare<string>(AStr, TArray<string>.Create('10','20','30','40','50')) );
 
-
   // Find
   AI := NIL;
   AStr := TArray<string>.Create('4','king','joker','7','JOKER','joker','ace','joker');
@@ -1105,7 +1013,6 @@ begin
     if I >= 0 then TArray.Add<integer>(AI, I);
   until I < 0;
   assert( TArray.Compare<integer>(AI, TArray<integer>.Create(2,4,5,7)) );
-
 
   // Map
   AI := NIL;
@@ -1143,8 +1050,6 @@ begin
 end;
 
 {$ENDIF TEST_FUNCTION}
-
-
 
 end.
 

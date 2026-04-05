@@ -1,4 +1,4 @@
-﻿unit ZeOS.ConnectionStrategy;
+unit ZeOS.ConnectionStrategy;
 
 interface
 

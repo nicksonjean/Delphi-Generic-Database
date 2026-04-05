@@ -1,4 +1,4 @@
-﻿unit FireDAC.ConnectionStrategy;
+unit FireDAC.ConnectionStrategy;
 
 {
   FireDAC.ConnectionStrategy

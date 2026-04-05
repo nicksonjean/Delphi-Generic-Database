@@ -1,4 +1,4 @@
-﻿unit dbExpress.Factory;
+unit dbExpress.Factory;
 
 {
   dbExpress.Factory
