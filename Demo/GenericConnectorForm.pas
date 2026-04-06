@@ -138,8 +138,6 @@ type
     LabelComboEditOracle: TLabel;
     Button1: TButton;
     Button2: TButton;
-    ComboEdit1: TComboEdit;
-    Edit1: TEdit;
     procedure TabDBSQLiteClick(Sender: TObject);
     procedure TabDBFirebirdClick(Sender: TObject);
     procedure TabDBMySQLClick(Sender: TObject);
