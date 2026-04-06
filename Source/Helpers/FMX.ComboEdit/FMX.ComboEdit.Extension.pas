@@ -69,7 +69,7 @@ end;
 
 procedure TStyledComboEditEditStyle.FreeStyle;
 begin
-  FDropBtn := nil;
+  FreeAndNil(FDropBtn);
   inherited;
 end;
 
