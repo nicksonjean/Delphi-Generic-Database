@@ -1,4 +1,4 @@
-{
+﻿{
   MimeType.
   ------------------------------------------------------------------------------
   Objetivo : Detectar a MimeType de um Arquivo ou Stream Através Números Mágicos.
@@ -40,7 +40,7 @@ uses
   System.RTTI,
   System.TypInfo,
   System.NetEncoding,
-  Strings
+  &Type.&String
   ;
 
 type

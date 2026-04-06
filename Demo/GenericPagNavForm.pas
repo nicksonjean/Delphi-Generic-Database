@@ -82,16 +82,16 @@ implementation
 
 uses
   DictionaryHelper,
-  TimeDate,
-  Float,
-  IArray,
-  ArrayString,
-  ArrayStringHelper,
-  ArrayVariant,
-  ArrayVariantHelper,
-  ArrayField,
-  ArrayFieldHelper,
-  ArrayAssoc,
+  Type.DateTime,
+  Type.Float,
+  Type.Array,
+  Type.Array.String,
+  Type.Array.String.Helper,
+  Type.Array.Variant,
+  Type.Array.Variant.Helper,
+  Type.Array.Field,
+  Type.Array.Field.Helper,
+  Type.Array.Assoc,
   MimeType,
   SmartPointer.TSmartPointer;
 

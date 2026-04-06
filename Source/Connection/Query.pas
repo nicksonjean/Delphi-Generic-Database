@@ -1,4 +1,4 @@
-unit Query;
+﻿unit Query;
 
 {
   Query
@@ -15,9 +15,8 @@ interface
 uses
   System.SysUtils,
   Data.DB,
-  Connection.IQueryStrategy,
-  Connection.IConnectionStrategy,
-  EngineRegistry,
+  Connection.Strategy.Intf,
+  Engine.Registry,
   Query.Intf;
 
 type

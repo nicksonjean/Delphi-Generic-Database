@@ -1,0 +1,67 @@
+package GenericDatabase.Connection.Config;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Delphi Generic Database - Connection.Config (loaders + factory)'}
+{$LIBSUFFIX AUTO}
+{$IMPLICITBUILD OFF}
+
+{
+  Inclui TConnection + EngineRegistry e todo o subtree Connection.Config.
+  Para YAML / TOML, adicione ao library path: Neslib.Yaml, DelphiTOML\src
+  (ou equivalente via boss modules).
+}
+
+requires
+  rtl,
+  xmlrtl,
+  dbrtl,
+  GenericDatabase.Connection.Core;
+
+contains
+  Connection.Config.Types in '..\Connection\Config\Connection.Config.Types.pas',
+  Connection.Config.DocumentRefs in '..\Connection\Config\Connection.Config.DocumentRefs.pas',
+  Connection.Config.Loader.Abstract in '..\Connection\Config\Core\Connection.Config.Loader.Abstract.pas',
+  Connection.Config.Intf in '..\Connection\Config\Connection.Config.Intf.pas',
+  Connection.Config.JSON.Mapper in '..\Connection\Config\Mapper\Connection.Config.JSON.Mapper.pas',
+  Connection.Config.INI.Mapper in '..\Connection\Config\Mapper\Connection.Config.INI.Mapper.pas',
+  Connection.Config.XML.Mapper in '..\Connection\Config\Mapper\Connection.Config.XML.Mapper.pas',
+  Connection.Config.YAML.Mapper in '..\Connection\Config\Mapper\Connection.Config.YAML.Mapper.pas',
+  Connection.Config.TOML.Mapper in '..\Connection\Config\Mapper\Connection.Config.TOML.Mapper.pas',
+  Connection.Config.INI in '..\Connection\Config\Static\Connection.Config.INI.pas',
+  Connection.Config.JSON in '..\Connection\Config\Static\Connection.Config.JSON.pas',
+  Connection.Config.XML in '..\Connection\Config\Static\Connection.Config.XML.pas',
+  Connection.Config.YAML in '..\Connection\Config\Static\Connection.Config.YAML.pas',
+  Connection.Config.TOML in '..\Connection\Config\Static\Connection.Config.TOML.pas',
+  Connection.Config.Adapter.INI in '..\Connection\Config\Adapters\Connection.Config.Adapter.INI.pas',
+  Connection.Config.Adapter.JSON in '..\Connection\Config\Adapters\Connection.Config.Adapter.JSON.pas',
+  Connection.Config.Adapter.XML in '..\Connection\Config\Adapters\Connection.Config.Adapter.XML.pas',
+  Connection.Config.Adapter.YAML in '..\Connection\Config\Adapters\Connection.Config.Adapter.YAML.pas',
+  Connection.Config.Adapter.TOML in '..\Connection\Config\Adapters\Connection.Config.Adapter.TOML.pas',
+  Connection.Config.Factory in '..\Connection\Config\Connection.Config.Factory.pas',
+  Connection.Config.All in '..\Connection\Config\Connection.Config.All.pas';
+
+end.

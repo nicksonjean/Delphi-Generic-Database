@@ -1,7 +1,7 @@
 unit Options.Intf;
 
 {
-  IOptions — marcador comum aos helpers TOptionsInteger, TOptionsArray e TOptionsJSON.
+  IOptions — marcador comum aos helpers Options.Integer, Options.Array e Options.JSON.
   Classes baseadas em TConnector/TQuery (TObject) não implementam esta interface no Delphi
   sem suporte a IUnknown; use o tipo concreto ou parâmetros genéricos onde precisar.
 }

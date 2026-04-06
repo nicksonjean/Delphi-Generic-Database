@@ -1,0 +1,47 @@
+package GenericDatabase.Connection.Engine;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Delphi Generic Database - Connection.Engine (all engines)'}
+{$LIBSUFFIX AUTO}
+{$IMPLICITBUILD OFF}
+
+{
+  Metapackage: depende de um pacote por engine. Para compilar/testar só uma engine,
+  abra e compile apenas GenericDatabase.Connection.Engine.<Engine>.dpk (sem este ficheiro).
+}
+
+requires
+  GenericDatabase.Connection.Core,
+  GenericDatabase.Connection.Engine.DbExpress,
+  GenericDatabase.Connection.Engine.FireDAC,
+  GenericDatabase.Connection.Engine.ZeOS,
+  GenericDatabase.Connection.Engine.UniDAC;
+
+contains
+  Connection.All in '..\Connection\Engine\Adapters\Connection.All.pas';
+
+end.

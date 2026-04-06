@@ -79,7 +79,7 @@ implementation
 uses
   System.StrUtils,
   DictionaryHelper,
-  ArrayVariant,
+  &Type.&Array.Variant,
   RTTI,
   FMX.ListView.Extension,
   EventDelegate;

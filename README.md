@@ -31,31 +31,40 @@ Source/
 │   ├── Helpers/QueryHelper.pas  # Helper de extensão para TQuery
 │   ├── Registry/                # EngineRegistry — auto-registro via Factory.initialization
 │   ├── Strategy/                # Interfaces: IConnectionStrategy, IQueryStrategy, IEngineFactory, IDriverConfigurator
-│   ├── Adapters/                # Implementações concretas por engine
-│   │   ├── FireDAC/             #   ConnectionStrategy, QueryStrategy, Factory, Drivers (7 BDs)
-│   │   ├── dbExpress/           #   idem
-│   │   ├── ZeOS/                #   idem
-│   │   └── UniDAC/              #   idem
+│   ├── Engine/                  # Implementações por biblioteca de acesso — ver Engine/README.md
+│   │   └── Adapters/
+│   │       ├── Connection.All.pas   # Todas as engines (uses Connection.*.All)
+│   │       ├── dbExpress/       #   Connection.dbExpress.All.pas + Core/ + Drivers/
+│   │       ├── FireDAC/         #   Connection.FireDAC.All.pas + Core/ + Drivers/
+│   │       ├── ZeOS/            #   Connection.ZeOS.All.pas + Core/ + Drivers/
+│   │       └── UniDAC/          #   Connection.UniDAC.All.pas + Core/ + Drivers/
 │   └── Config/                  # Carregamento de configuração
-│       ├── Connection.Config.INI.pas
-│       ├── Connection.Config.JSON.pas
-│       └── Connection.Config.XML.pas
+│       ├── Connection.Config.All.pas
+│       ├── Connection.Config.Types.pas
+│       ├── Connection.Config.Intf.pas
+│       ├── Connection.Config.Factory.pas
+│       ├── Core/                # Connection.Config.Loader.Abstract.pas
+│       ├── Mapper/               # Connection.Config.*.Mapper.pas
+│       ├── Static/              # Loaders TConnectionConfig* (INI, JSON, XML, YAML, TOML)
+│       └── Adapters/            # Connection.Config.Adapter.*.pas
 ├── Connector/                   # Binding de TQuery a componentes FMX
 │   ├── Connector.pas            # TConnector — métodos ToGrid, ToStringGrid, ToListBox, ToListView, ToComboBox, ToComboEdit, ToEdit
-│   ├── OptionsArray.pas
-│   ├── OptionsInteger.pas
-│   └── OptionsJSON.pas
-├── Types/                       # Tipos auxiliares
-│   ├── Array/                   # Arrays associativos PHP-like
-│   │   ├── ArrayString.pas      #   Bidimensional de strings (herda TStringList)
-│   │   ├── ArrayVariant.pas     #   Genérico TDictionary<Variant, Variant>
-│   │   ├── ArrayField.pas       #   TDictionary<Variant, TField>
-│   │   ├── ArrayAssoc.pas       #   Multidimensional aninhado
-│   │   └── Helpers/             #   ArrayStringHelper, ArrayVariantHelper, ArrayFieldHelper
-│   ├── Date.pas / Time.pas / TimeDate.pas
-│   ├── Float.pas / Strings.pas
-│   ├── Locale/Locale.pas        # Localização e formatação regional
-│   └── Money.Types.json         # Definições de tipos monetários
+│   └── Options/                 # Helpers de opções (units `Options.*`)
+│       ├── Options.Intf.pas
+│       ├── Options.Integer.pas
+│       ├── Options.Array.pas
+│       └── Options.JSON.pas
+├── Types/                       # Tipos auxiliares (units `Types.*` e `Type.*` onde indicado)
+│   ├── Types.Locale.pas
+│   ├── Types.Strings.pas
+│   ├── Types.Float.pas
+│   ├── Type.DateTime.pas        # `TTimeDate`, `TLocaleTimeDate` (antes TimeDate.pas)
+│   ├── Type.Money.json / Type.Money.json.inc
+│   ├── Types.Array.Intf.pas     # `IArrayInterface<T>`
+│   ├── Types.ArrayGuard.Intf.pas
+│   ├── Types.Array.pas          # record `IArray<T>` + `TArrayGuard`
+│   ├── Types.Array.String.pas / .Field / .Variant / .Assoc
+│   └── Types.Array.StringHelper.pas / .FieldHelper / .VariantHelper
 ├── Helpers/                     # Class helpers para componentes FMX
 │   ├── FMX.Edit/                # TEdit helper
 │   ├── FMX.ComboBox/            # TComboBox helper
@@ -91,7 +100,7 @@ Source/
 
 ### Connection — Conexão Genérica a Bancos de Dados
 
-`TConnection` implementa `IConnection` e delega toda a lógica de engine para `IConnectionStrategy`. Para ativar uma engine, basta incluir a unit de seu `Factory.pas` no projeto — o registro ocorre automaticamente via `initialization`.
+`TConnection` implementa `IConnection` e delega toda a lógica de engine para `IConnectionStrategy`. As implementações ficam em `Source/Connection/Engine/Adapters/<engine>/`: pasta **`Core/`** (`Factory`, `Connection.Strategy`, `Query.Strategy`) e **`Drivers/`** (um `.pas` por `TDriver`). Agregadores: **`Connection.All`** (quatro engines), **`Connection.dbExpress.All`**, **`Connection.FireDAC.All`**, **`Connection.ZeOS.All`**, **`Connection.UniDAC.All`** — cada um faz `uses` de Core + drivers da engine (ou de outros `.All`). Incluir só o `Factory` em `Core/` também funciona — o registro ocorre via `initialization`.
 
 **Conexão direta (gerenciamento manual):**
 
@@ -204,17 +213,36 @@ end;
 
 **Configuração a partir de arquivo:**
 
-```delphi
-uses Connection.Config.INI;
+Inclua as units com um único agregador (`Connection.Config.All`) e use `TConnection` + factory ou loader estático:
 
-var Conn: IConnection;
+```delphi
+uses
+  Connection.Config.All,
+  FireDAC.Factory;
+
+var
+  Conn: TConnection;
 begin
-  Conn := TConnectionConfigINI.FromFile('config.ini');
-  Conn.Connect := True;
+  Conn := TConnectionConfigFactory.FromFile('config.ini').LoadFromFile('config.ini');
+  Conn.Connected := True;
 end;
 ```
 
-Formatos suportados: **INI**, **JSON**, **XML**.
+Ou diretamente o loader em `Source/Connection/Config/Static/` (herdam de `TConnectionConfigLoader` e delegam o mapeamento às units `Mapper\Connection.Config.*.Mapper.pas`):
+
+```delphi
+uses Connection.Config.All, FireDAC.Factory;
+
+var Conn: TConnection;
+begin
+  Conn := TConnectionConfigINI.LoadFromFile('config.ini');
+  Conn.Connected := True;
+end;
+```
+
+Formatos suportados: **INI**, **JSON**, **XML**, **YAML**, **TOML**. Documentação detalhada: [Source/Connection/Config/README.md](Source/Connection/Config/README.md). Pacote opcional: [Source/Packages/GenericDatabase.Connection.Config.dpk](Source/Packages/GenericDatabase.Connection.Config.dpk).
+
+Layout das engines (Core/Drivers e agregadores): [Source/Connection/Engine/README.md](Source/Connection/Engine/README.md). Pacotes `.dpk`: [Source/Packages/README.md](Source/Packages/README.md).
 
 ---
 
@@ -467,7 +495,7 @@ Além das dependências de acesso a dados, o projeto inclui (via Boss) as seguin
 | **XSuperObject** | `github.com/onryldz/x-superobject` | Parser e serializador JSON de alta performance |
 | **ZeOSLib** | `github.com/zeoslib/zeoslib` | Adapter de acesso a banco de dados (engine ZeOS) |
 | **Neslib.Yaml** | `github.com/neslib/Neslib.Yaml` | Parser e emitter YAML via LibYAML — Win32/64, Android, iOS |
-| **delphi-neon** | `github.com/paolo-rossi/delphi-neon` | Serialização/deserialização JSON com atributos RTTI |
+| **delphi-neon** | `github.com/paolo-rossi/delphi-neon` | Serialização JSON com RTTI (biblioteca *Neon*; **não** é o formato [Nette NEON](https://doc.nette.org/pt/neon/format)) |
 | **DelphiTOML** | `github.com/SilenceCCF/DelphiTOML` | Parser TOML v1.1 completo para Delphi |
 
 **Exemplo de leitura de configuração YAML (Neslib.Yaml):**
@@ -545,7 +573,8 @@ Adicione as seguintes pastas ao search path do projeto em **Project > Options > 
 
 ```
 ../Delphi-Generic-Database/Source/Connection
-../Delphi-Generic-Database/Source/Connection/Adapters/FireDAC
+../Delphi-Generic-Database/Source/Connection/Engine/Adapters/FireDAC/Core
+../Delphi-Generic-Database/Source/Connection/Engine/Adapters/FireDAC/Drivers
 ../Delphi-Generic-Database/Source/Connection/Config
 ../Delphi-Generic-Database/Source/Connection/Registry
 ../Delphi-Generic-Database/Source/Connection/Strategy
@@ -586,7 +615,6 @@ Adicione as seguintes pastas ao search path do projeto em **Project > Options > 
 - [x] QueryBuilder genérico (SELECT, INSERT, UPDATE, DELETE, REPLACE)
 - [x] SmartPointer genérico com suporte a `TInterfacedObject`
 - [x] Refatoração removendo arquivos `*.inc` de Connection, Connector e Types/Array
-- [ ] Refatorar Types/TimeDate.pas
 - [ ] Suporte a TeeGrid no Connector
 - [ ] DBNavigator para TGrid e TStringGrid
 - [ ] Paginação / "Carregar Mais" para ListBox e ListView

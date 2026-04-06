@@ -18,9 +18,9 @@ uses
   System.SysUtils,
   System.Generics.Collections,
   Connection.Types,
-  Connection.IConnectionStrategy,
+  Connection.Strategy.Intf,
   Connection.Intf,
-  EngineRegistry;
+  Engine.Registry;
 
 type
   TConnection = class(TInterfacedObject, IConnection)

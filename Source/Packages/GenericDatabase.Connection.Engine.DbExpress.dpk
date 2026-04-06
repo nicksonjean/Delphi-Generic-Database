@@ -1,0 +1,52 @@
+package GenericDatabase.Connection.Engine.DbExpress;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Delphi Generic Database - Engine.DbExpress only'}
+{$LIBSUFFIX AUTO}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  dbrtl,
+  GenericDatabase.Connection.Core,
+  dbexpress,
+  DbxCommonDriver;
+
+contains
+  dbExpress.Factory in '..\Connection\Engine\Adapters\dbExpress\Core\dbExpress.Factory.pas',
+  dbExpress.Connection.Strategy in '..\Connection\Engine\Adapters\dbExpress\Core\dbExpress.Connection.Strategy.pas',
+  dbExpress.Query.Strategy in '..\Connection\Engine\Adapters\dbExpress\Core\dbExpress.Query.Strategy.pas',
+  dbExpress.Driver.SQLite in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.SQLite.pas',
+  dbExpress.Driver.MySQL in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.MySQL.pas',
+  dbExpress.Driver.Firebird in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.Firebird.pas',
+  dbExpress.Driver.Interbase in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.Interbase.pas',
+  dbExpress.Driver.MSSQL in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.MSSQL.pas',
+  dbExpress.Driver.PostgreSQL in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.PostgreSQL.pas',
+  dbExpress.Driver.Oracle in '..\Connection\Engine\Adapters\dbExpress\Drivers\dbExpress.Driver.Oracle.pas',
+  Connection.dbExpress.All in '..\Connection\Engine\Adapters\dbExpress\Connection.dbExpress.All.pas';
+
+end.

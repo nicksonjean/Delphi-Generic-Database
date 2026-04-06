@@ -1,4 +1,4 @@
-﻿{
+{
   RTTI.
   ------------------------------------------------------------------------------
   Objetivo : Simplificar a convesão, formatação e comparação de valores

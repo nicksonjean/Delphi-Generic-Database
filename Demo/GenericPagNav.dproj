@@ -85,10 +85,13 @@
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
+        <DCC_H>false</DCC_H>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
+        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\Neslib.Yaml;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Engine\Adapters;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_DisableWarningsForUnit>modules\*;..\Source\Vendor\*;TOML.*.pas;ZPlainProxyDriverInternalProxy.pas;$(DCC_DisableWarningsForUnit)</DCC_DisableWarningsForUnit>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <Android_LauncherIcon48>$(BDS)\bin\Artwork\Android\FM_LauncherIcon_48x48.png</Android_LauncherIcon48>
@@ -190,24 +193,25 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\Types\Locale\Locale.pas"/>
+        <DCCReference Include="..\Source\Types\Float\Type.Locale.pas"/>
         <DCCReference Include="..\Source\Helpers\DictionaryHelper\DictionaryHelper.pas"/>
         <DCCReference Include="..\Source\Helpers\ArrayHelper\ArrayHelper.pas"/>
+        <DCCReference Include="..\Source\Types\String\Type.String.pas"/>
+        <DCCReference Include="..\Source\Types\Float\Type.Float.pas"/>
         <DCCReference Include="..\Source\Reflection\MimeType.pas"/>
-        <DCCReference Include="..\Source\Types\TimeDate.pas"/>
-        <DCCReference Include="..\Source\Types\Float.pas"/>
-        <DCCReference Include="..\Source\Types\Strings.pas"/>
-        <DCCReference Include="..\Source\Types\IArray.pas"/>
-        <DCCReference Include="..\Source\Types\Array\ArrayAssoc.pas"/>
-        <DCCReference Include="..\Source\Types\Array\ArrayField.pas"/>
-        <DCCReference Include="..\Source\Types\Array\ArrayString.pas"/>
-        <DCCReference Include="..\Source\Types\Array\ArrayVariant.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Helpers\ArrayFieldHelper.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Helpers\ArrayStringHelper.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Helpers\ArrayVariantHelper.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.IGuard.Intf.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Guard.Intf.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Field.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.String.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Variant.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.String.Helper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Variant.Helper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Field.Helper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Assoc.pas"/>
+        <DCCReference Include="..\Source\Types\DateTime\Type.DateTime.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.Guard.Intf.pas"/>
         <DCCReference Include="..\Source\SmartPointer\SmartPointer.Guard.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.ISmartPointer.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.SmartPointer.pas"/>
         <DCCReference Include="..\Source\SmartPointer\SmartPointer.RefGuard.pas"/>
         <DCCReference Include="..\Source\SmartPointer\SmartPointer.TSmartPointer.pas"/>
         <DCCReference Include="GenericPagNavForm.pas">

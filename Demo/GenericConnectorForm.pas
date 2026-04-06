@@ -1,4 +1,4 @@
-﻿unit GenericConnectorForm;
+unit GenericConnectorForm;
 
 interface
 
@@ -8,7 +8,8 @@ uses
   FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   System.Rtti, FMX.Grid.Style, FMX.ComboEdit, FMX.Grid, FMX.ScrollBox,
   FMX.ListView, FMX.Edit, FMX.SearchBox, FMX.Layouts, FMX.ListBox, FMX.StdCtrls,
-  FMX.Controls.Presentation, FMX.TabControl, Data.DBXOdbc, Data.DB, Data.SqlExpr;
+  FMX.Controls.Presentation, FMX.TabControl, Data.DBXOdbc, Data.DB, Data.SqlExpr,
+  FMX.Objects;
 
 type
   TGenericConnectorForm = class(TForm)
@@ -137,6 +138,8 @@ type
     LabelComboEditOracle: TLabel;
     Button1: TButton;
     Button2: TButton;
+    ComboEdit1: TComboEdit;
+    Edit1: TEdit;
     procedure TabDBSQLiteClick(Sender: TObject);
     procedure TabDBFirebirdClick(Sender: TObject);
     procedure TabDBMySQLClick(Sender: TObject);
@@ -149,7 +152,6 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procedure PresentationNameChoosing(Sender: TObject; var PresenterName: string);
   end;
 
 var
@@ -161,28 +163,23 @@ uses
   FMX.Edit.Helper,
   FMX.Objects.Helper,
   FMX.Edit.Extension,
-  ArrayField,
-  ArrayString,
-  ArrayVariant,
+  FMX.ComboEdit.Extension,
+  &Type.&Array,
+  &Type.&Array.Field,
+  &Type.&Array.&String,
+  &Type.&Array.Variant,
   DictionaryHelper,
   Connection,
   Connector,
   Query,
   QueryBuilder,
   Connection.Types,
-  IArray,
-  SmartPointer.ISmartPointer,
-  SmartPointer.TSmartPointer;
+  SmartPointer.Intf,
+  SmartPointer;
 
 {$R *.fmx}
 
 { TGenericConnectorForm }
-
-procedure TGenericConnectorForm.PresentationNameChoosing(Sender: TObject; var PresenterName: string);
-begin
-  inherited;
-  PresenterName := 'SuggestEdit-Style';
-end;
 
 procedure TGenericConnectorForm.Button2Click(Sender: TObject);
 var

@@ -110,7 +110,7 @@ impactam a camada dbExpress na nova arquitetura:
 | Criação de adapters | **Abstract Factory** | `IEngineFactory` instancia objetos da engine certa |
 | Registro dinâmico | **Registry** | Permite registrar novas engines sem alterar código existente |
 | Generics | `TQuery<TDataSet>` | Desacopla o tipo do dataset da camada de negócio |
-| Ciclo de vida | **Smart Pointer** | `TSmartPointer<T>` / `ISmartPointer<T>` — units `SmartPointer.TSmartPointer` e `SmartPointer.ISmartPointer` (ver §5.3) |
+| Ciclo de vida | **Smart Pointer** | `TSmartPointer<T>` / `ISmartPointer<T>` — units `SmartPointer.TSmartPointer` e `SmartPointer.SmartPointer` (ver §5.3) |
 
 ### 2.2 Diagrama de camadas
 
@@ -133,10 +133,10 @@ impactam a camada dbExpress na nova arquitetura:
                        │ implementado por
 ┌──────────────────────▼────────────────────────────────────────┐
 │             ADAPTERS  (um por engine)                          │
-│  dbExpress.ConnectionStrategy  ·  dbExpress.QueryStrategy      │
-│  FireDAC.ConnectionStrategy    ·  FireDAC.QueryStrategy        │
-│  ZeOS.ConnectionStrategy       ·  ZeOS.QueryStrategy           │
-│  UniDAC.ConnectionStrategy     ·  UniDAC.QueryStrategy         │
+│  dbExpress.Connection.Strategy  ·  dbExpress.Query.Strategy     │
+│  FireDAC.Connection.Strategy    ·  FireDAC.Query.Strategy      │
+│  ZeOS.Connection.Strategy       ·  ZeOS.Query.Strategy          │
+│  UniDAC.Connection.Strategy     ·  UniDAC.Query.Strategy       │
 └──────────────────────┬────────────────────────────────────────┘
                        │ criados por
 ┌──────────────────────▼────────────────────────────────────────┐
@@ -298,7 +298,6 @@ public
   class function CreateFromINI (const ASource: String): TConnection;
   class function CreateFromXML (const ASource: String): TConnection;
   class function CreateFromYAML(const ASource: String): TConnection;
-  class function CreateFromNEON(const ASource: String): TConnection;
   class function CreateFromTOML(const ASource: String): TConnection;
 end;
 ```
@@ -432,10 +431,6 @@ DB := TConnection.CreateFromXML(TFile.ReadAllText('conn.xml'));
 //   CharacterSet: UTF8
 DB := TConnection.CreateFromYAML(TFile.ReadAllText('conn.yaml'));
 
-// NEON (Object Pascal Serialization — biblioteca Neon para Delphi)
-// Mesmo formato JSON/estrutura; usa TNeonDeserializer internamente
-DB := TConnection.CreateFromNEON(TFile.ReadAllText('conn.neon.json'));
-
 // TOML
 // engine = "UniDAC"
 // driver = "Oracle"
@@ -454,16 +449,14 @@ DB := TConnection.CreateFromTOML(TFile.ReadAllText('conn.toml'));
 | `CreateFromINI`  | `System.IniFiles` | Sim |
 | `CreateFromXML`  | `Xml.XMLDoc`, `Xml.XMLIntf` | Sim |
 | `CreateFromYAML` | Biblioteca YAML para Delphi (ex: `Neslib.Yaml`) | Não — opcional |
-| `CreateFromNEON` | Biblioteca Neon (`Neon.Core.*`) | Não — opcional |
 | `CreateFromTOML` | Biblioteca TOML para Delphi | Não — opcional |
 
-Os métodos que dependem de bibliotecas opcionais são compilados somente se a biblioteca
-estiver no search path (`{$IF Declared(TNeonDeserializer)}`), evitando erro de compilação
-para quem não usa esses formatos.
+Os métodos que dependem de bibliotecas opcionais podem ser protegidos por compilação condicional
+quando as units não estiverem no search path, evitando erro para quem não usa esses formatos.
 
-### 2.9 Estrutura de arquivos dos Adapters
+### 2.9 Estrutura de arquivos das engines (`Engine/Adapters`)
 
-Nomenclatura sem abreviações — nome completo da engine em todos os arquivos.
+Nomenclatura sem abreviações — nome completo da engine em todos os arquivos. Cada engine tem **`Core/`** (factory + strategies) e **`Drivers/`** (configuradores por `TDriver`). Agregadores por engine: **`Connection.<engine>.All.pas`**; **`Connection.All.pas`** referencia os quatro.
 
 ```
 Source\
@@ -478,64 +471,57 @@ Source\
       IQueryStrategy.pas
       IEngineFactory.pas
       IDriverConfigurator.pas
-    Adapters\
-      dbExpress\
-        dbExpress.ConnectionStrategy.pas
-        dbExpress.QueryStrategy.pas
-        dbExpress.Factory.pas               ← registra TEngine.dbExpress
-        dbExpress.Drivers\
-          dbExpress.Driver.SQLite.pas
-          dbExpress.Driver.MySQL.pas
-          dbExpress.Driver.Firebird.pas
-          dbExpress.Driver.Interbase.pas
-          dbExpress.Driver.MSSQL.pas
-          dbExpress.Driver.PostgreSQL.pas   ← usa Devart (dbexppgsql40.dll)
-          dbExpress.Driver.Oracle.pas       ← usa driver nativo (dbxora.dll + oci.dll)
-      FireDAC\
-        FireDAC.ConnectionStrategy.pas
-        FireDAC.QueryStrategy.pas
-        FireDAC.Factory.pas                 ← registra TEngine.FireDAC
-        FireDAC.Drivers\
-          FireDAC.Driver.SQLite.pas
-          FireDAC.Driver.MySQL.pas
-          FireDAC.Driver.Firebird.pas
-          FireDAC.Driver.Interbase.pas
-          FireDAC.Driver.MSSQL.pas
-          FireDAC.Driver.PostgreSQL.pas
-          FireDAC.Driver.Oracle.pas
-      ZeOS\
-        ZeOS.ConnectionStrategy.pas
-        ZeOS.QueryStrategy.pas
-        ZeOS.Factory.pas                    ← registra TEngine.ZeOS
-        ZeOS.Drivers\
-          ZeOS.Driver.SQLite.pas
-          ZeOS.Driver.MySQL.pas
-          ZeOS.Driver.Firebird.pas
-          ZeOS.Driver.Interbase.pas
-          ZeOS.Driver.MSSQL.pas
-          ZeOS.Driver.PostgreSQL.pas
-          ZeOS.Driver.Oracle.pas
-      UniDAC\
-        UniDAC.ConnectionStrategy.pas
-        UniDAC.QueryStrategy.pas
-        UniDAC.Factory.pas                  ← registra TEngine.UniDAC
-        UniDAC.Drivers\
-          UniDAC.Driver.SQLite.pas
-          UniDAC.Driver.MySQL.pas
-          UniDAC.Driver.Firebird.pas
-          UniDAC.Driver.Interbase.pas
-          UniDAC.Driver.MSSQL.pas
-          UniDAC.Driver.PostgreSQL.pas
-          UniDAC.Driver.Oracle.pas
+    Engine\
+      Adapters\
+        Connection.All.pas              ← uses: Connection.dbExpress/FireDAC/ZeOS/UniDAC.All
+        dbExpress\
+          Connection.dbExpress.All.pas  ← uses: Core + Drivers dbExpress
+          Core\
+            dbExpress.ConnectionStrategy.pas
+            dbExpress.QueryStrategy.pas
+            dbExpress.Factory.pas         ← registra TEngine.dbExpress
+          Drivers\
+            dbExpress.Driver.SQLite.pas
+            dbExpress.Driver.MySQL.pas
+            dbExpress.Driver.Firebird.pas
+            dbExpress.Driver.Interbase.pas
+            dbExpress.Driver.MSSQL.pas
+            dbExpress.Driver.PostgreSQL.pas ← Devart (dbexppgsql40.dll)
+            dbExpress.Driver.Oracle.pas     ← nativo (dbxora.dll + oci.dll)
+        FireDAC\
+          Connection.FireDAC.All.pas
+          Core\
+            FireDAC.ConnectionStrategy.pas
+            FireDAC.QueryStrategy.pas
+            FireDAC.Factory.pas           ← registra TEngine.FireDAC
+          Drivers\
+            FireDAC.Driver.SQLite.pas
+            …
+        ZeOS\
+          Connection.ZeOS.All.pas
+          Core\
+            ZeOS.Factory.pas              ← registra TEngine.ZeOS
+            …
+          Drivers\
+            ZeOS.Driver.*.pas
+        UniDAC\
+          Connection.UniDAC.All.pas
+          Core\
+            UniDAC.Factory.pas            ← registra TEngine.UniDAC
+            …
+          Drivers\
+            UniDAC.Driver.*.pas
     Registry\
       EngineRegistry.pas
     Config\
-      Connection.Config.JSON.pas
-      Connection.Config.INI.pas
-      Connection.Config.XML.pas
-      Connection.Config.YAML.pas
-      Connection.Config.NEON.pas
-      Connection.Config.TOML.pas
+      Connection.Config.All.pas
+      Connection.Config.Types.pas
+      Connection.Config.Intf.pas
+      Connection.Config.Factory.pas
+      Core\Connection.Config.Loader.Abstract.pas
+      Mapper\Connection.Config.*.Mapper.pas
+      Static\Connection.Config.*.pas
+      Adapters\Connection.Config.Adapter.*.pas
 ```
 
 ### 2.10 Adicionar uma quinta engine futura
@@ -544,11 +530,11 @@ Source\
 // 1. Adicionar valor ao enum TEngine (único ponto de mudança obrigatório):
 TEngine = (FireDAC, dbExpress, ZeOS, UniDAC, mORMot);
 
-// 2. Criar os arquivos em Source\Connection\Adapters\mORMot\
-//    mORMot.ConnectionStrategy.pas
-//    mORMot.QueryStrategy.pas
-//    mORMot.Factory.pas
-//    mORMot.Drivers\mORMot.Driver.*.pas
+// 2. Criar os arquivos em Source\Connection\Engine\Adapters\mORMot\
+//    Core\mORMot.ConnectionStrategy.pas
+//    Core\mORMot.QueryStrategy.pas
+//    Core\mORMot.Factory.pas
+//    Drivers\mORMot.Driver.*.pas
 
 // 3. Em mORMot.Factory.pas — auto-registro:
 initialization
@@ -721,7 +707,7 @@ delega ao configurador correto — sem `case` ou `{$IFDEF}`.
 
 ---
 
-## 5. Camada Connector — Preservando `TConnector`, `OptionsJSON`, `OptionsInteger`, `OptionsArray`
+## 5. Camada Connector — Preservando `TConnector`, classes `TOptions*` (units `Options.JSON`, `Options.Integer`, `Options.Array`)
 
 ### 5.1 Solução — `AsInMemoryDataSet: TDataSet`
 
@@ -741,9 +727,9 @@ function TConnector.ToDataSet: {$I CNC.Type.inc};
 function TConnector.ToDataSet: TDataSet;
 ```
 
-### 5.2 `OptionsJSON`, `OptionsInteger`, `OptionsArray` — sem alteração de API
+### 5.2 Units `Options.JSON`, `Options.Integer`, `Options.Array` — sem alteração de API das classes
 
-Mesmo contrato público. Mudança interna: substituir `TClientDataSet`/`TFDMemTable` por
+Mesmo contrato público (`TOptionsJSON`, `TOptionsInteger`, `TOptionsArray`). Mudança interna: substituir `TClientDataSet`/`TFDMemTable` por
 `TDataSet` e chamar `FQuery.Strategy.AsInMemoryDataSet`.
 
 ### 5.3 `Source\SmartPointer` — um tipo por unit (padrão `*.Intf` / implementação)
@@ -754,17 +740,17 @@ permanece a mesma. O que mudou é apenas o **layout físico**, alinhado a `Conne
 
 | Unit | Conteúdo |
 |------|----------|
-| `SmartPointer.IGuard.Intf.pas` | `IGuard` |
+| `SmartPointer.Guard.Intf.pas` | `IGuard` |
 | `SmartPointer.Guard.pas` | `TGuard` — `TInterfacedObject` que dá `Free` ao `TObject` no `Destroy` |
-| `SmartPointer.ISmartPointer.pas` | record `ISmartPointer<T>` |
+| `SmartPointer.SmartPointer.pas` | record `ISmartPointer<T>` |
 | `SmartPointer.RefGuard.pas` | `TSmartPointerRefGuard` — libera via `IInterface` quando o objeto suporta, senão `Free` |
 | `SmartPointer.TSmartPointer.pas` | record `TSmartPointer<T>` |
 
-**Ordem de compilação sugerida:** `SmartPointer.IGuard.Intf` → `SmartPointer.Guard` → `SmartPointer.ISmartPointer` → `SmartPointer.RefGuard` → `SmartPointer.TSmartPointer`.
+**Ordem de compilação sugerida:** `SmartPointer.Guard.Intf` → `SmartPointer.Guard` → `SmartPointer.SmartPointer` → `SmartPointer.RefGuard` → `SmartPointer.TSmartPointer`.
 
-Nos `uses` do código de aplicação, usar `SmartPointer.ISmartPointer` e/ou `SmartPointer.TSmartPointer`
+Nos `uses` do código de aplicação, usar `SmartPointer.SmartPointer` e/ou `SmartPointer.TSmartPointer`
 (em vez dos antigos units `ISmartPointer` e `TSmartPointer`). Os drivers FireDAC que só precisam do
-cast implícito para `ISmartPointer<T>` referenciam apenas `SmartPointer.ISmartPointer`.
+cast implícito para `ISmartPointer<T>` referenciam apenas `SmartPointer.SmartPointer`.
 
 ---
 
@@ -792,7 +778,7 @@ Connector.ToListView(ListViewSQLite, ['Codigo', 'Estado', 'Sigla'], 13);
 | `Conn.Engine := ZeOS` | não existia | reconfigura estratégia sem recriar o objeto |
 | `Conn.WithDriver(MySQL)...` | não existia | interface fluente chainable |
 | `Conn.AddArgument(...)` | hardcoded nos `.inc` | parâmetro livre propagado ao driver |
-| `CreateFromJSON/INI/XML/YAML/NEON/TOML` | não existia | 6 construtores por formato |
+| `CreateFromJSON/INI/XML/YAML/TOML` | não existia | 5 construtores por formato |
 | `TConnector.ToDataSet` | `TClientDataSet` ou `TFDMemTable` via `.inc` | `TDataSet` via `AsInMemoryDataSet` |
 | Troca de engine | impossível sem recompilar | `Conn.Engine := FireDAC` ou `SwitchEngine` |
 | Múltiplos engines simultâneos | impossível | `TConnection.Create(FireDAC)` + `TConnection.Create(UniDAC)` |
@@ -846,12 +832,11 @@ Connector.ToListView(ListViewSQLite, ['Codigo', 'Estado', 'Sigla'], 13);
 - [x] Manter `TConnectionClass` (Singleton opcional)
 
 ### Fase 7 — Construtores de configuração
-- [x] `Source\Connection\Config\Connection.Config.JSON.pas`
-- [x] `Source\Connection\Config\Connection.Config.INI.pas`
-- [x] `Source\Connection\Config\Connection.Config.XML.pas`
-- [ ] `Source\Connection\Config\Connection.Config.YAML.pas` (condicional — Neslib.Yaml)
-- [ ] `Source\Connection\Config\Connection.Config.NEON.pas` (condicional — Neon)
-- [ ] `Source\Connection\Config\Connection.Config.TOML.pas` (condicional — TOML lib)
+- [x] `Source\Connection\Config\Static\Connection.Config.JSON.pas`
+- [x] `Source\Connection\Config\Static\Connection.Config.INI.pas`
+- [x] `Source\Connection\Config\Static\Connection.Config.XML.pas`
+- [ ] `Source\Connection\Config\Static\Connection.Config.YAML.pas` (condicional — Neslib.Yaml)
+- [ ] `Source\Connection\Config\Static\Connection.Config.TOML.pas` (condicional — TOML lib)
 
 ### Fase 8 — Refatorar `Query.pas`
 - [x] Remover `{$IFDEF}` de engine
@@ -902,8 +887,8 @@ Connector.ToListView(ListViewSQLite, ['Codigo', 'Estado', 'Sigla'], 13);
 8. **`SwitchEngine` lança exceção se `InTransaction = True`.** Transações abertas impedem
    troca de engine.
 
-9. **Métodos de configuração opcionais** (`CreateFromYAML`, `CreateFromNEON`,
-   `CreateFromTOML`) compilam somente se a biblioteca de terceiros estiver no path.
+9. **Métodos de configuração opcionais** (`CreateFromYAML`, `CreateFromTOML`)
+   compilam somente se a biblioteca de terceiros estiver no path.
 
 10. **API pública estável.** `TConnection`, `TQuery`, `TConnector`, `TQueryBuilder`
     mantêm os mesmos nomes de métodos e propriedades existentes hoje.
@@ -930,7 +915,7 @@ Connector.ToListView(ListViewSQLite, ['Codigo', 'Estado', 'Sigla'], 13);
 | UniDAC requer licença comercial | Baixo | Adapter compilado apenas se `Uni.pas` estiver no path |
 | `SwitchEngine` com transação aberta | Alto | Exceção explícita com mensagem clara |
 | `ExtraArgs` com chave inválida | Baixo | Adapter ignora silenciosamente; log opcional via callback |
-| Bibliotecas YAML/NEON/TOML ausentes | Baixo | Compilação condicional — sem erro se ausente |
+| Bibliotecas YAML/TOML ausentes | Baixo | Compilação condicional — sem erro se ausente |
 
 ---
 
@@ -945,7 +930,7 @@ Connector.ToListView(ListViewSQLite, ['Codigo', 'Estado', 'Sigla'], 13);
 | Propriedade `Engine` | Não existia | Define/troca a engine com prioridade |
 | Interface fluente | Não existia | `.WithDriver(MySQL).WithHost(...).AddArgument(...)` |
 | Parâmetros extras | Hardcoded nos `.inc` | `AddArgument` / `AddParameter` |
-| Configuração externa | Não existia | JSON, INI, XML, YAML, NEON, TOML |
+| Configuração externa | Não existia | JSON, INI, XML, YAML, TOML |
 | Adicionar nova engine | Modificar 6+ arquivos | Criar 3 units + `initialization` |
 | Suporte a UniDAC | Não existia | Adapter completo incluído desde o início |
 | Oracle dbExpress | Nativo + Devart (dois modos) | Apenas nativo (`dbxora.dll` + `oci.dll`) |

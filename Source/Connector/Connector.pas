@@ -81,8 +81,8 @@ uses
   QueryBuilder,
   RTTI,
   ArrayHelper,
-  ArrayString,
-  ArrayVariant,
+  &Type.&Array.&String,
+  &Type.&Array.Variant,
   Vcl.Forms
   ;
 
@@ -347,9 +347,9 @@ type
 implementation
 
 uses
-  OptionsInteger,
-  OptionsArray,
-  OptionsJSON;
+  Options.Integer,
+  Options.&Array,
+  Options.JSON;
 
 function ConnectorGetItemsStrings(AControl: TComponent): TStrings;
 begin

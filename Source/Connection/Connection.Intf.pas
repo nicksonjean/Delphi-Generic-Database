@@ -8,7 +8,7 @@ interface
 
 uses
   Connection.Types,
-  Connection.IConnectionStrategy;
+  Connection.Strategy.Intf;
 
 type
   IConnection = interface

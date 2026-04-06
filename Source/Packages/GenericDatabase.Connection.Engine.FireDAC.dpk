@@ -1,0 +1,60 @@
+
+package GenericDatabase.Connection.Engine.FireDAC;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Delphi Generic Database - Engine.FireDAC only'}
+{$LIBSUFFIX AUTO}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  dbrtl,
+  GenericDatabase.Connection.Core,
+  FireDAC,
+  FireDACCommon,
+  FireDACCommonDriver,
+  FireDACSqliteDriver,
+  FireDACIBDriver,
+  FireDACPgDriver,
+  FireDACMSSQLDriver,
+  FireDACMySQLDriver,
+  FireDACOracleDriver;
+
+contains
+  FireDAC.Factory in '..\Connection\Engine\Adapters\FireDAC\Core\FireDAC.Factory.pas',
+  FireDAC.Connection.Strategy in '..\Connection\Engine\Adapters\FireDAC\Core\FireDAC.Connection.Strategy.pas',
+  FireDAC.Query.Strategy in '..\Connection\Engine\Adapters\FireDAC\Core\FireDAC.Query.Strategy.pas',
+  FireDAC.Driver.SQLite in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.SQLite.pas',
+  FireDAC.Driver.MySQL in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.MySQL.pas',
+  FireDAC.Driver.Firebird in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.Firebird.pas',
+  FireDAC.Driver.Interbase in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.Interbase.pas',
+  FireDAC.Driver.MSSQL in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.MSSQL.pas',
+  FireDAC.Driver.PostgreSQL in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.PostgreSQL.pas',
+  FireDAC.Driver.Oracle in '..\Connection\Engine\Adapters\FireDAC\Drivers\FireDAC.Driver.Oracle.pas',
+  Connection.FireDAC.All in '..\Connection\Engine\Adapters\FireDAC\Connection.FireDAC.All.pas';
+
+end.

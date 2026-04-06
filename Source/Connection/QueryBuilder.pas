@@ -1,4 +1,4 @@
-unit QueryBuilder;
+﻿unit QueryBuilder;
 
 interface
 
@@ -20,18 +20,18 @@ uses
   Data.DB,
   Data.FMTBcd,
 
-  Connection.IConnectionStrategy,
+  Connection.Strategy.Intf,
 
-  Float,
-  Strings,
+  &Type.Float,
+  &Type.&String,
   MimeType,
-  ArrayString,
-  ArrayStringHelper,
-  ArrayVariant,
-  ArrayVariantHelper,
-  ArrayField,
-  ArrayFieldHelper,
-  ArrayAssoc,
+  &Type.&Array.&String,
+  &Type.&Array.&String.Helper,
+  &Type.&Array.Variant,
+  &Type.&Array.Variant.Helper,
+  &Type.&Array.Field,
+  &Type.&Array.Field.Helper,
+  &Type.&Array.Assoc,
   Query;
 
   { Record TQueryBuilder para Criação de Consultas para a Classe TQuery }

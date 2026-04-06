@@ -7,7 +7,7 @@ unit SmartPointer.Guard;
 interface
 
 uses
-  SmartPointer.IGuard.Intf;
+  SmartPointer.Guard.Intf;
 
 type
   TGuard = class(TInterfacedObject, IGuard)

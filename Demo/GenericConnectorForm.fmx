@@ -342,7 +342,6 @@ object GenericConnectorForm: TGenericConnectorForm
                 object ComboEditSQLite: TComboEdit
                   Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  StyleLookup = 'suggesteditstyle'
                   TabOrder = 25
                   ItemHeight = 19.000000000000000000
                   ItemIndex = -1
@@ -2117,8 +2116,22 @@ object GenericConnectorForm: TGenericConnectorForm
   object Button2: TButton
     Position.X = 616.000000000000000000
     Position.Y = 16.000000000000000000
-    TabOrder = 16
+    TabOrder = 18
     Text = 'Button2'
     OnClick = Button2Click
+  end
+  object ComboEdit1: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 17
+    ItemHeight = 19.000000000000000000
+    ItemIndex = -1
+    Position.X = 184.000000000000000000
+    Position.Y = 16.000000000000000000
+  end
+  object Edit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 16
+    Position.X = 72.000000000000000000
+    Position.Y = 16.000000000000000000
   end
 end

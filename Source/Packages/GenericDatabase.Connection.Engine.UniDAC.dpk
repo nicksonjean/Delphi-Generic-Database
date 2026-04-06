@@ -1,0 +1,56 @@
+
+package GenericDatabase.Connection.Engine.UniDAC;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Delphi Generic Database - Engine.UniDAC only'}
+{$LIBSUFFIX AUTO}
+{$IMPLICITBUILD OFF}
+
+{
+  Ajuste REQUIRES aos pacotes runtime UniDAC da sua instalação Devart
+  (ex.: dac, dacvcl, unidac — nomes variam por versão).
+}
+
+requires
+  rtl,
+  dbrtl,
+  GenericDatabase.Connection.Core;
+
+contains
+  UniDAC.Factory in '..\Connection\Engine\Adapters\UniDAC\Core\UniDAC.Factory.pas',
+  UniDAC.Connection.Strategy in '..\Connection\Engine\Adapters\UniDAC\Core\UniDAC.Connection.Strategy.pas',
+  UniDAC.Query.Strategy in '..\Connection\Engine\Adapters\UniDAC\Core\UniDAC.Query.Strategy.pas',
+  UniDAC.Driver.SQLite in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.SQLite.pas',
+  UniDAC.Driver.MySQL in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.MySQL.pas',
+  UniDAC.Driver.Firebird in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.Firebird.pas',
+  UniDAC.Driver.Interbase in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.Interbase.pas',
+  UniDAC.Driver.MSSQL in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.MSSQL.pas',
+  UniDAC.Driver.PostgreSQL in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.PostgreSQL.pas',
+  UniDAC.Driver.Oracle in '..\Connection\Engine\Adapters\UniDAC\Drivers\UniDAC.Driver.Oracle.pas',
+  Connection.UniDAC.All in '..\Connection\Engine\Adapters\UniDAC\Connection.UniDAC.All.pas';
+
+end.
