@@ -1,4 +1,4 @@
-unit FMX.ComboEdit.Extension;
+﻿unit FMX.ComboEdit.Extension;
 
 interface
 
@@ -18,20 +18,7 @@ uses
   FMX.Objects,
   EventDelegate;
 
-type
-  TComboEditExtension = class helper for TComboEdit
-  public
-    // Intentionally left for API compatibility; styling is applied by presentation proxy.
-    procedure ApplyEditStyleRuntime;
-  end;
-
 implementation
-
-procedure TComboEditExtension.ApplyEditStyleRuntime;
-begin
-  // Styling is applied automatically by the presentation proxy.
-end;
-
 
 type
   // Uses 'editstyle' instead of 'comboeditstyle' so borders, focus, and hover
