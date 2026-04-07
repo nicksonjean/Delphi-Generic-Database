@@ -17,6 +17,7 @@ uses
   FMX.ListBox.Helper in '..\Source\Helpers\FMX.ListBox\FMX.ListBox.Helper.pas',
   FMX.ListView.Helper in '..\Source\Helpers\FMX.ListView\FMX.ListView.Helper.pas',
   FMX.StringGrid.Helper in '..\Source\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas',
+  Masks in '..\Source\Helpers\Masks\Masks.pas',
   FMX.Edit.Helper in '..\Source\Helpers\FMX.Edit\FMX.Edit.Helper.pas',
   FMX.ComboEdit.Helper in '..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas',
   FMX.ComboEdit.Extension in '..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Extension.pas',

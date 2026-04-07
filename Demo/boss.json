@@ -11,6 +11,7 @@
 		"github.com/onryldz/x-superobject": "1.0.0",
 		"github.com/zeoslib/zeoslib": "1.0.0",
 		"github.com/neslib/Neslib.Yaml": "master",
-		"github.com/SilenceCCF/DelphiTOML": "main"
+		"github.com/SilenceCCF/DelphiTOML": "main",
+		"github.com/rafael-figueiredo-alves/DotEnv4Delphi": "1.5.0"
 	}
 }

@@ -206,6 +206,7 @@
         <DCCReference Include="..\Source\Helpers\FMX.ListBox\FMX.ListBox.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ListView\FMX.ListView.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas"/>
+        <DCCReference Include="..\Source\Helpers\Masks\Masks.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.Edit\FMX.Edit.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Extension.pas"/>
