@@ -88,7 +88,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>GenericDataTypes</SanitizedProjectName>
-        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\Neslib.Yaml;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Config;..\Source\Connection\Config\Core;..\Source\Connection\Config\Mapper;..\Source\Connection\Config\Static;..\Source\Connection\Config\Adapters;..\Source\Connection\Engine\Adapters;..\Source\Connection\Engine\Adapters\FireDAC;..\Source\Connection\Engine\Adapters\FireDAC\Core;..\Source\Connection\Engine\Adapters\FireDAC\Drivers;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;..\Source\Vendor\Neslib.Yaml;..\Source\Vendor\Neslib.Yaml\Neslib;..\Source\Vendor\Neslib;..\Source\Vendor\Neslib.Yaml\Tests\UnitTests\Tests;..\Source\Vendor\Neslib.Yaml\Tests\YamlDump;..\Source\Vendor\DelphiTOML\src;modules\Neslib.Yaml;modules\Neslib.Yaml\Neslib;modules\Neslib;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;modules\DelphiTOML\src;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Config;..\Source\Connection\Config\Core;..\Source\Connection\Config\Mapper;..\Source\Connection\Config\Static;..\Source\Connection\Config\Adapters;..\Source\Connection\Engine\Adapters;..\Source\Connection\Engine\Adapters\dbExpress;..\Source\Connection\Engine\Adapters\dbExpress\Core;..\Source\Connection\Engine\Adapters\dbExpress\Drivers;..\Source\Connection\Engine\Adapters\FireDAC;..\Source\Connection\Engine\Adapters\FireDAC\Core;..\Source\Connection\Engine\Adapters\FireDAC\Drivers;..\Source\Connection\Engine\Adapters\UniDAC;..\Source\Connection\Engine\Adapters\UniDAC\Core;..\Source\Connection\Engine\Adapters\UniDAC\Drivers;..\Source\Connection\Engine\Adapters\ZeOS;..\Source\Connection\Engine\Adapters\ZeOS\Core;..\Source\Connection\Engine\Adapters\ZeOS\Drivers;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DisableWarningsForUnit>modules\*;..\Source\Vendor\*;TOML.*.pas;ZPlainProxyDriverInternalProxy.pas;$(DCC_DisableWarningsForUnit)</DCC_DisableWarningsForUnit>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
@@ -192,14 +192,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\Connection\Connection.Types.pas"/>
-        <DCCReference Include="..\Source\Connection\Strategy\Connection.Strategy.Intf.pas"/>
-        <DCCReference Include="..\Source\Connection\Registry\EngineRegistry.pas"/>
-        <DCCReference Include="..\Source\Connection\Engine\Adapters\FireDAC\Connection.FireDAC.All.pas"/>
-        <DCCReference Include="..\Source\Connection\Connection.Intf.pas"/>
-        <DCCReference Include="..\Source\Connection\Connection.pas"/>
-        <DCCReference Include="..\Source\Types\Float\Type.Locale.pas"/>
-        <DCCReference Include="..\Source\Reflection\RTTI.pas"/>
+        <DCCReference Include="..\Source\Vendor\FastMM5\FastMM5.pas"/>
         <DCCReference Include="..\Source\Vendor\XSuperObject\XSuperJSON.pas"/>
         <DCCReference Include="..\Source\Vendor\XSuperObject\XSuperObject.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ListView\FMX.FireMonkey.Parser.pas"/>
@@ -214,51 +207,20 @@
         <DCCReference Include="..\Source\Helpers\FMX.ListView\FMX.ListView.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.Edit\FMX.Edit.Helper.pas"/>
-        <DCCReference Include="..\Source\Helpers\EventDelegate\EventDelegate.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Core\EventDriven.Types.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Core\EventDriven.Core.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.Notify.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.Key.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.ItemBox.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.ItemView.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.Paint.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.ItemButton.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Delegates\EventDriven.ItemUpdating.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Bindings\EventDriven.GridBindings.pas"/>
-        <DCCReference Include="..\Source\EventDriven\Core\EventDriven.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas"/>
+        <DCCReference Include="..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Extension.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboBox\FMX.ComboBox.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.Objects\FMX.Objects.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\DictionaryHelper\DictionaryHelper.pas"/>
         <DCCReference Include="..\Source\Helpers\ArrayHelper\ArrayHelper.pas"/>
-        <DCCReference Include="..\Source\Types\String\Type.String.pas"/>
-        <DCCReference Include="..\Source\Types\Float\Type.Float.pas"/>
+        <DCCReference Include="..\Source\Helpers\EventDelegate\EventDelegate.pas"/>
         <DCCReference Include="..\Source\Reflection\MimeType.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.Field.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.String.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.Variant.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.String.Helper.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.Variant.Helper.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.Field.Helper.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.Assoc.pas"/>
-        <DCCReference Include="..\Source\Types\DateTime\Type.DateTime.pas"/>
-        <DCCReference Include="..\Source\Connection\Query.Intf.pas"/>
-        <DCCReference Include="..\Source\Connection\Query.pas"/>
-        <DCCReference Include="..\Source\Connection\QueryBuilder.pas"/>
-        <DCCReference Include="..\Source\Connector\Connector.Types.pas"/>
-        <DCCReference Include="..\Source\Connector\Connector.Intf.pas"/>
-        <DCCReference Include="..\Source\Connector\Connector.pas"/>
-        <DCCReference Include="..\Source\Connector\Options\Options.Intf.pas"/>
-        <DCCReference Include="..\Source\Connector\Options\Options.Integer.pas"/>
-        <DCCReference Include="..\Source\Connector\Options\Options.Array.pas"/>
-        <DCCReference Include="..\Source\Connector\Options\Options.JSON.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.Guard.Intf.pas"/>
-        <DCCReference Include="..\Source\Types\Array\Type.Array.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.Guard.Intf.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.Guard.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.SmartPointer.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.RefGuard.pas"/>
-        <DCCReference Include="..\Source\SmartPointer\SmartPointer.TSmartPointer.pas"/>
+        <DCCReference Include="..\Source\Reflection\RTTI.pas"/>
+        <DCCReference Include="..\Source\EventDriven\EventDriven.All.pas"/>
+        <DCCReference Include="..\Source\Types\Type.All.pas"/>
+        <DCCReference Include="..\Source\SmartPointer\SmartPointer.All.pas"/>
+        <DCCReference Include="..\Source\Connection\Connection.All.pas"/>
+        <DCCReference Include="..\Source\Connector\Connector.All.pas"/>
         <DCCReference Include="GenericDataTypesForm.pas">
             <Form>GenericDataTypesForm</Form>
         </DCCReference>

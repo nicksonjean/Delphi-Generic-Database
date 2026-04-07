@@ -88,7 +88,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>GenericConnector</SanitizedProjectName>
-        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\Neslib.Yaml;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;..\Source\Vendor\Neslib.Yaml;..\Source\Vendor\Neslib.Yaml\Neslib;..\Source\Vendor\DelphiTOML\src;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Config;..\Source\Connection\Config\Core;..\Source\Connection\Config\Mapper;..\Source\Connection\Config\Static;..\Source\Connection\Config\Adapters;..\Source\Connection\Engine\Adapters;..\Source\Connection\Engine\Adapters\dbExpress;..\Source\Connection\Engine\Adapters\dbExpress\Core;..\Source\Connection\Engine\Adapters\dbExpress\Drivers;..\Source\Connection\Engine\Adapters\FireDAC;..\Source\Connection\Engine\Adapters\FireDAC\Core;..\Source\Connection\Engine\Adapters\FireDAC\Drivers;..\Source\Connection\Engine\Adapters\UniDAC;..\Source\Connection\Engine\Adapters\UniDAC\Core;..\Source\Connection\Engine\Adapters\UniDAC\Drivers;..\Source\Connection\Engine\Adapters\ZeOS;..\Source\Connection\Engine\Adapters\ZeOS\Core;..\Source\Connection\Engine\Adapters\ZeOS\Drivers;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;..\Source\Vendor\Neslib.Yaml;..\Source\Vendor\Neslib.Yaml\Neslib;..\Source\Vendor\Neslib;..\Source\Vendor\Neslib.Yaml\Tests\UnitTests\Tests;..\Source\Vendor\Neslib.Yaml\Tests\YamlDump;..\Source\Vendor\DelphiTOML\src;modules\Neslib.Yaml;modules\Neslib.Yaml\Neslib;modules\Neslib;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;modules\DelphiTOML\src;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Config;..\Source\Connection\Config\Core;..\Source\Connection\Config\Mapper;..\Source\Connection\Config\Static;..\Source\Connection\Config\Adapters;..\Source\Connection\Engine\Adapters;..\Source\Connection\Engine\Adapters\dbExpress;..\Source\Connection\Engine\Adapters\dbExpress\Core;..\Source\Connection\Engine\Adapters\dbExpress\Drivers;..\Source\Connection\Engine\Adapters\FireDAC;..\Source\Connection\Engine\Adapters\FireDAC\Core;..\Source\Connection\Engine\Adapters\FireDAC\Drivers;..\Source\Connection\Engine\Adapters\UniDAC;..\Source\Connection\Engine\Adapters\UniDAC\Core;..\Source\Connection\Engine\Adapters\UniDAC\Drivers;..\Source\Connection\Engine\Adapters\ZeOS;..\Source\Connection\Engine\Adapters\ZeOS\Core;..\Source\Connection\Engine\Adapters\ZeOS\Drivers;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DisableWarningsForUnit>modules\*;..\Source\Vendor\*;TOML.*.pas;ZPlainProxyDriverInternalProxy.pas;$(DCC_DisableWarningsForUnit)</DCC_DisableWarningsForUnit>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
@@ -169,8 +169,6 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
-        <DCC_MapFile>3</DCC_MapFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -1046,7 +1044,6 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
-            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

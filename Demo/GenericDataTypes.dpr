@@ -1,16 +1,9 @@
 program GenericDataTypes;
 
 uses
+  FastMM5 in '..\Source\Vendor\FastMM5\FastMM5.pas',
   System.StartUpCopy,
   FMX.Forms,
-  Connection.Types in '..\Source\Connection\Connection.Types.pas',
-  Connection.Strategy.Intf in '..\Source\Connection\Strategy\Connection.Strategy.Intf.pas',
-  EngineRegistry in '..\Source\Connection\Registry\EngineRegistry.pas',
-  Connection.FireDAC.All in '..\Source\Connection\Engine\Adapters\FireDAC\Connection.FireDAC.All.pas',
-  Connection.Intf in '..\Source\Connection\Connection.Intf.pas',
-  Connection in '..\Source\Connection\Connection.pas',
-  Type.Locale in '..\Source\Types\Float\Type.Locale.pas',
-  RTTI in '..\Source\Reflection\RTTI.pas',
   XSuperJSON in '..\Source\Vendor\XSuperObject\XSuperJSON.pas',
   XSuperObject in '..\Source\Vendor\XSuperObject\XSuperObject.pas',
   FMX.FireMonkey.Parser in '..\Source\Helpers\FMX.ListView\FMX.FireMonkey.Parser.pas',
@@ -25,57 +18,30 @@ uses
   FMX.ListView.Helper in '..\Source\Helpers\FMX.ListView\FMX.ListView.Helper.pas',
   FMX.StringGrid.Helper in '..\Source\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas',
   FMX.Edit.Helper in '..\Source\Helpers\FMX.Edit\FMX.Edit.Helper.pas',
-  EventDelegate in '..\Source\Helpers\EventDelegate\EventDelegate.pas',
-  EventDriven.Types in '..\Source\EventDriven\Core\EventDriven.Types.pas',
-  EventDriven.Core in '..\Source\EventDriven\Core\EventDriven.Core.pas',
-  EventDriven.Notify in '..\Source\EventDriven\Delegates\EventDriven.Notify.pas',
-  EventDriven.Key in '..\Source\EventDriven\Delegates\EventDriven.Key.pas',
-  EventDriven.ItemBox in '..\Source\EventDriven\Delegates\EventDriven.ItemBox.pas',
-  EventDriven.ItemView in '..\Source\EventDriven\Delegates\EventDriven.ItemView.pas',
-  EventDriven.Paint in '..\Source\EventDriven\Delegates\EventDriven.Paint.pas',
-  EventDriven.ItemButton in '..\Source\EventDriven\Delegates\EventDriven.ItemButton.pas',
-  EventDriven.ItemUpdating in '..\Source\EventDriven\Delegates\EventDriven.ItemUpdating.pas',
-  EventDriven.GridBindings in '..\Source\EventDriven\Bindings\EventDriven.GridBindings.pas',
-  EventDriven in '..\Source\EventDriven\Core\EventDriven.pas',
   FMX.ComboEdit.Helper in '..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas',
+  FMX.ComboEdit.Extension in '..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Extension.pas',
   FMX.ComboBox.Helper in '..\Source\Helpers\FMX.ComboBox\FMX.ComboBox.Helper.pas',
   FMX.Objects.Helper in '..\Source\Helpers\FMX.Objects\FMX.Objects.Helper.pas',
   DictionaryHelper in '..\Source\Helpers\DictionaryHelper\DictionaryHelper.pas',
   ArrayHelper in '..\Source\Helpers\ArrayHelper\ArrayHelper.pas',
-  Type.String in '..\Source\Types\String\Type.String.pas',
-  Type.Float in '..\Source\Types\Float\Type.Float.pas',
+  EventDelegate in '..\Source\Helpers\EventDelegate\EventDelegate.pas',
   MimeType in '..\Source\Reflection\MimeType.pas',
-  Type.Array.Field in '..\Source\Types\Array\Type.Array.Field.pas',
-  Type.Array.String in '..\Source\Types\Array\Type.Array.String.pas',
-  Type.Array.Variant in '..\Source\Types\Array\Type.Array.Variant.pas',
-  Type.Array.String.Helper in '..\Source\Types\Array\Type.Array.String.Helper.pas',
-  Type.Array.Variant.Helper in '..\Source\Types\Array\Type.Array.Variant.Helper.pas',
-  Type.Array.Field.Helper in '..\Source\Types\Array\Type.Array.Field.Helper.pas',
-  Type.Array.Assoc in '..\Source\Types\Array\Type.Array.Assoc.pas',
-  Type.DateTime in '..\Source\Types\DateTime\Type.DateTime.pas',
-  Query.Intf in '..\Source\Connection\Query.Intf.pas',
-  Query in '..\Source\Connection\Query.pas',
-  QueryBuilder in '..\Source\Connection\QueryBuilder.pas',
-  Connector.Types in '..\Source\Connector\Connector.Types.pas',
-  Connector.Intf in '..\Source\Connector\Connector.Intf.pas',
-  Connector in '..\Source\Connector\Connector.pas',
-  Options.Intf in '..\Source\Connector\Options\Options.Intf.pas',
-  Options.Integer in '..\Source\Connector\Options\Options.Integer.pas',
-  Options.Array in '..\Source\Connector\Options\Options.Array.pas',
-  Options.JSON in '..\Source\Connector\Options\Options.JSON.pas',
-  Type.Array.Guard.Intf in '..\Source\Types\Array\Type.Array.Guard.Intf.pas',
-  Type.Array in '..\Source\Types\Array\Type.Array.pas',
-  SmartPointer.Guard.Intf in '..\Source\SmartPointer\SmartPointer.Guard.Intf.pas',
-  SmartPointer.Guard in '..\Source\SmartPointer\SmartPointer.Guard.pas',
-  SmartPointer.SmartPointer in '..\Source\SmartPointer\SmartPointer.SmartPointer.pas',
-  SmartPointer.RefGuard in '..\Source\SmartPointer\SmartPointer.RefGuard.pas',
-  SmartPointer.TSmartPointer in '..\Source\SmartPointer\SmartPointer.TSmartPointer.pas',
+  RTTI in '..\Source\Reflection\RTTI.pas',
+  EventDriven.All in '..\Source\EventDriven\EventDriven.All.pas',
+  &Type.All in '..\Source\Types\Type.All.pas',
+  SmartPointer.All in '..\Source\SmartPointer\SmartPointer.All.pas',
+  Connection.All in '..\Source\Connection\Connection.All.pas',
+  Connector.All in '..\Source\Connector\Connector.All.pas',
   GenericDataTypesForm in 'GenericDataTypesForm.pas' {GenericDataTypesForm};
 
 {$R *.res}
 
 begin
+  FastMM_EnterDebugMode;
+  FastMM_MessageBoxEvents := [];
+  FastMM_LogToFileEvents := FastMM_LogToFileEvents + [mmetUnexpectedMemoryLeakDetail, mmetUnexpectedMemoryLeakSummary];
   Application.Initialize;
   Application.CreateForm(TGenericDataTypesForm, FGenericDataTypesForm);
   Application.Run;
+  ReportMemoryLeaksOnShutdown := True;
 end.

@@ -148,8 +148,8 @@ object GenericPagNavForm: TGenericPagNavForm
               Size.Height = 506.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 6
-              Viewport.Width = 372.000000000000000000
-              Viewport.Height = 481.000000000000000000
+              Viewport.Width = 376.000000000000000000
+              Viewport.Height = 506.000000000000000000
             end
           end
         end
@@ -256,8 +256,8 @@ object GenericPagNavForm: TGenericPagNavForm
                 Size.Height = 211.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 6
-                Viewport.Width = 372.000000000000000000
-                Viewport.Height = 186.000000000000000000
+                Viewport.Width = 376.000000000000000000
+                Viewport.Height = 211.000000000000000000
               end
               object PagPanelLayout: TGridPanelLayout
                 Align = Client
@@ -450,8 +450,8 @@ object GenericPagNavForm: TGenericPagNavForm
                 Size.Height = 211.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 5
-                Viewport.Width = 372.000000000000000000
-                Viewport.Height = 186.000000000000000000
+                Viewport.Width = 376.000000000000000000
+                Viewport.Height = 211.000000000000000000
               end
               object NavPanelLayout: TGridPanelLayout
                 Align = Client
