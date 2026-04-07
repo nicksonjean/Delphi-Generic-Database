@@ -161,13 +161,18 @@ end;
 function TFrameDataTypes.GetDBConnection: TConnection;
 begin
   Result := TConnection.Create(TEngine.FireDAC);
-  Result.Driver   := TDriver.MySQL;
-  Result.Host     := EditArrayHost.Text;
-  Result.Port     := StrToIntDef(EditArrayPort.Text, 3306);
-  Result.Database := EditArrayDatabase.Text;
-  Result.Username := EditArrayUsername.Text;
-  Result.Password := EditArrayPassword.Text;
-  Result.Connected := True;
+  try
+    Result.Driver    := TDriver.MySQL;
+    Result.Host      := EditArrayHost.Text;
+    Result.Port      := StrToIntDef(EditArrayPort.Text, 3306);
+    Result.Database  := EditArrayDatabase.Text;
+    Result.Username  := EditArrayUsername.Text;
+    Result.Password  := EditArrayPassword.Text;
+    Result.Connected := True;
+  except
+    FreeAndNil(Result);
+    raise;
+  end;
 end;
 
 function TFrameDataTypes.ArrayStringTest(const AMethodName: String): String;
@@ -177,6 +182,7 @@ var
   SQL: TQuery;
   DB: TConnection;
 begin
+  DB := nil;
   DB := GetDBConnection;
   try
     QBuilder := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
@@ -235,6 +241,7 @@ var
   SQL: TQuery;
   DB: TConnection;
 begin
+  DB := nil;
   DB := GetDBConnection;
   try
     QBuilder := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
@@ -294,6 +301,7 @@ var
   SQL: TQuery;
   DB: TConnection;
 begin
+  DB := nil;
   DB := GetDBConnection;
   try
     QBuilder := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
