@@ -1,0 +1,1110 @@
+object FrameDataTypes: TFrameDataTypes
+  Size.Width = 1100.000000000000000000
+  Size.Height = 700.000000000000000000
+  Size.PlatformDefault = False
+  object RectDataTypesBg: TRectangle
+    Align = Client
+    Fill.Color = xFFF0F2F5
+    Stroke.Kind = None
+    Size.Width = 1100.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+    object RectDTHeader: TRectangle
+      Align = Top
+      Fill.Color = xFF1E3A5F
+      Stroke.Kind = None
+      Size.Width = 1100.000000000000000000
+      Size.Height = 44.000000000000000000
+      Size.PlatformDefault = False
+      object LblDTTitle: TLabel
+        Align = Client
+        Text = 'Data Types Testing Suite'
+        TextSettings.Font.Family = 'Segoe UI'
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.Font.Style = [fsBold]
+        TextSettings.FontColor = xFFFFFFFF
+        TextSettings.HorzAlign = Leading
+        TextSettings.VertAlign = Center
+        Margins.Left = 16.000000000000000000
+        Size.Width = 1100.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object TabControlDataTypes: TTabControl
+      Align = Client
+      FullSize = True
+      Size.Width = 1100.000000000000000000
+      Size.Height = 656.000000000000000000
+      Size.PlatformDefault = False
+      TabHeight = 44.000000000000000000
+      TabIndex = 0
+      TabOrder = 15
+      TabPosition = PlatformDefault
+      Sizes = (
+        1100s
+        612s
+        1100s
+        612s
+        1100s
+        612s
+        1100s
+        612s)
+      object TabArrays: TTabItem
+        AutoSize = False
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        Size.Width = 274.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Arrays'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object GridPanelArrayTab: TGridPanelLayout
+          Align = Client
+          Margins.Left = 12.000000000000000000
+          Margins.Top = 8.000000000000000000
+          Margins.Right = 12.000000000000000000
+          Margins.Bottom = 8.000000000000000000
+          Size.Width = 1076.000000000000000000
+          Size.Height = 596.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 60.000000000000000000
+            end
+            item
+              Value = 40.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = RectArraySelectors
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = RectArrayConfig
+              Row = 0
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          object RectArraySelectors: TRectangle
+            Align = Client
+            Fill.Color = xFFFFFFFF
+            Stroke.Color = xFFE0E0E0
+            Stroke.Thickness = 1.000000000000000000
+            Size.Width = 645.000000000000000000
+            Size.Height = 596.000000000000000000
+            Size.PlatformDefault = False
+            XRadius = 6.000000000000000000
+            YRadius = 6.000000000000000000
+            object RectArraySelectHeader: TRectangle
+              Align = Top
+              Fill.Color = xFF37474F
+              Stroke.Kind = None
+              Size.Width = 645.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              XRadius = 6.000000000000000000
+              YRadius = 6.000000000000000000
+              object RectArraySelectHeaderFill: TRectangle
+                Align = Bottom
+                Fill.Color = xFF37474F
+                Stroke.Kind = None
+                Size.Width = 645.000000000000000000
+                Size.Height = 10.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblArraySelectTitle: TLabel
+                Align = Client
+                Text = 'Array Type Selectors'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 12.000000000000000000
+                TextSettings.Font.Style = [fsBold]
+                TextSettings.FontColor = xFFFFFFFF
+                TextSettings.HorzAlign = Leading
+                TextSettings.VertAlign = Center
+                Margins.Left = 12.000000000000000000
+                Size.Width = 645.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object GridPanelArraySelectors: TGridPanelLayout
+              Align = Top
+              Margins.Left = 8.000000000000000000
+              Margins.Top = 8.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Size.Width = 629.000000000000000000
+              Size.Height = 80.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 33.333000000000000000
+                end
+                item
+                  Value = 33.333000000000000000
+                end
+                item
+                  Value = 33.334000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = GroupBoxArrayString
+                  Row = 0
+                end
+                item
+                  Column = 1
+                  Control = GroupBoxArrayVariant
+                  Row = 0
+                end
+                item
+                  Column = 2
+                  Control = GroupBoxArrayField
+                  Row = 0
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  Value = 100.000000000000000000
+                end>
+              object GroupBoxArrayString: TGroupBox
+                Align = Client
+                Text = 'TArrayString'
+                Size.Width = 209.000000000000000000
+                Size.Height = 80.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                object ComboBoxDataTypeTArrayString: TComboBox
+                  Align = Client
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 20.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 201.000000000000000000
+                  Size.Height = 52.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Items.Strings = (
+                    'Fetch'
+                    'Copy'
+                    'Clone'
+                    'ToList'
+                    'ToTags'
+                    'ToXML'
+                    'ToJSON')
+                  ItemIndex = 0
+                  OnChange = ComboBoxDataTypeTArrayStringChange
+                end
+              end
+              object GroupBoxArrayVariant: TGroupBox
+                Align = Client
+                Text = 'TArrayVariant'
+                Size.Width = 209.000000000000000000
+                Size.Height = 80.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                object ComboBoxDataTypeTArrayVariant: TComboBox
+                  Align = Client
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 20.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 201.000000000000000000
+                  Size.Height = 52.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Items.Strings = (
+                    'Fetch'
+                    'Copy'
+                    'Clone'
+                    'ToList'
+                    'ToTags'
+                    'ToXML'
+                    'ToJSON')
+                  ItemIndex = 0
+                  OnChange = ComboBoxDataTypeTArrayVariantChange
+                end
+              end
+              object GroupBoxArrayField: TGroupBox
+                Align = Client
+                Text = 'TArrayField'
+                Size.Width = 211.000000000000000000
+                Size.Height = 80.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                object ComboBoxDataTypeTArrayField: TComboBox
+                  Align = Client
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 20.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 203.000000000000000000
+                  Size.Height = 52.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Items.Strings = (
+                    'Fetch'
+                    'Copy'
+                    'Clone'
+                    'ToList'
+                    'ToTags'
+                    'ToXML'
+                    'ToJSON')
+                  ItemIndex = 0
+                  OnChange = ComboBoxDataTypeTArrayFieldChange
+                end
+              end
+            end
+            object MemoDataTypeArrayResult: TMemo
+              Align = Client
+              Margins.Left = 8.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 629.000000000000000000
+              Size.Height = 460.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              TextSettings.Font.Family = 'Courier New'
+              TextSettings.Font.Size = 11.000000000000000000
+              ReadOnly = True
+            end
+          end
+          object RectArrayConfig: TRectangle
+            Align = Client
+            Fill.Color = xFFFFFFFF
+            Stroke.Color = xFFE0E0E0
+            Stroke.Thickness = 1.000000000000000000
+            Margins.Left = 12.000000000000000000
+            Size.Width = 419.000000000000000000
+            Size.Height = 596.000000000000000000
+            Size.PlatformDefault = False
+            XRadius = 6.000000000000000000
+            YRadius = 6.000000000000000000
+            object RectArrayConfigHeader: TRectangle
+              Align = Top
+              Fill.Color = xFF37474F
+              Stroke.Kind = None
+              Size.Width = 419.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              XRadius = 6.000000000000000000
+              YRadius = 6.000000000000000000
+              object RectArrayConfigHeaderFill: TRectangle
+                Align = Bottom
+                Fill.Color = xFF37474F
+                Stroke.Kind = None
+                Size.Width = 419.000000000000000000
+                Size.Height = 10.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblArrayConfigTitle: TLabel
+                Align = Client
+                Text = 'Connection Config'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 12.000000000000000000
+                TextSettings.Font.Style = [fsBold]
+                TextSettings.FontColor = xFFFFFFFF
+                TextSettings.HorzAlign = Leading
+                TextSettings.VertAlign = Center
+                Margins.Left = 12.000000000000000000
+                Size.Width = 419.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object ScrollArrayConfig: TVertScrollBox
+              Align = Client
+              ShowScrollBars = False
+              Size.Width = 419.000000000000000000
+              Size.Height = 556.000000000000000000
+              Size.PlatformDefault = False
+              Padding.Left = 12.000000000000000000
+              Padding.Top = 8.000000000000000000
+              Padding.Right = 12.000000000000000000
+              object LblArrayHost: TLabel
+                Align = Top
+                Text = 'Host'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.FontColor = xFF607D8B
+                Margins.Top = 8.000000000000000000
+                Size.Width = 395.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object EditArrayHost: TEdit
+                Align = Top
+                Size.Width = 395.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                Text = '127.0.0.1'
+                TabOrder = 0
+              end
+              object LblArrayPort: TLabel
+                Align = Top
+                Text = 'Port'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.FontColor = xFF607D8B
+                Margins.Top = 8.000000000000000000
+                Size.Width = 395.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object EditArrayPort: TEdit
+                Align = Top
+                Size.Width = 395.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                Text = '3306'
+                TabOrder = 1
+              end
+              object LblArrayDatabase: TLabel
+                Align = Top
+                Text = 'Database'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.FontColor = xFF607D8B
+                Margins.Top = 8.000000000000000000
+                Size.Width = 395.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object EditArrayDatabase: TEdit
+                Align = Top
+                Size.Width = 395.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                Text = 'demodev'
+                TabOrder = 2
+              end
+              object LblArrayUsername: TLabel
+                Align = Top
+                Text = 'Username'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.FontColor = xFF607D8B
+                Margins.Top = 8.000000000000000000
+                Size.Width = 395.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object EditArrayUsername: TEdit
+                Align = Top
+                Size.Width = 395.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                Text = 'root'
+                TabOrder = 3
+              end
+              object LblArrayPassword: TLabel
+                Align = Top
+                Text = 'Password'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.FontColor = xFF607D8B
+                Margins.Top = 8.000000000000000000
+                Size.Width = 395.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object EditArrayPassword: TEdit
+                Align = Top
+                Size.Width = 395.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                Password = True
+                TabOrder = 4
+              end
+            end
+          end
+        end
+      end
+      object TabFloats: TTabItem
+        AutoSize = False
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 274.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 1
+        Text = 'Floats'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object GridPanelFloatsTab: TGridPanelLayout
+          Align = Client
+          Margins.Left = 12.000000000000000000
+          Margins.Top = 8.000000000000000000
+          Margins.Right = 12.000000000000000000
+          Margins.Bottom = 8.000000000000000000
+          Size.Width = 1076.000000000000000000
+          Size.Height = 596.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 55.000000000000000000
+            end
+            item
+              Value = 45.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = GroupBoxFloatFormat
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = GroupBoxFloatCalculate
+              Row = 0
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          object GroupBoxFloatFormat: TGroupBox
+            Align = Client
+            Text = 'Float Format'
+            Size.Width = 591.000000000000000000
+            Size.Height = 596.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object GridPanelFloatFormat: TGridPanelLayout
+              Align = Top
+              Margins.Left = 8.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Size.Width = 575.000000000000000000
+              Size.Height = 252.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ColumnCollection = <
+                item
+                  Value = 14.000000000000000000
+                end
+                item
+                  Value = 14.000000000000000000
+                end
+                item
+                  Value = 72.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = LayoutFloatTest1
+                  Row = 0
+                end
+                item
+                  Column = 1
+                  Control = LayoutFloatTest2
+                  Row = 0
+                end
+                item
+                  Column = 2
+                  Control = LayoutFloatTest3
+                  Row = 0
+                end
+                item
+                  Column = 0
+                  Control = LayoutFloatTest4
+                  Row = 1
+                end
+                item
+                  Column = 1
+                  Control = LayoutFloatTest5
+                  Row = 1
+                end
+                item
+                  Column = 2
+                  Control = LayoutFloatTest6
+                  Row = 1
+                end
+                item
+                  Column = 0
+                  Control = LayoutFloatTest7
+                  Row = 2
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  Value = 33.333000000000000000
+                end
+                item
+                  Value = 33.333000000000000000
+                end
+                item
+                  Value = 33.334000000000000000
+                end>
+              object LayoutFloatTest1: TLayout
+                Align = Client
+                Size.Width = 80.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object EditLength1: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '12'
+                  TabOrder = 0
+                end
+                object EditDecimal1: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '2'
+                  TabOrder = 1
+                end
+              end
+              object LayoutFloatTest2: TLayout
+                Align = Client
+                Size.Width = 80.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object EditLength2: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '10'
+                  TabOrder = 0
+                end
+                object EditDecimal2: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '3'
+                  TabOrder = 1
+                end
+              end
+              object LayoutFloatTest3: TLayout
+                Align = Client
+                Size.Width = 415.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object ComboBoxResult1: TComboBox
+                  Align = Top
+                  Size.Width = 415.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Items.Strings = (
+                    'Round'
+                    'Truncate')
+                  ItemIndex = 0
+                end
+              end
+              object LayoutFloatTest4: TLayout
+                Align = Client
+                Size.Width = 80.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object EditLength3: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '8'
+                  TabOrder = 0
+                end
+                object EditDecimal3: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '4'
+                  TabOrder = 1
+                end
+              end
+              object LayoutFloatTest5: TLayout
+                Align = Client
+                Size.Width = 80.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object EditLength4: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '15'
+                  TabOrder = 0
+                end
+                object EditDecimal4: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '2'
+                  TabOrder = 1
+                end
+              end
+              object LayoutFloatTest6: TLayout
+                Align = Client
+                Size.Width = 415.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object ComboBoxResult2: TComboBox
+                  Align = Top
+                  Size.Width = 415.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Items.Strings = (
+                    'Round'
+                    'Truncate')
+                  ItemIndex = 1
+                end
+              end
+              object LayoutFloatTest7: TLayout
+                Align = Client
+                Size.Width = 80.000000000000000000
+                Size.Height = 84.000000000000000000
+                Size.PlatformDefault = False
+                object EditLength5: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '6'
+                  TabOrder = 0
+                end
+                object EditDecimal5: TEdit
+                  Align = Top
+                  Size.Width = 80.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '5'
+                  TabOrder = 1
+                end
+              end
+            end
+            object GridPanelFloatActions: TGridPanelLayout
+              Align = Top
+              Margins.Left = 8.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 575.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              ColumnCollection = <
+                item
+                  Value = 50.000000000000000000
+                end
+                item
+                  Value = 50.000000000000000000
+                end>
+              ControlCollection = <
+                item
+                  Column = 0
+                  Control = FormatExplicit
+                  Row = 0
+                end
+                item
+                  Column = 1
+                  Control = FormatImplicit
+                  Row = 0
+                end>
+              ExpandStyle = FixedSize
+              RowCollection = <
+                item
+                  Value = 100.000000000000000000
+                end>
+              object FormatExplicit: TButton
+                Align = Client
+                Text = 'Format Explicit'
+                Size.Width = 287.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                OnClick = FormatExplicitClick
+              end
+              object FormatImplicit: TButton
+                Align = Client
+                Text = 'Format Implicit'
+                Size.Width = 288.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                OnClick = FormatImplicitClick
+              end
+            end
+            object MemoResultFormat: TMemo
+              Align = Client
+              Margins.Left = 8.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 8.000000000000000000
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 575.000000000000000000
+              Size.Height = 276.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              TextSettings.Font.Family = 'Courier New'
+              TextSettings.Font.Size = 11.000000000000000000
+              ReadOnly = True
+            end
+          end
+          object GroupBoxFloatCalculate: TGroupBox
+            Align = Client
+            Text = 'Float Calculate'
+            Margins.Left = 12.000000000000000000
+            Size.Width = 473.000000000000000000
+            Size.Height = 596.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            object ScrollFloatCalc: TVertScrollBox
+              Align = Client
+              ShowScrollBars = False
+              Size.Width = 473.000000000000000000
+              Size.Height = 576.000000000000000000
+              Size.PlatformDefault = False
+              Padding.Left = 8.000000000000000000
+              Padding.Top = 8.000000000000000000
+              Padding.Right = 8.000000000000000000
+              Padding.Bottom = 8.000000000000000000
+              object GridPanelFloatCalcInputs: TGridPanelLayout
+                Align = Top
+                Size.Width = 457.000000000000000000
+                Size.Height = 280.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 33.333000000000000000
+                  end
+                  item
+                    Value = 33.333000000000000000
+                  end
+                  item
+                    Value = 33.334000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = EditCalculate1
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = EditAmount1
+                    Row = 0
+                  end
+                  item
+                    Column = 2
+                    Control = EditOperation1
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = EditCalculate2
+                    Row = 1
+                  end
+                  item
+                    Column = 1
+                    Control = EditAmount2
+                    Row = 1
+                  end
+                  item
+                    Column = 2
+                    Control = EditOperation2
+                    Row = 1
+                  end
+                  item
+                    Column = 0
+                    Control = EditCalculate3
+                    Row = 2
+                  end
+                  item
+                    Column = 1
+                    Control = EditAmount3
+                    Row = 2
+                  end
+                  item
+                    Column = 2
+                    Control = EditOperation3
+                    Row = 2
+                  end
+                  item
+                    Column = 0
+                    Control = EditCalculate4
+                    Row = 3
+                  end
+                  item
+                    Column = 1
+                    Control = EditAmount4
+                    Row = 3
+                  end
+                  item
+                    Column = 2
+                    Control = EditOperation4
+                    Row = 3
+                  end
+                  item
+                    Column = 0
+                    Control = EditCalculate5
+                    Row = 4
+                  end
+                  item
+                    Column = 1
+                    Control = EditAmount5
+                    Row = 4
+                  end
+                  item
+                    Column = 2
+                    Control = EditOperation5
+                    Row = 4
+                  end>
+                ExpandStyle = FixedSize
+                RowCollection = <
+                  item
+                    SizeStyle = Absolute
+                    Value = 56.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 56.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 56.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 56.000000000000000000
+                  end
+                  item
+                    SizeStyle = Absolute
+                    Value = 56.000000000000000000
+                  end>
+                object EditCalculate1: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '1234567.89'
+                  TabOrder = 0
+                end
+                object EditAmount1: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '1.15'
+                  TabOrder = 1
+                end
+                object EditOperation1: TEdit
+                  Align = Client
+                  Size.Width = 153.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = 'ToCurrency'
+                  ReadOnly = True
+                  TabOrder = 2
+                end
+                object EditCalculate2: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '9876543.21'
+                  TabOrder = 3
+                end
+                object EditAmount2: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '1.0'
+                  TabOrder = 4
+                end
+                object EditOperation2: TEdit
+                  Align = Client
+                  Size.Width = 153.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = 'ToDouble'
+                  ReadOnly = True
+                  TabOrder = 5
+                end
+                object EditCalculate3: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '99999.99999'
+                  TabOrder = 6
+                end
+                object EditAmount3: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '1.0'
+                  TabOrder = 7
+                end
+                object EditOperation3: TEdit
+                  Align = Client
+                  Size.Width = 153.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = 'ToExtended'
+                  ReadOnly = True
+                  TabOrder = 8
+                end
+                object EditCalculate4: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '50000.00'
+                  TabOrder = 9
+                end
+                object EditAmount4: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '1.0'
+                  TabOrder = 10
+                end
+                object EditOperation4: TEdit
+                  Align = Client
+                  Size.Width = 153.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = 'ToMoney'
+                  ReadOnly = True
+                  TabOrder = 11
+                end
+                object EditCalculate5: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '12345.678901'
+                  TabOrder = 12
+                end
+                object EditAmount5: TEdit
+                  Align = Client
+                  Size.Width = 152.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = '1.0'
+                  TabOrder = 13
+                end
+                object EditOperation5: TEdit
+                  Align = Client
+                  Size.Width = 153.000000000000000000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  Text = 'ToSQL'
+                  ReadOnly = True
+                  TabOrder = 14
+                end
+              end
+              object Calculate: TButton
+                Align = Top
+                Text = 'Calculate'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 13.000000000000000000
+                Margins.Top = 8.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Size.Width = 457.000000000000000000
+                Size.Height = 40.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                OnClick = CalculateClick
+              end
+              object MemoResultCalculate: TMemo
+                Align = Top
+                Margins.Top = 4.000000000000000000
+                Size.Width = 457.000000000000000000
+                Size.Height = 200.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                TextSettings.Font.Family = 'Courier New'
+                TextSettings.Font.Size = 11.000000000000000000
+                ReadOnly = True
+              end
+            end
+          end
+        end
+      end
+      object TabStrings: TTabItem
+        AutoSize = False
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 274.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 2
+        Text = 'Strings'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object LblStringsComingSoon: TLabel
+          Align = Client
+          Text = 'String type tests — coming soon'
+          TextSettings.Font.Family = 'Segoe UI'
+          TextSettings.Font.Size = 18.000000000000000000
+          TextSettings.FontColor = xFF9E9E9E
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Center
+          Size.Width = 1100.000000000000000000
+          Size.Height = 612.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object TabDateTime: TTabItem
+        AutoSize = False
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 278.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 3
+        Text = 'DateTime'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object LblDateTimeComingSoon: TLabel
+          Align = Client
+          Text = 'DateTime type tests — coming soon'
+          TextSettings.Font.Family = 'Segoe UI'
+          TextSettings.Font.Size = 18.000000000000000000
+          TextSettings.FontColor = xFF9E9E9E
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Center
+          Size.Width = 1100.000000000000000000
+          Size.Height = 612.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+    end
+  end
+end

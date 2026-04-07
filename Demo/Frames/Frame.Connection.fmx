@@ -1,0 +1,529 @@
+object FrameConnection: TFrameConnection
+  Size.Width = 1100.000000000000000000
+  Size.Height = 700.000000000000000000
+  Size.PlatformDefault = False
+  object RectConnectionBg: TRectangle
+    Align = Client
+    Fill.Color = xFFF0F2F5
+    Stroke.Kind = None
+    Size.Width = 1100.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+    object GridPanelMain: TGridPanelLayout
+      Align = Client
+      Margins.Left = 12.000000000000000000
+      Margins.Top = 12.000000000000000000
+      Margins.Right = 12.000000000000000000
+      Margins.Bottom = 12.000000000000000000
+      Size.Width = 1076.000000000000000000
+      Size.Height = 676.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      ColumnCollection = <
+        item
+          Value = 38.000000000000000000
+        end
+        item
+          Value = 62.000000000000000000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = RectConnectionParams
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = RectConfigRight
+          Row = 0
+        end>
+      ExpandStyle = FixedSize
+      RowCollection = <
+        item
+          Value = 100.000000000000000000
+        end>
+      object RectConnectionParams: TRectangle
+        Align = Client
+        Fill.Color = xFFFFFFFF
+        Stroke.Color = xFFE0E0E0
+        Stroke.Thickness = 1.000000000000000000
+        Size.Width = 408.000000000000000000
+        Size.Height = 676.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectParamsHeader: TRectangle
+          Align = Top
+          Fill.Color = xFF1E3A5F
+          Stroke.Kind = None
+          Size.Width = 408.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          XRadius = 6.000000000000000000
+          YRadius = 6.000000000000000000
+          object RectParamsHeaderFill: TRectangle
+            Align = Bottom
+            Fill.Color = xFF1E3A5F
+            Stroke.Kind = None
+            Size.Width = 408.000000000000000000
+            Size.Height = 10.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LblParamsTitle: TLabel
+            Align = Client
+            Text = 'Connection Parameters'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFFFFFFFF
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Left = 16.000000000000000000
+            Size.Width = 408.000000000000000000
+            Size.Height = 44.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object ScrollParams: TVertScrollBox
+          Align = Client
+          ShowScrollBars = False
+          Size.Width = 408.000000000000000000
+          Size.Height = 632.000000000000000000
+          Size.PlatformDefault = False
+          Padding.Left = 16.000000000000000000
+          Padding.Top = 8.000000000000000000
+          Padding.Right = 16.000000000000000000
+          Padding.Bottom = 8.000000000000000000
+          object LblEngine: TLabel
+            Align = Top
+            Text = 'Engine'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ComboEngine: TComboBox
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Items.Strings = (
+              'FireDAC'
+              'dbExpress'
+              'ZeOS'
+              'UniDAC')
+            ItemIndex = 0
+            OnChange = ComboEngineChange
+          end
+          object LblDriver: TLabel
+            Align = Top
+            Text = 'Driver'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ComboDriver: TComboBox
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Items.Strings = (
+              'SQLite'
+              'MySQL'
+              'MariaDB'
+              'Firebird'
+              'Interbase'
+              'PostgreSQL'
+              'SQLServer'
+              'Oracle')
+            ItemIndex = 0
+            OnChange = ComboDriverChange
+          end
+          object LblHost: TLabel
+            Align = Top
+            Text = 'Host'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditHost: TEdit
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'localhost'
+            TabOrder = 2
+          end
+          object LblPort: TLabel
+            Align = Top
+            Text = 'Port'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditPort: TEdit
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = '3306'
+            TabOrder = 3
+          end
+          object LblDatabase: TLabel
+            Align = Top
+            Text = 'Database / File'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditDatabase: TEdit
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'mydb'
+            TabOrder = 4
+          end
+          object LblUsername: TLabel
+            Align = Top
+            Text = 'Username'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditUsername: TEdit
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'root'
+            TabOrder = 5
+          end
+          object LblPassword: TLabel
+            Align = Top
+            Text = 'Password'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditPassword: TEdit
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Password = True
+            TabOrder = 6
+          end
+          object LblSchema: TLabel
+            Align = Top
+            Text = 'Schema'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            TextSettings.HorzAlign = Leading
+            Margins.Top = 12.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditSchema: TEdit
+            Align = Top
+            Size.Width = 376.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'public'
+            TabOrder = 7
+          end
+          object LayButtons: TLayout
+            Align = Top
+            Margins.Top = 20.000000000000000000
+            Margins.Bottom = 4.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            object BtnTestConnection: TButton
+              Align = Client
+              Text = 'Test Connection'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 13.000000000000000000
+              StyleLookup = 'buttonstyle'
+              TabOrder = 0
+              OnClick = BtnTestConnectionClick
+              Size.Width = 240.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object BtnBrowseFile: TButton
+              Align = Right
+              Text = '...'
+              Hint = 'Browse file'
+              Size.Width = 40.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              OnClick = BtnBrowseFileClick
+            end
+          end
+          object LayConfigActions: TLayout
+            Align = Top
+            Margins.Top = 4.000000000000000000
+            Margins.Bottom = 16.000000000000000000
+            Size.Width = 376.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            object BtnLoadConfig: TButton
+              Align = Left
+              Text = 'Load Config'
+              TextSettings.Font.Family = 'Segoe UI'
+              Size.Width = 120.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              OnClick = BtnLoadConfigClick
+            end
+            object BtnSaveConfig: TButton
+              Align = Left
+              Text = 'Save Config'
+              TextSettings.Font.Family = 'Segoe UI'
+              Margins.Left = 8.000000000000000000
+              Size.Width = 120.000000000000000000
+              Size.Height = 40.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              OnClick = BtnSaveConfigClick
+            end
+          end
+        end
+      end
+      object RectConfigRight: TRectangle
+        Align = Client
+        Fill.Color = xFFFFFFFF
+        Stroke.Color = xFFE0E0E0
+        Stroke.Thickness = 1.000000000000000000
+        Margins.Left = 12.000000000000000000
+        Size.Width = 656.000000000000000000
+        Size.Height = 676.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectRightHeader: TRectangle
+          Align = Top
+          Fill.Color = xFF1E3A5F
+          Stroke.Kind = None
+          Size.Width = 656.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          XRadius = 6.000000000000000000
+          YRadius = 6.000000000000000000
+          object RectRightHeaderFill: TRectangle
+            Align = Bottom
+            Fill.Color = xFF1E3A5F
+            Stroke.Kind = None
+            Size.Width = 656.000000000000000000
+            Size.Height = 10.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LblRightTitle: TLabel
+            Align = Left
+            Text = 'Config Preview'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFFFFFFFF
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Left = 16.000000000000000000
+            Size.Width = 200.000000000000000000
+            Size.Height = 44.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ComboConfigFormat: TComboBox
+            Align = Right
+            Size.Width = 140.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Margins.Right = 8.000000000000000000
+            Margins.Top = 4.000000000000000000
+            TabOrder = 0
+            Items.Strings = (
+              'JSON'
+              'YAML'
+              'XML'
+              'INI'
+              'TOML')
+            ItemIndex = 0
+            OnChange = ComboConfigFormatChange
+          end
+        end
+        object GridPanelRight: TGridPanelLayout
+          Align = Client
+          Size.Width = 656.000000000000000000
+          Size.Height = 632.000000000000000000
+          Size.PlatformDefault = False
+          ColumnCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = RectConfigPreview
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = RectStatusAndLog
+              Row = 1
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              Value = 50.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
+            end>
+          object RectConfigPreview: TRectangle
+            Align = Client
+            Fill.Color = xFFFFFFFF
+            Stroke.Kind = None
+            Size.Width = 656.000000000000000000
+            Size.Height = 316.000000000000000000
+            Size.PlatformDefault = False
+            object MemoConfigPreview: TMemo
+              Align = Client
+              Margins.Left = 12.000000000000000000
+              Margins.Top = 8.000000000000000000
+              Margins.Right = 12.000000000000000000
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 632.000000000000000000
+              Size.Height = 300.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              TextSettings.Font.Family = 'Courier New'
+              TextSettings.Font.Size = 12.000000000000000000
+              ReadOnly = True
+            end
+          end
+          object RectStatusAndLog: TRectangle
+            Align = Client
+            Fill.Color = xFFFFFFFF
+            Stroke.Kind = None
+            Size.Width = 656.000000000000000000
+            Size.Height = 316.000000000000000000
+            Size.PlatformDefault = False
+            object RectLogHeader: TRectangle
+              Align = Top
+              Fill.Color = xFF37474F
+              Stroke.Kind = None
+              Size.Width = 656.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              object LblLogTitle: TLabel
+                Align = Left
+                Text = 'Connection Log'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 12.000000000000000000
+                TextSettings.Font.Style = [fsBold]
+                TextSettings.FontColor = xFFFFFFFF
+                TextSettings.HorzAlign = Leading
+                TextSettings.VertAlign = Center
+                Margins.Left = 12.000000000000000000
+                Size.Width = 200.000000000000000000
+                Size.Height = 36.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object RectStatusIndicator: TRectangle
+                Align = Right
+                Fill.Color = xFF9E9E9E
+                Stroke.Kind = None
+                Size.Width = 14.000000000000000000
+                Size.Height = 36.000000000000000000
+                Size.PlatformDefault = False
+                XRadius = 7.000000000000000000
+                YRadius = 7.000000000000000000
+                Margins.Right = 12.000000000000000000
+                Margins.Top = 11.000000000000000000
+                Margins.Bottom = 11.000000000000000000
+              end
+              object LblConnectionStatus: TLabel
+                Align = Right
+                Text = 'Disconnected'
+                TextSettings.Font.Family = 'Segoe UI'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.FontColor = xFF9E9E9E
+                TextSettings.HorzAlign = Trailing
+                TextSettings.VertAlign = Center
+                Margins.Right = 32.000000000000000000
+                Size.Width = 120.000000000000000000
+                Size.Height = 36.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object BtnClearLog: TButton
+                Align = Right
+                Text = 'Clear'
+                Size.Width = 60.000000000000000000
+                Size.Height = 36.000000000000000000
+                Size.PlatformDefault = False
+                StyleLookup = 'toolbuttonstyle'
+                TabOrder = 0
+                TextSettings.FontColor = xFF90CAF9
+                OnClick = BtnClearLogClick
+              end
+            end
+            object MemoConnectionLog: TMemo
+              Align = Client
+              Margins.Left = 12.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 12.000000000000000000
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 632.000000000000000000
+              Size.Height = 268.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              TextSettings.Font.Family = 'Courier New'
+              TextSettings.Font.Size = 11.000000000000000000
+              ReadOnly = True
+            end
+          end
+        end
+      end
+    end
+  end
+end

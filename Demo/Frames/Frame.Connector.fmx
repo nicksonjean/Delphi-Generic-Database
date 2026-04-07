@@ -1,0 +1,554 @@
+object FrameConnector: TFrameConnector
+  Size.Width = 1100.000000000000000000
+  Size.Height = 700.000000000000000000
+  Size.PlatformDefault = False
+  object RectConnectorBg: TRectangle
+    Align = Client
+    Fill.Color = xFFF0F2F5
+    Stroke.Kind = None
+    Size.Width = 1100.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+    object GridPanelConnector: TGridPanelLayout
+      Align = Client
+      Margins.Left = 12.000000000000000000
+      Margins.Top = 12.000000000000000000
+      Margins.Right = 12.000000000000000000
+      Margins.Bottom = 12.000000000000000000
+      Size.Width = 1076.000000000000000000
+      Size.Height = 676.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      ColumnCollection = <
+        item
+          Value = 28.000000000000000000
+        end
+        item
+          Value = 72.000000000000000000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = RectConnectorConfig
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = RectConnectorResults
+          Row = 0
+        end>
+      ExpandStyle = FixedSize
+      RowCollection = <
+        item
+          Value = 100.000000000000000000
+        end>
+      object RectConnectorConfig: TRectangle
+        Align = Client
+        Fill.Color = xFFFFFFFF
+        Stroke.Color = xFFE0E0E0
+        Stroke.Thickness = 1.000000000000000000
+        Size.Width = 300.000000000000000000
+        Size.Height = 676.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectConnConfigHeader: TRectangle
+          Align = Top
+          Fill.Color = xFF1E3A5F
+          Stroke.Kind = None
+          Size.Width = 300.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          XRadius = 6.000000000000000000
+          YRadius = 6.000000000000000000
+          object RectConnConfigHeaderFill: TRectangle
+            Align = Bottom
+            Fill.Color = xFF1E3A5F
+            Stroke.Kind = None
+            Size.Width = 300.000000000000000000
+            Size.Height = 10.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LblConnConfigTitle: TLabel
+            Align = Client
+            Text = 'Query Configuration'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFFFFFFFF
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Left = 16.000000000000000000
+            Size.Width = 300.000000000000000000
+            Size.Height = 44.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object ScrollConnConfig: TVertScrollBox
+          Align = Client
+          ShowScrollBars = False
+          Size.Width = 300.000000000000000000
+          Size.Height = 632.000000000000000000
+          Size.PlatformDefault = False
+          Padding.Left = 12.000000000000000000
+          Padding.Top = 8.000000000000000000
+          Padding.Right = 12.000000000000000000
+          Padding.Bottom = 8.000000000000000000
+          object LblConnEngine: TLabel
+            Align = Top
+            Text = 'Engine'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ComboConnEngine: TComboBox
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Items.Strings = (
+              'FireDAC'
+              'dbExpress'
+              'ZeOS'
+              'UniDAC')
+            ItemIndex = 0
+          end
+          object LblConnDriver: TLabel
+            Align = Top
+            Text = 'Driver'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ComboConnDriver: TComboBox
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Items.Strings = (
+              'SQLite'
+              'MySQL'
+              'Firebird'
+              'PostgreSQL'
+              'SQLServer'
+              'Oracle')
+            ItemIndex = 0
+            OnChange = ComboConnDriverChange
+          end
+          object LblConnDatabase: TLabel
+            Align = Top
+            Text = 'Database / File'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditConnDatabase: TEdit
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'DB.SQLITE'
+            TabOrder = 2
+          end
+          object LblConnSQL: TLabel
+            Align = Top
+            Text = 'SQL Query'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object MemoConnSQL: TMemo
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 80.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 3
+            TextSettings.Font.Family = 'Courier New'
+            TextSettings.Font.Size = 11.000000000000000000
+          end
+          object LblConnIndexField: TLabel
+            Align = Top
+            Text = 'Index Field (Value)'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditConnIndexField: TEdit
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Codigo'
+            TabOrder = 4
+          end
+          object LblConnValueField: TLabel
+            Align = Top
+            Text = 'Value Field (Display)'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditConnValueField: TEdit
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Estado'
+            TabOrder = 5
+          end
+          object LblConnFilter: TLabel
+            Align = Top
+            Text = 'Filter (JSON)'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object EditConnFilter: TEdit
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            Text = ''
+            TabOrder = 6
+          end
+          object LblConnOptions: TLabel
+            Align = Top
+            Text = 'Options Mode'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.FontColor = xFF607D8B
+            Margins.Top = 8.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ComboConnOptions: TComboBox
+            Align = Top
+            Size.Width = 276.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 7
+            Items.Strings = (
+              'JSON Filter'
+              'Index (Integer)'
+              'No Filter')
+            ItemIndex = 0
+          end
+          object BtnRunConnector: TButton
+            Align = Top
+            Text = 'Run Connector'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            Margins.Top = 20.000000000000000000
+            Size.Width = 276.000000000000000000
+            Size.Height = 42.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 8
+            OnClick = BtnRunConnectorClick
+          end
+        end
+      end
+      object RectConnectorResults: TRectangle
+        Align = Client
+        Fill.Color = xFFFFFFFF
+        Stroke.Color = xFFE0E0E0
+        Stroke.Thickness = 1.000000000000000000
+        Margins.Left = 12.000000000000000000
+        Size.Width = 764.000000000000000000
+        Size.Height = 676.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectResultsHeader: TRectangle
+          Align = Top
+          Fill.Color = xFF1E3A5F
+          Stroke.Kind = None
+          Size.Width = 764.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          XRadius = 6.000000000000000000
+          YRadius = 6.000000000000000000
+          object RectResultsHeaderFill: TRectangle
+            Align = Bottom
+            Fill.Color = xFF1E3A5F
+            Stroke.Kind = None
+            Size.Width = 764.000000000000000000
+            Size.Height = 10.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LblResultsTitle: TLabel
+            Align = Client
+            Text = 'Component Results'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 13.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFFFFFFFF
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Left = 16.000000000000000000
+            Size.Width = 764.000000000000000000
+            Size.Height = 44.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object GridPanelResults: TGridPanelLayout
+          Align = Client
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 8.000000000000000000
+          Margins.Right = 8.000000000000000000
+          Margins.Bottom = 8.000000000000000000
+          Size.Width = 748.000000000000000000
+          Size.Height = 624.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 33.333000000000000000
+            end
+            item
+              Value = 33.333000000000000000
+            end
+            item
+              Value = 33.334000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = GroupBoxCombo
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = GroupBoxEdit
+              Row = 0
+            end
+            item
+              Column = 2
+              Control = GroupBoxComboEdit
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = GroupBoxListBox
+              Row = 1
+            end
+            item
+              Column = 1
+              Control = GroupBoxListView
+              Row = 1
+            end
+            item
+              Column = 2
+              Control = GroupBoxStringGrid
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = GroupBoxGrid
+              Row = 2
+              ColumnSpan = 3
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 60.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
+            end>
+          object GroupBoxCombo: TGroupBox
+            Align = Client
+            Text = 'TComboBox'
+            Size.Width = 249.000000000000000000
+            Size.Height = 60.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object ComboConnResult: TComboBox
+              Align = Client
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 241.000000000000000000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+          object GroupBoxEdit: TGroupBox
+            Align = Client
+            Text = 'TEdit'
+            Size.Width = 249.000000000000000000
+            Size.Height = 60.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            object EditConnResult: TEdit
+              Align = Client
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 241.000000000000000000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+          object GroupBoxComboEdit: TGroupBox
+            Align = Client
+            Text = 'TComboEdit'
+            Size.Width = 250.000000000000000000
+            Size.Height = 60.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+            object ComboEditConnResult: TComboEdit
+              Align = Client
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 242.000000000000000000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+          object GroupBoxListBox: TGroupBox
+            Align = Client
+            Text = 'TListBox'
+            Size.Width = 249.000000000000000000
+            Size.Height = 282.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 3
+            object SearchBoxListBox: TSearchBox
+              Align = Top
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Size.Width = 241.000000000000000000
+              Size.Height = 28.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+            object ListBoxConnResult: TListBox
+              Align = Client
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 4.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 241.000000000000000000
+              Size.Height = 246.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+            end
+          end
+          object GroupBoxListView: TGroupBox
+            Align = Client
+            Text = 'TListView'
+            Size.Width = 249.000000000000000000
+            Size.Height = 282.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 4
+            object ListViewConnResult: TListView
+              Align = Client
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 241.000000000000000000
+              Size.Height = 258.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              ItemAppearance.ItemAppearance = 'ListItem'
+              ItemAppearance.HeaderAppearance = 'ListHeader'
+              ItemAppearance.FooterAppearance = 'ListFooter'
+              SearchVisible = True
+              SearchAlwaysOnTop = False
+            end
+          end
+          object GroupBoxStringGrid: TGroupBox
+            Align = Client
+            Text = 'TStringGrid'
+            Size.Width = 250.000000000000000000
+            Size.Height = 282.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 5
+            object StringGridConnResult: TStringGrid
+              Align = Client
+              CanFocus = True
+              ClipChildren = True
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 242.000000000000000000
+              Size.Height = 258.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Viewport.Width = 242.000000000000000000
+              Viewport.Height = 258.000000000000000000
+            end
+          end
+          object GroupBoxGrid: TGroupBox
+            Align = Client
+            Text = 'TGrid'
+            Size.Width = 748.000000000000000000
+            Size.Height = 282.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 6
+            object GridConnResult: TGrid
+              Align = Client
+              CanFocus = True
+              ClipChildren = True
+              Margins.Left = 4.000000000000000000
+              Margins.Top = 20.000000000000000000
+              Margins.Right = 4.000000000000000000
+              Margins.Bottom = 4.000000000000000000
+              Size.Width = 740.000000000000000000
+              Size.Height = 258.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Viewport.Width = 740.000000000000000000
+              Viewport.Height = 258.000000000000000000
+            end
+          end
+        end
+      end
+    end
+  end
+end

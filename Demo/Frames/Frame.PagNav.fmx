@@ -1,0 +1,737 @@
+object FramePagNav: TFramePagNav
+  Size.Width = 1100.000000000000000000
+  Size.Height = 700.000000000000000000
+  Size.PlatformDefault = False
+  object RectPagNavBg: TRectangle
+    Align = Client
+    Fill.Color = xFFF0F2F5
+    Size.Width = 1100.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object RectPagNavHeader: TRectangle
+      Align = Top
+      Fill.Color = xFF1E3A5F
+      Size.Width = 1100.000000000000000000
+      Size.Height = 44.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object LblPagNavTitle: TLabel
+        Align = Left
+        Margins.Left = 16.000000000000000000
+        Position.X = 16.000000000000000000
+        Size.Width = 360.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        Text = 'Paginators && Navigators'
+      end
+      object LayPagNavConnectBar: TLayout
+        Align = Client
+        Size.Width = 724.000000000000000000
+        Size.Height = 44.000000000000000000
+        Size.PlatformDefault = False
+        object LblPNEngine: TLabel
+          Align = Left
+          Margins.Left = 8.000000000000000000
+          Position.X = 8.000000000000000000
+          Size.Width = 56.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 11.000000000000000000
+          TextSettings.FontColor = xFF90CAF9
+          TextSettings.HorzAlign = Trailing
+          Text = 'Engine:'
+        end
+        object ComboPNEngine: TComboBox
+          Align = Left
+          Items.Strings = (
+            'FireDAC'
+            'dbExpress'
+            'ZeOS'
+            'UniDAC')
+          ItemIndex = 0
+          Margins.Left = 4.000000000000000000
+          Margins.Top = 6.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Position.X = 68.000000000000000000
+          Position.Y = 6.000000000000000000
+          Size.Width = 110.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+        end
+        object LblPNDriver: TLabel
+          Align = Left
+          Margins.Left = 8.000000000000000000
+          Position.X = 186.000000000000000000
+          Size.Width = 50.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 11.000000000000000000
+          TextSettings.FontColor = xFF90CAF9
+          TextSettings.HorzAlign = Trailing
+          Text = 'Driver:'
+        end
+        object ComboPNDriver: TComboBox
+          Align = Left
+          Items.Strings = (
+            'SQLite'
+            'MySQL'
+            'Firebird'
+            'PostgreSQL'
+            'SQLServer'
+            'Oracle')
+          ItemIndex = 0
+          Margins.Left = 4.000000000000000000
+          Margins.Top = 6.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Position.X = 240.000000000000000000
+          Position.Y = 6.000000000000000000
+          Size.Width = 100.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+        end
+        object EditPNDatabase: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Left
+          TabOrder = 2
+          Text = 'DB.SQLITE'
+          Position.X = 348.000000000000000000
+          Position.Y = 6.000000000000000000
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 6.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Size.Width = 200.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object BtnPNConnect: TButton
+          Align = Left
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 6.000000000000000000
+          Margins.Bottom = 6.000000000000000000
+          Position.X = 556.000000000000000000
+          Position.Y = 6.000000000000000000
+          Size.Width = 140.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          Text = 'Connect && Load'
+          OnClick = BtnPNConnectClick
+        end
+      end
+    end
+    object GridPanelPagNav: TGridPanelLayout
+      Align = Client
+      Margins.Left = 12.000000000000000000
+      Margins.Top = 8.000000000000000000
+      Margins.Right = 12.000000000000000000
+      Margins.Bottom = 8.000000000000000000
+      Size.Width = 1076.000000000000000000
+      Size.Height = 640.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      ColumnCollection = <
+        item
+          Value = 33.333000000000000000
+        end
+        item
+          Value = 33.333000000000000000
+        end
+        item
+          Value = 33.334000000000000000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = GroupBoxOriginal
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = GroupBoxMinimal
+          Row = 0
+        end
+        item
+          Column = 2
+          Control = GroupBoxFull
+          Row = 0
+        end>
+      ExpandStyle = FixedSize
+      RowCollection = <
+        item
+          Value = 100.000000000000000000
+        end>
+      object GroupBoxOriginal: TGroupBox
+        Align = Client
+        Size.Width = 358.663085937500000000
+        Size.Height = 640.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Original (TBindNavigator)'
+        TabOrder = 0
+        object GridPanelOriginal: TGridPanelLayout
+          Align = Client
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 8.000000000000000000
+          Margins.Bottom = 8.000000000000000000
+          Size.Width = 342.663085937500000000
+          Size.Height = 612.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = EditPNSearch1
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = Grid1
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = BindNavigator1
+              Row = 2
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 28.000000000000000000
+            end
+            item
+              Value = 100.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 36.000000000000000000
+            end>
+          object EditPNSearch1: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 0
+            Size.Width = 342.663085937500000000
+            Size.Height = 28.000000000000000000
+            Size.PlatformDefault = False
+            object SearchEditButton1: TSearchEditButton
+              CanFocus = False
+              Cursor = crArrow
+              Size.Width = 28.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+          object Grid1: TGrid
+            Align = Client
+            CanFocus = True
+            ClipChildren = True
+            Size.Width = 342.663085937500000000
+            Size.Height = 548.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Viewport.Width = 342.700000000000000000
+            Viewport.Height = 548.000000000000000000
+          end
+          object BindNavigator1: TBindNavigator
+            Align = Client
+            Size.Width = 342.663085937500000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+            xRadius = 4.000000000000000000
+            yRadius = 4.000000000000000000
+          end
+        end
+      end
+      object GroupBoxMinimal: TGroupBox
+        Align = Client
+        Margins.Left = 8.000000000000000000
+        Size.Width = 350.663085937500000000
+        Size.Height = 640.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Minimal (4 buttons)'
+        TabOrder = 1
+        object GridPanelMinimal: TGridPanelLayout
+          Align = Client
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 8.000000000000000000
+          Margins.Bottom = 8.000000000000000000
+          Size.Width = 334.663085937500000000
+          Size.Height = 612.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = EditPNSearch2
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = Grid2
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = PagPanelLayout
+              Row = 2
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 28.000000000000000000
+            end
+            item
+              Value = 100.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 36.000000000000000000
+            end>
+          object EditPNSearch2: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 0
+            Size.Width = 334.663085937500000000
+            Size.Height = 28.000000000000000000
+            Size.PlatformDefault = False
+            object SearchEditButton2: TSearchEditButton
+              CanFocus = False
+              Cursor = crArrow
+              Size.Width = 28.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+          object Grid2: TGrid
+            Align = Client
+            CanFocus = True
+            ClipChildren = True
+            Size.Width = 334.663085937500000000
+            Size.Height = 548.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Viewport.Width = 334.700000000000000000
+            Viewport.Height = 548.000000000000000000
+          end
+          object PagPanelLayout: TGridPanelLayout
+            Align = Client
+            Size.Width = 334.663085937500000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+            ColumnCollection = <
+              item
+                Value = 25.000000000000000000
+              end
+              item
+                Value = 25.000000000000000000
+              end
+              item
+                Value = 25.000000000000000000
+              end
+              item
+                Value = 25.000000000000000000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = PagButtonFirst
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = PagButtonPrior
+                Row = 0
+              end
+              item
+                Column = 2
+                Control = PagButtonNext
+                Row = 0
+              end
+              item
+                Column = 3
+                Control = PagButtonLast
+                Row = 0
+              end>
+            ExpandStyle = FixedSize
+            RowCollection = <
+              item
+                Value = 100.000000000000000000
+              end>
+            object PagButtonFirst: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 83.665771484375000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = '|<'
+              XRadius = 4.000000000000000000
+              YRadius = 4.000000000000000000
+              OnClick = PagButtonFirstClick
+            end
+            object PagButtonPrior: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 83.665771484375000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = '<'
+              XRadius = 4.000000000000000000
+              YRadius = 4.000000000000000000
+              OnClick = PagButtonPriorClick
+            end
+            object PagButtonNext: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 83.665771484375000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              Text = '>'
+              XRadius = 4.000000000000000000
+              YRadius = 4.000000000000000000
+              OnClick = PagButtonNextClick
+            end
+            object PagButtonLast: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 83.665771484375000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              Text = '>|'
+              XRadius = 4.000000000000000000
+              YRadius = 4.000000000000000000
+              OnClick = PagButtonLastClick
+            end
+          end
+        end
+      end
+      object GroupBoxFull: TGroupBox
+        Align = Client
+        Margins.Left = 8.000000000000000000
+        Size.Width = 350.673828125000000000
+        Size.Height = 640.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Full (10 buttons)'
+        TabOrder = 2
+        object GridPanelFull: TGridPanelLayout
+          Align = Client
+          Margins.Left = 8.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 8.000000000000000000
+          Margins.Bottom = 8.000000000000000000
+          Size.Width = 334.673828125000000000
+          Size.Height = 612.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = EditPNSearch3
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = Grid3
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = NavPanelLayout
+              Row = 2
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 28.000000000000000000
+            end
+            item
+              Value = 100.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 36.000000000000000000
+            end>
+          object EditPNSearch3: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 0
+            Size.Width = 334.673828125000000000
+            Size.Height = 28.000000000000000000
+            Size.PlatformDefault = False
+            object SearchEditButton3: TSearchEditButton
+              CanFocus = False
+              Cursor = crArrow
+              Size.Width = 28.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+          object Grid3: TGrid
+            Align = Client
+            CanFocus = True
+            ClipChildren = True
+            Size.Width = 334.673828125000000000
+            Size.Height = 548.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Viewport.Width = 334.700000000000000000
+            Viewport.Height = 548.000000000000000000
+          end
+          object NavPanelLayout: TGridPanelLayout
+            Align = Client
+            Size.Width = 334.673828125000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+            ColumnCollection = <
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end
+              item
+                Value = 10.000000000000000000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = NavButtonFirst
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = NavButtonPrior
+                Row = 0
+              end
+              item
+                Column = 2
+                Control = NavButtonNext
+                Row = 0
+              end
+              item
+                Column = 3
+                Control = NavButtonLast
+                Row = 0
+              end
+              item
+                Column = 4
+                Control = NavButtonInsert
+                Row = 0
+              end
+              item
+                Column = 5
+                Control = NavButtonDelete
+                Row = 0
+              end
+              item
+                Column = 6
+                Control = NavButtonEdit
+                Row = 0
+              end
+              item
+                Column = 7
+                Control = NavButtonPost
+                Row = 0
+              end
+              item
+                Column = 8
+                Control = NavButtonCancel
+                Row = 0
+              end
+              item
+                Column = 9
+                Control = NavButtonRefresh
+                Row = 0
+              end>
+            ExpandStyle = FixedSize
+            RowCollection = <
+              item
+                Value = 100.000000000000000000
+              end>
+            object NavButtonFirst: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467384338378910000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = '|<'
+              TextSettings.Font.Size = 9.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonFirstClick
+            end
+            object NavButtonPrior: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467384338378910000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = '<'
+              TextSettings.Font.Size = 9.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonPriorClick
+            end
+            object NavButtonNext: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467384338378910000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              Text = '>'
+              TextSettings.Font.Size = 9.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonNextClick
+            end
+            object NavButtonLast: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467384338378910000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              Text = '>|'
+              TextSettings.Font.Size = 9.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonLastClick
+            end
+            object NavButtonInsert: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467376708984380000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = '+'
+              TextSettings.Font.Size = 11.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonInsertClick
+            end
+            object NavButtonDelete: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467376708984380000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 5
+              Text = '-'
+              TextSettings.Font.Size = 14.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonDeleteClick
+            end
+            object NavButtonEdit: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467376708984380000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 6
+              Text = 'E'
+              TextSettings.Font.Size = 10.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonEditClick
+            end
+            object NavButtonPost: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467376708984380000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 7
+              Text = 'OK'
+              TextSettings.Font.Size = 9.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonPostClick
+            end
+            object NavButtonCancel: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467376708984380000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 8
+              Text = 'X'
+              TextSettings.Font.Size = 10.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonCancelClick
+            end
+            object NavButtonRefresh: TCornerButton
+              Align = Client
+              Sides = [Top, Left, Bottom, Right]
+              Size.Width = 33.467407226562500000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 9
+              Text = 'R'
+              TextSettings.Font.Size = 10.000000000000000000
+              XRadius = 3.000000000000000000
+              YRadius = 3.000000000000000000
+              OnClick = NavButtonRefreshClick
+            end
+          end
+        end
+      end
+    end
+  end
+end

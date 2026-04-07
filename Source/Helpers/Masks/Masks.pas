@@ -1,4 +1,4 @@
-unit Masks;
+﻿unit Masks;
 
 interface
 
@@ -35,7 +35,7 @@ uses
   System.RegularExpressions,
   System.MaskUtils,
   System.Character,
-  &Type.Float,
+  &Type.&Float,
   &Type.&String;
 
 { TMasks }
