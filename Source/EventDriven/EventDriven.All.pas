@@ -17,6 +17,7 @@ uses
   EventDriven.Core,
   EventDriven.Notify,
   EventDriven.Key,
+  EventDriven.KeyPress,
   EventDriven.ItemBox,
   EventDriven.ItemView,
   EventDriven.Paint,

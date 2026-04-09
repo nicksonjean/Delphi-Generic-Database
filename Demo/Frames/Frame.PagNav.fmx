@@ -4,44 +4,45 @@ object FramePagNav: TFramePagNav
   Size.PlatformDefault = False
   object RectPagNavBg: TRectangle
     Align = Client
-    Fill.Color = xFFF0F2F5
+    Fill.Color = xFFF8F9FA
     Size.Width = 1100.000000000000000000
     Size.Height = 700.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     object RectPagNavHeader: TRectangle
       Align = Top
-      Fill.Color = xFF1E3A5F
+      Fill.Color = xFFF8F9FA
       Size.Width = 1100.000000000000000000
-      Size.Height = 44.000000000000000000
+      Size.Height = 52.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       object LblPagNavTitle: TLabel
         Align = Left
-        Margins.Left = 16.000000000000000000
-        Position.X = 16.000000000000000000
+        Margins.Left = 20.000000000000000000
+        Position.X = 20.000000000000000000
         Size.Width = 360.000000000000000000
-        Size.Height = 44.000000000000000000
+        Size.Height = 52.000000000000000000
         Size.PlatformDefault = False
-        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.Font.Size = 16.000000000000000000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
-        TextSettings.FontColor = claWhite
+        TextSettings.FontColor = xFF212529
         Text = 'Paginators && Navigators'
       end
       object LayPagNavConnectBar: TLayout
         Align = Client
-        Size.Width = 724.000000000000000000
-        Size.Height = 44.000000000000000000
+        Size.Width = 720.000000000000000000
+        Size.Height = 52.000000000000000000
         Size.PlatformDefault = False
         object LblPNEngine: TLabel
           Align = Left
           Margins.Left = 8.000000000000000000
           Position.X = 8.000000000000000000
-          Size.Width = 56.000000000000000000
-          Size.Height = 44.000000000000000000
+          Size.Width = 64.000000000000000000
+          Size.Height = 52.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.Size = 11.000000000000000000
-          TextSettings.FontColor = xFF90CAF9
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = xFF212529
           TextSettings.HorzAlign = Trailing
           Text = 'Engine:'
         end
@@ -54,10 +55,10 @@ object FramePagNav: TFramePagNav
             'UniDAC')
           ItemIndex = 0
           Margins.Left = 4.000000000000000000
-          Margins.Top = 6.000000000000000000
-          Margins.Bottom = 6.000000000000000000
-          Position.X = 68.000000000000000000
-          Position.Y = 6.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Bottom = 10.000000000000000000
+          Position.X = 76.000000000000000000
+          Position.Y = 10.000000000000000000
           Size.Width = 110.000000000000000000
           Size.Height = 32.000000000000000000
           Size.PlatformDefault = False
@@ -66,12 +67,13 @@ object FramePagNav: TFramePagNav
         object LblPNDriver: TLabel
           Align = Left
           Margins.Left = 8.000000000000000000
-          Position.X = 186.000000000000000000
-          Size.Width = 50.000000000000000000
-          Size.Height = 44.000000000000000000
+          Position.X = 194.000000000000000000
+          Size.Width = 56.000000000000000000
+          Size.Height = 52.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.Size = 11.000000000000000000
-          TextSettings.FontColor = xFF90CAF9
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = xFF212529
           TextSettings.HorzAlign = Trailing
           Text = 'Driver:'
         end
@@ -86,10 +88,10 @@ object FramePagNav: TFramePagNav
             'Oracle')
           ItemIndex = 0
           Margins.Left = 4.000000000000000000
-          Margins.Top = 6.000000000000000000
-          Margins.Bottom = 6.000000000000000000
-          Position.X = 240.000000000000000000
-          Position.Y = 6.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Bottom = 10.000000000000000000
+          Position.X = 254.000000000000000000
+          Position.Y = 10.000000000000000000
           Size.Width = 100.000000000000000000
           Size.Height = 32.000000000000000000
           Size.PlatformDefault = False
@@ -100,11 +102,11 @@ object FramePagNav: TFramePagNav
           Align = Left
           TabOrder = 2
           Text = 'DB.SQLITE'
-          Position.X = 348.000000000000000000
-          Position.Y = 6.000000000000000000
+          Position.X = 362.000000000000000000
+          Position.Y = 10.000000000000000000
           Margins.Left = 8.000000000000000000
-          Margins.Top = 6.000000000000000000
-          Margins.Bottom = 6.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Bottom = 10.000000000000000000
           Size.Width = 200.000000000000000000
           Size.Height = 32.000000000000000000
           Size.PlatformDefault = False
@@ -112,27 +114,30 @@ object FramePagNav: TFramePagNav
         object BtnPNConnect: TButton
           Align = Left
           Margins.Left = 8.000000000000000000
-          Margins.Top = 6.000000000000000000
-          Margins.Bottom = 6.000000000000000000
-          Position.X = 556.000000000000000000
-          Position.Y = 6.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Bottom = 10.000000000000000000
+          Position.X = 570.000000000000000000
+          Position.Y = 10.000000000000000000
           Size.Width = 140.000000000000000000
           Size.Height = 32.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 3
           Text = 'Connect && Load'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = xFF0D6EFD
           OnClick = BtnPNConnectClick
         end
       end
     end
     object GridPanelPagNav: TGridPanelLayout
       Align = Client
-      Margins.Left = 12.000000000000000000
-      Margins.Top = 8.000000000000000000
-      Margins.Right = 12.000000000000000000
-      Margins.Bottom = 8.000000000000000000
-      Size.Width = 1076.000000000000000000
-      Size.Height = 640.000000000000000000
+      Margins.Left = 20.000000000000000000
+      Margins.Top = 20.000000000000000000
+      Margins.Right = 20.000000000000000000
+      Margins.Bottom = 20.000000000000000000
+      Size.Width = 1060.000000000000000000
+      Size.Height = 608.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
       ColumnCollection = <
@@ -168,8 +173,8 @@ object FramePagNav: TFramePagNav
         end>
       object GroupBoxOriginal: TGroupBox
         Align = Client
-        Size.Width = 358.663085937500000000
-        Size.Height = 640.000000000000000000
+        Size.Width = 353.329803466796900000
+        Size.Height = 608.000000000000000000
         Size.PlatformDefault = False
         Text = 'Original (TBindNavigator)'
         TabOrder = 0
@@ -179,8 +184,8 @@ object FramePagNav: TFramePagNav
           Margins.Top = 20.000000000000000000
           Margins.Right = 8.000000000000000000
           Margins.Bottom = 8.000000000000000000
-          Size.Width = 342.663085937500000000
-          Size.Height = 612.000000000000000000
+          Size.Width = 337.329803466796900000
+          Size.Height = 580.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           ColumnCollection = <
@@ -220,7 +225,7 @@ object FramePagNav: TFramePagNav
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Client
             TabOrder = 0
-            Size.Width = 342.663085937500000000
+            Size.Width = 337.329803466796900000
             Size.Height = 28.000000000000000000
             Size.PlatformDefault = False
             object SearchEditButton1: TSearchEditButton
@@ -236,16 +241,16 @@ object FramePagNav: TFramePagNav
             Align = Client
             CanFocus = True
             ClipChildren = True
-            Size.Width = 342.663085937500000000
-            Size.Height = 548.000000000000000000
+            Size.Width = 337.329803466796900000
+            Size.Height = 516.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
-            Viewport.Width = 342.700000000000000000
-            Viewport.Height = 548.000000000000000000
+            Viewport.Width = 337.300000000000000000
+            Viewport.Height = 516.000000000000000000
           end
           object BindNavigator1: TBindNavigator
             Align = Client
-            Size.Width = 342.663085937500000000
+            Size.Width = 337.329803466796900000
             Size.Height = 36.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
@@ -257,8 +262,8 @@ object FramePagNav: TFramePagNav
       object GroupBoxMinimal: TGroupBox
         Align = Client
         Margins.Left = 8.000000000000000000
-        Size.Width = 350.663085937500000000
-        Size.Height = 640.000000000000000000
+        Size.Width = 345.329803466796900000
+        Size.Height = 608.000000000000000000
         Size.PlatformDefault = False
         Text = 'Minimal (4 buttons)'
         TabOrder = 1
@@ -268,8 +273,8 @@ object FramePagNav: TFramePagNav
           Margins.Top = 20.000000000000000000
           Margins.Right = 8.000000000000000000
           Margins.Bottom = 8.000000000000000000
-          Size.Width = 334.663085937500000000
-          Size.Height = 612.000000000000000000
+          Size.Width = 329.329803466796900000
+          Size.Height = 580.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           ColumnCollection = <
@@ -309,7 +314,7 @@ object FramePagNav: TFramePagNav
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Client
             TabOrder = 0
-            Size.Width = 334.663085937500000000
+            Size.Width = 329.329803466796900000
             Size.Height = 28.000000000000000000
             Size.PlatformDefault = False
             object SearchEditButton2: TSearchEditButton
@@ -325,16 +330,16 @@ object FramePagNav: TFramePagNav
             Align = Client
             CanFocus = True
             ClipChildren = True
-            Size.Width = 334.663085937500000000
-            Size.Height = 548.000000000000000000
+            Size.Width = 329.329803466796900000
+            Size.Height = 516.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
-            Viewport.Width = 334.700000000000000000
-            Viewport.Height = 548.000000000000000000
+            Viewport.Width = 329.300000000000000000
+            Viewport.Height = 516.000000000000000000
           end
           object PagPanelLayout: TGridPanelLayout
             Align = Client
-            Size.Width = 334.663085937500000000
+            Size.Width = 329.329803466796900000
             Size.Height = 36.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
@@ -380,49 +385,45 @@ object FramePagNav: TFramePagNav
             object PagButtonFirst: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 83.665771484375000000
+              Size.Width = 82.332450866699220000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               Text = '|<'
-              XRadius = 4.000000000000000000
-              YRadius = 4.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = PagButtonFirstClick
             end
             object PagButtonPrior: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 83.665771484375000000
+              Size.Width = 82.332450866699220000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
               Text = '<'
-              XRadius = 4.000000000000000000
-              YRadius = 4.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = PagButtonPriorClick
             end
             object PagButtonNext: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 83.665771484375000000
+              Size.Width = 82.332443237304690000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
               Text = '>'
-              XRadius = 4.000000000000000000
-              YRadius = 4.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = PagButtonNextClick
             end
             object PagButtonLast: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 83.665771484375000000
+              Size.Width = 82.332458496093750000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
               Text = '>|'
-              XRadius = 4.000000000000000000
-              YRadius = 4.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = PagButtonLastClick
             end
           end
@@ -431,8 +432,8 @@ object FramePagNav: TFramePagNav
       object GroupBoxFull: TGroupBox
         Align = Client
         Margins.Left = 8.000000000000000000
-        Size.Width = 350.673828125000000000
-        Size.Height = 640.000000000000000000
+        Size.Width = 345.340393066406300000
+        Size.Height = 608.000000000000000000
         Size.PlatformDefault = False
         Text = 'Full (10 buttons)'
         TabOrder = 2
@@ -442,8 +443,8 @@ object FramePagNav: TFramePagNav
           Margins.Top = 20.000000000000000000
           Margins.Right = 8.000000000000000000
           Margins.Bottom = 8.000000000000000000
-          Size.Width = 334.673828125000000000
-          Size.Height = 612.000000000000000000
+          Size.Width = 329.340393066406300000
+          Size.Height = 580.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           ColumnCollection = <
@@ -483,7 +484,7 @@ object FramePagNav: TFramePagNav
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Client
             TabOrder = 0
-            Size.Width = 334.673828125000000000
+            Size.Width = 329.340393066406300000
             Size.Height = 28.000000000000000000
             Size.PlatformDefault = False
             object SearchEditButton3: TSearchEditButton
@@ -499,16 +500,16 @@ object FramePagNav: TFramePagNav
             Align = Client
             CanFocus = True
             ClipChildren = True
-            Size.Width = 334.673828125000000000
-            Size.Height = 548.000000000000000000
+            Size.Width = 329.340393066406300000
+            Size.Height = 516.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
-            Viewport.Width = 334.700000000000000000
-            Viewport.Height = 548.000000000000000000
+            Viewport.Width = 329.300000000000000000
+            Viewport.Height = 516.000000000000000000
           end
           object NavPanelLayout: TGridPanelLayout
             Align = Client
-            Size.Width = 334.673828125000000000
+            Size.Width = 329.340393066406300000
             Size.Height = 36.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
@@ -602,131 +603,121 @@ object FramePagNav: TFramePagNav
             object NavButtonFirst: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467384338378910000
+              Size.Width = 32.934040069580080000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
               Text = '|<'
               TextSettings.Font.Size = 9.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonFirstClick
             end
             object NavButtonPrior: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467384338378910000
+              Size.Width = 32.934040069580080000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
               Text = '<'
               TextSettings.Font.Size = 9.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonPriorClick
             end
             object NavButtonNext: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467384338378910000
+              Size.Width = 32.934043884277340000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
               Text = '>'
               TextSettings.Font.Size = 9.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonNextClick
             end
             object NavButtonLast: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467384338378910000
+              Size.Width = 32.934036254882810000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
               Text = '>|'
               TextSettings.Font.Size = 9.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonLastClick
             end
             object NavButtonInsert: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467376708984380000
+              Size.Width = 32.934036254882810000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
               Text = '+'
               TextSettings.Font.Size = 11.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonInsertClick
             end
             object NavButtonDelete: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467376708984380000
+              Size.Width = 32.934036254882810000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 5
               Text = '-'
               TextSettings.Font.Size = 14.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonDeleteClick
             end
             object NavButtonEdit: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467376708984380000
+              Size.Width = 32.934036254882810000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 6
               Text = 'E'
               TextSettings.Font.Size = 10.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonEditClick
             end
             object NavButtonPost: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467376708984380000
+              Size.Width = 32.934051513671880000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 7
               Text = 'OK'
               TextSettings.Font.Size = 9.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonPostClick
             end
             object NavButtonCancel: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467376708984380000
+              Size.Width = 32.934051513671880000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 8
               Text = 'X'
               TextSettings.Font.Size = 10.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonCancelClick
             end
             object NavButtonRefresh: TCornerButton
               Align = Client
               Sides = [Top, Left, Bottom, Right]
-              Size.Width = 33.467407226562500000
+              Size.Width = 32.934051513671880000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 9
               Text = 'R'
               TextSettings.Font.Size = 10.000000000000000000
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
+              TextSettings.FontColor = xFF0D6EFD
               OnClick = NavButtonRefreshClick
             end
           end

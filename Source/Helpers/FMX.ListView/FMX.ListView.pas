@@ -7111,3 +7111,4 @@ initialization
 finalization
   LVTextLayout.Free;
 end.
+

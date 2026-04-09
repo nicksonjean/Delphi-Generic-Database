@@ -4,38 +4,35 @@ object FrameDataTypes: TFrameDataTypes
   Size.PlatformDefault = False
   object RectDataTypesBg: TRectangle
     Align = Client
-    Fill.Color = xFFF0F2F5
-    Stroke.Kind = None
+    Fill.Color = xFFF8F9FA
     Size.Width = 1100.000000000000000000
     Size.Height = 700.000000000000000000
     Size.PlatformDefault = False
+    Stroke.Kind = None
     object RectDTHeader: TRectangle
       Align = Top
-      Fill.Color = xFF1E3A5F
-      Stroke.Kind = None
+      Fill.Color = xFFF8F9FA
       Size.Width = 1100.000000000000000000
-      Size.Height = 44.000000000000000000
+      Size.Height = 48.000000000000000000
       Size.PlatformDefault = False
+      Stroke.Kind = None
       object LblDTTitle: TLabel
         Align = Client
-        Text = 'Data Types Testing Suite'
-        TextSettings.Font.Family = 'Segoe UI'
-        TextSettings.Font.Size = 14.000000000000000000
-        TextSettings.Font.Style = [fsBold]
-        TextSettings.FontColor = xFFFFFFFF
-        TextSettings.HorzAlign = Leading
-        TextSettings.VertAlign = Center
         Margins.Left = 16.000000000000000000
-        Size.Width = 1100.000000000000000000
-        Size.Height = 44.000000000000000000
+        Size.Width = 1084.000000000000000000
+        Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = xFF212529
+        Text = 'Data Types Testing Suite'
       end
     end
     object TabControlDataTypes: TTabControl
       Align = Client
       FullSize = True
       Size.Width = 1100.000000000000000000
-      Size.Height = 656.000000000000000000
+      Size.Height = 652.000000000000000000
       Size.PlatformDefault = False
       TabHeight = 44.000000000000000000
       TabIndex = 0
@@ -43,20 +40,20 @@ object FrameDataTypes: TFrameDataTypes
       TabPosition = PlatformDefault
       Sizes = (
         1100s
-        612s
+        608s
         1100s
-        612s
+        608s
         1100s
-        612s
+        608s
         1100s
-        612s)
+        608s)
       object TabArrays: TTabItem
         AutoSize = False
         CustomIcon = <
           item
           end>
         IsSelected = True
-        Size.Width = 274.000000000000000000
+        Size.Width = 275.000000000000000000
         Size.Height = 44.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = ''
@@ -66,12 +63,12 @@ object FrameDataTypes: TFrameDataTypes
         ExplicitSize.cy = 50.000000000000000000
         object GridPanelArrayTab: TGridPanelLayout
           Align = Client
-          Margins.Left = 12.000000000000000000
-          Margins.Top = 8.000000000000000000
-          Margins.Right = 12.000000000000000000
-          Margins.Bottom = 8.000000000000000000
-          Size.Width = 1076.000000000000000000
-          Size.Height = 596.000000000000000000
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Margins.Bottom = 20.000000000000000000
+          Size.Width = 1060.000000000000000000
+          Size.Height = 568.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           ColumnCollection = <
@@ -99,44 +96,28 @@ object FrameDataTypes: TFrameDataTypes
             end>
           object RectArraySelectors: TRectangle
             Align = Client
-            Fill.Color = xFFFFFFFF
-            Stroke.Color = xFFE0E0E0
-            Stroke.Thickness = 1.000000000000000000
-            Size.Width = 645.000000000000000000
-            Size.Height = 596.000000000000000000
+            Fill.Color = claWhite
+            Size.Width = 636.000000000000000000
+            Size.Height = 568.000000000000000000
             Size.PlatformDefault = False
-            XRadius = 6.000000000000000000
-            YRadius = 6.000000000000000000
+            Stroke.Color = xFFDEE2E6
             object RectArraySelectHeader: TRectangle
               Align = Top
-              Fill.Color = xFF37474F
-              Stroke.Kind = None
-              Size.Width = 645.000000000000000000
-              Size.Height = 40.000000000000000000
+              Fill.Color = xFFF8F9FA
+              Size.Width = 636.000000000000000000
+              Size.Height = 48.000000000000000000
               Size.PlatformDefault = False
-              XRadius = 6.000000000000000000
-              YRadius = 6.000000000000000000
-              object RectArraySelectHeaderFill: TRectangle
-                Align = Bottom
-                Fill.Color = xFF37474F
-                Stroke.Kind = None
-                Size.Width = 645.000000000000000000
-                Size.Height = 10.000000000000000000
-                Size.PlatformDefault = False
-              end
+              Stroke.Kind = None
               object LblArraySelectTitle: TLabel
                 Align = Client
-                Text = 'Array Type Selectors'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 12.000000000000000000
-                TextSettings.Font.Style = [fsBold]
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                Margins.Left = 12.000000000000000000
-                Size.Width = 645.000000000000000000
-                Size.Height = 40.000000000000000000
+                Margins.Left = 18.000000000000000000
+                Size.Width = 618.000000000000000000
+                Size.Height = 48.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Array Type Selectors'
               end
             end
             object GridPanelArraySelectors: TGridPanelLayout
@@ -144,7 +125,9 @@ object FrameDataTypes: TFrameDataTypes
               Margins.Left = 8.000000000000000000
               Margins.Top = 8.000000000000000000
               Margins.Right = 8.000000000000000000
-              Size.Width = 629.000000000000000000
+              Position.X = 8.000000000000000000
+              Position.Y = 56.000000000000000000
+              Size.Width = 620.000000000000000000
               Size.Height = 80.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -181,21 +164,13 @@ object FrameDataTypes: TFrameDataTypes
                 end>
               object GroupBoxArrayString: TGroupBox
                 Align = Client
-                Text = 'TArrayString'
-                Size.Width = 209.000000000000000000
+                Size.Width = 206.664596557617200000
                 Size.Height = 80.000000000000000000
                 Size.PlatformDefault = False
+                Text = 'TArrayString'
                 TabOrder = 0
                 object ComboBoxDataTypeTArrayString: TComboBox
                   Align = Client
-                  Margins.Left = 4.000000000000000000
-                  Margins.Top = 20.000000000000000000
-                  Margins.Right = 4.000000000000000000
-                  Margins.Bottom = 4.000000000000000000
-                  Size.Width = 201.000000000000000000
-                  Size.Height = 52.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 0
                   Items.Strings = (
                     'Fetch'
                     'Copy'
@@ -205,26 +180,26 @@ object FrameDataTypes: TFrameDataTypes
                     'ToXML'
                     'ToJSON')
                   ItemIndex = 0
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 20.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 198.664596557617200000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
                   OnChange = ComboBoxDataTypeTArrayStringChange
                 end
               end
               object GroupBoxArrayVariant: TGroupBox
                 Align = Client
-                Text = 'TArrayVariant'
-                Size.Width = 209.000000000000000000
+                Size.Width = 206.664596557617200000
                 Size.Height = 80.000000000000000000
                 Size.PlatformDefault = False
+                Text = 'TArrayVariant'
                 TabOrder = 1
                 object ComboBoxDataTypeTArrayVariant: TComboBox
                   Align = Client
-                  Margins.Left = 4.000000000000000000
-                  Margins.Top = 20.000000000000000000
-                  Margins.Right = 4.000000000000000000
-                  Margins.Bottom = 4.000000000000000000
-                  Size.Width = 201.000000000000000000
-                  Size.Height = 52.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 0
                   Items.Strings = (
                     'Fetch'
                     'Copy'
@@ -234,26 +209,26 @@ object FrameDataTypes: TFrameDataTypes
                     'ToXML'
                     'ToJSON')
                   ItemIndex = 0
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 20.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 198.664596557617200000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
                   OnChange = ComboBoxDataTypeTArrayVariantChange
                 end
               end
               object GroupBoxArrayField: TGroupBox
                 Align = Client
-                Text = 'TArrayField'
-                Size.Width = 211.000000000000000000
+                Size.Width = 206.670806884765600000
                 Size.Height = 80.000000000000000000
                 Size.PlatformDefault = False
+                Text = 'TArrayField'
                 TabOrder = 2
                 object ComboBoxDataTypeTArrayField: TComboBox
                   Align = Client
-                  Margins.Left = 4.000000000000000000
-                  Margins.Top = 20.000000000000000000
-                  Margins.Right = 4.000000000000000000
-                  Margins.Bottom = 4.000000000000000000
-                  Size.Width = 203.000000000000000000
-                  Size.Height = 52.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 0
                   Items.Strings = (
                     'Fetch'
                     'Copy'
@@ -263,171 +238,208 @@ object FrameDataTypes: TFrameDataTypes
                     'ToXML'
                     'ToJSON')
                   ItemIndex = 0
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 20.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 198.670806884765600000
+                  Size.Height = 56.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
                   OnChange = ComboBoxDataTypeTArrayFieldChange
                 end
               end
             end
             object MemoDataTypeArrayResult: TMemo
+              Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+              DataDetectorTypes = []
+              ReadOnly = True
+              TextSettings.Font.Family = 'Consolas'
+              TextSettings.Font.Size = 13.000000000000000000
+              TextSettings.FontColor = xFF212529
               Align = Client
               Margins.Left = 8.000000000000000000
               Margins.Top = 4.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 8.000000000000000000
-              Size.Width = 629.000000000000000000
-              Size.Height = 460.000000000000000000
+              Size.Width = 620.000000000000000000
+              Size.Height = 420.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
-              TextSettings.Font.Family = 'Courier New'
-              TextSettings.Font.Size = 11.000000000000000000
-              ReadOnly = True
+              Viewport.Width = 620.000000000000000000
+              Viewport.Height = 420.000000000000000000
             end
           end
           object RectArrayConfig: TRectangle
             Align = Client
-            Fill.Color = xFFFFFFFF
-            Stroke.Color = xFFE0E0E0
-            Stroke.Thickness = 1.000000000000000000
+            Fill.Color = claWhite
             Margins.Left = 12.000000000000000000
-            Size.Width = 419.000000000000000000
-            Size.Height = 596.000000000000000000
+            Size.Width = 412.000000000000000000
+            Size.Height = 568.000000000000000000
             Size.PlatformDefault = False
-            XRadius = 6.000000000000000000
-            YRadius = 6.000000000000000000
+            Stroke.Color = xFFDEE2E6
             object RectArrayConfigHeader: TRectangle
               Align = Top
-              Fill.Color = xFF37474F
-              Stroke.Kind = None
-              Size.Width = 419.000000000000000000
-              Size.Height = 40.000000000000000000
+              Fill.Color = xFFF8F9FA
+              Size.Width = 412.000000000000000000
+              Size.Height = 48.000000000000000000
               Size.PlatformDefault = False
-              XRadius = 6.000000000000000000
-              YRadius = 6.000000000000000000
-              object RectArrayConfigHeaderFill: TRectangle
-                Align = Bottom
-                Fill.Color = xFF37474F
-                Stroke.Kind = None
-                Size.Width = 419.000000000000000000
-                Size.Height = 10.000000000000000000
-                Size.PlatformDefault = False
-              end
+              Stroke.Kind = None
               object LblArrayConfigTitle: TLabel
                 Align = Client
-                Text = 'Connection Config'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 12.000000000000000000
-                TextSettings.Font.Style = [fsBold]
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                Margins.Left = 12.000000000000000000
-                Size.Width = 419.000000000000000000
-                Size.Height = 40.000000000000000000
+                Margins.Left = 18.000000000000000000
+                Size.Width = 394.000000000000000000
+                Size.Height = 48.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Connection Config'
               end
             end
             object ScrollArrayConfig: TVertScrollBox
               Align = Client
-              ShowScrollBars = False
-              Size.Width = 419.000000000000000000
-              Size.Height = 556.000000000000000000
+              Padding.Left = 18.000000000000000000
+              Padding.Top = 16.000000000000000000
+              Padding.Right = 18.000000000000000000
+              Padding.Bottom = 20.000000000000000000
+              Size.Width = 412.000000000000000000
+              Size.Height = 520.000000000000000000
               Size.PlatformDefault = False
-              Padding.Left = 12.000000000000000000
-              Padding.Top = 8.000000000000000000
-              Padding.Right = 12.000000000000000000
+              ShowScrollBars = False
+              Viewport.Width = 412.000000000000000000
+              Viewport.Height = 520.000000000000000000
               object LblArrayHost: TLabel
                 Align = Top
-                Text = 'Host'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 11.000000000000000000
-                TextSettings.FontColor = xFF607D8B
                 Margins.Top = 8.000000000000000000
-                Size.Width = 395.000000000000000000
+                Position.X = 18.000000000000000000
+                Position.Y = 24.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Host'
+                TabOrder = 5
               end
               object EditArrayHost: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
                 Align = Top
-                Size.Width = 395.000000000000000000
+                TabOrder = 0
+                Text = '127.0.0.1'
+                Position.X = 18.000000000000000000
+                Position.Y = 44.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
-                Text = '127.0.0.1'
-                TabOrder = 0
               end
               object LblArrayPort: TLabel
                 Align = Top
-                Text = 'Port'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 11.000000000000000000
-                TextSettings.FontColor = xFF607D8B
                 Margins.Top = 8.000000000000000000
-                Size.Width = 395.000000000000000000
+                Position.X = 18.000000000000000000
+                Position.Y = 84.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Port'
+                TabOrder = 6
               end
               object EditArrayPort: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
                 Align = Top
-                Size.Width = 395.000000000000000000
+                TabOrder = 1
+                Text = '3306'
+                Position.X = 18.000000000000000000
+                Position.Y = 104.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
-                Text = '3306'
-                TabOrder = 1
               end
               object LblArrayDatabase: TLabel
                 Align = Top
-                Text = 'Database'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 11.000000000000000000
-                TextSettings.FontColor = xFF607D8B
                 Margins.Top = 8.000000000000000000
-                Size.Width = 395.000000000000000000
+                Position.X = 18.000000000000000000
+                Position.Y = 144.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Database'
+                TabOrder = 7
               end
               object EditArrayDatabase: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
                 Align = Top
-                Size.Width = 395.000000000000000000
+                TabOrder = 2
+                Text = 'demodev'
+                Position.X = 18.000000000000000000
+                Position.Y = 164.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
-                Text = 'demodev'
-                TabOrder = 2
               end
               object LblArrayUsername: TLabel
                 Align = Top
-                Text = 'Username'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 11.000000000000000000
-                TextSettings.FontColor = xFF607D8B
                 Margins.Top = 8.000000000000000000
-                Size.Width = 395.000000000000000000
+                Position.X = 18.000000000000000000
+                Position.Y = 204.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Username'
+                TabOrder = 8
               end
               object EditArrayUsername: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
                 Align = Top
-                Size.Width = 395.000000000000000000
+                TabOrder = 3
+                Text = 'root'
+                Position.X = 18.000000000000000000
+                Position.Y = 224.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
-                Text = 'root'
-                TabOrder = 3
               end
               object LblArrayPassword: TLabel
                 Align = Top
-                Text = 'Password'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 11.000000000000000000
-                TextSettings.FontColor = xFF607D8B
                 Margins.Top = 8.000000000000000000
-                Size.Width = 395.000000000000000000
+                Position.X = 18.000000000000000000
+                Position.Y = 264.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 20.000000000000000000
                 Size.PlatformDefault = False
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Password'
+                TabOrder = 9
               end
               object EditArrayPassword: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
                 Align = Top
-                Size.Width = 395.000000000000000000
+                TabOrder = 4
+                Password = True
+                Position.X = 18.000000000000000000
+                Position.Y = 284.000000000000000000
+                Size.Width = 376.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
-                Password = True
-                TabOrder = 4
+              end
+              object Button1: TButton
+                Position.X = 24.000000000000000000
+                Position.Y = 336.000000000000000000
+                TabOrder = 10
+                Text = 'Button1'
+                OnClick = Button1Click
               end
             end
           end
@@ -439,22 +451,22 @@ object FrameDataTypes: TFrameDataTypes
           item
           end>
         IsSelected = False
-        Size.Width = 274.000000000000000000
+        Size.Width = 275.000000000000000000
         Size.Height = 44.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = ''
-        TabOrder = 1
+        TabOrder = 0
         Text = 'Floats'
         ExplicitSize.cx = 50.000000000000000000
         ExplicitSize.cy = 50.000000000000000000
         object GridPanelFloatsTab: TGridPanelLayout
           Align = Client
-          Margins.Left = 12.000000000000000000
-          Margins.Top = 8.000000000000000000
-          Margins.Right = 12.000000000000000000
-          Margins.Bottom = 8.000000000000000000
-          Size.Width = 1076.000000000000000000
-          Size.Height = 596.000000000000000000
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Margins.Bottom = 20.000000000000000000
+          Size.Width = 1060.000000000000000000
+          Size.Height = 568.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
           ColumnCollection = <
@@ -467,12 +479,12 @@ object FrameDataTypes: TFrameDataTypes
           ControlCollection = <
             item
               Column = 0
-              Control = GroupBoxFloatFormat
+              Control = RectFloatFormat
               Row = 0
             end
             item
               Column = 1
-              Control = GroupBoxFloatCalculate
+              Control = RectFloatCalculate
               Row = 0
             end>
           ExpandStyle = FixedSize
@@ -480,19 +492,40 @@ object FrameDataTypes: TFrameDataTypes
             item
               Value = 100.000000000000000000
             end>
-          object GroupBoxFloatFormat: TGroupBox
+          object RectFloatFormat: TRectangle
             Align = Client
-            Text = 'Float Format'
-            Size.Width = 591.000000000000000000
-            Size.Height = 596.000000000000000000
+            Fill.Color = claWhite
+            Size.Width = 583.000000000000000000
+            Size.Height = 568.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 0
+            Stroke.Color = xFFDEE2E6
+            object RectFloatFormatHeader: TRectangle
+              Align = Top
+              Fill.Color = xFFF8F9FA
+              Size.Width = 583.000000000000000000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              object LblFloatFormatTitle: TLabel
+                Align = Client
+                Margins.Left = 18.000000000000000000
+                Size.Width = 565.000000000000000000
+                Size.Height = 48.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Float Format'
+              end
+            end
             object GridPanelFloatFormat: TGridPanelLayout
               Align = Top
               Margins.Left = 8.000000000000000000
-              Margins.Top = 20.000000000000000000
+              Margins.Top = 8.000000000000000000
               Margins.Right = 8.000000000000000000
-              Size.Width = 575.000000000000000000
+              Position.X = 8.000000000000000000
+              Position.Y = 56.000000000000000000
+              Size.Width = 567.000000000000000000
               Size.Height = 252.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -555,146 +588,161 @@ object FrameDataTypes: TFrameDataTypes
                 end>
               object LayoutFloatTest1: TLayout
                 Align = Client
-                Size.Width = 80.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 79.379997253417970000
+                Size.Height = 83.999160766601560000
                 Size.PlatformDefault = False
                 object EditLength1: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 0
+                  Text = '12'
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '12'
-                  TabOrder = 0
                 end
                 object EditDecimal1: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 1
+                  Text = '2'
+                  Position.Y = 32.000000000000000000
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '2'
-                  TabOrder = 1
                 end
               end
               object LayoutFloatTest2: TLayout
                 Align = Client
-                Size.Width = 80.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 79.379997253417970000
+                Size.Height = 83.999160766601560000
                 Size.PlatformDefault = False
                 object EditLength2: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 0
+                  Text = '10'
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '10'
-                  TabOrder = 0
                 end
                 object EditDecimal2: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 1
+                  Text = '3'
+                  Position.Y = 32.000000000000000000
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '3'
-                  TabOrder = 1
                 end
               end
               object LayoutFloatTest3: TLayout
                 Align = Client
-                Size.Width = 415.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 408.239990234375000000
+                Size.Height = 83.999160766601560000
                 Size.PlatformDefault = False
                 object ComboBoxResult1: TComboBox
                   Align = Top
-                  Size.Width = 415.000000000000000000
-                  Size.Height = 32.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 0
                   Items.Strings = (
                     'Round'
                     'Truncate')
                   ItemIndex = 0
+                  Size.Width = 408.239990234375000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
                 end
               end
               object LayoutFloatTest4: TLayout
                 Align = Client
-                Size.Width = 80.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 79.379997253417970000
+                Size.Height = 83.999160766601560000
                 Size.PlatformDefault = False
                 object EditLength3: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 0
+                  Text = '8'
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '8'
-                  TabOrder = 0
                 end
                 object EditDecimal3: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 1
+                  Text = '4'
+                  Position.Y = 32.000000000000000000
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '4'
-                  TabOrder = 1
                 end
               end
               object LayoutFloatTest5: TLayout
                 Align = Client
-                Size.Width = 80.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 79.379997253417970000
+                Size.Height = 83.999160766601560000
                 Size.PlatformDefault = False
                 object EditLength4: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 0
+                  Text = '15'
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '15'
-                  TabOrder = 0
                 end
                 object EditDecimal4: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 1
+                  Text = '2'
+                  Position.Y = 32.000000000000000000
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '2'
-                  TabOrder = 1
                 end
               end
               object LayoutFloatTest6: TLayout
                 Align = Client
-                Size.Width = 415.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 408.239990234375000000
+                Size.Height = 83.999160766601560000
                 Size.PlatformDefault = False
                 object ComboBoxResult2: TComboBox
                   Align = Top
-                  Size.Width = 415.000000000000000000
-                  Size.Height = 32.000000000000000000
-                  Size.PlatformDefault = False
-                  TabOrder = 0
                   Items.Strings = (
                     'Round'
                     'Truncate')
                   ItemIndex = 1
+                  Size.Width = 408.239990234375000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
                 end
               end
               object LayoutFloatTest7: TLayout
                 Align = Client
-                Size.Width = 80.000000000000000000
-                Size.Height = 84.000000000000000000
+                Size.Width = 79.379997253417970000
+                Size.Height = 84.001678466796880000
                 Size.PlatformDefault = False
                 object EditLength5: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 0
+                  Text = '6'
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '6'
-                  TabOrder = 0
                 end
                 object EditDecimal5: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Top
-                  Size.Width = 80.000000000000000000
+                  TabOrder = 1
+                  Text = '5'
+                  Position.Y = 32.000000000000000000
+                  Size.Width = 79.379997253417970000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '5'
-                  TabOrder = 1
                 end
               end
             end
@@ -704,7 +752,9 @@ object FrameDataTypes: TFrameDataTypes
               Margins.Top = 4.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 4.000000000000000000
-              Size.Width = 575.000000000000000000
+              Position.X = 8.000000000000000000
+              Position.Y = 312.000000000000000000
+              Size.Width = 567.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -733,59 +783,93 @@ object FrameDataTypes: TFrameDataTypes
                 end>
               object FormatExplicit: TButton
                 Align = Client
-                Text = 'Format Explicit'
-                Size.Width = 287.000000000000000000
+                Size.Width = 283.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
+                Text = 'Format Explicit'
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF0D6EFD
                 OnClick = FormatExplicitClick
               end
               object FormatImplicit: TButton
                 Align = Client
-                Text = 'Format Implicit'
-                Size.Width = 288.000000000000000000
+                Size.Width = 283.500000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 1
+                Text = 'Format Implicit'
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF0D6EFD
                 OnClick = FormatImplicitClick
               end
             end
             object MemoResultFormat: TMemo
+              Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+              DataDetectorTypes = []
+              ReadOnly = True
+              TextSettings.Font.Family = 'Consolas'
+              TextSettings.Font.Size = 13.000000000000000000
+              TextSettings.FontColor = xFF212529
               Align = Client
               Margins.Left = 8.000000000000000000
               Margins.Top = 4.000000000000000000
               Margins.Right = 8.000000000000000000
               Margins.Bottom = 8.000000000000000000
-              Size.Width = 575.000000000000000000
-              Size.Height = 276.000000000000000000
+              Size.Width = 567.000000000000000000
+              Size.Height = 200.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
-              TextSettings.Font.Family = 'Courier New'
-              TextSettings.Font.Size = 11.000000000000000000
-              ReadOnly = True
+              Viewport.Width = 567.000000000000000000
+              Viewport.Height = 200.000000000000000000
             end
           end
-          object GroupBoxFloatCalculate: TGroupBox
+          object RectFloatCalculate: TRectangle
             Align = Client
-            Text = 'Float Calculate'
+            Fill.Color = claWhite
             Margins.Left = 12.000000000000000000
-            Size.Width = 473.000000000000000000
-            Size.Height = 596.000000000000000000
+            Size.Width = 465.000000000000000000
+            Size.Height = 568.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 1
+            Stroke.Color = xFFDEE2E6
+            object RectFloatCalcHeader: TRectangle
+              Align = Top
+              Fill.Color = xFFF8F9FA
+              Size.Width = 465.000000000000000000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              object LblFloatCalcTitle: TLabel
+                Align = Client
+                Margins.Left = 18.000000000000000000
+                Size.Width = 447.000000000000000000
+                Size.Height = 48.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Float Calculate'
+              end
+            end
             object ScrollFloatCalc: TVertScrollBox
               Align = Client
-              ShowScrollBars = False
-              Size.Width = 473.000000000000000000
-              Size.Height = 576.000000000000000000
-              Size.PlatformDefault = False
               Padding.Left = 8.000000000000000000
               Padding.Top = 8.000000000000000000
               Padding.Right = 8.000000000000000000
               Padding.Bottom = 8.000000000000000000
+              Size.Width = 465.000000000000000000
+              Size.Height = 520.000000000000000000
+              Size.PlatformDefault = False
+              ShowScrollBars = False
+              Viewport.Width = 465.000000000000000000
+              Viewport.Height = 520.000000000000000000
               object GridPanelFloatCalcInputs: TGridPanelLayout
                 Align = Top
-                Size.Width = 457.000000000000000000
+                Position.X = 8.000000000000000000
+                Position.Y = 8.000000000000000000
+                Size.Width = 449.000000000000000000
                 Size.Height = 280.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -898,154 +982,179 @@ object FrameDataTypes: TFrameDataTypes
                     Value = 56.000000000000000000
                   end>
                 object EditCalculate1: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 0
+                  Text = '1234567.89'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '1234567.89'
-                  TabOrder = 0
                 end
                 object EditAmount1: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 1
+                  Text = '1.15'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '1.15'
-                  TabOrder = 1
                 end
                 object EditOperation1: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 153.000000000000000000
+                  TabOrder = 2
+                  ReadOnly = True
+                  Text = 'ToCurrency'
+                  Size.Width = 149.669647216796900000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = 'ToCurrency'
-                  ReadOnly = True
-                  TabOrder = 2
                 end
                 object EditCalculate2: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 3
+                  Text = '9876543.21'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '9876543.21'
-                  TabOrder = 3
                 end
                 object EditAmount2: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 4
+                  Text = '1.0'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '1.0'
-                  TabOrder = 4
                 end
                 object EditOperation2: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 153.000000000000000000
+                  TabOrder = 5
+                  ReadOnly = True
+                  Text = 'ToDouble'
+                  Size.Width = 149.669647216796900000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = 'ToDouble'
-                  ReadOnly = True
-                  TabOrder = 5
                 end
                 object EditCalculate3: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 6
+                  Text = '99999.99999'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '99999.99999'
-                  TabOrder = 6
                 end
                 object EditAmount3: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 7
+                  Text = '1.0'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '1.0'
-                  TabOrder = 7
                 end
                 object EditOperation3: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 153.000000000000000000
+                  TabOrder = 8
+                  ReadOnly = True
+                  Text = 'ToExtended'
+                  Size.Width = 149.669647216796900000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = 'ToExtended'
-                  ReadOnly = True
-                  TabOrder = 8
                 end
                 object EditCalculate4: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 9
+                  Text = '50000.00'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '50000.00'
-                  TabOrder = 9
                 end
                 object EditAmount4: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 10
+                  Text = '1.0'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '1.0'
-                  TabOrder = 10
                 end
                 object EditOperation4: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 153.000000000000000000
+                  TabOrder = 11
+                  ReadOnly = True
+                  Text = 'ToMoney'
+                  Size.Width = 149.669647216796900000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = 'ToMoney'
-                  ReadOnly = True
-                  TabOrder = 11
                 end
                 object EditCalculate5: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 12
+                  Text = '12345.678901'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '12345.678901'
-                  TabOrder = 12
                 end
                 object EditAmount5: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 152.000000000000000000
+                  TabOrder = 13
+                  Text = '1.0'
+                  Size.Width = 149.665176391601600000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = '1.0'
-                  TabOrder = 13
                 end
                 object EditOperation5: TEdit
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
                   Align = Client
-                  Size.Width = 153.000000000000000000
+                  TabOrder = 14
+                  ReadOnly = True
+                  Text = 'ToSQL'
+                  Size.Width = 149.669647216796900000
                   Size.Height = 56.000000000000000000
                   Size.PlatformDefault = False
-                  Text = 'ToSQL'
-                  ReadOnly = True
-                  TabOrder = 14
                 end
               end
               object Calculate: TButton
                 Align = Top
-                Text = 'Calculate'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 13.000000000000000000
                 Margins.Top = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Size.Width = 457.000000000000000000
+                Position.X = 8.000000000000000000
+                Position.Y = 296.000000000000000000
+                Size.Width = 449.000000000000000000
                 Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 1
+                Text = 'Calculate'
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF0D6EFD
                 OnClick = CalculateClick
               end
               object MemoResultCalculate: TMemo
+                Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+                DataDetectorTypes = []
+                ReadOnly = True
+                TextSettings.Font.Family = 'Consolas'
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.FontColor = xFF212529
                 Align = Top
                 Margins.Top = 4.000000000000000000
-                Size.Width = 457.000000000000000000
+                Position.X = 8.000000000000000000
+                Position.Y = 344.000000000000000000
+                Size.Width = 449.000000000000000000
                 Size.Height = 200.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 2
-                TextSettings.Font.Family = 'Courier New'
-                TextSettings.Font.Size = 11.000000000000000000
-                ReadOnly = True
+                Viewport.Width = 449.000000000000000000
+                Viewport.Height = 200.000000000000000000
               end
             end
           end
@@ -1057,25 +1166,644 @@ object FrameDataTypes: TFrameDataTypes
           item
           end>
         IsSelected = False
-        Size.Width = 274.000000000000000000
+        Size.Width = 275.000000000000000000
         Size.Height = 44.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = ''
-        TabOrder = 2
+        TabOrder = 0
         Text = 'Strings'
         ExplicitSize.cx = 50.000000000000000000
         ExplicitSize.cy = 50.000000000000000000
-        object LblStringsComingSoon: TLabel
+        object GridPanelStringsTab: TGridPanelLayout
           Align = Client
-          Text = 'String type tests — coming soon'
-          TextSettings.Font.Family = 'Segoe UI'
-          TextSettings.Font.Size = 18.000000000000000000
-          TextSettings.FontColor = xFF9E9E9E
-          TextSettings.HorzAlign = Center
-          TextSettings.VertAlign = Center
-          Size.Width = 1100.000000000000000000
-          Size.Height = 612.000000000000000000
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Margins.Bottom = 20.000000000000000000
+          Size.Width = 1060.000000000000000000
+          Size.Height = 568.000000000000000000
           Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 50.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = RectMasks
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = RectStringUtils
+              Row = 0
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          object RectMasks: TRectangle
+            Align = Client
+            Fill.Color = claWhite
+            Size.Width = 530.000000000000000000
+            Size.Height = 568.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Color = xFFDEE2E6
+            object RectMasksHeader: TRectangle
+              Align = Top
+              Fill.Color = xFFF8F9FA
+              Size.Width = 530.000000000000000000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              object LblMasksTitle: TLabel
+                Align = Client
+                Margins.Left = 18.000000000000000000
+                Size.Width = 512.000000000000000000
+                Size.Height = 48.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Masks (TMasks)'
+              end
+            end
+            object ScrollMasks: TVertScrollBox
+              Align = Client
+              Padding.Left = 8.000000000000000000
+              Padding.Top = 4.000000000000000000
+              Padding.Right = 8.000000000000000000
+              Padding.Bottom = 8.000000000000000000
+              Size.Width = 530.000000000000000000
+              Size.Height = 520.000000000000000000
+              Size.PlatformDefault = False
+              ShowScrollBars = False
+              Viewport.Width = 530.000000000000000000
+              Viewport.Height = 520.000000000000000000
+              object LblMaskCPF: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'CPF'
+                TabOrder = 0
+              end
+              object EditMaskCPF: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 1
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskCNPJ: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'CNPJ'
+                TabOrder = 2
+              end
+              object EditMaskCNPJ: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 3
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskCEP: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'CEP'
+                TabOrder = 4
+              end
+              object EditMaskCEP: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 5
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskFone: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Fone'
+                TabOrder = 6
+              end
+              object EditMaskFone: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 7
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskSerial: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Serial'
+                TabOrder = 8
+              end
+              object EditMaskSerial: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 9
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskMonthYear2D: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'MonthYear 2D  (MM/AA)'
+                TabOrder = 10
+              end
+              object EditMaskMonthYear2D: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 11
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskMonthYear4D: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'MonthYear 4D  (MM/AAAA)'
+                TabOrder = 12
+              end
+              object EditMaskMonthYear4D: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 13
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskDate2D: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Date 2D  (DD/MM/AA)'
+                TabOrder = 14
+              end
+              object EditMaskDate2D: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 15
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskDate4D: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Date 4D  (DD/MM/AAAA)'
+                TabOrder = 16
+              end
+              object EditMaskDate4D: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 17
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskTime: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Time  (HH:MM:SS)'
+                TabOrder = 18
+              end
+              object EditMaskTime: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 19
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskMoney: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Money  (R$)'
+                TabOrder = 20
+              end
+              object EditMaskMoney: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 21
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblMaskFloat: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Float  (4 decimais)'
+                TabOrder = 22
+              end
+              object EditMaskFloat: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 23
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+          end
+          object RectStringUtils: TRectangle
+            Align = Client
+            Fill.Color = claWhite
+            Margins.Left = 8.000000000000000000
+            Size.Width = 522.000000000000000000
+            Size.Height = 568.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Color = xFFDEE2E6
+            object RectStringUtilsHeader: TRectangle
+              Align = Top
+              Fill.Color = xFFF8F9FA
+              Size.Width = 522.000000000000000000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              object LblStringUtilsTitle: TLabel
+                Align = Client
+                Margins.Left = 18.000000000000000000
+                Size.Width = 504.000000000000000000
+                Size.Height = 48.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'String Utilities (TString)'
+              end
+            end
+            object ScrollStringUtils: TVertScrollBox
+              Align = Client
+              Padding.Left = 8.000000000000000000
+              Padding.Top = 4.000000000000000000
+              Padding.Right = 8.000000000000000000
+              Padding.Bottom = 8.000000000000000000
+              Size.Width = 522.000000000000000000
+              Size.Height = 520.000000000000000000
+              Size.PlatformDefault = False
+              ShowScrollBars = False
+              Viewport.Width = 522.000000000000000000
+              Viewport.Height = 520.000000000000000000
+              object LblStrOnlyAlpha: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'OnlyAlpha'
+                TabOrder = 0
+              end
+              object EditStrInOnlyAlpha: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 1
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Entrada...'
+                OnChange = EditStrOnlyAlphaChange
+              end
+              object EditStrOutOnlyAlpha: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 2
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrOnlyValues: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'OnlyValues'
+                TabOrder = 3
+              end
+              object EditStrInOnlyValues: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 4
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Entrada...'
+                OnChange = EditStrOnlyValuesChange
+              end
+              object EditStrOutOnlyValues: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 5
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrOnlyNumeric: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'OnlyNumeric'
+                TabOrder = 6
+              end
+              object EditStrInOnlyNumeric: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 7
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Entrada...'
+                OnChange = EditStrOnlyNumericChange
+              end
+              object EditStrOutOnlyNumeric: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 8
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrOnlyAlphaNumeric: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'OnlyAlphaNumeric'
+                TabOrder = 9
+              end
+              object EditStrInOnlyAlphaNumeric: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 10
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Entrada...'
+                OnChange = EditStrOnlyAlphaNumericChange
+              end
+              object EditStrOutOnlyAlphaNumeric: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 11
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrIsNull: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsNull'
+                TabOrder = 12
+              end
+              object EditStrInIsNull: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 13
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: null'
+                OnChange = EditStrIsNullChange
+              end
+              object EditStrOutIsNull: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 14
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrIsZeroFilled: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsZeroFilled'
+                TabOrder = 15
+              end
+              object EditStrInIsZeroFilled: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 16
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 007'
+                OnChange = EditStrIsZeroFilledChange
+              end
+              object EditStrOutIsZeroFilled: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 17
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrIsNumeric: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsNumeric'
+                TabOrder = 18
+              end
+              object EditStrInIsNumeric: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 19
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 42'
+                OnChange = EditStrIsNumericChange
+              end
+              object EditStrOutIsNumeric: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 20
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblStrIsDecimal: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsDecimal'
+                TabOrder = 21
+              end
+              object EditStrInIsDecimal: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 22
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 3.14'
+                OnChange = EditStrIsDecimalChange
+              end
+              object EditStrOutIsDecimal: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 23
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+          end
         end
       end
       object TabDateTime: TTabItem
@@ -1084,25 +1812,476 @@ object FrameDataTypes: TFrameDataTypes
           item
           end>
         IsSelected = False
-        Size.Width = 278.000000000000000000
+        Size.Width = 275.000000000000000000
         Size.Height = 44.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = ''
-        TabOrder = 3
+        TabOrder = 0
         Text = 'DateTime'
         ExplicitSize.cx = 50.000000000000000000
         ExplicitSize.cy = 50.000000000000000000
-        object LblDateTimeComingSoon: TLabel
+        object GridPanelDateTimeTab: TGridPanelLayout
           Align = Client
-          Text = 'DateTime type tests — coming soon'
-          TextSettings.Font.Family = 'Segoe UI'
-          TextSettings.Font.Size = 18.000000000000000000
-          TextSettings.FontColor = xFF9E9E9E
-          TextSettings.HorzAlign = Center
-          TextSettings.VertAlign = Center
-          Size.Width = 1100.000000000000000000
-          Size.Height = 612.000000000000000000
+          Margins.Left = 20.000000000000000000
+          Margins.Top = 20.000000000000000000
+          Margins.Right = 20.000000000000000000
+          Margins.Bottom = 20.000000000000000000
+          Size.Width = 1060.000000000000000000
+          Size.Height = 568.000000000000000000
           Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 50.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = RectDTValidation
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = RectDTCurrent
+              Row = 0
+            end>
+          ExpandStyle = FixedSize
+          RowCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          object RectDTValidation: TRectangle
+            Align = Client
+            Fill.Color = claWhite
+            Size.Width = 530.000000000000000000
+            Size.Height = 568.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Color = xFFDEE2E6
+            object RectDTValidationHeader: TRectangle
+              Align = Top
+              Fill.Color = xFFF8F9FA
+              Size.Width = 530.000000000000000000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              object LblDTValidationTitle: TLabel
+                Align = Client
+                Margins.Left = 18.000000000000000000
+                Size.Width = 512.000000000000000000
+                Size.Height = 48.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Validation and Conversion'
+              end
+            end
+            object ScrollDTValidation: TVertScrollBox
+              Align = Client
+              Padding.Left = 8.000000000000000000
+              Padding.Top = 4.000000000000000000
+              Padding.Right = 8.000000000000000000
+              Padding.Bottom = 8.000000000000000000
+              Size.Width = 530.000000000000000000
+              Size.Height = 520.000000000000000000
+              Size.PlatformDefault = False
+              ShowScrollBars = False
+              Viewport.Width = 530.000000000000000000
+              Viewport.Height = 520.000000000000000000
+              object LblDTIsValidTime: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsValidTime'
+                TabOrder = 0
+              end
+              object EditDTIsValidTime: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 1
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 10:30:59'
+                OnChange = EditDTIsValidTimeChange
+              end
+              object EditDTResIsValidTime: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 2
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTIsValidDate: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsValidDate'
+                TabOrder = 3
+              end
+              object EditDTIsValidDate: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 4
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 2024-12-31'
+                OnChange = EditDTIsValidDateChange
+              end
+              object EditDTResIsValidDate: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 5
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTIsValidDateTime: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsValidDateTime'
+                TabOrder = 6
+              end
+              object EditDTIsValidDateTime: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 7
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 2024-12-31 10:30:59'
+                OnChange = EditDTIsValidDateTimeChange
+              end
+              object EditDTResIsValidDateTime: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 8
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTIsValid: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'IsValid  (any format)'
+                TabOrder = 9
+              end
+              object EditDTIsValid: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 10
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 29/02/2020 10:59 PM'
+                OnChange = EditDTIsValidChange
+              end
+              object EditDTResIsValid: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 11
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTToSQL: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'ToSQL'
+                TabOrder = 12
+              end
+              object EditDTToSQL: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 13
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 31/12/2024 or 10:30:59'
+                OnChange = EditDTToSQLChange
+              end
+              object EditDTResToSQL: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 14
+                ReadOnly = True
+                Margins.Top = 2.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTToArray: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'ToArray'
+                TabOrder = 15
+              end
+              object EditDTToArrayInput: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 16
+                Margins.Top = 4.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TextPrompt = 'Ex: 2024-12-31 10:30:59'
+                OnChange = EditDTToArrayChange
+              end
+              object MemoToArray: TMemo
+                Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+                DataDetectorTypes = []
+                ReadOnly = True
+                TextSettings.Font.Family = 'Courier New'
+                TextSettings.Font.Size = 11.000000000000000000
+                Align = Top
+                Margins.Top = 2.000000000000000000
+                Size.Width = 514.000000000000000000
+                Size.Height = 100.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 17
+                Viewport.Width = 514.000000000000000000
+                Viewport.Height = 100.000000000000000000
+              end
+            end
+          end
+          object RectDTCurrent: TRectangle
+            Align = Client
+            Fill.Color = claWhite
+            Margins.Left = 8.000000000000000000
+            Size.Width = 522.000000000000000000
+            Size.Height = 568.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Color = xFFDEE2E6
+            object RectDTCurrentHeader: TRectangle
+              Align = Top
+              Fill.Color = xFFF8F9FA
+              Size.Width = 522.000000000000000000
+              Size.Height = 48.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+              object LblDTCurrentTitle: TLabel
+                Align = Client
+                Margins.Left = 18.000000000000000000
+                Size.Width = 504.000000000000000000
+                Size.Height = 48.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'Current Values'
+              end
+            end
+            object ScrollDTCurrent: TVertScrollBox
+              Align = Client
+              Padding.Left = 8.000000000000000000
+              Padding.Top = 4.000000000000000000
+              Padding.Right = 8.000000000000000000
+              Padding.Bottom = 8.000000000000000000
+              Size.Width = 522.000000000000000000
+              Size.Height = 520.000000000000000000
+              Size.PlatformDefault = False
+              ShowScrollBars = False
+              Viewport.Width = 522.000000000000000000
+              Viewport.Height = 520.000000000000000000
+              object BtnDTRefresh: TButton
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Text = 'Refresh'
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF0D6EFD
+                OnClick = BtnDTRefreshClick
+              end
+              object LblDTNow: TLabel
+                Align = Top
+                Margins.Top = 12.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'NOW'
+                TabOrder = 1
+              end
+              object EditDTNow: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 2
+                ReadOnly = True
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTDate: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'DATE'
+                TabOrder = 3
+              end
+              object EditDTDate: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 4
+                ReadOnly = True
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTTime: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'TIME'
+                TabOrder = 5
+              end
+              object EditDTTime: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 6
+                ReadOnly = True
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTToday: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'TODAY'
+                TabOrder = 7
+              end
+              object EditDTToday: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 8
+                ReadOnly = True
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTTomorrow: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'TOMORROW'
+                TabOrder = 9
+              end
+              object EditDTTomorrow: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 10
+                ReadOnly = True
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object LblDTYesterday: TLabel
+                Align = Top
+                Margins.Top = 8.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 20.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Size = 13.000000000000000000
+                TextSettings.Font.StyleExt = {00070000000000000004000000}
+                TextSettings.FontColor = xFF212529
+                Text = 'YESTERDAY'
+                TabOrder = 11
+              end
+              object EditDTYesterday: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Top
+                TabOrder = 12
+                ReadOnly = True
+                Margins.Top = 4.000000000000000000
+                Size.Width = 506.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+          end
         end
       end
     end

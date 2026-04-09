@@ -194,8 +194,8 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\Source\Types\Float\Type.Locale.pas"/>
-        <DCCReference Include="..\Source\Helpers\DictionaryHelper\DictionaryHelper.pas"/>
-        <DCCReference Include="..\Source\Helpers\ArrayHelper\ArrayHelper.pas"/>
+        <DCCReference Include="..\Source\Types\Dictionary\Type.Dictionary.Helper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Helper.pas"/>
         <DCCReference Include="..\Source\Types\String\Type.String.pas"/>
         <DCCReference Include="..\Source\Types\Float\Type.Float.pas"/>
         <DCCReference Include="..\Source\Reflection\MimeType.pas"/>

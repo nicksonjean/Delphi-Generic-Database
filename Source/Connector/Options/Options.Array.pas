@@ -75,8 +75,8 @@ uses
   FMX.Grid.Helper,
   FMX.ComboEdit.Helper,
   FMX.ComboBox.Helper,
-  DictionaryHelper,
-  ArrayHelper,
+  &Type.Dictionary.Helper,
+  &Type.&Array.Helper,
   Connection,
   Connector.Types,
   Connector

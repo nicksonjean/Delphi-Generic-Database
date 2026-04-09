@@ -128,6 +128,22 @@ begin
   FActiveDataSet := nil;
   ReportMemoryLeaksOnShutdown := True;
 
+  BtnPNConnect.StyledSettings := BtnPNConnect.StyledSettings - [TStyledSetting.FontColor];
+  PagButtonFirst.StyledSettings := PagButtonFirst.StyledSettings - [TStyledSetting.FontColor];
+  PagButtonPrior.StyledSettings := PagButtonPrior.StyledSettings - [TStyledSetting.FontColor];
+  PagButtonNext.StyledSettings := PagButtonNext.StyledSettings - [TStyledSetting.FontColor];
+  PagButtonLast.StyledSettings := PagButtonLast.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonFirst.StyledSettings := NavButtonFirst.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonPrior.StyledSettings := NavButtonPrior.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonNext.StyledSettings := NavButtonNext.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonLast.StyledSettings := NavButtonLast.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonInsert.StyledSettings := NavButtonInsert.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonDelete.StyledSettings := NavButtonDelete.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonEdit.StyledSettings := NavButtonEdit.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonPost.StyledSettings := NavButtonPost.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonCancel.StyledSettings := NavButtonCancel.StyledSettings - [TStyledSetting.FontColor];
+  NavButtonRefresh.StyledSettings := NavButtonRefresh.StyledSettings - [TStyledSetting.FontColor];
+
   EditPNDatabase.Text :=
     {$IFDEF MSWINDOWS}
     ExtractFilePath(ParamStr(0)) + 'DB.SQLITE';

@@ -14,29 +14,42 @@ object GenericDemoForm: TGenericDemoForm
   DesignerMasterStyle = 0
   object RectBackground: TRectangle
     Align = Client
-    Fill.Color = xFFF0F2F5
+    Fill.Color = xFFF8F9FA
     Stroke.Kind = None
     Size.Width = 1366.000000000000000000
     Size.Height = 768.000000000000000000
     Size.PlatformDefault = False
     object RectHeader: TRectangle
       Align = Top
-      Fill.Color = xFF1E3A5F
+      Fill.Color = xFF0D6EFD
       Stroke.Kind = None
       Size.Width = 1366.000000000000000000
       Size.Height = 60.000000000000000000
       Size.PlatformDefault = False
-      object BtnHamburger: TButton
+      object RectHamburgerSlot: TRectangle
         Align = Left
-        StyleLookup = 'toolbuttonstyle'
+        Fill.Color = xFFF8F9FA
         Size.Width = 60.000000000000000000
         Size.Height = 60.000000000000000000
         Size.PlatformDefault = False
-        Text = #9776
-        TextSettings.Font.Size = 22.000000000000000000
-        TextSettings.FontColor = xFFFFFFFF
-        TabOrder = 0
-        OnClick = BtnHamburgerClick
+        Stroke.Kind = None
+        object LblHamburger: TLabel
+          Align = Client
+          Cursor = crHandPoint
+          HitTest = True
+          Size.Width = 60.000000000000000000
+          Size.Height = 60.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Segoe UI'
+          TextSettings.Font.Size = 22.000000000000000000
+          TextSettings.Font.Style = [fsBold]
+          TextSettings.FontColor = xFF0D6EFD
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Center
+          Text = #9776
+          TabOrder = 0
+          OnClick = BtnHamburgerClick
+        end
       end
       object LayHeaderCenter: TLayout
         Align = Client
@@ -67,8 +80,9 @@ object GenericDemoForm: TGenericDemoForm
           Align = Client
           Text = ''
           TextSettings.Font.Family = 'Segoe UI'
-          TextSettings.Font.Size = 12.000000000000000000
-          TextSettings.FontColor = xFF90CAF9
+          TextSettings.Font.Size = 12.500000000000000000
+          TextSettings.Font.Style = [fsBold]
+          TextSettings.FontColor = xFFE7F1FF
           TextSettings.HorzAlign = Trailing
           TextSettings.VertAlign = Center
           Margins.Right = 16.000000000000000000
@@ -86,7 +100,7 @@ object GenericDemoForm: TGenericDemoForm
       object RectSidebar: TRectangle
         Align = Left
         ClipChildren = True
-        Fill.Color = xFF263238
+        Fill.Color = xFF212529
         Stroke.Kind = None
         Size.Width = 0.000000000000000000
         Size.Height = 708.000000000000000000
@@ -109,7 +123,7 @@ object GenericDemoForm: TGenericDemoForm
         end
         object RectSidebarHeader: TRectangle
           Align = Top
-          Fill.Color = xFF1A272E
+          Fill.Color = xFF212529
           Stroke.Kind = None
           Size.Width = 280.000000000000000000
           Size.Height = 88.000000000000000000
@@ -134,8 +148,8 @@ object GenericDemoForm: TGenericDemoForm
             Align = Top
             Text = 'Demo Suite'
             TextSettings.Font.Family = 'Segoe UI'
-            TextSettings.Font.Size = 11.000000000000000000
-            TextSettings.FontColor = xFF78909C
+            TextSettings.Font.Size = 12.000000000000000000
+            TextSettings.FontColor = xFFADB5BD
             TextSettings.HorzAlign = Leading
             TextSettings.VertAlign = Center
             Margins.Left = 20.000000000000000000
@@ -147,7 +161,7 @@ object GenericDemoForm: TGenericDemoForm
         end
         object RectSidebarDivider: TRectangle
           Align = Top
-          Fill.Color = xFF37474F
+          Fill.Color = xFF495057
           Stroke.Kind = None
           Size.Width = 280.000000000000000000
           Size.Height = 1.000000000000000000
@@ -187,7 +201,7 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Left
                 Text = #9670
                 TextSettings.Font.Size = 16.000000000000000000
-                TextSettings.FontColor = xFF78909C
+                TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
                 Size.Width = 52.000000000000000000
@@ -199,8 +213,8 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Client
                 Text = 'Connection'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFF90A4AE
+                TextSettings.Font.Size = 14.500000000000000000
+                TextSettings.FontColor = xFFF8F9FA
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
@@ -238,7 +252,7 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Left
                 Text = #8652
                 TextSettings.Font.Size = 16.000000000000000000
-                TextSettings.FontColor = xFF78909C
+                TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
                 Size.Width = 52.000000000000000000
@@ -250,8 +264,8 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Client
                 Text = 'Connector'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFF90A4AE
+                TextSettings.Font.Size = 14.500000000000000000
+                TextSettings.FontColor = xFFF8F9FA
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
@@ -290,7 +304,7 @@ object GenericDemoForm: TGenericDemoForm
                 Text = '{}'
                 TextSettings.Font.Size = 14.000000000000000000
                 TextSettings.Font.Style = [fsBold]
-                TextSettings.FontColor = xFF78909C
+                TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
                 Size.Width = 52.000000000000000000
@@ -302,8 +316,8 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Client
                 Text = 'DataTypes'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFF90A4AE
+                TextSettings.Font.Size = 14.500000000000000000
+                TextSettings.FontColor = xFFF8F9FA
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
@@ -341,7 +355,7 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Left
                 Text = #9634
                 TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFF78909C
+                TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
                 Size.Width = 52.000000000000000000
@@ -353,8 +367,8 @@ object GenericDemoForm: TGenericDemoForm
                 Align = Client
                 Text = 'PagNav'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFF90A4AE
+                TextSettings.Font.Size = 14.500000000000000000
+                TextSettings.FontColor = xFFF8F9FA
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
@@ -366,7 +380,7 @@ object GenericDemoForm: TGenericDemoForm
           end
           object RectMenuDivider: TRectangle
             Align = Top
-            Fill.Color = xFF37474F
+            Fill.Color = xFF495057
             Stroke.Kind = None
             Size.Width = 280.000000000000000000
             Size.Height = 1.000000000000000000

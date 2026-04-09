@@ -25,6 +25,7 @@ uses
   EventDriven.Core,
   EventDriven.Notify,
   EventDriven.Key,
+  EventDriven.KeyPress,
   EventDriven.ItemBox,
   EventDriven.ItemView,
   EventDriven.Paint,
@@ -53,6 +54,8 @@ type
 
   TNotifyEventReference = EventDriven.Core.TNotifyEventReference;
   TNofifyKeyEventReference = EventDriven.Key.TNofifyKeyEventReference;
+  TKeyPressEvent = EventDriven.KeyPress.TKeyPressEvent;
+  TNotifyKeyPressEventReference = EventDriven.KeyPress.TNotifyKeyPressEventReference;
   TNotifyItemBoxEventReference = EventDriven.ItemBox.TNotifyItemBoxEventReference;
   TNotifyItemViewEventReference = EventDriven.ItemView.TNotifyItemViewEventReference;
   TNotifyPaintEventReference = EventDriven.Paint.TNotifyPaintEventReference;
@@ -64,8 +67,9 @@ type
 
   TEventComponent = EventDriven.Core.TEventComponent;
 
-function DelegateEvent(Owner: TComponent; Proc: TNotifyEventReference): TNotifyEvent;
-function DelegateKeyEvent(Owner: TComponent; Proc: TNofifyKeyEventReference): TKeyEvent;
+function DelegateEvent        (Owner: TComponent; Proc: TNotifyEventReference):           TNotifyEvent;
+function DelegateKeyEvent     (Owner: TComponent; Proc: TNofifyKeyEventReference):         TKeyEvent;
+function DelegateKeyPressEvent(Owner: TComponent; Proc: TNotifyKeyPressEventReference):    TKeyEvent;
 function DelegatePaintEvent(Owner: TComponent; Proc: TNotifyPaintEventReference): TPaintEvent;
 function DelegateItemBoxEvent(Owner: TComponent; Proc: TNotifyItemBoxEventReference): TItemBoxEvent;
 function DelegateItemViewEvent(Owner: TComponent; Proc: TNotifyItemViewEventReference): TItemViewEvent;
@@ -85,6 +89,11 @@ end;
 function DelegateKeyEvent(Owner: TComponent; Proc: TNofifyKeyEventReference): TKeyEvent;
 begin
   Result := EventDriven.Key.DelegateKeyEvent(Owner, Proc);
+end;
+
+function DelegateKeyPressEvent(Owner: TComponent; Proc: TNotifyKeyPressEventReference): TKeyEvent;
+begin
+  Result := EventDriven.KeyPress.DelegateKeyPressEvent(Owner, Proc);
 end;
 
 function DelegatePaintEvent(Owner: TComponent; Proc: TNotifyPaintEventReference): TPaintEvent;

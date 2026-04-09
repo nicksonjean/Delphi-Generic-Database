@@ -7,7 +7,8 @@ uses
   System.UITypes,
   System.Classes,
   FMX.Edit,
-  FMX.Edit.Suggest.Messages;
+  FMX.Edit.Suggest.Messages,
+  EventDelegate;
 
 type
   TEditHelper = class helper for TEdit
@@ -16,6 +17,7 @@ type
     procedure SetIndex(const Value: Integer);
     procedure SetOnItemChange(const Value: TNotifyEvent);
     function GetItems: TStrings;
+    procedure SetOnKeyPress(const Value: TNotifyKeyPressEventReference);
   public
     procedure SetEditControlColor(AColor: TAlphaColor);
     procedure AssignItems(const S: TStrings);
@@ -27,6 +29,10 @@ type
     property OnItemChange: TNotifyEvent write SetOnItemChange;
     property ItemIndex: Integer read GetIndex write SetIndex;
     property Items: TStrings read GetItems;
+    { OnKeyPress: equivalente FMX do OnKeyPress do VCL.
+      Aceita procedure anônima (Sender: TObject; var KeyChar: WideChar).
+      O bridge instala-se em OnKeyDown internamente — o chamador nunca vê OnKeyDown. }
+    property OnKeyPress: TNotifyKeyPressEventReference write SetOnKeyPress;
   end;
 
 implementation
@@ -95,6 +101,13 @@ end;
 procedure TEditHelper.AssignItems(const S: TStrings);
 begin
   Self.Model.Data['suggestions'] := TValue.From<TStrings>(S);
+end;
+
+procedure TEditHelper.SetOnKeyPress(const Value: TNotifyKeyPressEventReference);
+begin
+  { FMX não expõe OnKeyPress — o bridge intercepta OnKeyDown internamente.
+    Do lado de fora só existe a property OnKeyPress; OnKeyDown não é tocado pelo chamador. }
+  OnKeyDown := TNotifyKeyPressEventWrapper.Create(Self, Value).KeyDownBridge;
 end;
 
 procedure TEditHelper.SetEditControlColor(AColor: TAlphaColor);

@@ -1,6 +1,6 @@
 ﻿  { Classe para Facilitar a Manipulação de TDictionary }
 
-unit DictionaryHelper;
+unit &Type.Dictionary.Helper;
 
 interface
 

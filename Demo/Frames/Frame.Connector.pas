@@ -1,4 +1,4 @@
-unit Frame.Connector;
+﻿unit Frame.Connector;
 
 interface
 
@@ -40,7 +40,6 @@ type
     GridPanelConnector: TGridPanelLayout;
     RectConnectorConfig: TRectangle;
     RectConnConfigHeader: TRectangle;
-    RectConnConfigHeaderFill: TRectangle;
     LblConnConfigTitle: TLabel;
     ScrollConnConfig: TVertScrollBox;
     LblConnEngine: TLabel;
@@ -62,11 +61,12 @@ type
     BtnRunConnector: TButton;
     RectConnectorResults: TRectangle;
     RectResultsHeader: TRectangle;
-    RectResultsHeaderFill: TRectangle;
     LblResultsTitle: TLabel;
     GridPanelResults: TGridPanelLayout;
     GroupBoxCombo: TGroupBox;
     ComboConnResult: TComboBox;
+    RectEditComboContainer: TRectangle;
+    GridPanelEditCombo: TGridPanelLayout;
     GroupBoxEdit: TGroupBox;
     EditConnResult: TEdit;
     GroupBoxComboEdit: TGroupBox;
@@ -102,7 +102,7 @@ uses
   &Type.&Array.Field,
   &Type.&Array.&String,
   &Type.&Array.Variant,
-  DictionaryHelper,
+  &Type.Dictionary.Helper,
   Connection,
   Connector,
   Query,
@@ -119,6 +119,7 @@ begin
   inherited;
   ComboConnEngine.ItemIndex := 0;
   ComboConnDriver.ItemIndex := 0;
+  BtnRunConnector.StyledSettings := BtnRunConnector.StyledSettings - [TStyledSetting.FontColor];
   SetupDefaultSQL;
   // Default database path for SQLite
   EditConnDatabase.Text :=

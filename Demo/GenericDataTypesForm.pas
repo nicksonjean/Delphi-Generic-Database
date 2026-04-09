@@ -117,7 +117,7 @@ var
 implementation
 
 uses
-  DictionaryHelper,
+  &Type.Dictionary.Helper,
   &Type.DateTime,
   &Type.Float,
   &Type.&Array,

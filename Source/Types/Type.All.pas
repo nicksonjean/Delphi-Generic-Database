@@ -20,6 +20,7 @@ uses
   &Type.&String,
   &Type.Float,
   &Type.&Array,
+  &Type.&Array.Helper,
   &Type.&Array.&String,
   &Type.&Array.&String.Helper,
   &Type.&Array.Variant,
@@ -27,7 +28,8 @@ uses
   &Type.&Array.Field,
   &Type.&Array.Field.Helper,
   &Type.&Array.Assoc,
-  &Type.DateTime
+  &Type.DateTime,
+  &Type.Dictionary.Helper
   ;
 
 implementation

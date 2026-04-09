@@ -1,0 +1,4 @@
+Indy TLS via SChannel (sem OpenSSL)
+Fonte: https://github.com/tothpaul/Delphi/tree/master/Indy.SChannel/lib
+Arquivos: Execute.IdSSLSChannel.pas, Execute.SChannel.pas, Execute.WinSSPI.pas
+Copyright (c) Execute SARL — ver comentários nos fontes.

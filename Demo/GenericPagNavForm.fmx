@@ -319,8 +319,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '9'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 8.000000000000000000
-                  YRadius = 8.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object PagButtonPrior: TCornerButton
                   Align = Client
@@ -336,8 +336,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '3'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object PagButtonNext: TCornerButton
                   Align = Client
@@ -353,8 +353,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '4'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object PagButtonLast: TCornerButton
                   Align = Client
@@ -370,8 +370,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = ':'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 8.000000000000000000
-                  YRadius = 8.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
               end
             end
@@ -560,8 +560,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '9'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 8.000000000000000000
-                  YRadius = 8.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonPrior: TCornerButton
                   Align = Client
@@ -576,8 +576,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '3'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonNext: TCornerButton
                   Align = Client
@@ -592,8 +592,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '4'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonLast: TCornerButton
                   Align = Client
@@ -608,8 +608,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = ':'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonInsert: TCornerButton
                   Align = Client
@@ -623,8 +623,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   TabOrder = 9
                   Text = #55357#57251
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonDelete: TCornerButton
                   Align = Client
@@ -640,8 +640,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   TextSettings.Font.Family = 'Impact'
                   TextSettings.Font.Size = 26.000000000000000000
                   TextSettings.Font.StyleExt = {00070000000000000004000000}
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonEdit: TCornerButton
                   Align = Client
@@ -656,8 +656,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = '3'
                   TextSettings.Font.Family = 'Wingdings'
                   TextSettings.Font.Size = 24.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonPost: TCornerButton
                   Align = Client
@@ -673,8 +673,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   TextSettings.Font.Family = 'Wingdings'
                   TextSettings.Font.Size = 26.000000000000000000
                   TextSettings.Font.StyleExt = {00070000000000000004000000}
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonCancel: TCornerButton
                   Align = Client
@@ -689,8 +689,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = #251
                   TextSettings.Font.Family = 'Wingdings'
                   TextSettings.Font.Size = 34.000000000000000000
-                  XRadius = 3.000000000000000000
-                  YRadius = 3.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
                 object NavButtonRefresh: TCornerButton
                   Align = Client
@@ -705,8 +705,8 @@ object GenericPagNavForm: TGenericPagNavForm
                   Text = 'q'
                   TextSettings.Font.Family = 'Webdings'
                   TextSettings.Font.Size = 26.000000000000000000
-                  XRadius = 8.000000000000000000
-                  YRadius = 8.000000000000000000
+                  XRadius = 0.000000000000000000
+                  YRadius = 0.000000000000000000
                 end
               end
             end

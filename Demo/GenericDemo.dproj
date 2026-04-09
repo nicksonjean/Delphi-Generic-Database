@@ -88,7 +88,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>GenericDemo</SanitizedProjectName>
-        <DCC_UnitSearchPath>Frames;modules\.dcp;modules\.dcu;modules;..\Source\Vendor\Neslib.Yaml;..\Source\Vendor\Neslib.Yaml\Neslib;..\Source\Vendor\Neslib;..\Source\Vendor\Neslib.Yaml\Tests\UnitTests\Tests;..\Source\Vendor\Neslib.Yaml\Tests\YamlDump;..\Source\Vendor\DelphiTOML\src;modules\Neslib.Yaml;modules\Neslib.Yaml\Neslib;modules\Neslib;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;modules\DelphiTOML\src;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Config;..\Source\Connection\Config\Core;..\Source\Connection\Config\Mapper;..\Source\Connection\Config\Static;..\Source\Connection\Config\Adapters;..\Source\Connection\Engine\Adapters;..\Source\Connection\Engine\Adapters\dbExpress;..\Source\Connection\Engine\Adapters\dbExpress\Core;..\Source\Connection\Engine\Adapters\dbExpress\Drivers;..\Source\Connection\Engine\Adapters\FireDAC;..\Source\Connection\Engine\Adapters\FireDAC\Core;..\Source\Connection\Engine\Adapters\FireDAC\Drivers;..\Source\Connection\Engine\Adapters\UniDAC;..\Source\Connection\Engine\Adapters\UniDAC\Core;..\Source\Connection\Engine\Adapters\UniDAC\Drivers;..\Source\Connection\Engine\Adapters\ZeOS;..\Source\Connection\Engine\Adapters\ZeOS\Core;..\Source\Connection\Engine\Adapters\ZeOS\Drivers;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\Source\Vendor\Indy\Lib\System;..\Source\Vendor\Indy\Lib\Core;..\Source\Vendor\Indy\Lib\Protocols;..\Source\Vendor\IndySChannel\lib;Frames;modules\.dcp;modules\.dcu;modules;..\Source\Vendor\Neslib.Yaml;..\Source\Vendor\Neslib.Yaml\Neslib;..\Source\Vendor\Neslib;..\Source\Vendor\Neslib.Yaml\Tests\UnitTests\Tests;..\Source\Vendor\Neslib.Yaml\Tests\YamlDump;..\Source\Vendor\DelphiTOML\src;modules\Neslib.Yaml;modules\Neslib.Yaml\Neslib;modules\Neslib;modules\Neslib.Yaml\Tests\UnitTests\Tests;modules\Neslib.Yaml\Tests\YamlDump;modules\DelphiTOML\src;..\Source\Types;..\Source\Types\Array;..\Source\Types\Float;..\Source\Types\String;..\Source\Types\DateTime;..\Source\SmartPointer;..\Source\Connector;..\Source\Connector\Options;..\Source\Connection;..\Source\Connection\Registry;..\Source\Connection\Strategy;..\Source\Connection\Config;..\Source\Connection\Config\Core;..\Source\Connection\Config\Mapper;..\Source\Connection\Config\Static;..\Source\Connection\Config\Adapters;..\Source\Connection\Engine\Adapters;..\Source\Connection\Engine\Adapters\dbExpress;..\Source\Connection\Engine\Adapters\dbExpress\Core;..\Source\Connection\Engine\Adapters\dbExpress\Drivers;..\Source\Connection\Engine\Adapters\FireDAC;..\Source\Connection\Engine\Adapters\FireDAC\Core;..\Source\Connection\Engine\Adapters\FireDAC\Drivers;..\Source\Connection\Engine\Adapters\UniDAC;..\Source\Connection\Engine\Adapters\UniDAC\Core;..\Source\Connection\Engine\Adapters\UniDAC\Drivers;..\Source\Connection\Engine\Adapters\ZeOS;..\Source\Connection\Engine\Adapters\ZeOS\Core;..\Source\Connection\Engine\Adapters\ZeOS\Drivers;..\Source\EventDriven;..\Source\EventDriven\Core;..\Source\EventDriven\Delegates;..\Source\EventDriven\Bindings;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DisableWarningsForUnit>modules\*;..\Source\Vendor\*;TOML.*.pas;ZPlainProxyDriverInternalProxy.pas;$(DCC_DisableWarningsForUnit)</DCC_DisableWarningsForUnit>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
@@ -206,18 +206,19 @@
         <DCCReference Include="..\Source\Helpers\FMX.ListBox\FMX.ListBox.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ListView\FMX.ListView.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.StringGrid\FMX.StringGrid.Helper.pas"/>
-        <DCCReference Include="..\Source\Helpers\Masks\Masks.pas"/>
+        <DCCReference Include="..\Source\Classes\Masks\Masks.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.Edit\FMX.Edit.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Extension.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.ComboBox\FMX.ComboBox.Helper.pas"/>
         <DCCReference Include="..\Source\Helpers\FMX.Objects\FMX.Objects.Helper.pas"/>
-        <DCCReference Include="..\Source\Helpers\DictionaryHelper\DictionaryHelper.pas"/>
-        <DCCReference Include="..\Source\Helpers\ArrayHelper\ArrayHelper.pas"/>
-        <DCCReference Include="..\Source\Helpers\EventDelegate\EventDelegate.pas"/>
+        <DCCReference Include="..\Source\Types\Dictionary\Type.Dictionary.Helper.pas"/>
+        <DCCReference Include="..\Source\Types\Array\Type.Array.Helper.pas"/>
+        <DCCReference Include="..\Source\Classes\EventDelegate\EventDelegate.pas"/>
         <DCCReference Include="..\Source\Reflection\MimeType.pas"/>
         <DCCReference Include="..\Source\Reflection\RTTI.pas"/>
         <DCCReference Include="..\Source\EventDriven\EventDriven.All.pas"/>
+        <DCCReference Include="..\Source\Classes\Mailer\Mail.SChannel.pas"/>
         <DCCReference Include="..\Source\Types\Type.All.pas"/>
         <DCCReference Include="..\Source\SmartPointer\SmartPointer.All.pas"/>
         <DCCReference Include="..\Source\Connection\Connection.All.pas"/>

@@ -42,6 +42,7 @@ contains
   Type.String in '..\Types\String\Type.String.pas',
   Type.Float in '..\Types\Float\Type.Float.pas',
   Type.Array in '..\Types\Array\Type.Array.pas',
+  Type.Array.Helper in '..\Types\Array\Type.Array.Helper.pas',
   Type.Array.String in '..\Types\Array\Type.Array.String.pas',
   Type.Array.String.Helper in '..\Types\Array\Type.Array.String.Helper.pas',
   Type.Array.Variant in '..\Types\Array\Type.Array.Variant.pas',
@@ -50,6 +51,7 @@ contains
   Type.Array.Field.Helper in '..\Types\Array\Type.Array.Field.Helper.pas',
   Type.Array.Assoc in '..\Types\Array\Type.Array.Assoc.pas',
   Type.DateTime in '..\Types\DateTime\Type.DateTime.pas',
+  Type.Dictionary.Helper in '..\Types\Dictionary\Type.Dictionary.Helper.pas',
   Type.All in '..\Types\Type.All.pas';
 
 end.

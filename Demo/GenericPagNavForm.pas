@@ -1,4 +1,4 @@
-unit GenericPagNavForm;
+﻿unit GenericPagNavForm;
 
 interface
 
@@ -81,7 +81,7 @@ var
 implementation
 
 uses
-  DictionaryHelper,
+  &Type.Dictionary.Helper,
   &Type.DateTime,
   &Type.Float,
   &Type.&Array,

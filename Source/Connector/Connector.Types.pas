@@ -1,4 +1,4 @@
-unit Connector.Types;
+﻿unit Connector.Types;
 
 {
   Tipos e helpers partilhados pelo Connector e pelas units Options* (TValueObject,
@@ -78,7 +78,7 @@ implementation
 
 uses
   System.StrUtils,
-  DictionaryHelper,
+  &Type.Dictionary.Helper,
   &Type.&Array.Variant,
   RTTI,
   FMX.ListView.Extension,

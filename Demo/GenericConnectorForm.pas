@@ -1,4 +1,4 @@
-unit GenericConnectorForm;
+﻿unit GenericConnectorForm;
 
 interface
 
@@ -166,7 +166,7 @@ uses
   &Type.&Array.Field,
   &Type.&Array.&String,
   &Type.&Array.Variant,
-  DictionaryHelper,
+  &Type.Dictionary.Helper,
   Connection,
   Connector,
   Query,

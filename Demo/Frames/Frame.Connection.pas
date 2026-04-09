@@ -30,45 +30,49 @@ type
     GridPanelMain: TGridPanelLayout;
     RectConnectionParams: TRectangle;
     RectParamsHeader: TRectangle;
-    RectParamsHeaderFill: TRectangle;
     LblParamsTitle: TLabel;
     ScrollParams: TVertScrollBox;
+    GridEngineDriver: TGridPanelLayout;
     LblEngine: TLabel;
-    ComboEngine: TComboBox;
     LblDriver: TLabel;
+    ComboEngine: TComboBox;
     ComboDriver: TComboBox;
+    GridHostPort: TGridPanelLayout;
     LblHost: TLabel;
-    EditHost: TEdit;
     LblPort: TLabel;
+    EditHost: TEdit;
     EditPort: TEdit;
     LblDatabase: TLabel;
+    LayDatabaseRow: TLayout;
     EditDatabase: TEdit;
+    BtnBrowseFile: TButton;
     LblUsername: TLabel;
     EditUsername: TEdit;
     LblPassword: TLabel;
     EditPassword: TEdit;
     LblSchema: TLabel;
     EditSchema: TEdit;
-    LayButtons: TLayout;
-    BtnTestConnection: TButton;
-    BtnBrowseFile: TButton;
-    LayConfigActions: TLayout;
+    GridPanelConnActions: TGridPanelLayout;
     BtnLoadConfig: TButton;
+    BtnTestConnection: TButton;
     BtnSaveConfig: TButton;
     RectConfigRight: TRectangle;
-    RectRightHeader: TRectangle;
-    RectRightHeaderFill: TRectangle;
+    GridPanelRight: TGridPanelLayout;
+    RectCardPreview: TRectangle;
+    RectPreviewHeader: TRectangle;
     LblRightTitle: TLabel;
     ComboConfigFormat: TComboBox;
-    GridPanelRight: TGridPanelLayout;
-    RectConfigPreview: TRectangle;
     MemoConfigPreview: TMemo;
-    RectStatusAndLog: TRectangle;
+    RectCardLog: TRectangle;
     RectLogHeader: TRectangle;
+    LayLogHeaderInner: TLayout;
     LblLogTitle: TLabel;
+    LayLogHeaderRight: TLayout;
+    BtnClearLog: TButton;
+    RectStatusBadge: TRectangle;
+    LayBadgeInner: TLayout;
     RectStatusIndicator: TRectangle;
     LblConnectionStatus: TLabel;
-    BtnClearLog: TButton;
     MemoConnectionLog: TMemo;
     procedure ComboEngineChange(Sender: TObject);
     procedure ComboDriverChange(Sender: TObject);
@@ -98,6 +102,7 @@ type
 implementation
 
 uses
+  System.Character,
   Connection,
   Connection.Types,
   SmartPointer.Intf,
@@ -106,9 +111,10 @@ uses
 {$R *.fmx}
 
 const
-  COLOR_CONNECTED    = $FF4CAF50;
-  COLOR_DISCONNECTED = $FF9E9E9E;
-  COLOR_ERROR        = $FFF44336;
+  COLOR_CONNECTED    = $FF198754;
+  COLOR_DISCONNECTED = $FF6C757D;
+  COLOR_ERROR        = $FFDC3545;
+  COLOR_BS_PRIMARY   = $FF0D6EFD;
 
 { TFrameConnection }
 
@@ -117,6 +123,23 @@ begin
   inherited;
   ComboEngine.ItemIndex := 0;
   ComboDriver.ItemIndex := 0;
+  BtnTestConnection.StyledSettings := BtnTestConnection.StyledSettings - [TStyledSetting.FontColor];
+  BtnTestConnection.TextSettings.FontColor := COLOR_BS_PRIMARY;
+  BtnBrowseFile.StyledSettings := BtnBrowseFile.StyledSettings -
+    [TStyledSetting.FontColor, TStyledSetting.Family, TStyledSetting.Size];
+  BtnBrowseFile.Text := WideChar($E8E5);
+  BtnBrowseFile.TextSettings.Font.Family := 'Segoe MDL2 Assets';
+  BtnBrowseFile.TextSettings.Font.Size := 18;
+  BtnBrowseFile.TextSettings.FontColor := COLOR_BS_PRIMARY;
+  BtnLoadConfig.StyledSettings := BtnLoadConfig.StyledSettings - [TStyledSetting.FontColor];
+  BtnSaveConfig.StyledSettings := BtnSaveConfig.StyledSettings - [TStyledSetting.FontColor];
+  BtnClearLog.StyledSettings := BtnClearLog.StyledSettings - [TStyledSetting.FontColor];
+  BtnClearLog.TextSettings.FontColor := COLOR_BS_PRIMARY;
+  LblConnectionStatus.StyledSettings := LblConnectionStatus.StyledSettings - [TStyledSetting.FontColor];
+  BtnLoadConfig.Text := Char.ConvertFromUtf32($1F4C2) + '  Load Config';
+  BtnTestConnection.Text := Char.ConvertFromUtf32($1F50C) + '  Test Connection';
+  BtnSaveConfig.Text := Char.ConvertFromUtf32($1F4BE) + '  Save Config';
+  BtnClearLog.Text := Char.ConvertFromUtf32($1F5D1) + '  Clear';
   UpdateDefaultPort;
   UpdateDatabaseLabel;
   UpdateConfigPreview;

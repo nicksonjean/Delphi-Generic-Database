@@ -1,4 +1,4 @@
-unit Frame.DataTypes;
+﻿unit Frame.DataTypes;
 
 interface
 
@@ -36,7 +36,6 @@ type
     GridPanelArrayTab: TGridPanelLayout;
     RectArraySelectors: TRectangle;
     RectArraySelectHeader: TRectangle;
-    RectArraySelectHeaderFill: TRectangle;
     LblArraySelectTitle: TLabel;
     GridPanelArraySelectors: TGridPanelLayout;
     GroupBoxArrayString: TGroupBox;
@@ -48,7 +47,6 @@ type
     MemoDataTypeArrayResult: TMemo;
     RectArrayConfig: TRectangle;
     RectArrayConfigHeader: TRectangle;
-    RectArrayConfigHeaderFill: TRectangle;
     LblArrayConfigTitle: TLabel;
     ScrollArrayConfig: TVertScrollBox;
     LblArrayHost: TLabel;
@@ -63,7 +61,9 @@ type
     EditArrayPassword: TEdit;
     TabFloats: TTabItem;
     GridPanelFloatsTab: TGridPanelLayout;
-    GroupBoxFloatFormat: TGroupBox;
+    RectFloatFormat: TRectangle;
+    RectFloatFormatHeader: TRectangle;
+    LblFloatFormatTitle: TLabel;
     GridPanelFloatFormat: TGridPanelLayout;
     LayoutFloatTest1: TLayout;
     EditLength1: TEdit;
@@ -88,7 +88,9 @@ type
     FormatExplicit: TButton;
     FormatImplicit: TButton;
     MemoResultFormat: TMemo;
-    GroupBoxFloatCalculate: TGroupBox;
+    RectFloatCalculate: TRectangle;
+    RectFloatCalcHeader: TRectangle;
+    LblFloatCalcTitle: TLabel;
     ScrollFloatCalc: TVertScrollBox;
     GridPanelFloatCalcInputs: TGridPanelLayout;
     EditCalculate1: TEdit;
@@ -109,20 +111,133 @@ type
     Calculate: TButton;
     MemoResultCalculate: TMemo;
     TabStrings: TTabItem;
-    LblStringsComingSoon: TLabel;
+    GridPanelStringsTab: TGridPanelLayout;
+    RectMasks: TRectangle;
+    RectMasksHeader: TRectangle;
+    LblMasksTitle: TLabel;
+    ScrollMasks: TVertScrollBox;
+    LblMaskCPF: TLabel;
+    EditMaskCPF: TEdit;
+    LblMaskCNPJ: TLabel;
+    EditMaskCNPJ: TEdit;
+    LblMaskCEP: TLabel;
+    EditMaskCEP: TEdit;
+    LblMaskFone: TLabel;
+    EditMaskFone: TEdit;
+    LblMaskSerial: TLabel;
+    EditMaskSerial: TEdit;
+    LblMaskMonthYear2D: TLabel;
+    EditMaskMonthYear2D: TEdit;
+    LblMaskMonthYear4D: TLabel;
+    EditMaskMonthYear4D: TEdit;
+    LblMaskDate2D: TLabel;
+    EditMaskDate2D: TEdit;
+    LblMaskDate4D: TLabel;
+    EditMaskDate4D: TEdit;
+    LblMaskTime: TLabel;
+    EditMaskTime: TEdit;
+    LblMaskMoney: TLabel;
+    EditMaskMoney: TEdit;
+    LblMaskFloat: TLabel;
+    EditMaskFloat: TEdit;
+    RectStringUtils: TRectangle;
+    RectStringUtilsHeader: TRectangle;
+    LblStringUtilsTitle: TLabel;
+    ScrollStringUtils: TVertScrollBox;
+    LblStrOnlyAlpha: TLabel;
+    EditStrInOnlyAlpha: TEdit;
+    EditStrOutOnlyAlpha: TEdit;
+    LblStrOnlyValues: TLabel;
+    EditStrInOnlyValues: TEdit;
+    EditStrOutOnlyValues: TEdit;
+    LblStrOnlyNumeric: TLabel;
+    EditStrInOnlyNumeric: TEdit;
+    EditStrOutOnlyNumeric: TEdit;
+    LblStrOnlyAlphaNumeric: TLabel;
+    EditStrInOnlyAlphaNumeric: TEdit;
+    EditStrOutOnlyAlphaNumeric: TEdit;
+    LblStrIsNull: TLabel;
+    EditStrInIsNull: TEdit;
+    EditStrOutIsNull: TEdit;
+    LblStrIsZeroFilled: TLabel;
+    EditStrInIsZeroFilled: TEdit;
+    EditStrOutIsZeroFilled: TEdit;
+    LblStrIsNumeric: TLabel;
+    EditStrInIsNumeric: TEdit;
+    EditStrOutIsNumeric: TEdit;
+    LblStrIsDecimal: TLabel;
+    EditStrInIsDecimal: TEdit;
+    EditStrOutIsDecimal: TEdit;
     TabDateTime: TTabItem;
-    LblDateTimeComingSoon: TLabel;
+    GridPanelDateTimeTab: TGridPanelLayout;
+    RectDTValidation: TRectangle;
+    RectDTValidationHeader: TRectangle;
+    LblDTValidationTitle: TLabel;
+    ScrollDTValidation: TVertScrollBox;
+    LblDTIsValidTime: TLabel;
+    EditDTIsValidTime: TEdit;
+    EditDTResIsValidTime: TEdit;
+    LblDTIsValidDate: TLabel;
+    EditDTIsValidDate: TEdit;
+    EditDTResIsValidDate: TEdit;
+    LblDTIsValidDateTime: TLabel;
+    EditDTIsValidDateTime: TEdit;
+    EditDTResIsValidDateTime: TEdit;
+    LblDTIsValid: TLabel;
+    EditDTIsValid: TEdit;
+    EditDTResIsValid: TEdit;
+    LblDTToSQL: TLabel;
+    EditDTToSQL: TEdit;
+    EditDTResToSQL: TEdit;
+    LblDTToArray: TLabel;
+    EditDTToArrayInput: TEdit;
+    MemoToArray: TMemo;
+    RectDTCurrent: TRectangle;
+    RectDTCurrentHeader: TRectangle;
+    LblDTCurrentTitle: TLabel;
+    ScrollDTCurrent: TVertScrollBox;
+    BtnDTRefresh: TButton;
+    LblDTNow: TLabel;
+    EditDTNow: TEdit;
+    LblDTDate: TLabel;
+    EditDTDate: TEdit;
+    LblDTTime: TLabel;
+    EditDTTime: TEdit;
+    LblDTToday: TLabel;
+    EditDTToday: TEdit;
+    LblDTTomorrow: TLabel;
+    EditDTTomorrow: TEdit;
+    LblDTYesterday: TLabel;
+    EditDTYesterday: TEdit;
+    Button1: TButton;
     procedure ComboBoxDataTypeTArrayStringChange(Sender: TObject);
     procedure ComboBoxDataTypeTArrayVariantChange(Sender: TObject);
     procedure ComboBoxDataTypeTArrayFieldChange(Sender: TObject);
     procedure FormatExplicitClick(Sender: TObject);
     procedure FormatImplicitClick(Sender: TObject);
     procedure CalculateClick(Sender: TObject);
+    procedure EditStrOnlyAlphaChange(Sender: TObject);
+    procedure EditStrOnlyValuesChange(Sender: TObject);
+    procedure EditStrOnlyNumericChange(Sender: TObject);
+    procedure EditStrOnlyAlphaNumericChange(Sender: TObject);
+    procedure EditStrIsNullChange(Sender: TObject);
+    procedure EditStrIsZeroFilledChange(Sender: TObject);
+    procedure EditStrIsNumericChange(Sender: TObject);
+    procedure EditStrIsDecimalChange(Sender: TObject);
+    procedure EditDTIsValidTimeChange(Sender: TObject);
+    procedure EditDTIsValidDateChange(Sender: TObject);
+    procedure EditDTIsValidDateTimeChange(Sender: TObject);
+    procedure EditDTIsValidChange(Sender: TObject);
+    procedure EditDTToSQLChange(Sender: TObject);
+    procedure EditDTToArrayChange(Sender: TObject);
+    procedure BtnDTRefreshClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     function GetDBConnection: TConnection;
     function ArrayStringTest(const AMethodName: String): String;
     function ArrayVariantTest(const AMethodName: String): String;
     function ArrayFieldTest(const AMethodName: String): String;
+    procedure SendEmail;
   public
     constructor Create(AOwner: TComponent); override;
   end;
@@ -130,9 +245,10 @@ type
 implementation
 
 uses
-  DictionaryHelper,
+  &Type.Dictionary.Helper,
   &Type.DateTime,
   &Type.Float,
+  &Type.&String,
   &Type.&Array,
   &Type.&Array.&String,
   &Type.&Array.&String.Helper,
@@ -143,7 +259,11 @@ uses
   &Type.&Array.Assoc,
   Connection.Types,
   Query,
-  QueryBuilder;
+  QueryBuilder,
+  Masks,
+  Mail.SChannel,
+  IdExplicitTLSClientServerBase
+  ;
 
 {$R *.fmx}
 
@@ -156,6 +276,22 @@ constructor TFrameDataTypes.Create(AOwner: TComponent);
 begin
   inherited;
   ReportMemoryLeaksOnShutdown := True;
+  FormatExplicit.StyledSettings := FormatExplicit.StyledSettings - [TStyledSetting.FontColor];
+  FormatImplicit.StyledSettings := FormatImplicit.StyledSettings - [TStyledSetting.FontColor];
+  Calculate.StyledSettings := Calculate.StyledSettings - [TStyledSetting.FontColor];
+  // Máscaras — setup completo (filtro + máscara + propriedades) via TMasks
+  TMasks.SetupCPF(EditMaskCPF);
+  TMasks.SetupCNPJ(EditMaskCNPJ);
+  TMasks.SetupCEP(EditMaskCEP);
+  TMasks.SetupFone(EditMaskFone);
+  TMasks.SetupSerial(EditMaskSerial);
+  TMasks.SetupMonthYear2D(EditMaskMonthYear2D);
+  TMasks.SetupMonthYear4D(EditMaskMonthYear4D);
+  TMasks.SetupDate2D(EditMaskDate2D);
+  TMasks.SetupDate4D(EditMaskDate4D);
+  TMasks.SetupTime(EditMaskTime);
+  TMasks.SetupMoney(EditMaskMoney);
+  TMasks.SetupFloat(EditMaskFloat);
 end;
 
 function TFrameDataTypes.GetDBConnection: TConnection;
@@ -449,6 +585,137 @@ begin
     'ToSQL:      ' + TFloat.ToString(EditCalculate5.Text) + ' * ' + TFloat.ToString(EditAmount5.Text) +
     ' | Truncate: ' + TFloat.ToSQL(FloatToStr(TFloat.ToCurrency(EditCalculate5.Text) * TFloat.ToCurrency(EditAmount5.Text)), 4, TResultMode.Truncate) +
     ' | Round: '   + TFloat.ToSQL(FloatToStr(TFloat.ToCurrency(EditCalculate5.Text) * TFloat.ToCurrency(EditAmount5.Text)), 4, TResultMode.Round));
+end;
+
+{ TString Utilities }
+
+procedure TFrameDataTypes.EditStrOnlyAlphaChange(Sender: TObject);
+begin
+  EditStrOutOnlyAlpha.Text := TString.OnlyAlpha(EditStrInOnlyAlpha.Text);
+end;
+
+procedure TFrameDataTypes.EditStrOnlyValuesChange(Sender: TObject);
+begin
+  EditStrOutOnlyValues.Text := TString.OnlyValues(EditStrInOnlyValues.Text);
+end;
+
+procedure TFrameDataTypes.EditStrOnlyNumericChange(Sender: TObject);
+begin
+  EditStrOutOnlyNumeric.Text := TString.OnlyNumeric(EditStrInOnlyNumeric.Text);
+end;
+
+procedure TFrameDataTypes.EditStrOnlyAlphaNumericChange(Sender: TObject);
+begin
+  EditStrOutOnlyAlphaNumeric.Text := TString.OnlyAlphaNumeric(EditStrInOnlyAlphaNumeric.Text);
+end;
+
+procedure TFrameDataTypes.EditStrIsNullChange(Sender: TObject);
+begin
+  EditStrOutIsNull.Text := BoolToStr(TString.IsNull(EditStrInIsNull.Text), True);
+end;
+
+procedure TFrameDataTypes.EditStrIsZeroFilledChange(Sender: TObject);
+begin
+  EditStrOutIsZeroFilled.Text := BoolToStr(TString.IsZeroFilled(EditStrInIsZeroFilled.Text), True);
+end;
+
+procedure TFrameDataTypes.EditStrIsNumericChange(Sender: TObject);
+begin
+  EditStrOutIsNumeric.Text := BoolToStr(TString.IsNumeric(EditStrInIsNumeric.Text), True);
+end;
+
+procedure TFrameDataTypes.EditStrIsDecimalChange(Sender: TObject);
+begin
+  EditStrOutIsDecimal.Text := BoolToStr(TString.IsDecimal(EditStrInIsDecimal.Text), True);
+end;
+
+{ DateTime }
+
+procedure TFrameDataTypes.EditDTIsValidTimeChange(Sender: TObject);
+begin
+  EditDTResIsValidTime.Text := BoolToStr(TTimeDate.IsValidTime(EditDTIsValidTime.Text), True);
+end;
+
+procedure TFrameDataTypes.EditDTIsValidDateChange(Sender: TObject);
+begin
+  EditDTResIsValidDate.Text := BoolToStr(TTimeDate.IsValidDate(EditDTIsValidDate.Text), True);
+end;
+
+procedure TFrameDataTypes.EditDTIsValidDateTimeChange(Sender: TObject);
+begin
+  EditDTResIsValidDateTime.Text := BoolToStr(TTimeDate.IsValidDateTime(EditDTIsValidDateTime.Text), True);
+end;
+
+procedure TFrameDataTypes.EditDTIsValidChange(Sender: TObject);
+begin
+  EditDTResIsValid.Text := BoolToStr(TTimeDate.IsValid(EditDTIsValid.Text), True);
+end;
+
+procedure TFrameDataTypes.EditDTToSQLChange(Sender: TObject);
+begin
+  EditDTResToSQL.Text := TTimeDate.ToSQL(EditDTToSQL.Text);
+end;
+
+procedure TFrameDataTypes.EditDTToArrayChange(Sender: TObject);
+var
+  Arr: TArrayVariant;
+begin
+  MemoToArray.Lines.Clear;
+  if EditDTToArrayInput.Text = '' then
+    Exit;
+  Arr := TTimeDate.ToArray(EditDTToArrayInput.Text);
+  try
+    MemoToArray.Text := Arr.ToList(True);
+  finally
+    FreeAndNil(Arr);
+  end;
+end;
+
+procedure TFrameDataTypes.BtnDTRefreshClick(Sender: TObject);
+begin
+  EditDTNow.Text       := FormatDateTime('yyyy-mm-dd hh:nn:ss', Now);
+  EditDTDate.Text      := FormatDateTime('yyyy-mm-dd', Date);
+  EditDTTime.Text      := FormatDateTime('hh:nn:ss', Time);
+  EditDTToday.Text     := FormatDateTime('yyyy-mm-dd', Date);
+  EditDTTomorrow.Text  := FormatDateTime('yyyy-mm-dd', Date + 1);
+  EditDTYesterday.Text := FormatDateTime('yyyy-mm-dd', Date - 1);
+end;
+
+procedure TFrameDataTypes.Button1Click(Sender: TObject);
+begin
+  Self.SendEmail;
+end;
+
+procedure TFrameDataTypes.SendEmail;
+var
+  Config: TMailConfig;
+  Sender: TMailSender;
+  Mail: TMailMessage;
+begin
+  Config.Host := 'smtp.gmail.com';
+  Config.Port := 587;
+  Config.Username := 'nickson.jeanmerson@gmail.com';
+  Config.Password := ''; // Use Senha de App
+  Config.FromName := 'Nickson Jeanmerson';
+  Config.FromEmail := 'nickson.jeanmerson@gmail.com';
+  Config.UseTLS := utUseExplicitTLS; // 587
+
+  Sender := TMailSender.Create(Config);
+  Mail := TMailMessage.Create;
+  try
+    Mail.AddRecipient('nickson.jeanmerson@email.com');
+    Mail.Subject := 'Teste com SChannel';
+    Mail.Body := '<b>Email enviado sem OpenSSL</b>';
+    Mail.IsHTML := True;
+
+//    Mail.AddAttachment('C:\arquivo.pdf');
+
+    Sender.Send(Mail);
+
+  finally
+    Mail.Free;
+    Sender.Free;
+  end;
 end;
 
 end.

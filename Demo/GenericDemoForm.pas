@@ -26,7 +26,8 @@ type
   TGenericDemoForm = class(TForm)
     RectBackground: TRectangle;
     RectHeader: TRectangle;
-    BtnHamburger: TButton;
+    RectHamburgerSlot: TRectangle;
+    LblHamburger: TLabel;
     LayHeaderCenter: TLayout;
     LblAppTitle: TLabel;
     LayHeaderRight: TLayout;
@@ -82,6 +83,7 @@ type
       ALblText: TLabel;
       AActive: Boolean);
     procedure CloseSidebarIfOpen;
+    procedure ApplyWindowsTextTheming;
   public
   end;
 
@@ -100,14 +102,41 @@ uses
 
 const
   SIDEBAR_WIDTH = 280;
+  { Bootstrap-like dark navbar on sidebar }
   COLOR_MENU_ACTIVE_ICON   = $FFFFFFFF;
-  COLOR_MENU_INACTIVE_ICON = $FF78909C;
   COLOR_MENU_ACTIVE_TEXT   = $FFFFFFFF;
-  COLOR_MENU_INACTIVE_TEXT = $FF90A4AE;
-  COLOR_MENU_ACTIVE_BG     = $FF1E3A5F;
+  COLOR_MENU_ACTIVE_BG     = $FF0D6EFD;
+  COLOR_MENU_INACTIVE_ICON = $FFADB5BD;
+  COLOR_MENU_INACTIVE_TEXT = $FFF8F9FA;
   COLOR_MENU_INACTIVE_BG   = $00000000;
 
 { TGenericDemoForm }
+
+procedure TGenericDemoForm.ApplyWindowsTextTheming;
+  procedure UnstickFontColor(const AControl: TControl);
+  begin
+    if AControl is TLabel then
+      TLabel(AControl).StyledSettings :=
+        TLabel(AControl).StyledSettings - [TStyledSetting.FontColor];
+    if AControl is TButton then
+      TButton(AControl).StyledSettings :=
+        TButton(AControl).StyledSettings - [TStyledSetting.FontColor];
+  end;
+begin
+  UnstickFontColor(LblAppTitle);
+  UnstickFontColor(LblSectionName);
+  UnstickFontColor(LblHamburger);
+  UnstickFontColor(LblSidebarTitle);
+  UnstickFontColor(LblSidebarSubtitle);
+  UnstickFontColor(LblMenuConnectionIcon);
+  UnstickFontColor(LblMenuConnectionText);
+  UnstickFontColor(LblMenuConnectorIcon);
+  UnstickFontColor(LblMenuConnectorText);
+  UnstickFontColor(LblMenuDataTypesIcon);
+  UnstickFontColor(LblMenuDataTypesText);
+  UnstickFontColor(LblMenuPagNavIcon);
+  UnstickFontColor(LblMenuPagNavText);
+end;
 
 procedure TGenericDemoForm.FormCreate(Sender: TObject);
 begin
@@ -115,6 +144,7 @@ begin
   FActiveSection := msNone;
   FActiveFrame := nil;
   ReportMemoryLeaksOnShutdown := True;
+  ApplyWindowsTextTheming;
   NavigateTo(msConnection);
 end;
 
@@ -160,7 +190,7 @@ procedure TGenericDemoForm.SetMenuItemActive(
 var
   LBgColor: TAlphaColor;
 begin
-  ARectActive.Visible := AActive;
+  ARectActive.Visible := False;
   if AActive then
   begin
     ALblIcon.TextSettings.FontColor := COLOR_MENU_ACTIVE_ICON;
