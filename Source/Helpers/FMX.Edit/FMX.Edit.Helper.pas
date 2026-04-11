@@ -8,6 +8,7 @@ uses
   System.Classes,
   FMX.Edit,
   FMX.Edit.Suggest.Messages,
+  FMX.Presentation.Messages,
   EventDelegate;
 
 type
@@ -18,6 +19,7 @@ type
     procedure SetOnItemChange(const Value: TNotifyEvent);
     function GetItems: TStrings;
     procedure SetOnKeyPress(const Value: TNotifyKeyPressEventReference);
+    procedure SetExtension(const Value: Boolean);
   public
     procedure SetEditControlColor(AColor: TAlphaColor);
     procedure AssignItems(const S: TStrings);
@@ -33,6 +35,9 @@ type
       Aceita procedure anônima (Sender: TObject; var KeyChar: WideChar).
       O bridge instala-se em OnKeyDown internamente — o chamador nunca vê OnKeyDown. }
     property OnKeyPress: TNotifyKeyPressEventReference write SetOnKeyPress;
+    { Extension: habilita/desabilita o dropdown de sugestões para este componente.
+      Por padrão False — precisa ser explicitamente ativado por quem usar o Connector. }
+    property Extension: Boolean write SetExtension;
   end;
 
 implementation
@@ -108,6 +113,12 @@ begin
   { FMX não expõe OnKeyPress — o bridge intercepta OnKeyDown internamente.
     Do lado de fora só existe a property OnKeyPress; OnKeyDown não é tocado pelo chamador. }
   OnKeyDown := TNotifyKeyPressEventWrapper.Create(Self, Value).KeyDownBridge;
+end;
+
+procedure TEditHelper.SetExtension(const Value: Boolean);
+begin
+  if HasPresentationProxy then
+    PresentationProxy.SendMessage<Boolean>(PM_SET_EXTENSION, Value);
 end;
 
 procedure TEditHelper.SetEditControlColor(AColor: TAlphaColor);

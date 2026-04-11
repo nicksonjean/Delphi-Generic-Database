@@ -16,6 +16,7 @@ uses
   FMX.Controls.Model,
   FMX.Presentation.Factory,
   FMX.Objects,
+  FMX.Edit.Suggest.Messages,
   EventDelegate;
 
 implementation
@@ -79,14 +80,22 @@ const
   HookTag  = 'DGD.ComboEdit.DropBtnHooked';
 var
   PrevClick: TNotifyEvent;
+  Active: Boolean;
 begin
+  Active := (PresentedControl <> nil) and
+            (PresentedControl.TagString = EXT_TAG);
+
   // Create the button once; survive repeated ApplyStyle calls.
   if FDropBtn = nil then
   begin
     FDropBtn := TButton.Create(Self);
     FDropBtn.Stored   := False;
     FDropBtn.Parent   := Self;
+    FDropBtn.Visible  := False; { hidden until Extension := True }
   end;
+
+  FDropBtn.Visible     := Active;
+  if not Active then Exit;
 
   FDropBtn.Cursor      := crArrow;
   FDropBtn.Width       := BtnWidth;

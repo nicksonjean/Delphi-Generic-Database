@@ -107,9 +107,14 @@ begin
       if Conn.Connected then Conn.Connected := False;
       Conn.Close;
     except
-      { silencioso no destrutor }
     end;
-    FreeAndNil(FConnection);
+    { TFDConnection.Destroy pode lançar durante limpeza do pool interno do FireDAC.
+      Capturamos silenciosamente para não impedir a liberação de FConfigurators e
+      do próprio TFireDACConnectionStrategy (evita o vazamento em cascata). }
+    try
+      FreeAndNil(FConnection);
+    except
+    end;
   end;
   FreeAndNil(FConfigurators);
   inherited Destroy;

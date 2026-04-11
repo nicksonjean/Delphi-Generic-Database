@@ -10,11 +10,16 @@ uses
 
 type
   TListBoxHelper = class helper for TListBox
+  private
+    function GetExtension: Boolean;
+    procedure SetExtension(const Value: Boolean);
   public
     procedure EmptyFilter;
     function FindItemByName(Name: String): Integer;
     function ItemIsChecked(Name: String): Boolean;
     procedure ItemChecked(Name: String; Mark: Boolean);
+    { Extension: opt-in flag para funcionalidades extras do Connector neste componente. }
+    property Extension: Boolean read GetExtension write SetExtension;
   end;
 
 implementation
@@ -71,6 +76,17 @@ begin
     result := true
   else
     result := False;
+end;
+
+function TListBoxHelper.GetExtension: Boolean;
+begin
+  Result := Self.TagString = 'DGD.Extension.Active';
+end;
+
+procedure TListBoxHelper.SetExtension(const Value: Boolean);
+begin
+  if Value then Self.TagString := 'DGD.Extension.Active'
+  else Self.TagString := '';
 end;
 
 end.

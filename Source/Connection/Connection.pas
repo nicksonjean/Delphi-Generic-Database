@@ -105,14 +105,21 @@ end;
 
 destructor TConnection.Destroy;
 begin
-  if Assigned(FStrategy) and FStrategy.IsConnected then
+  if Assigned(FStrategy) then
   begin
     try
-      FStrategy.Disconnect;
+      if FStrategy.IsConnected then
+        FStrategy.Disconnect;
+    except
+    end;
+    { Zerando FStrategy chama _Release que pode desencadear Destroy da strategy
+      e desta o Free do TFDConnection, que pode levantar internamente no FireDAC.
+      Capturamos para garantir que FExtraArgs e inherited Destroy sempre executem. }
+    try
+      FStrategy := nil;
     except
     end;
   end;
-  FStrategy := nil;
   FreeAndNil(FExtraArgs);
   inherited Destroy;
 end;

@@ -11,8 +11,13 @@ uses
 
 type
   TListViewHelper = class helper for TListView
+  private
+    function GetExtension: Boolean;
+    procedure SetExtension(const Value: Boolean);
   public
     procedure EmptyFilter;
+    { Extension: opt-in flag para funcionalidades extras do Connector neste componente. }
+    property Extension: Boolean read GetExtension write SetExtension;
   end;
 
 type
@@ -45,6 +50,17 @@ begin
   end;
   if (SearchEdit <> nil) then
     SearchEdit.Text := '';
+end;
+
+function TListViewHelper.GetExtension: Boolean;
+begin
+  Result := Self.TagString = 'DGD.Extension.Active';
+end;
+
+procedure TListViewHelper.SetExtension(const Value: Boolean);
+begin
+  if Value then Self.TagString := 'DGD.Extension.Active'
+  else Self.TagString := '';
 end;
 
 { TCustomListViewHelper }

@@ -315,7 +315,7 @@ function TFrameDataTypes.ArrayStringTest(const AMethodName: String): String;
 var
   Array1, Array2: TArrayString;
   QBuilder: TQueryBuilder;
-  SQL: TQuery;
+  SQL, FetchSQL: TQuery;
   DB: TConnection;
 begin
   DB := nil;
@@ -325,23 +325,29 @@ begin
     Array1 := TArrayString.Create();
     try
       Array1.Clear;
+      SQL := nil;
       if AMethodName <> 'Fetch' then
       begin
         SQL := QBuilder.View('SELECT * FROM test_fields');
-        Array1['field_inc']       := SQL.Query.FieldByName('field_inc').Value;
-        Array1['field_int']       := SQL.Query.FieldByName('field_int').Value;
-        Array1['field_char']      := SQL.Query.FieldByName('field_char').Value;
-        Array1['field_varchar']   := SQL.Query.FieldByName('field_varchar').Value;
-        Array1['field_date']      := SQL.Query.FieldByName('field_date').Value;
-        Array1['field_datetime']  := SQL.Query.FieldByName('field_datetime').Value;
-        Array1['field_decimal']   := SQL.Query.FieldByName('field_decimal').Value;
-        Array1['field_float']     := SQL.Query.FieldByName('field_float').Value;
-        Array1['field_null']      := System.StrUtils.IfThen(SQL.Query.FieldByName('field_null').Value = NULL, 'null', SQL.Query.FieldByName('field_null').Value);
+        try
+          Array1['field_inc']       := SQL.Query.FieldByName('field_inc').Value;
+          Array1['field_int']       := SQL.Query.FieldByName('field_int').Value;
+          Array1['field_char']      := SQL.Query.FieldByName('field_char').Value;
+          Array1['field_varchar']   := SQL.Query.FieldByName('field_varchar').Value;
+          Array1['field_date']      := SQL.Query.FieldByName('field_date').Value;
+          Array1['field_datetime']  := SQL.Query.FieldByName('field_datetime').Value;
+          Array1['field_decimal']   := SQL.Query.FieldByName('field_decimal').Value;
+          Array1['field_float']     := SQL.Query.FieldByName('field_float').Value;
+          Array1['field_null']      := System.StrUtils.IfThen(SQL.Query.FieldByName('field_null').Value = NULL, 'null', SQL.Query.FieldByName('field_null').Value);
+        finally
+          FreeAndNil(SQL);
+        end;
       end;
 
       case AnsiIndexStr(AMethodName, Methods) of
         0: begin
-          QBuilder.FetchOne('SELECT * FROM test_fields', Array1);
+          FetchSQL := QBuilder.FetchOne('SELECT * FROM test_fields', Array1);
+          FreeAndNil(FetchSQL);
           Result := Array1.ToList(True);
         end;
         1: begin
@@ -374,7 +380,7 @@ function TFrameDataTypes.ArrayVariantTest(const AMethodName: String): String;
 var
   Array1, Array2: TArrayVariant;
   QBuilder: TQueryBuilder;
-  SQL: TQuery;
+  SQL, FetchSQL: TQuery;
   DB: TConnection;
 begin
   DB := nil;
@@ -384,23 +390,29 @@ begin
     Array1 := TArrayVariant.Create;
     try
       Array1.Clear;
+      SQL := nil;
       if AMethodName <> 'Fetch' then
       begin
         SQL := QBuilder.View('SELECT * FROM test_fields');
-        Array1['field_inc']      := SQL.Query.FieldByName('field_inc').Value;
-        Array1['field_int']      := SQL.Query.FieldByName('field_int').Value;
-        Array1['field_char']     := SQL.Query.FieldByName('field_char').Value;
-        Array1['field_varchar']  := SQL.Query.FieldByName('field_varchar').Value;
-        Array1['field_date']     := SQL.Query.FieldByName('field_date').Value;
-        Array1['field_datetime'] := SQL.Query.FieldByName('field_datetime').Value;
-        Array1['field_decimal']  := SQL.Query.FieldByName('field_decimal').Value;
-        Array1['field_float']    := SQL.Query.FieldByName('field_float').Value;
-        Array1['field_null']     := SQL.Query.FieldByName('field_null').Value;
+        try
+          Array1['field_inc']      := SQL.Query.FieldByName('field_inc').Value;
+          Array1['field_int']      := SQL.Query.FieldByName('field_int').Value;
+          Array1['field_char']     := SQL.Query.FieldByName('field_char').Value;
+          Array1['field_varchar']  := SQL.Query.FieldByName('field_varchar').Value;
+          Array1['field_date']     := SQL.Query.FieldByName('field_date').Value;
+          Array1['field_datetime'] := SQL.Query.FieldByName('field_datetime').Value;
+          Array1['field_decimal']  := SQL.Query.FieldByName('field_decimal').Value;
+          Array1['field_float']    := SQL.Query.FieldByName('field_float').Value;
+          Array1['field_null']     := SQL.Query.FieldByName('field_null').Value;
+        finally
+          FreeAndNil(SQL);
+        end;
       end;
 
       case AnsiIndexStr(AMethodName, Methods) of
         0: begin
-          QBuilder.FetchOne('SELECT * FROM test_fields', Array1);
+          FetchSQL := QBuilder.FetchOne('SELECT * FROM test_fields', Array1);
+          FreeAndNil(FetchSQL);
           Result := Array1.ToList(True);
         end;
         1: begin
@@ -434,7 +446,7 @@ var
   Array1, Array2: TArrayField;
   Array3: TArrayVariant;
   QBuilder: TQueryBuilder;
-  SQL: TQuery;
+  SQL, FetchSQL: TQuery;
   DB: TConnection;
 begin
   DB := nil;
@@ -442,6 +454,7 @@ begin
   try
     QBuilder := TQueryBuilder.ForConnection(DB.GetConnectionStrategy);
     Array1 := TArrayField.Create;
+    SQL := nil;
     try
       Array1.Clear;
       if AMethodName <> 'Fetch' then
@@ -460,7 +473,8 @@ begin
 
       case AnsiIndexStr(AMethodName, Methods) of
         0: begin
-          QBuilder.FetchOne('SELECT * FROM test_fields', Array1);
+          FetchSQL := QBuilder.FetchOne('SELECT * FROM test_fields', Array1);
+          FreeAndNil(FetchSQL);
           Result := Array1.ToList(True);
         end;
         1: begin
@@ -482,6 +496,7 @@ begin
         6: Result := Array1.ToJSON(True);
       end;
     finally
+      FreeAndNil(SQL);
       FreeAndNil(Array1);
     end;
   finally

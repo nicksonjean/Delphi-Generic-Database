@@ -27,11 +27,15 @@ type
     function GetAutoSizeColumns : Boolean;
     procedure SetAutoSizeColumns(Value : Boolean);
     procedure DoAutoSizeColumns;
+    function GetExtension: Boolean;
+    procedure SetExtension(const Value: Boolean);
   public
     procedure RemoveRows(RowIndex, RCount: Integer);
     procedure Clear;
     property FillData: TDataSet read GetData write SetData;
     property AutoSizeColumns: Boolean read GetAutoSizeColumns write SetAutoSizeColumns default false;
+    { Extension: opt-in flag para funcionalidades extras do Connector neste componente. }
+    property Extension: Boolean read GetExtension write SetExtension;
   end;
 
 implementation
@@ -142,6 +146,17 @@ begin
     for J := 0 to ColumnCount - 1 do
       Cells[J, I] := Cells[J, I + 1];
   RowCount := RowCount - RCount;
+end;
+
+function TStringGridHelper.GetExtension: Boolean;
+begin
+  Result := Self.TagString = 'DGD.Extension.Active';
+end;
+
+procedure TStringGridHelper.SetExtension(const Value: Boolean);
+begin
+  if Value then Self.TagString := 'DGD.Extension.Active'
+  else Self.TagString := '';
 end;
 
 end.

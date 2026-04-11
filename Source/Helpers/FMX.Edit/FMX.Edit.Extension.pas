@@ -46,7 +46,9 @@ type
     procedure PMPressEnter(var AMessage: TDispatchMessage); message PM_PRESSENTER;
     procedure PMRebuildSuggestions(var AMessage: TDispatchMessage); message PM_REBUILD_SUGGESTIONS;
     procedure PMClearSuggestionListBox(var AMessage: TDispatchMessage); message PM_CLEAR_SUGGESTION_LISTBOX;
+    procedure PMSetExtension(var AMessage: TDispatchMessageWithValue<Boolean>); message PM_SET_EXTENSION;
     procedure DoChangeTracking; override;
+    function IsExtensionActive: Boolean;
     procedure RebuildSuggestionList(AText: String);
     procedure RecalculatePopupHeight;
     procedure KeyDown(var Key: Word; var KeyChar: Char; Shift: TShiftState); override;
@@ -112,7 +114,25 @@ begin
   FDropDownButton.Parent := Self;
   FDropDownButton.StyleLookup := 'dropdowneditbutton';
   FDropDownButton.OnClick := OnClick;
+  FDropDownButton.Visible := False; { hidden until Extension := True }
   FLastClickedIndex := -1;
+end;
+
+function TStyledSuggestEdit.IsExtensionActive: Boolean;
+begin
+  Result := (PresentedControl <> nil) and
+            (PresentedControl.TagString = EXT_TAG);
+end;
+
+procedure TStyledSuggestEdit.PMSetExtension(var AMessage: TDispatchMessageWithValue<Boolean>);
+begin
+  if AMessage.Value then
+    PresentedControl.TagString := EXT_TAG
+  else
+    PresentedControl.TagString := '';
+  FDropDownButton.Visible := AMessage.Value;
+  if not AMessage.Value then
+    FPopup.IsOpen := False;
 end;
 
 procedure TStyledSuggestEdit.CheckIfTextMatchesSuggestions;
@@ -140,6 +160,7 @@ end;
 procedure TStyledSuggestEdit.DoChangeTracking;
 begin
   inherited;
+  if not IsExtensionActive then Exit;
   if Edit.Text <> _SelectedItem.Text then
     FLastClickedIndex := -1;
   if not FDontTrack and (FLastClickedIndex = -1) then
@@ -346,6 +367,7 @@ end;
 
 procedure TStyledSuggestEdit.DropDownRecalc(ByText: string; Delay: integer);
 begin
+  if not IsExtensionActive then Exit;
   if not self.FDontTrack then
   begin
     Self.RebuildSuggestionList(ByText);

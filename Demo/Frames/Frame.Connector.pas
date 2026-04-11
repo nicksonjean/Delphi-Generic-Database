@@ -95,6 +95,7 @@ implementation
 
 uses
   FMX.Edit.Helper,
+  FMX.ComboEdit.Helper,
   FMX.Objects.Helper,
   FMX.Edit.Extension,
   FMX.ComboEdit.Extension,
@@ -120,6 +121,9 @@ begin
   ComboConnEngine.ItemIndex := 0;
   ComboConnDriver.ItemIndex := 0;
   BtnRunConnector.StyledSettings := BtnRunConnector.StyledSettings - [TStyledSetting.FontColor];
+  { Opt-in explícito: apenas os result-components do Connector recebem a extensão }
+  EditConnResult.Extension       := True;
+  ComboEditConnResult.Extension  := True;
   SetupDefaultSQL;
   // Default database path for SQLite
   EditConnDatabase.Text :=

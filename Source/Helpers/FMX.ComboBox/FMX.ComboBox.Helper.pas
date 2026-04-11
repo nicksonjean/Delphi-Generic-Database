@@ -25,8 +25,13 @@ type
     function GetAutoComplete : Boolean;
     procedure SetAutoComplete(Value : Boolean);
     procedure DoAutoComplete;
+    function GetExtension: Boolean;
+    procedure SetExtension(const Value: Boolean);
   public
     property AutoComplete: Boolean read GetAutoComplete write SetAutoComplete default false;
+    { Extension: opt-in flag para funcionalidades extras do Connector neste componente.
+      Por padrão False. }
+    property Extension: Boolean read GetExtension write SetExtension;
   end;
 
 implementation
@@ -74,6 +79,17 @@ procedure TComboBoxHelper.SetAutoComplete(Value: Boolean);
 begin
   FAutoComplete := Value;
   Self.DoAutoComplete;
+end;
+
+function TComboBoxHelper.GetExtension: Boolean;
+begin
+  Result := Self.TagString = 'DGD.Extension.Active';
+end;
+
+procedure TComboBoxHelper.SetExtension(const Value: Boolean);
+begin
+  if Value then Self.TagString := 'DGD.Extension.Active'
+  else Self.TagString := '';
 end;
 
 end.

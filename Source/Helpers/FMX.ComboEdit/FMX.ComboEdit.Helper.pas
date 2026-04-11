@@ -15,6 +15,7 @@ uses
   FMX.Controls.Model,
   FMX.Presentation.Messages,
   FMX.Forms,
+  FMX.Edit.Suggest.Messages,
   EventDelegate;
 
 type
@@ -30,10 +31,14 @@ type
     procedure DoAutoComplete;
     procedure SetAutoComplete(Value : Boolean);
     function GetAutoComplete : Boolean;
+    procedure SetExtension(const Value: Boolean);
   public
     procedure SetFont(const FontFamily: TFontName; const FontStyles: TFontStyles; const FontSize: Integer; const FontColor: TAlphaColor);
     property ListBox: TComboEditListBox read GetListBoxFromComboEdit;
     property AutoComplete: Boolean read GetAutoComplete write SetAutoComplete default false;
+    { Extension: habilita/desabilita o botão dropdown de estilo TEdit para este componente.
+      Por padrão False — precisa ser explicitamente ativado. }
+    property Extension: Boolean write SetExtension;
   end;
 
 implementation
@@ -270,6 +275,18 @@ end;
 function TComboEditHelper.RemoveFontSettings(const Settings: TStyledSettings): TStyledSettings;
 begin
   Result := Settings - [TStyledSetting.Family, TStyledSetting.Size, TStyledSetting.Style, TStyledSetting.FontColor];
+end;
+
+procedure TComboEditHelper.SetExtension(const Value: Boolean);
+begin
+  { Write the opt-in tag so ApplyDropDownButtonStyle shows/hides the button.
+    Then force a style rebuild so the change takes effect immediately. }
+  if Value then
+    Self.TagString := EXT_TAG
+  else
+    Self.TagString := '';
+  Self.NeedStyleLookup;
+  Self.ApplyStyleLookup;
 end;
 
 initialization

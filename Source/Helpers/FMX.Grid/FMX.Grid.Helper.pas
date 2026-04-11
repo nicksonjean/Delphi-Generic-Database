@@ -30,11 +30,15 @@ type
     function GetAutoSizeColumns: Boolean;
     procedure SetAutoSizeColumns(Value: Boolean);
     procedure DoAutoSizeColumns;
+    function GetExtension: Boolean;
+    procedure SetExtension(const Value: Boolean);
   public
     procedure RemoveRows(RowIndex, RCount: Integer);
     procedure Clear;
     property FillData: TDataSet read GetData write SetData;
     property AutoSizeColumns: Boolean read GetAutoSizeColumns write SetAutoSizeColumns default false;
+    { Extension: opt-in flag para funcionalidades extras do Connector neste componente. }
+    property Extension: Boolean read GetExtension write SetExtension;
   end;
 
 implementation
@@ -227,6 +231,17 @@ end;
 procedure TGridHelper.RemoveRows(RowIndex, RCount: Integer);
 begin
   TGrid(Self).RemoveRows(RowIndex, RCount);
+end;
+
+function TGridHelper.GetExtension: Boolean;
+begin
+  Result := Self.TagString = 'DGD.Extension.Active';
+end;
+
+procedure TGridHelper.SetExtension(const Value: Boolean);
+begin
+  if Value then Self.TagString := 'DGD.Extension.Active'
+  else Self.TagString := '';
 end;
 
 end.

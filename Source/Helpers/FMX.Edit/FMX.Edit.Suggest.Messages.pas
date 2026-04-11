@@ -20,6 +20,11 @@ const
   PM_GET_ITEMS = PM_EDIT_USER + 16;
   PM_REBUILD_SUGGESTIONS = PM_EDIT_USER + 17;
   PM_CLEAR_SUGGESTION_LISTBOX = PM_EDIT_USER + 18;
+  PM_SET_EXTENSION = PM_EDIT_USER + 19;
+
+  { TagString value written by the helper to opt a specific component into the extension.
+    The presenter reads this flag before activating popup/button features. }
+  EXT_TAG = 'DGD.Extension.Active';
 
 type
   TSelectedItem = record
