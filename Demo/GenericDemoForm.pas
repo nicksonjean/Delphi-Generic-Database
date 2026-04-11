@@ -71,6 +71,7 @@ type
     procedure MenuConnectorClick(Sender: TObject);
     procedure MenuDataTypesClick(Sender: TObject);
     procedure MenuPagNavClick(Sender: TObject);
+    procedure RectSidebarResize(Sender: TObject);
   private
     FSidebarOpen: Boolean;
     FActiveSection: TMenuSection;
@@ -85,6 +86,7 @@ type
     procedure CloseSidebarIfOpen;
     procedure ApplyWindowsTextTheming;
     procedure ApplyIconFont;
+    procedure ApplySidebarMenuPillsLayout;
   public
   end;
 
@@ -103,48 +105,67 @@ uses
 
 const
   SIDEBAR_WIDTH = 280;
-  { Bootstrap-like dark navbar on sidebar }
+  { Bootstrap 5 dark sidebar / .nav-pills (docs example) }
   COLOR_MENU_ACTIVE_ICON   = $FFFFFFFF;
   COLOR_MENU_ACTIVE_TEXT   = $FFFFFFFF;
   COLOR_MENU_ACTIVE_BG     = $FF0D6EFD;
-  COLOR_MENU_INACTIVE_ICON = $FFADB5BD;
-  COLOR_MENU_INACTIVE_TEXT = $FFF8F9FA;
-  COLOR_MENU_INACTIVE_BG   = $00000000;
+  { Inactive: white icon + label like the official dark sidebar }
+  COLOR_MENU_INACTIVE_ICON = $FFFFFFFF;
+  COLOR_MENU_INACTIVE_TEXT = $FFFFFFFF;
 
 { TGenericDemoForm }
 
 procedure TGenericDemoForm.ApplyWindowsTextTheming;
-  procedure UnstickFontColor(const AControl: TControl);
+  procedure UnstickLabelFont(const ALabel: TLabel);
   begin
-    if AControl is TLabel then
-      TLabel(AControl).StyledSettings :=
-        TLabel(AControl).StyledSettings - [TStyledSetting.FontColor];
-    if AControl is TButton then
-      TButton(AControl).StyledSettings :=
-        TButton(AControl).StyledSettings - [TStyledSetting.FontColor];
+    { Without this, Windows / default FMX styles keep FontColor, Size (and
+      sometimes Family) from the style — values set in the .fmx are ignored. }
+    ALabel.StyledSettings := ALabel.StyledSettings - [
+      TStyledSetting.FontColor,
+      TStyledSetting.Size];
   end;
 begin
-  UnstickFontColor(LblAppTitle);
-  UnstickFontColor(LblSectionName);
-  UnstickFontColor(LblHamburger);
-  UnstickFontColor(LblSidebarTitle);
-  UnstickFontColor(LblSidebarSubtitle);
-  UnstickFontColor(LblMenuConnectionIcon);
-  UnstickFontColor(LblMenuConnectionText);
-  UnstickFontColor(LblMenuConnectorIcon);
-  UnstickFontColor(LblMenuConnectorText);
-  UnstickFontColor(LblMenuDataTypesIcon);
-  UnstickFontColor(LblMenuDataTypesText);
-  UnstickFontColor(LblMenuPagNavIcon);
-  UnstickFontColor(LblMenuPagNavText);
+  UnstickLabelFont(LblAppTitle);
+  UnstickLabelFont(LblSectionName);
+  UnstickLabelFont(LblHamburger);
+  UnstickLabelFont(LblSidebarTitle);
+  UnstickLabelFont(LblSidebarSubtitle);
+  UnstickLabelFont(LblMenuConnectionIcon);
+  UnstickLabelFont(LblMenuConnectionText);
+  UnstickLabelFont(LblMenuConnectorIcon);
+  UnstickLabelFont(LblMenuConnectorText);
+  UnstickLabelFont(LblMenuDataTypesIcon);
+  UnstickLabelFont(LblMenuDataTypesText);
+  UnstickLabelFont(LblMenuPagNavIcon);
+  UnstickLabelFont(LblMenuPagNavText);
+end;
+
+procedure TGenericDemoForm.ApplySidebarMenuPillsLayout;
+  procedure StretchPill(const APill: TRectangle);
+  var
+    PC: TControl;
+  begin
+    if not (APill.Parent is TControl) then
+      Exit;
+    PC := TControl(APill.Parent);
+    { Avoid Align=Client here: another sibling (caption) also uses Client and FMX
+      then gives the pill only the remaining strip — icon sits outside the blue. }
+    APill.Align := TAlignLayout.None;
+    APill.SetBounds(0, 0, PC.Width, PC.Height);
+  end;
+begin
+  StretchPill(RectMenuConnectionActive);
+  StretchPill(RectMenuConnectorActive);
+  StretchPill(RectMenuDataTypesActive);
+  StretchPill(RectMenuPagNavActive);
 end;
 
 procedure TGenericDemoForm.ApplyIconFont;
   procedure SetIcon(ALabel: TLabel; AGlyph: Char);
   begin
-    // Remove Family from StyledSettings so FMX does not override our custom
-    // font with the system theme font at render time.
-    ALabel.StyledSettings := ALabel.StyledSettings - [TStyledSetting.Family];
+    ALabel.StyledSettings := ALabel.StyledSettings - [
+      TStyledSetting.Family,
+      TStyledSetting.Size];
     ALabel.TextSettings.Font.Family := 'bootstrap-icons';
     ALabel.Text := AGlyph;
   end;
@@ -164,6 +185,7 @@ begin
   ReportMemoryLeaksOnShutdown := True;
   ApplyWindowsTextTheming;
   ApplyIconFont;
+  ApplySidebarMenuPillsLayout;
   NavigateTo(msConnection);
 end;
 
@@ -175,7 +197,7 @@ end;
 
 procedure TGenericDemoForm.FormResize(Sender: TObject);
 begin
-  // Content area adjusts automatically via Align=Client
+  ApplySidebarMenuPillsLayout;
 end;
 
 procedure TGenericDemoForm.BtnHamburgerClick(Sender: TObject);
@@ -206,23 +228,19 @@ procedure TGenericDemoForm.SetMenuItemActive(
   ALblIcon: TLabel;
   ALblText: TLabel;
   AActive: Boolean);
-var
-  LBgColor: TAlphaColor;
 begin
-  ARectActive.Visible := False;
+  ARectActive.Visible := AActive;
+  ARectActive.Fill.Color := COLOR_MENU_ACTIVE_BG;
   if AActive then
   begin
     ALblIcon.TextSettings.FontColor := COLOR_MENU_ACTIVE_ICON;
     ALblText.TextSettings.FontColor := COLOR_MENU_ACTIVE_TEXT;
-    LBgColor := COLOR_MENU_ACTIVE_BG;
   end
   else
   begin
     ALblIcon.TextSettings.FontColor := COLOR_MENU_INACTIVE_ICON;
     ALblText.TextSettings.FontColor := COLOR_MENU_INACTIVE_TEXT;
-    LBgColor := COLOR_MENU_INACTIVE_BG;
   end;
-  TRectangle(ARectActive.Parent).Fill.Color := LBgColor;
 end;
 
 procedure TGenericDemoForm.UpdateMenuActiveState(ASection: TMenuSection);
@@ -309,6 +327,11 @@ end;
 procedure TGenericDemoForm.MenuPagNavClick(Sender: TObject);
 begin
   NavigateTo(msPagNav);
+end;
+
+procedure TGenericDemoForm.RectSidebarResize(Sender: TObject);
+begin
+  ApplySidebarMenuPillsLayout;
 end;
 
 end.

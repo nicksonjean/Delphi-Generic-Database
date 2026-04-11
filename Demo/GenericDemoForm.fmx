@@ -105,6 +105,7 @@ object GenericDemoForm: TGenericDemoForm
         Size.Width = 0.000000000000000000
         Size.Height = 708.000000000000000000
         Size.PlatformDefault = False
+        OnResize = RectSidebarResize
         object AnimSidebarShow: TFloatAnimation
           Duration = 0.250000000000000000
           Interpolation = Sinusoidal
@@ -132,7 +133,7 @@ object GenericDemoForm: TGenericDemoForm
             Align = Left
             Text = #63678
             TextSettings.Font.Family = 'bootstrap-icons'
-            TextSettings.Font.Size = 22.000000000000000000
+            TextSettings.Font.Size = 20.000000000000000000
             TextSettings.FontColor = xFFFFFFFF
             TextSettings.HorzAlign = Center
             TextSettings.VertAlign = Center
@@ -144,7 +145,7 @@ object GenericDemoForm: TGenericDemoForm
             Align = Client
             Text = 'Generic Database'
             TextSettings.Font.Family = 'Segoe UI'
-            TextSettings.Font.Size = 15.000000000000000000
+            TextSettings.Font.Size = 20.000000000000000000
             TextSettings.Font.Style = [fsBold]
             TextSettings.FontColor = xFFFFFFFF
             TextSettings.HorzAlign = Leading
@@ -166,214 +167,263 @@ object GenericDemoForm: TGenericDemoForm
         end
         object ScrollSidebarMenu: TVertScrollBox
           Align = Client
+          Padding.Top = 8.000000000000000000
           ShowScrollBars = False
           Size.Width = 280.000000000000000000
           Size.Height = 619.000000000000000000
           Size.PlatformDefault = False
           object LayMenuConnection: TLayout
             Align = Top
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 2.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 2.000000000000000000
             Size.Width = 280.000000000000000000
-            Size.Height = 56.000000000000000000
+            Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             object RectMenuConnectionBg: TRectangle
               Align = Client
               Fill.Color = x00000000
               Stroke.Kind = None
-              Size.Width = 280.000000000000000000
-              Size.Height = 56.000000000000000000
+              Size.Width = 256.000000000000000000
+              Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               HitTest = True
               OnClick = MenuConnectionClick
               object RectMenuConnectionActive: TRectangle
-                Align = Left
-                Fill.Color = xFF2196F3
+                Align = None
+                Position.X = 0.000000000000000000
+                Position.Y = 0.000000000000000000
+                Fill.Color = xFF0D6EFD
                 Stroke.Kind = None
-                Size.Width = 4.000000000000000000
-                Size.Height = 56.000000000000000000
+                XRadius = 6.000000000000000000
+                YRadius = 6.000000000000000000
+                Size.Width = 256.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 Visible = False
+                HitTest = False
               end
               object LblMenuConnectionIcon: TLabel
                 Align = Left
+                Margins.Left = 16.000000000000000000
+                Margins.Right = 12.000000000000000000
                 Text = #62710
                 TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 20.000000000000000000
-                TextSettings.FontColor = xFFADB5BD
+                TextSettings.Font.Size = 17.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
-                Size.Width = 52.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 26.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 HitTest = False
               end
               object LblMenuConnectionText: TLabel
                 Align = Client
+                Margins.Right = 16.000000000000000000
                 Text = 'Connection'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.500000000000000000
-                TextSettings.FontColor = xFFF8F9FA
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
-                Size.Width = 224.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 196.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
               end
             end
           end
           object LayMenuConnector: TLayout
             Align = Top
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 2.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 2.000000000000000000
             Size.Width = 280.000000000000000000
-            Size.Height = 56.000000000000000000
+            Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             object RectMenuConnectorBg: TRectangle
               Align = Client
               Fill.Color = x00000000
               Stroke.Kind = None
-              Size.Width = 280.000000000000000000
-              Size.Height = 56.000000000000000000
+              Size.Width = 256.000000000000000000
+              Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               HitTest = True
               OnClick = MenuConnectorClick
               object RectMenuConnectorActive: TRectangle
-                Align = Left
-                Fill.Color = xFF2196F3
+                Align = None
+                Position.X = 0.000000000000000000
+                Position.Y = 0.000000000000000000
+                Fill.Color = xFF0D6EFD
                 Stroke.Kind = None
-                Size.Width = 4.000000000000000000
-                Size.Height = 56.000000000000000000
+                XRadius = 6.000000000000000000
+                YRadius = 6.000000000000000000
+                Size.Width = 256.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 Visible = False
+                HitTest = False
               end
               object LblMenuConnectorIcon: TLabel
                 Align = Left
+                Margins.Left = 16.000000000000000000
+                Margins.Right = 12.000000000000000000
                 Text = #61739
                 TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 20.000000000000000000
-                TextSettings.FontColor = xFFADB5BD
+                TextSettings.Font.Size = 17.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
-                Size.Width = 52.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 26.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 HitTest = False
               end
               object LblMenuConnectorText: TLabel
                 Align = Client
+                Margins.Right = 16.000000000000000000
                 Text = 'Connector'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.500000000000000000
-                TextSettings.FontColor = xFFF8F9FA
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
-                Size.Width = 224.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 196.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
               end
             end
           end
           object LayMenuDataTypes: TLayout
             Align = Top
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 2.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 2.000000000000000000
             Size.Width = 280.000000000000000000
-            Size.Height = 56.000000000000000000
+            Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
             object RectMenuDataTypesBg: TRectangle
               Align = Client
               Fill.Color = x00000000
               Stroke.Kind = None
-              Size.Width = 280.000000000000000000
-              Size.Height = 56.000000000000000000
+              Size.Width = 256.000000000000000000
+              Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               HitTest = True
               OnClick = MenuDataTypesClick
               object RectMenuDataTypesActive: TRectangle
-                Align = Left
-                Fill.Color = xFF2196F3
+                Align = None
+                Position.X = 0.000000000000000000
+                Position.Y = 0.000000000000000000
+                Fill.Color = xFF0D6EFD
                 Stroke.Kind = None
-                Size.Width = 4.000000000000000000
-                Size.Height = 56.000000000000000000
+                XRadius = 6.000000000000000000
+                YRadius = 6.000000000000000000
+                Size.Width = 256.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 Visible = False
+                HitTest = False
               end
               object LblMenuDataTypesIcon: TLabel
                 Align = Left
+                Margins.Left = 16.000000000000000000
+                Margins.Right = 12.000000000000000000
                 Text = #61897
                 TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 20.000000000000000000
-                TextSettings.FontColor = xFFADB5BD
+                TextSettings.Font.Size = 17.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
-                Size.Width = 52.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 26.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 HitTest = False
               end
               object LblMenuDataTypesText: TLabel
                 Align = Client
+                Margins.Right = 16.000000000000000000
                 Text = 'DataTypes'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.500000000000000000
-                TextSettings.FontColor = xFFF8F9FA
+                TextSettings.Font.Size = 14.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
-                Size.Width = 224.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 196.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
               end
             end
           end
           object LayMenuPagNav: TLayout
             Align = Top
+            Margins.Left = 12.000000000000000000
+            Margins.Top = 2.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Margins.Bottom = 2.000000000000000000
             Size.Width = 280.000000000000000000
-            Size.Height = 56.000000000000000000
+            Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 3
             object RectMenuPagNavBg: TRectangle
               Align = Client
               Fill.Color = x00000000
               Stroke.Kind = None
-              Size.Width = 280.000000000000000000
-              Size.Height = 56.000000000000000000
+              Size.Width = 256.000000000000000000
+              Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
               HitTest = True
               OnClick = MenuPagNavClick
               object RectMenuPagNavActive: TRectangle
-                Align = Left
-                Fill.Color = xFF2196F3
+                Align = None
+                Position.X = 0.000000000000000000
+                Position.Y = 0.000000000000000000
+                Fill.Color = xFF0D6EFD
                 Stroke.Kind = None
-                Size.Width = 4.000000000000000000
-                Size.Height = 56.000000000000000000
+                XRadius = 6.000000000000000000
+                YRadius = 6.000000000000000000
+                Size.Width = 256.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 Visible = False
+                HitTest = False
               end
               object LblMenuPagNavIcon: TLabel
                 Align = Left
+                Margins.Left = 16.000000000000000000
+                Margins.Right = 12.000000000000000000
                 Text = #62890
                 TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 20.000000000000000000
-                TextSettings.FontColor = xFFADB5BD
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
-                Size.Width = 52.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 28.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
                 HitTest = False
               end
               object LblMenuPagNavText: TLabel
                 Align = Client
+                Margins.Right = 16.000000000000000000
                 Text = 'PagNav'
                 TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.500000000000000000
-                TextSettings.FontColor = xFFF8F9FA
+                TextSettings.Font.Size = 16.000000000000000000
+                TextSettings.FontColor = xFFFFFFFF
                 TextSettings.HorzAlign = Leading
                 TextSettings.VertAlign = Center
                 HitTest = False
-                Size.Width = 224.000000000000000000
-                Size.Height = 56.000000000000000000
+                Size.Width = 196.000000000000000000
+                Size.Height = 40.000000000000000000
                 Size.PlatformDefault = False
               end
             end
