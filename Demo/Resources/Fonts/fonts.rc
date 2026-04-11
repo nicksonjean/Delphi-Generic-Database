@@ -1,0 +1,13 @@
+// Bootstrap Icons font embedded as RCDATA.
+// The identifier BOOTSTRAP_ICONS must match exactly what is passed to
+// TFontResourceHelper.RegisterFontFromResource in FormCreate.
+//
+// Steps to generate fonts.res:
+//   1. Place bootstrap-icons.ttf in this directory
+//   2. Run from this directory (or adjust the path):
+//        brcc32 fonts.rc -fo fonts.res
+//      brcc32.exe is located in <Delphi>\bin\
+//   3. The generated fonts.res is already referenced in GenericDemo.dpr
+//      via  {$R 'Resources\Fonts\fonts.res'}
+
+BOOTSTRAP_ICONS RCDATA "bootstrap-icons.ttf"

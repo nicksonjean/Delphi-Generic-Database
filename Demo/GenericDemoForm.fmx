@@ -126,10 +126,22 @@ object GenericDemoForm: TGenericDemoForm
           Fill.Color = xFF212529
           Stroke.Kind = None
           Size.Width = 280.000000000000000000
-          Size.Height = 88.000000000000000000
+          Size.Height = 64.000000000000000000
           Size.PlatformDefault = False
           object LblSidebarTitle: TLabel
-            Align = Top
+            Align = Left
+            Text = #63678
+            TextSettings.Font.Family = 'bootstrap-icons'
+            TextSettings.Font.Size = 22.000000000000000000
+            TextSettings.FontColor = xFFFFFFFF
+            TextSettings.HorzAlign = Center
+            TextSettings.VertAlign = Center
+            Size.Width = 56.000000000000000000
+            Size.Height = 64.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LblSidebarSubtitle: TLabel
+            Align = Client
             Text = 'Generic Database'
             TextSettings.Font.Family = 'Segoe UI'
             TextSettings.Font.Size = 15.000000000000000000
@@ -137,25 +149,10 @@ object GenericDemoForm: TGenericDemoForm
             TextSettings.FontColor = xFFFFFFFF
             TextSettings.HorzAlign = Leading
             TextSettings.VertAlign = Center
-            Margins.Left = 20.000000000000000000
-            Margins.Top = 16.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Size.Width = 280.000000000000000000
-            Size.Height = 32.000000000000000000
-            Size.PlatformDefault = False
-          end
-          object LblSidebarSubtitle: TLabel
-            Align = Top
-            Text = 'Demo Suite'
-            TextSettings.Font.Family = 'Segoe UI'
-            TextSettings.Font.Size = 12.000000000000000000
-            TextSettings.FontColor = xFFADB5BD
-            TextSettings.HorzAlign = Leading
-            TextSettings.VertAlign = Center
-            Margins.Left = 20.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Size.Width = 280.000000000000000000
-            Size.Height = 24.000000000000000000
+            Margins.Left = 4.000000000000000000
+            Margins.Right = 16.000000000000000000
+            Size.Width = 224.000000000000000000
+            Size.Height = 64.000000000000000000
             Size.PlatformDefault = False
           end
         end
@@ -199,8 +196,9 @@ object GenericDemoForm: TGenericDemoForm
               end
               object LblMenuConnectionIcon: TLabel
                 Align = Left
-                Text = #9670
-                TextSettings.Font.Size = 16.000000000000000000
+                Text = #62710
+                TextSettings.Font.Family = 'bootstrap-icons'
+                TextSettings.Font.Size = 20.000000000000000000
                 TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
@@ -250,8 +248,9 @@ object GenericDemoForm: TGenericDemoForm
               end
               object LblMenuConnectorIcon: TLabel
                 Align = Left
-                Text = #8652
-                TextSettings.Font.Size = 16.000000000000000000
+                Text = #61739
+                TextSettings.Font.Family = 'bootstrap-icons'
+                TextSettings.Font.Size = 20.000000000000000000
                 TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
@@ -301,9 +300,9 @@ object GenericDemoForm: TGenericDemoForm
               end
               object LblMenuDataTypesIcon: TLabel
                 Align = Left
-                Text = '{}'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.Font.Style = [fsBold]
+                Text = #61897
+                TextSettings.Font.Family = 'bootstrap-icons'
+                TextSettings.Font.Size = 20.000000000000000000
                 TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center
@@ -353,8 +352,9 @@ object GenericDemoForm: TGenericDemoForm
               end
               object LblMenuPagNavIcon: TLabel
                 Align = Left
-                Text = #9634
-                TextSettings.Font.Size = 14.000000000000000000
+                Text = #62890
+                TextSettings.Font.Family = 'bootstrap-icons'
+                TextSettings.Font.Size = 20.000000000000000000
                 TextSettings.FontColor = xFFADB5BD
                 TextSettings.HorzAlign = Center
                 TextSettings.VertAlign = Center

@@ -23,6 +23,7 @@ uses
   FMX.ComboEdit.Extension in '..\Source\Helpers\FMX.ComboEdit\FMX.ComboEdit.Extension.pas',
   FMX.ComboBox.Helper in '..\Source\Helpers\FMX.ComboBox\FMX.ComboBox.Helper.pas',
   FMX.Objects.Helper in '..\Source\Helpers\FMX.Objects\FMX.Objects.Helper.pas',
+  FMX.Style.Helper in '..\Source\Helpers\FMX.Style\FMX.Style.Helper.pas',
   &Type.Dictionary.Helper in '..\Source\Types\Dictionary\Type.Dictionary.Helper.pas',
   &Type.&Array.Helper in '..\Source\Types\Array\Type.Array.Helper.pas',
   EventDelegate in '..\Source\Classes\EventDelegate\EventDelegate.pas',
@@ -41,6 +42,7 @@ uses
   Frame.PagNav in 'Frames\Frame.PagNav.pas' {TFramePagNav: TFrame};
 
 {$R *.res}
+{$R 'Resources\Fonts\fonts.res'}
 
 begin
   FastMM_EnterDebugMode;
@@ -49,6 +51,9 @@ begin
     mmetUnexpectedMemoryLeakDetail,
     mmetUnexpectedMemoryLeakSummary
   ];
+  // Load embedded fonts BEFORE Application.Initialize so DirectWrite
+  // includes them in its font collection from the very first query.
+  TFontResourceHelper.RegisterFontFromResource('BOOTSTRAP_ICONS');
   Application.Initialize;
   Application.CreateForm(TGenericDemoForm, FGenericDemoForm);
   Application.Run;

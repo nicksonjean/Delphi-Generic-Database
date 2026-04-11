@@ -84,6 +84,7 @@ type
       AActive: Boolean);
     procedure CloseSidebarIfOpen;
     procedure ApplyWindowsTextTheming;
+    procedure ApplyIconFont;
   public
   end;
 
@@ -138,6 +139,23 @@ begin
   UnstickFontColor(LblMenuPagNavText);
 end;
 
+procedure TGenericDemoForm.ApplyIconFont;
+  procedure SetIcon(ALabel: TLabel; AGlyph: Char);
+  begin
+    // Remove Family from StyledSettings so FMX does not override our custom
+    // font with the system theme font at render time.
+    ALabel.StyledSettings := ALabel.StyledSettings - [TStyledSetting.Family];
+    ALabel.TextSettings.Font.Family := 'bootstrap-icons';
+    ALabel.Text := AGlyph;
+  end;
+begin
+  SetIcon(LblSidebarTitle,       Chr(63678)); // database-fill  (header)
+  SetIcon(LblMenuConnectionIcon, Chr(62710)); // plug-fill
+  SetIcon(LblMenuConnectorIcon,  Chr(61739)); // arrow-left-right
+  SetIcon(LblMenuDataTypesIcon,  Chr(61897)); // braces
+  SetIcon(LblMenuPagNavIcon,     Chr(62890)); // table
+end;
+
 procedure TGenericDemoForm.FormCreate(Sender: TObject);
 begin
   FSidebarOpen := False;
@@ -145,6 +163,7 @@ begin
   FActiveFrame := nil;
   ReportMemoryLeaksOnShutdown := True;
   ApplyWindowsTextTheming;
+  ApplyIconFont;
   NavigateTo(msConnection);
 end;
 
