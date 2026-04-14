@@ -238,6 +238,9 @@ type
     function ArrayVariantTest(const AMethodName: String): String;
     function ArrayFieldTest(const AMethodName: String): String;
     procedure SendEmail;
+    procedure ApplyBootstrapChrome;
+  protected
+    procedure SetParent(const Value: TFmxObject); override;
   public
     constructor Create(AOwner: TComponent); override;
   end;
@@ -245,6 +248,7 @@ type
 implementation
 
 uses
+  BootstrapStyle,
   &Type.Dictionary.Helper,
   &Type.DateTime,
   &Type.Float,
@@ -276,9 +280,6 @@ constructor TFrameDataTypes.Create(AOwner: TComponent);
 begin
   inherited;
   ReportMemoryLeaksOnShutdown := True;
-  FormatExplicit.StyledSettings := FormatExplicit.StyledSettings - [TStyledSetting.FontColor];
-  FormatImplicit.StyledSettings := FormatImplicit.StyledSettings - [TStyledSetting.FontColor];
-  Calculate.StyledSettings := Calculate.StyledSettings - [TStyledSetting.FontColor];
   // Máscaras — setup completo (filtro + máscara + propriedades) via TMasks
   TMasks.SetupCPF(EditMaskCPF);
   TMasks.SetupCNPJ(EditMaskCNPJ);
@@ -292,6 +293,22 @@ begin
   TMasks.SetupTime(EditMaskTime);
   TMasks.SetupMoney(EditMaskMoney);
   TMasks.SetupFloat(EditMaskFloat);
+end;
+
+procedure TFrameDataTypes.ApplyBootstrapChrome;
+begin
+  TBootstrapStyle.ApplyButton(FormatExplicit, bsPrimary, 'Format Explicit', 15, 'calculator');
+  TBootstrapStyle.ApplyButton(FormatImplicit, bsPrimary, 'Format Implicit', 15, 'calculator');
+  TBootstrapStyle.ApplyButton(Calculate,      bsPrimary, 'Calculate',       15, 'lightning-charge');
+  TBootstrapStyle.ApplyButton(BtnDTRefresh,   bsPrimary, 'Refresh',         14, 'arrow-clockwise');
+  TBootstrapStyle.ApplyButton(Button1,        bsPrimary, 'Send Email',      15, 'envelope');
+end;
+
+procedure TFrameDataTypes.SetParent(const Value: TFmxObject);
+begin
+  inherited SetParent(Value);
+  if Value <> nil then
+    ApplyBootstrapChrome;
 end;
 
 function TFrameDataTypes.GetDBConnection: TConnection;

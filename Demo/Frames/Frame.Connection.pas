@@ -95,6 +95,9 @@ type
     function GetConfigAsTOML: String;
     function GetDriverName: String;
     function GetEngineName: String;
+    procedure ApplyBootstrapChrome;
+  protected
+    procedure SetParent(const Value: TFmxObject); override;
   public
     constructor Create(AOwner: TComponent); override;
   end;
@@ -106,7 +109,8 @@ uses
   Connection,
   Connection.Types,
   SmartPointer.Intf,
-  SmartPointer;
+  SmartPointer,
+  BootstrapStyle;
 
 {$R *.fmx}
 
@@ -114,7 +118,6 @@ const
   COLOR_CONNECTED    = $FF198754;
   COLOR_DISCONNECTED = $FF6C757D;
   COLOR_ERROR        = $FFDC3545;
-  COLOR_BS_PRIMARY   = $FF0D6EFD;
 
 { TFrameConnection }
 
@@ -123,27 +126,27 @@ begin
   inherited;
   ComboEngine.ItemIndex := 0;
   ComboDriver.ItemIndex := 0;
-  BtnTestConnection.StyledSettings := BtnTestConnection.StyledSettings - [TStyledSetting.FontColor];
-  BtnTestConnection.TextSettings.FontColor := COLOR_BS_PRIMARY;
-  BtnBrowseFile.StyledSettings := BtnBrowseFile.StyledSettings -
-    [TStyledSetting.FontColor, TStyledSetting.Family, TStyledSetting.Size];
-  BtnBrowseFile.Text := WideChar($E8E5);
-  BtnBrowseFile.TextSettings.Font.Family := 'Segoe MDL2 Assets';
-  BtnBrowseFile.TextSettings.Font.Size := 18;
-  BtnBrowseFile.TextSettings.FontColor := COLOR_BS_PRIMARY;
-  BtnLoadConfig.StyledSettings := BtnLoadConfig.StyledSettings - [TStyledSetting.FontColor];
-  BtnSaveConfig.StyledSettings := BtnSaveConfig.StyledSettings - [TStyledSetting.FontColor];
-  BtnClearLog.StyledSettings := BtnClearLog.StyledSettings - [TStyledSetting.FontColor];
-  BtnClearLog.TextSettings.FontColor := COLOR_BS_PRIMARY;
-  LblConnectionStatus.StyledSettings := LblConnectionStatus.StyledSettings - [TStyledSetting.FontColor];
-  BtnLoadConfig.Text := Char.ConvertFromUtf32($1F4C2) + '  Load Config';
-  BtnTestConnection.Text := Char.ConvertFromUtf32($1F50C) + '  Test Connection';
-  BtnSaveConfig.Text := Char.ConvertFromUtf32($1F4BE) + '  Save Config';
-  BtnClearLog.Text := Char.ConvertFromUtf32($1F5D1) + '  Clear';
   UpdateDefaultPort;
   UpdateDatabaseLabel;
   UpdateConfigPreview;
   AddLog('Ready. Configure connection parameters and click Test Connection.');
+end;
+
+procedure TFrameConnection.ApplyBootstrapChrome;
+begin
+  TBootstrapStyle.ApplyLabelTypography(LblConnectionStatus);
+  TBootstrapStyle.ApplyButtonIconOnly(BtnBrowseFile, bsPrimary, 'folder2-open', 18);
+  TBootstrapStyle.ApplyButton(BtnLoadConfig,     bsPrimary, 'Load Config',      15, 'download');
+  TBootstrapStyle.ApplyButton(BtnTestConnection, bsPrimary, 'Test Connection',  15, 'plug-fill');
+  TBootstrapStyle.ApplyButton(BtnSaveConfig,     bsPrimary, 'Save Config',      15, 'floppy');
+  TBootstrapStyle.ApplyButton(BtnClearLog,       bsPrimary, 'Clear',            14, 'x-lg');
+end;
+
+procedure TFrameConnection.SetParent(const Value: TFmxObject);
+begin
+  inherited SetParent(Value);
+  if Value <> nil then
+    ApplyBootstrapChrome;
 end;
 
 function TFrameConnection.GetEngineName: String;

@@ -87,6 +87,9 @@ type
     function GetEngine: TEngine;
     function GetDriver: TDriver;
     function BuildFilter: String;
+    procedure ApplyBootstrapChrome;
+  protected
+    procedure SetParent(const Value: TFmxObject); override;
   public
     constructor Create(AOwner: TComponent); override;
   end;
@@ -94,6 +97,7 @@ type
 implementation
 
 uses
+  BootstrapStyle,
   FMX.Edit.Helper,
   FMX.ComboEdit.Helper,
   FMX.Objects.Helper,
@@ -120,7 +124,6 @@ begin
   inherited;
   ComboConnEngine.ItemIndex := 0;
   ComboConnDriver.ItemIndex := 0;
-  BtnRunConnector.StyledSettings := BtnRunConnector.StyledSettings - [TStyledSetting.FontColor];
   { Opt-in explícito: apenas os result-components do Connector recebem a extensão }
   EditConnResult.Extension       := True;
   ComboEditConnResult.Extension  := True;
@@ -132,6 +135,18 @@ begin
     {$ELSE}
     TPath.Combine(TPath.GetDocumentsPath, 'DB.SQLITE');
     {$ENDIF}
+end;
+
+procedure TFrameConnector.ApplyBootstrapChrome;
+begin
+  TBootstrapStyle.ApplyButton(BtnRunConnector, bsPrimary, 'Run Connector', 15, 'play-fill');
+end;
+
+procedure TFrameConnector.SetParent(const Value: TFmxObject);
+begin
+  inherited SetParent(Value);
+  if Value <> nil then
+    ApplyBootstrapChrome;
 end;
 
 procedure TFrameConnector.SetupDefaultSQL;

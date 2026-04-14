@@ -98,6 +98,9 @@ type
     procedure UpdateNavigationState;
     function GetEngine: TEngine;
     function GetDriver: TDriver;
+    procedure ApplyBootstrapChrome;
+  protected
+    procedure SetParent(const Value: TFmxObject); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -106,6 +109,7 @@ type
 implementation
 
 uses
+  BootstrapStyle,
   FMX.Grid.Helper,
   FMX.StringGrid.Helper,
   Connection,
@@ -128,28 +132,38 @@ begin
   FActiveDataSet := nil;
   ReportMemoryLeaksOnShutdown := True;
 
-  BtnPNConnect.StyledSettings := BtnPNConnect.StyledSettings - [TStyledSetting.FontColor];
-  PagButtonFirst.StyledSettings := PagButtonFirst.StyledSettings - [TStyledSetting.FontColor];
-  PagButtonPrior.StyledSettings := PagButtonPrior.StyledSettings - [TStyledSetting.FontColor];
-  PagButtonNext.StyledSettings := PagButtonNext.StyledSettings - [TStyledSetting.FontColor];
-  PagButtonLast.StyledSettings := PagButtonLast.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonFirst.StyledSettings := NavButtonFirst.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonPrior.StyledSettings := NavButtonPrior.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonNext.StyledSettings := NavButtonNext.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonLast.StyledSettings := NavButtonLast.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonInsert.StyledSettings := NavButtonInsert.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonDelete.StyledSettings := NavButtonDelete.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonEdit.StyledSettings := NavButtonEdit.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonPost.StyledSettings := NavButtonPost.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonCancel.StyledSettings := NavButtonCancel.StyledSettings - [TStyledSetting.FontColor];
-  NavButtonRefresh.StyledSettings := NavButtonRefresh.StyledSettings - [TStyledSetting.FontColor];
-
   EditPNDatabase.Text :=
     {$IFDEF MSWINDOWS}
     ExtractFilePath(ParamStr(0)) + 'DB.SQLITE';
     {$ELSE}
     TPath.Combine(TPath.GetDocumentsPath, 'DB.SQLITE');
     {$ENDIF}
+end;
+
+procedure TFramePagNav.ApplyBootstrapChrome;
+begin
+  TBootstrapStyle.ApplyButton(BtnPNConnect, bsPrimary, 'Connect && Load', 13, 'plug-fill');
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonFirst, bsPrimary, 'skip-start', 15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonPrior, bsPrimary, 'chevron-left', 15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonNext, bsPrimary, 'chevron-right', 15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonLast, bsPrimary, 'skip-end', 15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonFirst, bsPrimary, 'skip-start', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonPrior, bsPrimary, 'chevron-left', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonNext, bsPrimary, 'chevron-right', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonLast, bsPrimary, 'skip-end', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonInsert, bsPrimary, 'plus-lg', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonDelete, bsPrimary, 'trash', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonEdit, bsPrimary, 'pencil', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonPost, bsPrimary, 'check-lg', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonCancel, bsPrimary, 'x-lg', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonRefresh, bsPrimary, 'arrow-clockwise', 13);
+end;
+
+procedure TFramePagNav.SetParent(const Value: TFmxObject);
+begin
+  inherited SetParent(Value);
+  if Value <> nil then
+    ApplyBootstrapChrome;
 end;
 
 destructor TFramePagNav.Destroy;

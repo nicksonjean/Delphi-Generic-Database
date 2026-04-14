@@ -84,9 +84,7 @@ type
       ALblText: TLabel;
       AActive: Boolean);
     procedure CloseSidebarIfOpen;
-    procedure ApplyWindowsTextTheming;
-    procedure ApplyIconFont;
-    procedure ApplySidebarMenuPillsLayout;
+    procedure ApplyDemoChrome;
   public
   end;
 
@@ -99,82 +97,43 @@ uses
   Frame.Connection,
   Frame.Connector,
   Frame.DataTypes,
-  Frame.PagNav;
+  Frame.PagNav,
+  BootstrapStyle;
 
 {$R *.fmx}
 
 const
   SIDEBAR_WIDTH = 280;
-  { Bootstrap 5 dark sidebar / .nav-pills (docs example) }
-  COLOR_MENU_ACTIVE_ICON   = $FFFFFFFF;
-  COLOR_MENU_ACTIVE_TEXT   = $FFFFFFFF;
-  COLOR_MENU_ACTIVE_BG     = $FF0D6EFD;
-  { Inactive: white icon + label like the official dark sidebar }
-  COLOR_MENU_INACTIVE_ICON = $FFFFFFFF;
-  COLOR_MENU_INACTIVE_TEXT = $FFFFFFFF;
 
 { TGenericDemoForm }
 
-procedure TGenericDemoForm.ApplyWindowsTextTheming;
-  procedure UnstickLabelFont(const ALabel: TLabel);
-  begin
-    { Without this, Windows / default FMX styles keep FontColor, Size (and
-      sometimes Family) from the style — values set in the .fmx are ignored. }
-    ALabel.StyledSettings := ALabel.StyledSettings - [
-      TStyledSetting.FontColor,
-      TStyledSetting.Size];
-  end;
+procedure TGenericDemoForm.ApplyDemoChrome;
 begin
-  UnstickLabelFont(LblAppTitle);
-  UnstickLabelFont(LblSectionName);
-  UnstickLabelFont(LblHamburger);
-  UnstickLabelFont(LblSidebarTitle);
-  UnstickLabelFont(LblSidebarSubtitle);
-  UnstickLabelFont(LblMenuConnectionIcon);
-  UnstickLabelFont(LblMenuConnectionText);
-  UnstickLabelFont(LblMenuConnectorIcon);
-  UnstickLabelFont(LblMenuConnectorText);
-  UnstickLabelFont(LblMenuDataTypesIcon);
-  UnstickLabelFont(LblMenuDataTypesText);
-  UnstickLabelFont(LblMenuPagNavIcon);
-  UnstickLabelFont(LblMenuPagNavText);
-end;
+  TBootstrapStyle.ApplyLabelTypography(LblAppTitle);
+  TBootstrapStyle.ApplyLabelTypography(LblSectionName);
+  TBootstrapStyle.ApplyLabelTypography(LblHamburger);
+  TBootstrapStyle.ApplyLabelTypography(LblSidebarTitle);
+  TBootstrapStyle.ApplyLabelTypography(LblSidebarSubtitle);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectionIcon);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectionText);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectorIcon);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectorText);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuDataTypesIcon);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuDataTypesText);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuPagNavIcon);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuPagNavText);
 
-procedure TGenericDemoForm.ApplySidebarMenuPillsLayout;
-  procedure StretchPill(const APill: TRectangle);
-  var
-    PC: TControl;
-  begin
-    if not (APill.Parent is TControl) then
-      Exit;
-    PC := TControl(APill.Parent);
-    { Avoid Align=Client here: another sibling (caption) also uses Client and FMX
-      then gives the pill only the remaining strip — icon sits outside the blue. }
-    APill.Align := TAlignLayout.None;
-    APill.SetBounds(0, 0, PC.Width, PC.Height);
-  end;
-begin
-  StretchPill(RectMenuConnectionActive);
-  StretchPill(RectMenuConnectorActive);
-  StretchPill(RectMenuDataTypesActive);
-  StretchPill(RectMenuPagNavActive);
-end;
+  TBootstrapStyle.ApplyBootstrapIconLabel(LblSidebarTitle, 'database-fill');
+  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuConnectionIcon, 'plug-fill');
+  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuConnectorIcon, 'arrow-left-right');
+  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuDataTypesIcon, 'braces');
+  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuPagNavIcon, 'table');
 
-procedure TGenericDemoForm.ApplyIconFont;
-  procedure SetIcon(ALabel: TLabel; AGlyph: Char);
-  begin
-    ALabel.StyledSettings := ALabel.StyledSettings - [
-      TStyledSetting.Family,
-      TStyledSetting.Size];
-    ALabel.TextSettings.Font.Family := 'bootstrap-icons';
-    ALabel.Text := AGlyph;
-  end;
-begin
-  SetIcon(LblSidebarTitle,       Chr(63678)); // database-fill  (header)
-  SetIcon(LblMenuConnectionIcon, Chr(62710)); // plug-fill
-  SetIcon(LblMenuConnectorIcon,  Chr(61739)); // arrow-left-right
-  SetIcon(LblMenuDataTypesIcon,  Chr(61897)); // braces
-  SetIcon(LblMenuPagNavIcon,     Chr(62890)); // table
+  TBootstrapStyle.StretchSidebarMenuPills([
+    RectMenuConnectionActive,
+    RectMenuConnectorActive,
+    RectMenuDataTypesActive,
+    RectMenuPagNavActive]);
 end;
 
 procedure TGenericDemoForm.FormCreate(Sender: TObject);
@@ -183,9 +142,7 @@ begin
   FActiveSection := msNone;
   FActiveFrame := nil;
   ReportMemoryLeaksOnShutdown := True;
-  ApplyWindowsTextTheming;
-  ApplyIconFont;
-  ApplySidebarMenuPillsLayout;
+  ApplyDemoChrome;
   NavigateTo(msConnection);
 end;
 
@@ -197,7 +154,11 @@ end;
 
 procedure TGenericDemoForm.FormResize(Sender: TObject);
 begin
-  ApplySidebarMenuPillsLayout;
+  TBootstrapStyle.StretchSidebarMenuPills([
+    RectMenuConnectionActive,
+    RectMenuConnectorActive,
+    RectMenuDataTypesActive,
+    RectMenuPagNavActive]);
 end;
 
 procedure TGenericDemoForm.BtnHamburgerClick(Sender: TObject);
@@ -229,18 +190,7 @@ procedure TGenericDemoForm.SetMenuItemActive(
   ALblText: TLabel;
   AActive: Boolean);
 begin
-  ARectActive.Visible := AActive;
-  ARectActive.Fill.Color := COLOR_MENU_ACTIVE_BG;
-  if AActive then
-  begin
-    ALblIcon.TextSettings.FontColor := COLOR_MENU_ACTIVE_ICON;
-    ALblText.TextSettings.FontColor := COLOR_MENU_ACTIVE_TEXT;
-  end
-  else
-  begin
-    ALblIcon.TextSettings.FontColor := COLOR_MENU_INACTIVE_ICON;
-    ALblText.TextSettings.FontColor := COLOR_MENU_INACTIVE_TEXT;
-  end;
+  TBootstrapStyle.ApplyNavPillState(ARectActive, ALblIcon, ALblText, AActive);
 end;
 
 procedure TGenericDemoForm.UpdateMenuActiveState(ASection: TMenuSection);
@@ -331,7 +281,11 @@ end;
 
 procedure TGenericDemoForm.RectSidebarResize(Sender: TObject);
 begin
-  ApplySidebarMenuPillsLayout;
+  TBootstrapStyle.StretchSidebarMenuPills([
+    RectMenuConnectionActive,
+    RectMenuConnectorActive,
+    RectMenuDataTypesActive,
+    RectMenuPagNavActive]);
 end;
 
 end.
