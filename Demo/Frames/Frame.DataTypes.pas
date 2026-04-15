@@ -249,6 +249,7 @@ implementation
 
 uses
   BootstrapStyle,
+  BootstrapStyle.Core,
   &Type.Dictionary.Helper,
   &Type.DateTime,
   &Type.Float,
@@ -297,11 +298,103 @@ end;
 
 procedure TFrameDataTypes.ApplyBootstrapChrome;
 begin
+  { Buttons }
   TBootstrapStyle.ApplyButton(FormatExplicit, bsPrimary, 'Format Explicit', 15, 'calculator');
   TBootstrapStyle.ApplyButton(FormatImplicit, bsPrimary, 'Format Implicit', 15, 'calculator');
   TBootstrapStyle.ApplyButton(Calculate,      bsPrimary, 'Calculate',       15, 'lightning-charge');
   TBootstrapStyle.ApplyButton(BtnDTRefresh,   bsPrimary, 'Refresh',         14, 'arrow-clockwise');
   TBootstrapStyle.ApplyButton(Button1,        bsPrimary, 'Send Email',      15, 'envelope');
+  { Arrays tab — connection + type selectors }
+  TBootstrapStyle.ApplyComboBox(ComboBoxDataTypeTArrayString,  14);
+  TBootstrapStyle.ApplyComboBox(ComboBoxDataTypeTArrayVariant, 14);
+  TBootstrapStyle.ApplyComboBox(ComboBoxDataTypeTArrayField,   14);
+  TBootstrapStyle.ApplyEdit(EditArrayHost,     14);
+  TBootstrapStyle.ApplyEdit(EditArrayPort,     14);
+  TBootstrapStyle.ApplyEdit(EditArrayDatabase, 14);
+  TBootstrapStyle.ApplyEdit(EditArrayUsername, 14);
+  TBootstrapStyle.ApplyEdit(EditArrayPassword, 14);
+  { Floats tab }
+  TBootstrapStyle.ApplyEdit(EditLength1,  14);
+  TBootstrapStyle.ApplyEdit(EditDecimal1, 14);
+  TBootstrapStyle.ApplyEdit(EditLength2,  14);
+  TBootstrapStyle.ApplyEdit(EditDecimal2, 14);
+  TBootstrapStyle.ApplyComboBox(ComboBoxResult1, 14);
+  TBootstrapStyle.ApplyEdit(EditLength3,  14);
+  TBootstrapStyle.ApplyEdit(EditDecimal3, 14);
+  TBootstrapStyle.ApplyEdit(EditLength4,  14);
+  TBootstrapStyle.ApplyEdit(EditDecimal4, 14);
+  TBootstrapStyle.ApplyEdit(EditLength5,  14);
+  TBootstrapStyle.ApplyEdit(EditDecimal5, 14);
+  TBootstrapStyle.ApplyComboBox(ComboBoxResult2, 14);
+  TBootstrapStyle.ApplyEdit(EditCalculate1, 14);
+  TBootstrapStyle.ApplyEdit(EditAmount1,    14);
+  TBootstrapStyle.ApplyEdit(EditOperation1, 14);
+  TBootstrapStyle.ApplyEdit(EditCalculate2, 14);
+  TBootstrapStyle.ApplyEdit(EditAmount2,    14);
+  TBootstrapStyle.ApplyEdit(EditOperation2, 14);
+  TBootstrapStyle.ApplyEdit(EditCalculate3, 14);
+  TBootstrapStyle.ApplyEdit(EditAmount3,    14);
+  TBootstrapStyle.ApplyEdit(EditOperation3, 14);
+  TBootstrapStyle.ApplyEdit(EditCalculate4, 14);
+  TBootstrapStyle.ApplyEdit(EditAmount4,    14);
+  TBootstrapStyle.ApplyEdit(EditOperation4, 14);
+  TBootstrapStyle.ApplyEdit(EditCalculate5, 14);
+  TBootstrapStyle.ApplyEdit(EditAmount5,    14);
+  TBootstrapStyle.ApplyEdit(EditOperation5, 14);
+  { Strings tab — masks }
+  TBootstrapStyle.ApplyEdit(EditMaskCPF,          14);
+  TBootstrapStyle.ApplyEdit(EditMaskCNPJ,         14);
+  TBootstrapStyle.ApplyEdit(EditMaskCEP,          14);
+  TBootstrapStyle.ApplyEdit(EditMaskFone,         14);
+  TBootstrapStyle.ApplyEdit(EditMaskSerial,       14);
+  TBootstrapStyle.ApplyEdit(EditMaskMonthYear2D,  14);
+  TBootstrapStyle.ApplyEdit(EditMaskMonthYear4D,  14);
+  TBootstrapStyle.ApplyEdit(EditMaskDate2D,       14);
+  TBootstrapStyle.ApplyEdit(EditMaskDate4D,       14);
+  TBootstrapStyle.ApplyEdit(EditMaskTime,         14);
+  TBootstrapStyle.ApplyEdit(EditMaskMoney,        14);
+  TBootstrapStyle.ApplyEdit(EditMaskFloat,        14);
+  { Strings tab — utilities }
+  TBootstrapStyle.ApplyEdit(EditStrInOnlyAlpha,       14);
+  TBootstrapStyle.ApplyEdit(EditStrOutOnlyAlpha,      14);
+  TBootstrapStyle.ApplyEdit(EditStrInOnlyValues,      14);
+  TBootstrapStyle.ApplyEdit(EditStrOutOnlyValues,     14);
+  TBootstrapStyle.ApplyEdit(EditStrInOnlyNumeric,     14);
+  TBootstrapStyle.ApplyEdit(EditStrOutOnlyNumeric,    14);
+  TBootstrapStyle.ApplyEdit(EditStrInOnlyAlphaNumeric,  14);
+  TBootstrapStyle.ApplyEdit(EditStrOutOnlyAlphaNumeric, 14);
+  TBootstrapStyle.ApplyEdit(EditStrInIsNull,        14);
+  TBootstrapStyle.ApplyEdit(EditStrOutIsNull,       14);
+  TBootstrapStyle.ApplyEdit(EditStrInIsZeroFilled,  14);
+  TBootstrapStyle.ApplyEdit(EditStrOutIsZeroFilled, 14);
+  TBootstrapStyle.ApplyEdit(EditStrInIsNumeric,     14);
+  TBootstrapStyle.ApplyEdit(EditStrOutIsNumeric,    14);
+  TBootstrapStyle.ApplyEdit(EditStrInIsDecimal,     14);
+  TBootstrapStyle.ApplyEdit(EditStrOutIsDecimal,    14);
+  { DateTime tab — validation }
+  TBootstrapStyle.ApplyEdit(EditDTIsValidTime,     14);
+  TBootstrapStyle.ApplyEdit(EditDTResIsValidTime,  14);
+  TBootstrapStyle.ApplyEdit(EditDTIsValidDate,     14);
+  TBootstrapStyle.ApplyEdit(EditDTResIsValidDate,  14);
+  TBootstrapStyle.ApplyEdit(EditDTIsValidDateTime, 14);
+  TBootstrapStyle.ApplyEdit(EditDTResIsValidDateTime, 14);
+  TBootstrapStyle.ApplyEdit(EditDTIsValid,         14);
+  TBootstrapStyle.ApplyEdit(EditDTResIsValid,      14);
+  TBootstrapStyle.ApplyEdit(EditDTToSQL,           14);
+  TBootstrapStyle.ApplyEdit(EditDTResToSQL,        14);
+  TBootstrapStyle.ApplyEdit(EditDTToArrayInput,    14);
+  { DateTime tab — current values }
+  TBootstrapStyle.ApplyEdit(EditDTNow,       14);
+  TBootstrapStyle.ApplyEdit(EditDTDate,      14);
+  TBootstrapStyle.ApplyEdit(EditDTTime,      14);
+  TBootstrapStyle.ApplyEdit(EditDTToday,     14);
+  TBootstrapStyle.ApplyEdit(EditDTTomorrow,  14);
+  TBootstrapStyle.ApplyEdit(EditDTYesterday, 14);
+  { Memos — Bootstrap textarea style }
+  TBootstrapStyle.ApplyMemo(MemoDataTypeArrayResult, 13);
+  TBootstrapStyle.ApplyMemo(MemoResultFormat,        13);
+  TBootstrapStyle.ApplyMemo(MemoResultCalculate,     13);
+  TBootstrapStyle.ApplyMemo(MemoToArray,             13);
 end;
 
 procedure TFrameDataTypes.SetParent(const Value: TFmxObject);

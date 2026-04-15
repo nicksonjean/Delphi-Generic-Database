@@ -98,6 +98,7 @@ implementation
 
 uses
   BootstrapStyle,
+  BootstrapStyle.Core,
   FMX.Edit.Helper,
   FMX.ComboEdit.Helper,
   FMX.Objects.Helper,
@@ -139,7 +140,26 @@ end;
 
 procedure TFrameConnector.ApplyBootstrapChrome;
 begin
+  { Buttons }
   TBootstrapStyle.ApplyButton(BtnRunConnector, bsPrimary, 'Run Connector', 15, 'play-fill');
+  { Config panel controls }
+  TBootstrapStyle.ApplyComboBox(ComboConnEngine,  14);
+  TBootstrapStyle.ApplyComboBox(ComboConnDriver,  14);
+  TBootstrapStyle.ApplyEdit(EditConnDatabase,     14);
+  TBootstrapStyle.ApplyMemo(MemoConnSQL,          13);
+  TBootstrapStyle.ApplyEdit(EditConnIndexField,   14);
+  TBootstrapStyle.ApplyEdit(EditConnValueField,   14);
+  TBootstrapStyle.ApplyEdit(EditConnFilter,       14);
+  TBootstrapStyle.ApplyComboBox(ComboConnOptions, 14);
+  { Result components }
+  TBootstrapStyle.ApplyComboBox(ComboConnResult,        14);
+  TBootstrapStyle.ApplyEdit(EditConnResult,             14);
+  TBootstrapStyle.ApplyComboEdit(ComboEditConnResult,   14);
+  TBootstrapStyle.ApplySearchBox(SearchBoxListBox,      14);
+  TBootstrapStyle.ApplyListBox(ListBoxConnResult,       14);
+  TBootstrapStyle.ApplyListView(ListViewConnResult,     13);
+  TBootstrapStyle.ApplyStringGrid(StringGridConnResult, 13);
+  TBootstrapStyle.ApplyGrid(GridConnResult,             13);
 end;
 
 procedure TFrameConnector.SetParent(const Value: TFmxObject);

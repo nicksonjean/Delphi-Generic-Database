@@ -1,28 +1,34 @@
-unit BootstrapStyle;
+﻿unit BootstrapStyle;
 
-{
-  Bootstrap 5 look for FireMonkey — fully code-defined, no StyleBook.
+(*
+  Bootstrap 5 look for FireMonkey — unified public façade, no StyleBook required.
 
-  Zero-leak architecture
-  ─────────────────────
-  Previous approach called ApplyStyleLookup explicitly, which cloned the FMX
-  style graph BEFORE FMX cloned it naturally on first paint → two allocations,
-  one never freed → the AV/leak report.
+  Architecture
+  ────────────
+  All implementation lives in focused sub-units.  Callers need only:
+    uses BootstrapStyle;          { buttons, nav, labels }
+    uses BootstrapStyle.Core;     { for bsPrimary / bsSecondary … enum values }
+    uses BootstrapStyle.Forms;    { for form-control Apply methods }
 
-  New approach:
-  • ControlType := TControlType.Styled  →  disables native Win32 rendering,
-    lets FMX own the style lifecycle (one natural ApplyStyleLookup, properly
-    freed when the button is destroyed).
-  • We NEVER call ApplyStyleLookup ourselves.
-  • A TRectangle child ("__BSBg__") provides the solid Bootstrap background.
-    FMX calls FStyleObject.SendToBack() inside its own ApplyStyleLookup, so
-    FStyleObject is always behind our rect regardless of call order.
-  • TLabel "__BSIcon__" renders the bootstrap-icons glyph on the left.
-  • TLabel "__BSText__" (inside a TLayout) renders the caption on the right.
-  • Both labels have HitTest=False so clicks fall through to the TButton.
-  • Hover: TColorAnimation on the rect Fill.Color (0.15 s, Bootstrap colours).
-  • All child objects owned by the button → freed automatically on destroy.
-}
+  Sub-units:
+    BootstrapStyle.Core     — TBootstrapVariant, TBootstrapButtonPaint, BS_ constants
+    BootstrapStyle.Colors   — Bootstrap 5.3 theme colour constants
+    BootstrapStyle.Icons    — bootstrap-icons glyph map (TBootstrapIcons)
+    BootstrapStyle.Buttons  — button styling engine (TBootstrapButtons)
+    BootstrapStyle.Forms    — form control styling engine (TBootstrapForms)
+
+  TBootstrapStyle is a stateless class-method façade that delegates every call
+  to the appropriate sub-unit class.  No state, no lifecycle, no leaks.
+
+  Runtime toggle
+  ──────────────
+    TBootstrapStyle.SetBootstrapActive(False)  — reverts ALL styled controls
+                                                 (buttons + form controls)
+                                                 to FMX / Windows default look.
+    TBootstrapStyle.SetBootstrapActive(True)   — re-applies Bootstrap 5 to all
+                                                 registered controls.
+    TBootstrapStyle.GetBootstrapActive         — current state.
+*)
 
 interface
 
@@ -32,67 +38,48 @@ uses
   FMX.Controls,
   FMX.Controls.Presentation,
   FMX.StdCtrls,
+  FMX.Edit,
+  FMX.ComboEdit,
+  FMX.ListBox,
+  FMX.Grid,
   FMX.Objects,
   FMX.Layouts,
-  FMX.Ani;
+  FMX.Ani,
+  FMX.Memo,
+  FMX.SearchBox,
+  FMX.ListView,
+  BootstrapStyle.Core;   { re-exported so callers get TBootstrapVariant in scope }
 
+{ Type aliases — keep TBootstrapVariant and TBootstrapButtonPaint accessible
+  through "uses BootstrapStyle" without requiring callers to also list
+  BootstrapStyle.Core explicitly. }
 type
-  TBootstrapVariant = (
-    bsPrimary,
-    bsSecondary,
-    bsSuccess,
-    bsDanger,
-    bsWarning,
-    bsInfo,
-    bsLight,
-    bsDark,
-    bsLink);
-
-  TBootstrapButtonPaint = record
-    Normal, Hover: TAlphaColor;
-    TextColor: TAlphaColor;
-    Solid: Boolean;
-  end;
+  TBootstrapVariant     = BootstrapStyle.Core.TBootstrapVariant;
+  TBootstrapButtonPaint = BootstrapStyle.Core.TBootstrapButtonPaint;
 
   TBootstrapStyle = class
   private
-    const
-      HoverTagBase  = 910000000;
-      BS_BG_NAME    = '__BSBg__';
-      BS_INNER_NAME = '__BSInner__';
-      BS_ICON_NAME  = '__BSIcon__';
-      BS_TEXT_NAME  = '__BSText__';
-
-    class function  ButtonPaint(AVariant: TBootstrapVariant): TBootstrapButtonPaint; static;
-    class function  TryVariantFromTag(const ATag: Integer; out V: TBootstrapVariant): Boolean; static;
-    class procedure RemoveBSChildren(const C: TControl); static;
-    class function  FindBSBackground(const C: TControl): TRectangle; static;
-    class function  FindBSAnimation(const R: TRectangle): TColorAnimation; static;
-    class procedure AttachHover(const C: TControl; AVariant: TBootstrapVariant); static;
     class procedure StretchMenuPill(const APill: TRectangle); static;
 
-    class procedure BuildButtonVisuals(
-      const C: TControl;
-      const P: TBootstrapButtonPaint;
-      const AIconName, ACaption: string;
-      AFontSize: Single); static;
-
   public
-    { Used by TBootstrapHoverHook (TNotifyEvent requires a method pointer). }
-    class procedure ProcessHoverEnter(Sender: TObject); static;
-    class procedure ProcessHoverLeave(Sender: TObject); static;
-
+    { ── Typography ────────────────────────────────────────────────────── }
     class procedure ApplyLabelTypography(const ALabel: TLabel); static;
-    class procedure ApplyBootstrapIconLabel(const ALabel: TLabel; const ABootstrapIconName: string); static;
+    class procedure ApplyBootstrapIconLabel(
+      const ALabel: TLabel;
+      const ABootstrapIconName: string); static;
 
+    { ── Navigation pills ──────────────────────────────────────────────── }
     class procedure ApplyNavPillState(
       const ARectActive: TRectangle;
       const ALblIcon, ALblText: TLabel;
       AActive: Boolean); static;
 
-    class procedure StretchSidebarMenuPills(const APills: array of TRectangle); static;
+    class procedure StretchSidebarMenuPills(
+      const APills: array of TRectangle); static;
 
-    { AIconName is optional — empty string means text-only button. }
+    { ── Buttons (BootstrapStyle.Buttons) ─────────────────────────────── }
+
+    { Solid button with optional left-side icon. AIconName='' → text-only. }
     class procedure ApplyButton(
       const ABtn: TButton;
       AVariant: TBootstrapVariant;
@@ -113,350 +100,77 @@ type
       AVariant: TBootstrapVariant;
       const ABootstrapIconName: string;
       AFontSize: Single = 14); static;
+
+    { Hover callbacks — forwarded to TBootstrapButtons; exposed for backward
+      compatibility in case any external code holds a reference to them. }
+    class procedure ProcessHoverEnter(Sender: TObject); static;
+    class procedure ProcessHoverLeave(Sender: TObject); static;
+
+    { ── Form controls (BootstrapStyle.Forms) ─────────────────────────── }
+
+    { Registers + styles a TEdit as a Bootstrap 5 form-control. }
+    class procedure ApplyEdit(
+      const AEdit: TEdit;
+      AFontSize: Single = 14); static;
+
+    { Registers + styles a TComboBox as a Bootstrap 5 form-select. }
+    class procedure ApplyComboBox(
+      const ACombo: TComboBox;
+      AFontSize: Single = 14); static;
+
+    { Registers + styles a TComboEdit (type-ahead) as Bootstrap 5 form-control. }
+    class procedure ApplyComboEdit(
+      const AComboEdit: TComboEdit;
+      AFontSize: Single = 14); static;
+
+    { Registers + styles a TListBox as a Bootstrap 5 list-group. }
+    class procedure ApplyListBox(
+      const AListBox: TListBox;
+      AFontSize: Single = 14); static;
+
+    { Registers + styles a TGrid as a Bootstrap 5 table. }
+    class procedure ApplyGrid(
+      const AGrid: TGrid;
+      AFontSize: Single = 13); static;
+
+    { Registers + styles a TStringGrid as a Bootstrap 5 table. }
+    class procedure ApplyStringGrid(
+      const AGrid: TStringGrid;
+      AFontSize: Single = 13); static;
+
+    { Registers + styles a TMemo as a Bootstrap 5 textarea. }
+    class procedure ApplyMemo(
+      const AMemo: TMemo;
+      AFontSize: Single = 14); static;
+
+    { Registers + styles a TSearchBox as a Bootstrap 5 search input. }
+    class procedure ApplySearchBox(
+      const ASearchBox: TSearchBox;
+      AFontSize: Single = 14); static;
+
+    { Registers + styles a TListView as a Bootstrap 5 list. }
+    class procedure ApplyListView(
+      const AListView: TListView;
+      AFontSize: Single = 13); static;
+
+    { ── Global runtime toggle ─────────────────────────────────────────── }
+
+    { Switches ALL registered controls (buttons + form controls) between
+      Bootstrap 5 styling and the FMX / Windows default look at runtime. }
+    class procedure SetBootstrapActive(AActive: Boolean); static;
+    class function  GetBootstrapActive: Boolean; static;
   end;
 
 implementation
 
 uses
-  System.SysUtils,
-  System.Classes,
   FMX.Graphics,
   BootstrapStyle.Colors,
-  BootstrapStyle.Icons;
+  BootstrapStyle.Icons,
+  BootstrapStyle.Buttons,
+  BootstrapStyle.Forms;
 
-type
-  TBootstrapHoverHook = class
-  public
-    procedure ControlMouseEnter(Sender: TObject);
-    procedure ControlMouseLeave(Sender: TObject);
-  end;
-
-var
-  GBootstrapHoverHook: TBootstrapHoverHook;
-
-{ TBootstrapHoverHook }
-
-procedure TBootstrapHoverHook.ControlMouseEnter(Sender: TObject);
-begin
-  TBootstrapStyle.ProcessHoverEnter(Sender);
-end;
-
-procedure TBootstrapHoverHook.ControlMouseLeave(Sender: TObject);
-begin
-  TBootstrapStyle.ProcessHoverLeave(Sender);
-end;
-
-{ TBootstrapStyle — private helpers }
-
-class function TBootstrapStyle.ButtonPaint(AVariant: TBootstrapVariant): TBootstrapButtonPaint;
-begin
-  FillChar(Result, SizeOf(Result), 0);
-  Result.Solid := True;
-  Result.TextColor := BS_TEXT_ON_DARK;
-  case AVariant of
-    bsPrimary:
-      begin
-        Result.Normal := BS_PRIMARY;
-        Result.Hover  := BS_PRIMARY_HOVER;
-      end;
-    bsSecondary:
-      begin
-        Result.Normal := BS_SECONDARY;
-        Result.Hover  := BS_SECONDARY_HOVER;
-      end;
-    bsSuccess:
-      begin
-        Result.Normal := BS_SUCCESS;
-        Result.Hover  := BS_SUCCESS_HOVER;
-      end;
-    bsDanger:
-      begin
-        Result.Normal := BS_DANGER;
-        Result.Hover  := BS_DANGER_HOVER;
-      end;
-    bsWarning:
-      begin
-        Result.Normal    := BS_WARNING;
-        Result.Hover     := BS_WARNING_HOVER;
-        Result.TextColor := BS_TEXT_ON_LIGHT;
-      end;
-    bsInfo:
-      begin
-        Result.Normal    := BS_INFO;
-        Result.Hover     := BS_INFO_HOVER;
-        Result.TextColor := BS_TEXT_ON_LIGHT;
-      end;
-    bsLight:
-      begin
-        Result.Normal    := BS_LIGHT;
-        Result.Hover     := BS_LIGHT_HOVER;
-        Result.TextColor := BS_TEXT_ON_LIGHT;
-      end;
-    bsDark:
-      begin
-        Result.Normal := BS_DARK;
-        Result.Hover  := BS_DARK_HOVER;
-      end;
-    bsLink:
-      begin
-        Result.Solid     := False;
-        Result.Normal    := TAlphaColors.Null;
-        Result.Hover     := TAlphaColors.Null;
-        Result.TextColor := BS_LINK;
-      end;
-  end;
-end;
-
-class function TBootstrapStyle.TryVariantFromTag(const ATag: Integer; out V: TBootstrapVariant): Boolean;
-var
-  O: Integer;
-begin
-  O := ATag - HoverTagBase;
-  if (O < 0) or (O > Ord(High(TBootstrapVariant))) then
-    Exit(False);
-  V := TBootstrapVariant(O);
-  Result := True;
-end;
-
-class procedure TBootstrapStyle.RemoveBSChildren(const C: TControl);
-var
-  I: Integer;
-  Ch: TFmxObject;
-begin
-  for I := C.ChildrenCount - 1 downto 0 do
-  begin
-    Ch := C.Children[I];
-    if Ch is TRectangle then
-    begin
-      if TRectangle(Ch).Name = BS_BG_NAME then
-        Ch.Free;
-    end
-    else if Ch is TLayout then
-    begin
-      if TLayout(Ch).Name = BS_INNER_NAME then
-        Ch.Free;
-    end
-    else if Ch is TLabel then
-    begin
-      if (TLabel(Ch).Name = BS_ICON_NAME) or (TLabel(Ch).Name = BS_TEXT_NAME) then
-        Ch.Free;
-    end;
-  end;
-end;
-
-class function TBootstrapStyle.FindBSBackground(const C: TControl): TRectangle;
-var
-  I: Integer;
-begin
-  Result := nil;
-  for I := 0 to C.ChildrenCount - 1 do
-    if (C.Children[I] is TRectangle) and
-       (TRectangle(C.Children[I]).Name = BS_BG_NAME) then
-    begin
-      Result := TRectangle(C.Children[I]);
-      Exit;
-    end;
-end;
-
-class function TBootstrapStyle.FindBSAnimation(const R: TRectangle): TColorAnimation;
-var
-  I: Integer;
-begin
-  Result := nil;
-  for I := 0 to R.ChildrenCount - 1 do
-    if R.Children[I] is TColorAnimation then
-    begin
-      Result := TColorAnimation(R.Children[I]);
-      Exit;
-    end;
-end;
-
-class procedure TBootstrapStyle.AttachHover(const C: TControl; AVariant: TBootstrapVariant);
-begin
-  C.Tag := HoverTagBase + Ord(AVariant);
-  C.OnMouseEnter := GBootstrapHoverHook.ControlMouseEnter;
-  C.OnMouseLeave := GBootstrapHoverHook.ControlMouseLeave;
-end;
-
-class procedure TBootstrapStyle.BuildButtonVisuals(
-  const C: TControl;
-  const P: TBootstrapButtonPaint;
-  const AIconName, ACaption: string;
-  AFontSize: Single);
-var
-  BGRect: TRectangle;
-  Anim: TColorAnimation;
-  InnerLayout: TLayout;
-  IconLbl: TLabel;
-  TextLbl: TLabel;
-  HasIcon: Boolean;
-  HasCaption: Boolean;
-begin
-  HasIcon    := (AIconName <> '') and (TBootstrapIcons.Glyph(AIconName) <> '');
-  HasCaption := (ACaption <> '');
-
-  { ── Background rectangle ── }
-  if P.Solid then
-  begin
-    BGRect := TRectangle.Create(C);
-    BGRect.Name     := BS_BG_NAME;
-    BGRect.Parent   := C;
-    BGRect.Align    := TAlignLayout.Client;
-    BGRect.HitTest  := False;
-    BGRect.Fill.Kind  := TBrushKind.Solid;
-    BGRect.Fill.Color := P.Normal;
-    BGRect.Stroke.Kind := TBrushKind.None;
-    BGRect.XRadius  := 6;
-    BGRect.YRadius  := 6;
-
-    { Smooth hover animation (0.15 s — Bootstrap default transition). }
-    Anim := TColorAnimation.Create(BGRect);
-    Anim.Parent       := BGRect;
-    Anim.PropertyName := 'Fill.Color';
-    Anim.Duration     := 0.15;
-    Anim.StartValue   := P.Normal;
-    Anim.StopValue    := P.Hover;
-    Anim.AutoReverse  := False;
-    Anim.Loop         := False;
-    Anim.Enabled      := True;
-  end;
-
-  { ── Content: icon-left + text-right, icon-only, or text-only ── }
-  if HasIcon and HasCaption then
-  begin
-    { Horizontal layout: [icon label][text label] }
-    InnerLayout := TLayout.Create(C);
-    InnerLayout.Name    := BS_INNER_NAME;
-    InnerLayout.Parent  := C;
-    InnerLayout.Align   := TAlignLayout.Client;
-    InnerLayout.HitTest := False;
-    InnerLayout.Margins.Left  := 12;
-    InnerLayout.Margins.Right := 12;
-
-    IconLbl := TLabel.Create(C);
-    IconLbl.Name    := BS_ICON_NAME;
-    IconLbl.Parent  := InnerLayout;
-    IconLbl.Align   := TAlignLayout.Left;
-    IconLbl.Width   := AFontSize + 8;
-    IconLbl.HitTest := False;
-    IconLbl.AutoSize := False;
-    IconLbl.StyledSettings := [];
-    IconLbl.TextSettings.Font.Family := TBootstrapIcons.FontFamily;
-    IconLbl.TextSettings.Font.Size   := AFontSize;
-    IconLbl.TextSettings.Font.Style  := [];
-    IconLbl.TextSettings.HorzAlign   := TTextAlign.Center;
-    IconLbl.TextSettings.VertAlign   := TTextAlign.Center;
-    IconLbl.TextSettings.FontColor   := P.TextColor;
-    IconLbl.Text := TBootstrapIcons.Glyph(AIconName);
-
-    TextLbl := TLabel.Create(C);
-    TextLbl.Name    := BS_TEXT_NAME;
-    TextLbl.Parent  := InnerLayout;
-    TextLbl.Align   := TAlignLayout.Client;
-    TextLbl.HitTest := False;
-    TextLbl.AutoSize := False;
-    TextLbl.StyledSettings := [];
-    TextLbl.TextSettings.Font.Family := 'Segoe UI';
-    TextLbl.TextSettings.Font.Size   := AFontSize;
-    TextLbl.TextSettings.Font.Style  := [];
-    TextLbl.TextSettings.HorzAlign   := TTextAlign.Leading;
-    TextLbl.TextSettings.VertAlign   := TTextAlign.Center;
-    TextLbl.TextSettings.FontColor   := P.TextColor;
-    TextLbl.Text := ACaption;
-  end
-  else if HasIcon then
-  begin
-    { Icon-only: centred }
-    IconLbl := TLabel.Create(C);
-    IconLbl.Name    := BS_ICON_NAME;
-    IconLbl.Parent  := C;
-    IconLbl.Align   := TAlignLayout.Client;
-    IconLbl.HitTest := False;
-    IconLbl.AutoSize := False;
-    IconLbl.StyledSettings := [];
-    IconLbl.TextSettings.Font.Family := TBootstrapIcons.FontFamily;
-    IconLbl.TextSettings.Font.Size   := AFontSize;
-    IconLbl.TextSettings.Font.Style  := [];
-    IconLbl.TextSettings.HorzAlign   := TTextAlign.Center;
-    IconLbl.TextSettings.VertAlign   := TTextAlign.Center;
-    IconLbl.TextSettings.FontColor   := P.TextColor;
-    IconLbl.Text := TBootstrapIcons.Glyph(AIconName);
-  end
-  else if HasCaption then
-  begin
-    { Text-only: centred }
-    TextLbl := TLabel.Create(C);
-    TextLbl.Name    := BS_TEXT_NAME;
-    TextLbl.Parent  := C;
-    TextLbl.Align   := TAlignLayout.Client;
-    TextLbl.HitTest := False;
-    TextLbl.AutoSize := False;
-    TextLbl.StyledSettings := [];
-    TextLbl.TextSettings.Font.Family := 'Segoe UI';
-    TextLbl.TextSettings.Font.Size   := AFontSize;
-    TextLbl.TextSettings.Font.Style  := [];
-    TextLbl.TextSettings.HorzAlign   := TTextAlign.Center;
-    TextLbl.TextSettings.VertAlign   := TTextAlign.Center;
-    TextLbl.TextSettings.FontColor   := P.TextColor;
-    TextLbl.Text := ACaption;
-  end;
-end;
-
-{ TBootstrapStyle — public }
-
-class procedure TBootstrapStyle.ProcessHoverEnter(Sender: TObject);
-var
-  V: TBootstrapVariant;
-  P: TBootstrapButtonPaint;
-  Ctrl: TControl;
-  BG: TRectangle;
-  Anim: TColorAnimation;
-begin
-  if not (Sender is TControl) then Exit;
-  Ctrl := TControl(Sender);
-  if csDestroying in Ctrl.ComponentState then Exit;
-  if not TryVariantFromTag(Ctrl.Tag, V) then Exit;
-  P  := ButtonPaint(V);
-  BG := FindBSBackground(Ctrl);
-  if BG = nil then Exit;
-  Anim := FindBSAnimation(BG);
-  if Anim <> nil then
-  begin
-    Anim.StartValue := BG.Fill.Color;   { from current (may be mid-anim) }
-    Anim.StopValue  := P.Hover;
-    Anim.Inverse    := False;
-    Anim.Start;
-  end
-  else
-    BG.Fill.Color := P.Hover;
-end;
-
-class procedure TBootstrapStyle.ProcessHoverLeave(Sender: TObject);
-var
-  V: TBootstrapVariant;
-  P: TBootstrapButtonPaint;
-  Ctrl: TControl;
-  BG: TRectangle;
-  Anim: TColorAnimation;
-begin
-  if not (Sender is TControl) then Exit;
-  Ctrl := TControl(Sender);
-  if csDestroying in Ctrl.ComponentState then Exit;
-  if not TryVariantFromTag(Ctrl.Tag, V) then Exit;
-  P  := ButtonPaint(V);
-  BG := FindBSBackground(Ctrl);
-  if BG = nil then Exit;
-  Anim := FindBSAnimation(BG);
-  if Anim <> nil then
-  begin
-    Anim.StartValue := BG.Fill.Color;   { from current }
-    Anim.StopValue  := P.Normal;
-    Anim.Inverse    := False;
-    Anim.Start;
-  end
-  else
-    BG.Fill.Color := P.Normal;
-end;
+{ ── TBootstrapStyle — typography ──────────────────────────────────────────── }
 
 class procedure TBootstrapStyle.ApplyLabelTypography(const ALabel: TLabel);
 begin
@@ -465,7 +179,9 @@ begin
     TStyledSetting.Size];
 end;
 
-class procedure TBootstrapStyle.ApplyBootstrapIconLabel(const ALabel: TLabel; const ABootstrapIconName: string);
+class procedure TBootstrapStyle.ApplyBootstrapIconLabel(
+  const ALabel: TLabel;
+  const ABootstrapIconName: string);
 begin
   ALabel.StyledSettings := ALabel.StyledSettings - [
     TStyledSetting.Family,
@@ -474,12 +190,14 @@ begin
   ALabel.Text := TBootstrapIcons.Glyph(ABootstrapIconName);
 end;
 
+{ ── TBootstrapStyle — navigation pills ────────────────────────────────────── }
+
 class procedure TBootstrapStyle.ApplyNavPillState(
   const ARectActive: TRectangle;
   const ALblIcon, ALblText: TLabel;
   AActive: Boolean);
 begin
-  ARectActive.Visible := AActive;
+  ARectActive.Visible    := AActive;
   ARectActive.Fill.Color := BS_MENU_ACTIVE_BG;
   if AActive then
   begin
@@ -503,7 +221,8 @@ begin
   APill.SetBounds(0, 0, PC.Width, PC.Height);
 end;
 
-class procedure TBootstrapStyle.StretchSidebarMenuPills(const APills: array of TRectangle);
+class procedure TBootstrapStyle.StretchSidebarMenuPills(
+  const APills: array of TRectangle);
 var
   I: Integer;
 begin
@@ -511,28 +230,16 @@ begin
     StretchMenuPill(APills[I]);
 end;
 
+{ ── TBootstrapStyle — buttons (delegate to TBootstrapButtons) ─────────────── }
+
 class procedure TBootstrapStyle.ApplyButton(
   const ABtn: TButton;
   AVariant: TBootstrapVariant;
   const ACaption: string;
   AFontSize: Single;
   const AIconName: string);
-var
-  P: TBootstrapButtonPaint;
 begin
-  P := ButtonPaint(AVariant);
-  RemoveBSChildren(ABtn);
-  { Force FMX style engine (no native Win32 rendering).
-    FMX manages ONE ApplyStyleLookup lifecycle — no manual call → no leaks. }
-  ABtn.ControlType := TControlType.Styled;
-  { Hide the button's own styled text (we render it via our TLabel child). }
-  ABtn.Text := '';
-  ABtn.Padding.Left   := 0;
-  ABtn.Padding.Top    := 0;
-  ABtn.Padding.Right  := 0;
-  ABtn.Padding.Bottom := 0;
-  BuildButtonVisuals(ABtn, P, AIconName, ACaption, AFontSize);
-  AttachHover(ABtn, AVariant);
+  TBootstrapButtons.ApplyButton(ABtn, AVariant, ACaption, AFontSize, AIconName);
 end;
 
 class procedure TBootstrapStyle.ApplyButtonIconOnly(
@@ -541,7 +248,7 @@ class procedure TBootstrapStyle.ApplyButtonIconOnly(
   const ABootstrapIconName: string;
   AFontSize: Single);
 begin
-  ApplyButton(ABtn, AVariant, '', AFontSize, ABootstrapIconName);
+  TBootstrapButtons.ApplyButtonIconOnly(ABtn, AVariant, ABootstrapIconName, AFontSize);
 end;
 
 class procedure TBootstrapStyle.ApplyCornerButtonGlyph(
@@ -549,25 +256,82 @@ class procedure TBootstrapStyle.ApplyCornerButtonGlyph(
   AVariant: TBootstrapVariant;
   const ABootstrapIconName: string;
   AFontSize: Single);
-var
-  P: TBootstrapButtonPaint;
 begin
-  P := ButtonPaint(AVariant);
-  RemoveBSChildren(ABtn);
-  ABtn.ControlType := TControlType.Styled;
-  ABtn.Text := '';
-  ABtn.Padding.Left   := 0;
-  ABtn.Padding.Top    := 0;
-  ABtn.Padding.Right  := 0;
-  ABtn.Padding.Bottom := 0;
-  BuildButtonVisuals(ABtn, P, ABootstrapIconName, '', AFontSize);
-  AttachHover(ABtn, AVariant);
+  TBootstrapButtons.ApplyCornerButtonGlyph(ABtn, AVariant, ABootstrapIconName, AFontSize);
 end;
 
-initialization
-  GBootstrapHoverHook := TBootstrapHoverHook.Create;
+class procedure TBootstrapStyle.ProcessHoverEnter(Sender: TObject);
+begin
+  TBootstrapButtons.ProcessHoverEnter(Sender);
+end;
 
-finalization
-  FreeAndNil(GBootstrapHoverHook);
+class procedure TBootstrapStyle.ProcessHoverLeave(Sender: TObject);
+begin
+  TBootstrapButtons.ProcessHoverLeave(Sender);
+end;
+
+{ ── TBootstrapStyle — form controls (delegate to TBootstrapForms) ─────────── }
+
+class procedure TBootstrapStyle.ApplyEdit(const AEdit: TEdit; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyEdit(AEdit, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyComboBox(const ACombo: TComboBox; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyComboBox(ACombo, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyComboEdit(const AComboEdit: TComboEdit; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyComboEdit(AComboEdit, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyListBox(const AListBox: TListBox; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyListBox(AListBox, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyGrid(const AGrid: TGrid; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyGrid(AGrid, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyStringGrid(const AGrid: TStringGrid; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyStringGrid(AGrid, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyMemo(const AMemo: TMemo; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyMemo(AMemo, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplySearchBox(const ASearchBox: TSearchBox; AFontSize: Single);
+begin
+  TBootstrapForms.ApplySearchBox(ASearchBox, AFontSize);
+end;
+
+class procedure TBootstrapStyle.ApplyListView(const AListView: TListView; AFontSize: Single);
+begin
+  TBootstrapForms.ApplyListView(AListView, AFontSize);
+end;
+
+{ ── TBootstrapStyle — global toggle ───────────────────────────────────────── }
+
+class procedure TBootstrapStyle.SetBootstrapActive(AActive: Boolean);
+begin
+  { Toggle buttons first, then form controls.  Each registry is independent
+    and tracks only the controls it knows about. }
+  TBootstrapButtons.SetActive(AActive);
+  TBootstrapForms.SetActive(AActive);
+end;
+
+class function TBootstrapStyle.GetBootstrapActive: Boolean;
+begin
+  { Both registries must agree; buttons are the authoritative source since they
+    are always styled and their state is updated atomically with forms. }
+  Result := TBootstrapButtons.GetActive;
+end;
 
 end.

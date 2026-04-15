@@ -110,7 +110,8 @@ uses
   Connection.Types,
   SmartPointer.Intf,
   SmartPointer,
-  BootstrapStyle;
+  BootstrapStyle,
+  BootstrapStyle.Core;
 
 {$R *.fmx}
 
@@ -135,11 +136,22 @@ end;
 procedure TFrameConnection.ApplyBootstrapChrome;
 begin
   TBootstrapStyle.ApplyLabelTypography(LblConnectionStatus);
+  { Buttons }
   TBootstrapStyle.ApplyButtonIconOnly(BtnBrowseFile, bsPrimary, 'folder2-open', 18);
   TBootstrapStyle.ApplyButton(BtnLoadConfig,     bsPrimary, 'Load Config',      15, 'download');
   TBootstrapStyle.ApplyButton(BtnTestConnection, bsPrimary, 'Test Connection',  15, 'plug-fill');
   TBootstrapStyle.ApplyButton(BtnSaveConfig,     bsPrimary, 'Save Config',      15, 'floppy');
   TBootstrapStyle.ApplyButton(BtnClearLog,       bsPrimary, 'Clear',            14, 'x-lg');
+  { Form controls }
+  TBootstrapStyle.ApplyComboBox(ComboEngine, 14);
+  TBootstrapStyle.ApplyComboBox(ComboDriver, 14);
+  TBootstrapStyle.ApplyEdit(EditHost,     14);
+  TBootstrapStyle.ApplyEdit(EditPort,     14);
+  TBootstrapStyle.ApplyEdit(EditDatabase, 14);
+  TBootstrapStyle.ApplyEdit(EditUsername, 14);
+  TBootstrapStyle.ApplyEdit(EditPassword, 14);
+  TBootstrapStyle.ApplyEdit(EditSchema,   14);
+  TBootstrapStyle.ApplyComboBox(ComboConfigFormat, 14);
 end;
 
 procedure TFrameConnection.SetParent(const Value: TFmxObject);

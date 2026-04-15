@@ -1,0 +1,859 @@
+object FrameBootstrapShowcase: TFrameBootstrapShowcase
+  Size.Width = 1100.000000000000000000
+  Size.Height = 736.000000000000000000
+  Size.PlatformDefault = False
+  object RectShowcaseBg: TRectangle
+    Align = Client
+    Fill.Color = xFFF8F9FA
+    Stroke.Kind = None
+    Size.Width = 1100.000000000000000000
+    Size.Height = 736.000000000000000000
+    Size.PlatformDefault = False
+    object ScrollMain: TVertScrollBox
+      Align = Client
+      Padding.Left = 24.000000000000000000
+      Padding.Top = 20.000000000000000000
+      Padding.Right = 24.000000000000000000
+      Padding.Bottom = 20.000000000000000000
+      Size.Width = 1100.000000000000000000
+      Size.Height = 736.000000000000000000
+      Size.PlatformDefault = False
+      object RectSectionBtns: TRectangle
+        Align = Top
+        ClipChildren = True
+        Fill.Color = claWhite
+        Stroke.Color = xFFDEE2E6
+        Size.Width = 1052.000000000000000000
+        Size.Height = 393.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectBtnsHeader: TRectangle
+          Align = Top
+          Fill.Color = xFFF8F9FA
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          object LblBtnsTitle: TLabel
+            Align = Client
+            Margins.Left = 18.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Text = 'Buttons'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 15.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF212529
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Size.Width = 1022.000000000000000000
+            Size.Height = 48.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object RectBtnsDivider: TRectangle
+          Align = Top
+          Fill.Color = xFFDEE2E6
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 1.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object LayBtnsBody: TLayout
+          Align = Client
+          Padding.Left = 18.000000000000000000
+          Padding.Top = 16.000000000000000000
+          Padding.Right = 18.000000000000000000
+          Padding.Bottom = 16.000000000000000000
+          Size.Width = 1052.000000000000000000
+          Size.Height = 344.000000000000000000
+          Size.PlatformDefault = False
+          object LblRowText: TLabel
+            Align = Top
+            Text = 'Solid Buttons'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 12.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF6C757D
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Bottom = 8.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LayBtnsText: TLayout
+            Align = Top
+            Margins.Bottom = 16.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 38.000000000000000000
+            Size.PlatformDefault = False
+            object BtnPrimary: TButton
+              Align = Left
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Primary'
+            end
+            object BtnSecondary: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Secondary'
+            end
+            object BtnSuccess: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Success'
+            end
+            object BtnDanger: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Danger'
+            end
+            object BtnWarning: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Warning'
+            end
+            object BtnInfo: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Info'
+            end
+            object BtnLight: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Light'
+            end
+            object BtnDark: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Dark'
+            end
+            object BtnLink: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 105.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Link'
+            end
+          end
+          object LblRowIconText: TLabel
+            Align = Top
+            Text = 'Icon + Text Buttons'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 12.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF6C757D
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Bottom = 8.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LayBtnsIconText: TLayout
+            Align = Top
+            Margins.Bottom = 16.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 38.000000000000000000
+            Size.PlatformDefault = False
+            object BtnIPrimary: TButton
+              Align = Left
+              Size.Width = 162.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Save'
+            end
+            object BtnISecondary: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 162.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Settings'
+            end
+            object BtnISuccess: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 162.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Confirm'
+            end
+            object BtnIDanger: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 162.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Delete'
+            end
+            object BtnIWarning: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 162.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Alert'
+            end
+            object BtnIInfo: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 162.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Upload'
+            end
+          end
+          object LblRowIconOnly: TLabel
+            Align = Top
+            Text = 'Icon-Only Buttons'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 12.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF6C757D
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Bottom = 8.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LayBtnsIconOnly: TLayout
+            Align = Top
+            Margins.Bottom = 16.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 38.000000000000000000
+            Size.PlatformDefault = False
+            object BtnOPrimary: TButton
+              Align = Left
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object BtnOSecondary: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object BtnOSuccess: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object BtnODanger: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object BtnOWarning: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object BtnODark: TButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+          end
+          object LblRowCorner: TLabel
+            Align = Top
+            Text = 'Corner Buttons (Glyph)'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 12.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF6C757D
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Margins.Bottom = 8.000000000000000000
+            Size.Width = 1016.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LayCorner: TLayout
+            Align = Top
+            Size.Width = 1016.000000000000000000
+            Size.Height = 38.000000000000000000
+            Size.PlatformDefault = False
+            object CbtnPrimary: TCornerButton
+              Align = Left
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object CbtnSecondary: TCornerButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object CbtnSuccess: TCornerButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object CbtnDanger: TCornerButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object CbtnWarning: TCornerButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+            object CbtnInfo: TCornerButton
+              Align = Left
+              Margins.Left = 8.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              Text = ''
+            end
+          end
+        end
+      end
+      object RectSectionForms: TRectangle
+        Align = Top
+        ClipChildren = True
+        Fill.Color = claWhite
+        Stroke.Color = xFFDEE2E6
+        Margins.Top = 20.000000000000000000
+        Size.Width = 1052.000000000000000000
+        Size.Height = 301.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectFormsHeader: TRectangle
+          Align = Top
+          Fill.Color = xFFF8F9FA
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          object LblFormsTitle: TLabel
+            Align = Client
+            Margins.Left = 18.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Text = 'Form Controls'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 15.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF212529
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Size.Width = 1022.000000000000000000
+            Size.Height = 48.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object RectFormsDivider: TRectangle
+          Align = Top
+          Fill.Color = xFFDEE2E6
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 1.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object LayFormsBody: TLayout
+          Align = Client
+          Padding.Left = 18.000000000000000000
+          Padding.Top = 16.000000000000000000
+          Padding.Right = 18.000000000000000000
+          Padding.Bottom = 16.000000000000000000
+          Size.Width = 1052.000000000000000000
+          Size.Height = 252.000000000000000000
+          Size.PlatformDefault = False
+          object LayFormsLeft: TLayout
+            Align = Left
+            Size.Width = 500.000000000000000000
+            Size.Height = 220.000000000000000000
+            Size.PlatformDefault = False
+            object LblEditNormal: TLabel
+              Align = Top
+              Text = 'Text Input'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 500.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object EditNormal: TEdit
+              Align = Top
+              Margins.Bottom = 14.000000000000000000
+              Size.Width = 500.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = 'Enter text...'
+            end
+            object LblEditPassword: TLabel
+              Align = Top
+              Text = 'Password'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 500.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object EditPassword: TEdit
+              Align = Top
+              Margins.Bottom = 14.000000000000000000
+              Password = True
+              Size.Width = 500.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = 'Password'
+            end
+            object LblEditDisabled: TLabel
+              Align = Top
+              Text = 'Disabled Input'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 500.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object EditDisabled: TEdit
+              Align = Top
+              Enabled = False
+              Size.Width = 500.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Disabled field'
+            end
+          end
+          object LayFormsRight: TLayout
+            Align = Client
+            Margins.Left = 16.000000000000000000
+            Size.Width = 498.000000000000000000
+            Size.Height = 220.000000000000000000
+            Size.PlatformDefault = False
+            object LblComboBox: TLabel
+              Align = Top
+              Text = 'Select (ComboBox)'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object ComboBoxMain: TComboBox
+              Align = Top
+              Margins.Bottom = 14.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              Items.Strings = (
+                'SQLite'
+                'MySQL / MariaDB'
+                'PostgreSQL'
+                'SQL Server'
+                'Oracle'
+                'Firebird')
+              ItemIndex = 0
+            end
+            object LblComboEdit: TLabel
+              Align = Top
+              Text = 'Autocomplete (ComboEdit)'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object ComboEditMain: TComboEdit
+              Align = Top
+              Margins.Bottom = 14.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              Items.Strings = (
+                'FireDAC'
+                'dbExpress'
+                'ZeOS'
+                'UniDAC')
+            end
+            object LblSearchBox: TLabel
+              Align = Top
+              Text = 'Search Box'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object SearchBoxMain: TSearchBox
+              Align = Top
+              Size.Width = 498.000000000000000000
+              Size.Height = 36.000000000000000000
+              Size.PlatformDefault = False
+              TextPrompt = 'Search...'
+            end
+          end
+        end
+      end
+      object RectSectionLists: TRectangle
+        Align = Top
+        ClipChildren = True
+        Fill.Color = claWhite
+        Stroke.Color = xFFDEE2E6
+        Margins.Top = 20.000000000000000000
+        Size.Width = 1052.000000000000000000
+        Size.Height = 269.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectListsHeader: TRectangle
+          Align = Top
+          Fill.Color = xFFF8F9FA
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          object LblListsTitle: TLabel
+            Align = Client
+            Margins.Left = 18.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Text = 'Memo & List Group'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 15.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF212529
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Size.Width = 1022.000000000000000000
+            Size.Height = 48.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object RectListsDivider: TRectangle
+          Align = Top
+          Fill.Color = xFFDEE2E6
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 1.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object LayListsBody: TLayout
+          Align = Client
+          Padding.Left = 18.000000000000000000
+          Padding.Top = 16.000000000000000000
+          Padding.Right = 18.000000000000000000
+          Padding.Bottom = 16.000000000000000000
+          Size.Width = 1052.000000000000000000
+          Size.Height = 220.000000000000000000
+          Size.PlatformDefault = False
+          object LayListsLeft: TLayout
+            Align = Left
+            Size.Width = 500.000000000000000000
+            Size.Height = 188.000000000000000000
+            Size.PlatformDefault = False
+            object LblMemo: TLabel
+              Align = Top
+              Text = 'Textarea (TMemo)'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 500.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object MemoMain: TMemo
+              Align = Top
+              Size.Width = 500.000000000000000000
+              Size.Height = 160.000000000000000000
+              Size.PlatformDefault = False
+              Lines.Strings = (
+                'Bootstrap 5 textarea'
+                'Multiple lines supported'
+                'Styled with Bootstrap form-control'
+                'Rounded border on focus')
+            end
+          end
+          object LayListsRight: TLayout
+            Align = Client
+            Margins.Left = 16.000000000000000000
+            Size.Width = 498.000000000000000000
+            Size.Height = 188.000000000000000000
+            Size.PlatformDefault = False
+            object LblListBox: TLabel
+              Align = Top
+              Text = 'List Group (TListBox)'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object ListBoxMain: TListBox
+              Align = Top
+              Size.Width = 498.000000000000000000
+              Size.Height = 160.000000000000000000
+              Size.PlatformDefault = False
+            end
+          end
+        end
+      end
+      object RectSectionGrid: TRectangle
+        Align = Top
+        ClipChildren = True
+        Fill.Color = claWhite
+        Stroke.Color = xFFDEE2E6
+        Margins.Top = 20.000000000000000000
+        Size.Width = 1052.000000000000000000
+        Size.Height = 289.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectGridHeader: TRectangle
+          Align = Top
+          Fill.Color = xFFF8F9FA
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          object LblGridTitle: TLabel
+            Align = Client
+            Margins.Left = 18.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Text = 'Grids & List View'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 15.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF212529
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Size.Width = 1022.000000000000000000
+            Size.Height = 48.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object RectGridDivider: TRectangle
+          Align = Top
+          Fill.Color = xFFDEE2E6
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 1.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object LayGridBody: TLayout
+          Align = Client
+          Padding.Left = 18.000000000000000000
+          Padding.Top = 16.000000000000000000
+          Padding.Right = 18.000000000000000000
+          Padding.Bottom = 16.000000000000000000
+          Size.Width = 1052.000000000000000000
+          Size.Height = 240.000000000000000000
+          Size.PlatformDefault = False
+          object LayGridLeft: TLayout
+            Align = Left
+            Size.Width = 500.000000000000000000
+            Size.Height = 208.000000000000000000
+            Size.PlatformDefault = False
+            object LblStringGrid: TLabel
+              Align = Top
+              Text = 'String Grid (TStringGrid)'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 500.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object StringGridMain: TStringGrid
+              Align = Top
+              Size.Width = 500.000000000000000000
+              Size.Height = 180.000000000000000000
+              Size.PlatformDefault = False
+              object TStringColumn
+                Header = 'Name'
+                Width = 160.000000000000000000
+              end
+              object TStringColumn
+                Header = 'Type'
+                Width = 100.000000000000000000
+              end
+              object TStringColumn
+                Header = 'Value'
+                Width = 240.000000000000000000
+              end
+            end
+          end
+          object LayGridRight: TLayout
+            Align = Client
+            Margins.Left = 16.000000000000000000
+            Size.Width = 498.000000000000000000
+            Size.Height = 208.000000000000000000
+            Size.PlatformDefault = False
+            object LblListView: TLabel
+              Align = Top
+              Text = 'List View (TListView)'
+              TextSettings.Font.Family = 'Segoe UI'
+              TextSettings.Font.Size = 12.000000000000000000
+              TextSettings.FontColor = xFF212529
+              TextSettings.HorzAlign = Leading
+              TextSettings.VertAlign = Center
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 498.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object ListViewMain: TListView
+              Align = Top
+              Size.Width = 498.000000000000000000
+              Size.Height = 180.000000000000000000
+              Size.PlatformDefault = False
+            end
+          end
+        end
+      end
+      object RectSectionToggle: TRectangle
+        Align = Top
+        ClipChildren = True
+        Fill.Color = claWhite
+        Stroke.Color = xFFDEE2E6
+        Margins.Top = 20.000000000000000000
+        Size.Width = 1052.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        XRadius = 6.000000000000000000
+        YRadius = 6.000000000000000000
+        object RectToggleHeader: TRectangle
+          Align = Top
+          Fill.Color = xFFF8F9FA
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+          object LblToggleTitle: TLabel
+            Align = Client
+            Margins.Left = 18.000000000000000000
+            Margins.Right = 12.000000000000000000
+            Text = 'Toggle Bootstrap Styling'
+            TextSettings.Font.Family = 'Segoe UI'
+            TextSettings.Font.Size = 15.000000000000000000
+            TextSettings.Font.Style = [fsBold]
+            TextSettings.FontColor = xFF212529
+            TextSettings.HorzAlign = Leading
+            TextSettings.VertAlign = Center
+            Size.Width = 1022.000000000000000000
+            Size.Height = 48.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object RectToggleDivider: TRectangle
+          Align = Top
+          Fill.Color = xFFDEE2E6
+          Stroke.Kind = None
+          Size.Width = 1052.000000000000000000
+          Size.Height = 1.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object LayToggleBody: TLayout
+          Align = Client
+          Padding.Left = 18.000000000000000000
+          Padding.Top = 7.000000000000000000
+          Padding.Right = 18.000000000000000000
+          Padding.Bottom = 6.000000000000000000
+          Size.Width = 1052.000000000000000000
+          Size.Height = 51.000000000000000000
+          Size.PlatformDefault = False
+          object BtnToggleBootstrap: TButton
+            Align = Left
+            Size.Width = 200.000000000000000000
+            Size.Height = 38.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Bootstrap: ON'
+            OnClick = BtnToggleBootstrapClick
+          end
+        end
+      end
+    end
+  end
+end

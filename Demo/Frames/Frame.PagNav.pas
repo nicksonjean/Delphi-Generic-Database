@@ -110,6 +110,7 @@ implementation
 
 uses
   BootstrapStyle,
+  BootstrapStyle.Core,
   FMX.Grid.Helper,
   FMX.StringGrid.Helper,
   Connection,
@@ -142,21 +143,32 @@ end;
 
 procedure TFramePagNav.ApplyBootstrapChrome;
 begin
+  { Buttons }
   TBootstrapStyle.ApplyButton(BtnPNConnect, bsPrimary, 'Connect && Load', 13, 'plug-fill');
-  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonFirst, bsPrimary, 'skip-start', 15);
-  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonPrior, bsPrimary, 'chevron-left', 15);
-  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonNext, bsPrimary, 'chevron-right', 15);
-  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonLast, bsPrimary, 'skip-end', 15);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonFirst, bsPrimary, 'skip-start', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonPrior, bsPrimary, 'chevron-left', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonNext, bsPrimary, 'chevron-right', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonLast, bsPrimary, 'skip-end', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonInsert, bsPrimary, 'plus-lg', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonDelete, bsPrimary, 'trash', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonEdit, bsPrimary, 'pencil', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonPost, bsPrimary, 'check-lg', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonCancel, bsPrimary, 'x-lg', 13);
-  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonRefresh, bsPrimary, 'arrow-clockwise', 13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonFirst, bsPrimary, 'skip-start',    15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonPrior, bsPrimary, 'chevron-left',  15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonNext,  bsPrimary, 'chevron-right', 15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(PagButtonLast,  bsPrimary, 'skip-end',      15);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonFirst,   bsPrimary, 'skip-start',     13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonPrior,   bsPrimary, 'chevron-left',   13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonNext,    bsPrimary, 'chevron-right',  13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonLast,    bsPrimary, 'skip-end',       13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonInsert,  bsPrimary, 'plus-lg',        13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonDelete,  bsPrimary, 'trash',          13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonEdit,    bsPrimary, 'pencil',         13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonPost,    bsPrimary, 'check-lg',       13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonCancel,  bsPrimary, 'x-lg',           13);
+  TBootstrapStyle.ApplyCornerButtonGlyph(NavButtonRefresh, bsPrimary, 'arrow-clockwise',13);
+  { Form controls }
+  TBootstrapStyle.ApplyComboBox(ComboPNEngine,  14);
+  TBootstrapStyle.ApplyComboBox(ComboPNDriver,  14);
+  TBootstrapStyle.ApplyEdit(EditPNDatabase,     14);
+  TBootstrapStyle.ApplyEdit(EditPNSearch1,      14);
+  TBootstrapStyle.ApplyEdit(EditPNSearch2,      14);
+  TBootstrapStyle.ApplyEdit(EditPNSearch3,      14);
+  TBootstrapStyle.ApplyGrid(Grid1, 13);
+  TBootstrapStyle.ApplyGrid(Grid2, 13);
+  TBootstrapStyle.ApplyGrid(Grid3, 13);
 end;
 
 procedure TFramePagNav.SetParent(const Value: TFmxObject);

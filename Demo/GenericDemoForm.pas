@@ -21,7 +21,7 @@ uses
   FMX.ScrollBox;
 
 type
-  TMenuSection = (msNone, msConnection, msConnector, msDataTypes, msPagNav);
+  TMenuSection = (msNone, msBootstrapShowcase, msConnection, msConnector, msDataTypes, msPagNav);
 
   TGenericDemoForm = class(TForm)
     RectBackground: TRectangle;
@@ -41,6 +41,11 @@ type
     LblSidebarSubtitle: TLabel;
     RectSidebarDivider: TRectangle;
     ScrollSidebarMenu: TVertScrollBox;
+    LayMenuShowcase: TLayout;
+    RectMenuShowcaseBg: TRectangle;
+    RectMenuShowcaseActive: TRectangle;
+    LblMenuShowcaseIcon: TLabel;
+    LblMenuShowcaseText: TLabel;
     LayMenuConnection: TLayout;
     RectMenuConnectionBg: TRectangle;
     RectMenuConnectionActive: TRectangle;
@@ -67,6 +72,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure BtnHamburgerClick(Sender: TObject);
+    procedure MenuShowcaseClick(Sender: TObject);
     procedure MenuConnectionClick(Sender: TObject);
     procedure MenuConnectorClick(Sender: TObject);
     procedure MenuDataTypesClick(Sender: TObject);
@@ -94,6 +100,7 @@ var
 implementation
 
 uses
+  Frame.BootstrapShowcase,
   Frame.Connection,
   Frame.Connector,
   Frame.DataTypes,
@@ -114,6 +121,8 @@ begin
   TBootstrapStyle.ApplyLabelTypography(LblHamburger);
   TBootstrapStyle.ApplyLabelTypography(LblSidebarTitle);
   TBootstrapStyle.ApplyLabelTypography(LblSidebarSubtitle);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuShowcaseIcon);
+  TBootstrapStyle.ApplyLabelTypography(LblMenuShowcaseText);
   TBootstrapStyle.ApplyLabelTypography(LblMenuConnectionIcon);
   TBootstrapStyle.ApplyLabelTypography(LblMenuConnectionText);
   TBootstrapStyle.ApplyLabelTypography(LblMenuConnectorIcon);
@@ -124,12 +133,14 @@ begin
   TBootstrapStyle.ApplyLabelTypography(LblMenuPagNavText);
 
   TBootstrapStyle.ApplyBootstrapIconLabel(LblSidebarTitle, 'database-fill');
+  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuShowcaseIcon, 'speedometer2');
   TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuConnectionIcon, 'plug-fill');
   TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuConnectorIcon, 'arrow-left-right');
   TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuDataTypesIcon, 'braces');
   TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuPagNavIcon, 'table');
 
   TBootstrapStyle.StretchSidebarMenuPills([
+    RectMenuShowcaseActive,
     RectMenuConnectionActive,
     RectMenuConnectorActive,
     RectMenuDataTypesActive,
@@ -143,7 +154,7 @@ begin
   FActiveFrame := nil;
   ReportMemoryLeaksOnShutdown := True;
   ApplyDemoChrome;
-  NavigateTo(msConnection);
+  NavigateTo(msBootstrapShowcase);
 end;
 
 procedure TGenericDemoForm.FormDestroy(Sender: TObject);
@@ -155,6 +166,7 @@ end;
 procedure TGenericDemoForm.FormResize(Sender: TObject);
 begin
   TBootstrapStyle.StretchSidebarMenuPills([
+    RectMenuShowcaseActive,
     RectMenuConnectionActive,
     RectMenuConnectorActive,
     RectMenuDataTypesActive,
@@ -195,6 +207,7 @@ end;
 
 procedure TGenericDemoForm.UpdateMenuActiveState(ASection: TMenuSection);
 begin
+  SetMenuItemActive(RectMenuShowcaseActive,   LblMenuShowcaseIcon,   LblMenuShowcaseText,   ASection = msBootstrapShowcase);
   SetMenuItemActive(RectMenuConnectionActive, LblMenuConnectionIcon, LblMenuConnectionText, ASection = msConnection);
   SetMenuItemActive(RectMenuConnectorActive,  LblMenuConnectorIcon,  LblMenuConnectorText,  ASection = msConnector);
   SetMenuItemActive(RectMenuDataTypesActive,  LblMenuDataTypesIcon,  LblMenuDataTypesText,  ASection = msDataTypes);
@@ -222,6 +235,11 @@ begin
 
   // Create the new frame
   case ASection of
+    msBootstrapShowcase:
+    begin
+      FActiveFrame := TFrameBootstrapShowcase.Create(Self);
+      LSectionName := 'Bootstrap';
+    end;
     msConnection:
     begin
       FActiveFrame := TFrameConnection.Create(Self);
@@ -259,6 +277,11 @@ begin
   CloseSidebarIfOpen;
 end;
 
+procedure TGenericDemoForm.MenuShowcaseClick(Sender: TObject);
+begin
+  NavigateTo(msBootstrapShowcase);
+end;
+
 procedure TGenericDemoForm.MenuConnectionClick(Sender: TObject);
 begin
   NavigateTo(msConnection);
@@ -282,6 +305,7 @@ end;
 procedure TGenericDemoForm.RectSidebarResize(Sender: TObject);
 begin
   TBootstrapStyle.StretchSidebarMenuPills([
+    RectMenuShowcaseActive,
     RectMenuConnectionActive,
     RectMenuConnectorActive,
     RectMenuDataTypesActive,
