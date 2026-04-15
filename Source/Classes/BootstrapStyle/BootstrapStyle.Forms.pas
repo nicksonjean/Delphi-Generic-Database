@@ -1,4 +1,4 @@
-unit BootstrapStyle.Forms;
+﻿unit BootstrapStyle.Forms;
 
 {
   Bootstrap 5 form control styling for FireMonkey — code-defined, no StyleBook.
@@ -110,6 +110,7 @@ uses
   FMX.Objects,
   FMX.Graphics,
   FMX.TextLayout,
+  FMX.Layouts,
   BootstrapStyle.Colors;
 
 { ── Types ─────────────────────────────────────────────────────────────────── }
@@ -145,19 +146,16 @@ const
 { Finds the persistent __BSFormBg__ TRectangle child, or nil. }
 function FindFormBg(const C: TStyledControl): TRectangle;
 var
-  I:   Integer;
-  Obj: TFmxObject;
+  I: Integer;
 begin
   Result := nil;
+  if C = nil then Exit;
+
   for I := 0 to C.ChildrenCount - 1 do
   begin
-    Obj := C.Children[I];
-    if (Obj is TRectangle) and
-       (TRectangle(Obj).TagString = BS_FORM_BG_NAME) then
-    begin
-      Result := TRectangle(Obj);
-      Exit;
-    end;
+    if (C.Children[I] is TRectangle) and
+       (TRectangle(C.Children[I]).TagString = BS_FORM_BG_NAME) then
+      Exit(TRectangle(C.Children[I]));
   end;
 end;
 
@@ -168,13 +166,19 @@ var
   R: TRectangle;
 begin
   Result := FindFormBg(C);
-  if Result <> nil then Exit;
+  if Result = nil then
+  begin
+    R           := TRectangle.Create(C);
+    R.TagString := BS_FORM_BG_NAME;
+    R.HitTest   := False;
+    R.Parent    := C;
+  end
+  else
+    R := Result;
 
-  R           := TRectangle.Create(C);
-  R.Parent    := C;
-  R.TagString := BS_FORM_BG_NAME;
-  R.HitTest   := False;
-  R.Align     := TAlignLayout.Client;   { Client = full bounds; Contents is inset }
+  R.Align := TAlignLayout.Client;
+  { Keep it behind ANY presentation/style objects, even after style rebuilds. }
+  R.Index := 0;
   R.SendToBack;
   Result := R;
 end;
@@ -188,36 +192,107 @@ begin
   if R <> nil then R.Free;
 end;
 
-{ Makes the FMX style's own "background" resource invisible so our persistent
-  __BSFormBg__ shows through.
-
-  TRectangle path: set Fill.Kind/Stroke.Kind = None.  TBrushKind is an enum
-  and is NOT animated by FMX trigger effects, so this survives all state
-  transitions (focus, hover, pressed, enabled).
-
-  Non-TRectangle path (TActiveStyleObject, TBitmapStyleObject, etc.): set
-  Visible=False + Opacity=0.  The dropdown button for TComboBox/TComboEdit is
-  a style sibling of "background" (not a child), so hiding background is safe
-  for all standard FMX Windows controls. }
 procedure MakeStyleBackgroundTransparent(const C: TStyledControl);
 var
-  Obj:  TFmxObject;
-  R:    TRectangle;
-  Ctrl: TControl;
-begin
-  Obj := C.FindStyleResource('background');
-  if Obj is TRectangle then
+  Bg: TFmxObject;
+
+  procedure StripNativeChrome(Obj: TFmxObject);
+  var
+    I: Integer;
+    Ch: TFmxObject;
+    N: string;
+
+    function IsTextOrCaretRelated(const O: TFmxObject): Boolean;
+    begin
+      Result := (O is TText) or (O is TLabel);
+      if Result then Exit;
+      if O is TControl then
+      begin
+        N := LowerCase(Trim(TControl(O).StyleName));
+        if N = '' then
+          N := LowerCase(Trim(O.Name));
+      end
+      else
+        N := LowerCase(Trim(O.Name));
+
+      { Preserve caret/cursor/selection visuals. Different FMX styles vary. }
+      Result :=
+        (N.Contains('caret')) or
+        (N.Contains('cursor')) or
+        (N.Contains('selection')) or
+        (N.Contains('sel')) or
+        (N.Contains('highlight')) or
+        (N.Contains('text'));
+    end;
   begin
-    R             := TRectangle(Obj);
-    R.Fill.Kind   := TBrushKind.None;
-    R.Stroke.Kind := TBrushKind.None;
-  end
-  else if Obj is TControl then
-  begin
-    Ctrl         := TControl(Obj);
-    Ctrl.Visible := False;
-    Ctrl.Opacity := 0;
+    if Obj = nil then Exit;
+
+    { Do NOT touch text/caret/selection related objects. }
+    if IsTextOrCaretRelated(Obj) then
+      Exit;
+
+    { Most Windows-native chrome is expressed as shapes/bitmaps in the style. }
+    if Obj is TShape then
+    begin
+      TShape(Obj).Fill.Kind   := TBrushKind.None;
+      TShape(Obj).Stroke.Kind := TBrushKind.None;
+      { keep Opacity as-is; some presentations use it for caret blending }
+    end
+    else if Obj is TImage then
+    begin
+      { Bitmap borders/backgrounds }
+      TImage(Obj).Opacity := 0;
+    end;
+
+    { As a fallback, remove visibility of generic chrome controls (panels/rects),
+      but keep the object alive if it hosts text/caret (handled above). }
+    if (Obj is TControl) and not (Obj is TText) and not (Obj is TLabel) then
+    begin
+      if (Obj is TPath) then
+      begin
+        { Keep glyph paths (e.g. arrows) visible; they are recoloured elsewhere. }
+      end
+      else if (Obj is TScrollBar) then
+      begin
+        { Preserve scrollbars for memo/list }
+      end
+      else if (Obj is TScrollBox) then
+      begin
+        { Preserve scrollbox container }
+      end
+      else
+      begin
+        { If it's pure chrome, make it transparent. }
+        TControl(Obj).Opacity := 0;
+      end;
+    end;
+
+    for I := 0 to Obj.ChildrenCount - 1 do
+    begin
+      Ch := Obj.Children[I];
+      StripNativeChrome(Ch);
+    end;
   end;
+begin
+  Bg := C.FindStyleResource('background');
+  if Bg is TShape then
+  begin
+    TShape(Bg).Fill.Kind   := TBrushKind.None;
+    TShape(Bg).Stroke.Kind := TBrushKind.None;
+  end
+  { IMPORTANT:
+    Some FMX styles (especially on Windows) host the text/caret visuals inside
+    a non-shape "background" object. Hiding/moving that object can make the
+    text invisible even though it is still selectable/copiable.
+    For non-TShape backgrounds we keep it, but strip only the native chrome
+    (rectangular border/background bitmaps) so our Bootstrap overlay can show. }
+  else
+    StripNativeChrome(Bg);
+
+  { ComboEdit/ComboBox frequently paints a native-looking button; strip it too
+    (paths are preserved so ApplyComboArrow can recolour them). }
+  StripNativeChrome(C.FindStyleResource('button'));
+  StripNativeChrome(C.FindStyleResource('box'));
 end;
 
 { Paints Bootstrap form-control visuals onto the persistent __BSFormBg__ rect.
@@ -260,9 +335,17 @@ begin
   if Obj is TControl then
   begin
     TControl(Obj).Padding.Left   := 12;
-    TControl(Obj).Padding.Top    := 6;
     TControl(Obj).Padding.Right  := 12;
-    TControl(Obj).Padding.Bottom := 6;
+    if C is TMemo then
+    begin
+      TControl(Obj).Padding.Top    := 6;
+      TControl(Obj).Padding.Bottom := 6;
+    end
+    else
+    begin
+      TControl(Obj).Padding.Top    := 0;
+      TControl(Obj).Padding.Bottom := 0;
+    end;
   end;
 end;
 
@@ -336,6 +419,60 @@ begin
   end;
 end;
 
+{ Recursively forces BS form font + color into text objects.
+  Some FMX styles ignore control TextSettings and instead use the internal
+  TText/TEditText resource's own properties (often reset by triggers). }
+procedure ForceStyleTextInObj(AObj: TFmxObject; AFontSize: Single);
+var
+  I: Integer;
+  Ch: TFmxObject;
+begin
+  if AObj = nil then Exit;
+  for I := 0 to AObj.ChildrenCount - 1 do
+  begin
+    Ch := AObj.Children[I];
+    if Ch is TText then
+    begin
+      TText(Ch).Visible     := True;
+      TText(Ch).Opacity     := 1;
+      TText(Ch).Color       := BS_FORM_TEXT;
+      TText(Ch).Font.Family := 'Segoe UI';
+      if AFontSize > 0 then
+        TText(Ch).Font.Size := AFontSize;
+      TText(Ch).Font.Style := [];
+    end
+    else if Ch is TLabel then
+    begin
+      TLabel(Ch).Visible := True;
+      TLabel(Ch).Opacity := 1;
+      TLabel(Ch).StyledSettings := [];
+      TLabel(Ch).TextSettings.Font.Family := 'Segoe UI';
+      if AFontSize > 0 then
+        TLabel(Ch).TextSettings.Font.Size := AFontSize;
+      TLabel(Ch).TextSettings.Font.Style  := [];
+      TLabel(Ch).TextSettings.FontColor   := BS_FORM_TEXT;
+    end;
+    ForceStyleTextInObj(Ch, AFontSize);
+  end;
+end;
+
+procedure ForceStyleTextResources(C: TStyledControl; AFontSize: Single);
+var
+  Obj: TFmxObject;
+begin
+  if C = nil then Exit;
+
+  { Most presented edits expose a "text" style resource (TEditText/TText). }
+  Obj := C.FindStyleResource('text');
+  if Obj <> nil then
+    ForceStyleTextInObj(Obj, AFontSize);
+
+  { Memo often nests its text object under "content". }
+  Obj := C.FindStyleResource('content');
+  if Obj <> nil then
+    ForceStyleTextInObj(Obj, AFontSize);
+end;
+
 { Colours the dropdown arrow in TComboBox / TComboEdit.
   Tries "button" and "arrow" resource names (name varies across FMX styles). }
 procedure ApplyComboArrow(C: TStyledControl);
@@ -391,6 +528,7 @@ begin
     here so the text colour is always dark (#212529) regardless of theme. }
   if Supports(Ed, ITextSettings, ITS) then
     ITS.DefaultTextSettings.FontColor := BS_FORM_TEXT;
+  ForceStyleTextResources(Ed, AFontSize);
 end;
 
 procedure ApplyBsFontComboEdit(CE: TComboEdit; AFontSize: Single);
@@ -406,14 +544,29 @@ begin
   CE.TextSettings.FontColor   := BS_FORM_TEXT;
   if Supports(CE, ITextSettings, ITS) then
     ITS.DefaultTextSettings.FontColor := BS_FORM_TEXT;
+  ForceStyleTextResources(CE, AFontSize);
 end;
 
 procedure ApplyBsFontMemo(Mo: TMemo; AFontSize: Single);
+var
+  ITS: ITextSettings;
 begin
-  Mo.Font.Family := 'Segoe UI';
-  Mo.Font.Size   := AFontSize;
-  Mo.Font.Style  := [];
-  Mo.FontColor   := BS_FORM_TEXT;
+  { TMemo is a presented control; prefer TextSettings/DefaultTextSettings. }
+  Mo.StyledSettings := Mo.StyledSettings - [
+    TStyledSetting.Family, TStyledSetting.Size,
+    TStyledSetting.Style,  TStyledSetting.FontColor];
+  Mo.TextSettings.Font.Family := 'Segoe UI';
+  Mo.TextSettings.Font.Size   := AFontSize;
+  Mo.TextSettings.Font.Style  := [];
+  Mo.TextSettings.FontColor   := BS_FORM_TEXT;
+  if Supports(Mo, ITextSettings, ITS) then
+  begin
+    ITS.DefaultTextSettings.Font.Family := 'Segoe UI';
+    ITS.DefaultTextSettings.Font.Size   := AFontSize;
+    ITS.DefaultTextSettings.Font.Style  := [];
+    ITS.DefaultTextSettings.FontColor   := BS_FORM_TEXT;
+  end;
+  ForceStyleTextResources(Mo, AFontSize);
 end;
 
 procedure ApplyBsFontSearchBox(SB: TSearchBox; AFontSize: Single);
@@ -429,6 +582,7 @@ begin
   SB.TextSettings.FontColor   := BS_FORM_TEXT;
   if Supports(SB, ITextSettings, ITS) then
     ITS.DefaultTextSettings.FontColor := BS_FORM_TEXT;
+  ForceStyleTextResources(SB, AFontSize);
 end;
 
 procedure ApplyBsListItems(const LB: TListBox; AFontSize: Single);
@@ -489,9 +643,17 @@ begin
         ITS.DefaultTextSettings.FontColor := BS_FORM_TEXT;
         ITS.TextSettings.FontColor        := BS_FORM_TEXT;
       end;
+      ForceStyleTextResources(E.Control, E.FontSize);
     end;
     bsfkMemo:
-      TMemo(E.Control).FontColor := BS_FORM_TEXT;
+    begin
+      if Supports(E.Control, ITextSettings, ITS) then
+      begin
+        ITS.DefaultTextSettings.FontColor := BS_FORM_TEXT;
+        ITS.TextSettings.FontColor        := BS_FORM_TEXT;
+      end;
+      ForceStyleTextResources(E.Control, E.FontSize);
+    end;
   end;
 end;
 
@@ -512,7 +674,7 @@ begin
   Ed := TEdit(E.Control);
   R  := EnsureFormBg(Ed);
   MakeStyleBackgroundTransparent(Ed);
-  StyleFormBg(R, False, Ed.Enabled);
+  StyleFormBg(R, Ed.IsFocused, Ed.Enabled);
   ApplyContentPadding(Ed);
   ApplyPromptResource(Ed);
   ApplyBsFontEdit(Ed, E.FontSize);
@@ -529,6 +691,8 @@ begin
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
     TStyledSetting.Other];
+  AEdit.NeedStyleLookup;
+  AEdit.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -581,7 +745,7 @@ begin
   CE := TComboEdit(E.Control);
   R  := EnsureFormBg(CE);
   MakeStyleBackgroundTransparent(CE);
-  StyleFormBg(R, False, CE.Enabled);
+  StyleFormBg(R, CE.IsFocused, CE.Enabled);
   ApplyContentPadding(CE);
   ApplyPromptResource(CE);
   ApplyBsFontComboEdit(CE, E.FontSize);
@@ -600,6 +764,8 @@ begin
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
     TStyledSetting.Other];
+  ACE.NeedStyleLookup;
+  ACE.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -612,17 +778,9 @@ var
   R:  TRectangle;
 begin
   LB := TListBox(E.Control);
-  R  := FindBgRect(LB);
-  if R <> nil then
-  begin
-    R.Fill.Kind        := TBrushKind.Solid;
-    R.Fill.Color       := BS_FORM_BG;
-    R.Stroke.Kind      := TBrushKind.Solid;
-    R.Stroke.Color     := BS_FORM_BORDER;
-    R.Stroke.Thickness := 1;
-    R.XRadius          := 6;
-    R.YRadius          := 6;
-  end;
+  R  := EnsureFormBg(LB);
+  MakeStyleBackgroundTransparent(LB);
+  StyleFormBg(R, LB.IsFocused, LB.Enabled);
   ApplyBsListItems(LB, E.FontSize);
 end;
 
@@ -632,7 +790,10 @@ var
 begin
   LB := TListBox(E.Control);
   if csDestroying in LB.ComponentState then Exit;
+  RemoveFormBg(LB);
   RevertBsListItems(LB);
+  LB.NeedStyleLookup;
+  LB.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -647,7 +808,7 @@ begin
   Mo := TMemo(E.Control);
   R  := EnsureFormBg(Mo);
   MakeStyleBackgroundTransparent(Mo);
-  StyleFormBg(R, False, Mo.Enabled);
+  StyleFormBg(R, Mo.IsFocused, Mo.Enabled);
   ApplyContentPadding(Mo);
   ApplyBsFontMemo(Mo, E.FontSize);
 end;
@@ -675,7 +836,7 @@ begin
   SB := TSearchBox(E.Control);
   R  := EnsureFormBg(SB);
   MakeStyleBackgroundTransparent(SB);
-  StyleFormBg(R, False, SB.Enabled);
+  StyleFormBg(R, SB.IsFocused, SB.Enabled);
   ApplyContentPadding(SB);
   ApplyPromptResource(SB);
   ApplyBsFontSearchBox(SB, E.FontSize);
@@ -706,17 +867,9 @@ var
   R:  TRectangle;
 begin
   LV := TListView(E.Control);
-  R  := FindBgRect(LV);
-  if R <> nil then
-  begin
-    R.Fill.Kind        := TBrushKind.Solid;
-    R.Fill.Color       := BS_FORM_BG;
-    R.Stroke.Kind      := TBrushKind.Solid;
-    R.Stroke.Color     := BS_FORM_BORDER;
-    R.Stroke.Thickness := 1;
-    R.XRadius          := 6;
-    R.YRadius          := 6;
-  end;
+  R  := EnsureFormBg(LV);
+  MakeStyleBackgroundTransparent(LV);
+  StyleFormBg(R, LV.IsFocused, LV.Enabled);
 end;
 
 procedure DoResetListView(const E: TBSFormEntry);
@@ -725,6 +878,7 @@ var
 begin
   LV := TListView(E.Control);
   if csDestroying in LV.ComponentState then Exit;
+  RemoveFormBg(LV);
   LV.NeedStyleLookup;
   LV.ApplyStyleLookup;
 end;
@@ -736,7 +890,6 @@ end;
 procedure DoApplyGridCommon(const C: TStyledControl; AFontSize: Single);
 var
   G:    TGrid;
-  BG:   TFmxObject;
   R:    TRectangle;
   Hdr:  TFmxObject;
   HdrR: TRectangle;
@@ -751,18 +904,8 @@ begin
     G.Model.DefaultTextSettings.FontColor   := BS_FORM_TEXT;
   end;
 
-  BG := G.FindStyleResource('background');
-  if BG is TRectangle then
-  begin
-    R                  := TRectangle(BG);
-    R.Fill.Kind        := TBrushKind.Solid;
-    R.Fill.Color       := BS_FORM_BG;
-    R.Stroke.Kind      := TBrushKind.Solid;
-    R.Stroke.Color     := BS_TABLE_BORDER;
-    R.Stroke.Thickness := 1;
-    R.XRadius          := 0;
-    R.YRadius          := 0;
-  end;
+  R := EnsureFormBg(G);
+  StyleFormBg(R, G.IsFocused, G.Enabled);
 
   Hdr := G.FindStyleResource('header');
   if Hdr is TRectangle then
@@ -773,6 +916,8 @@ begin
     HdrR.Stroke.Kind  := TBrushKind.Solid;
     HdrR.Stroke.Color := BS_TABLE_BORDER;
   end;
+
+  MakeStyleBackgroundTransparent(G);
 end;
 
 procedure DoResetGridCommon(const C: TStyledControl);
@@ -781,6 +926,7 @@ var
 begin
   G := TGrid(C);
   if csDestroying in G.ComponentState then Exit;
+  RemoveFormBg(G);
   if G.Model <> nil then
   begin
     G.Model.DefaultTextSettings.Font.Family := '';
