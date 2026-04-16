@@ -39,56 +39,32 @@ type
     RectSidebarHeader: TRectangle;
     LblSidebarTitle: TLabel;
     LblSidebarSubtitle: TLabel;
-    RectSidebarDivider: TRectangle;
     ScrollSidebarMenu: TVertScrollBox;
     LayMenuShowcase: TLayout;
-    RectMenuShowcaseBg: TRectangle;
-    RectMenuShowcaseActive: TRectangle;
-    LblMenuShowcaseIcon: TLabel;
-    LblMenuShowcaseText: TLabel;
+    BtnMenuShowcase: TButton;
     LayMenuConnection: TLayout;
-    RectMenuConnectionBg: TRectangle;
-    RectMenuConnectionActive: TRectangle;
-    LblMenuConnectionIcon: TLabel;
-    LblMenuConnectionText: TLabel;
+    BtnMenuConnection: TButton;
     LayMenuConnector: TLayout;
-    RectMenuConnectorBg: TRectangle;
-    RectMenuConnectorActive: TRectangle;
-    LblMenuConnectorIcon: TLabel;
-    LblMenuConnectorText: TLabel;
+    BtnMenuConnector: TButton;
     LayMenuDataTypes: TLayout;
-    RectMenuDataTypesBg: TRectangle;
-    RectMenuDataTypesActive: TRectangle;
-    LblMenuDataTypesIcon: TLabel;
-    LblMenuDataTypesText: TLabel;
+    BtnMenuDataTypes: TButton;
     LayMenuPagNav: TLayout;
-    RectMenuPagNavBg: TRectangle;
-    RectMenuPagNavActive: TRectangle;
-    LblMenuPagNavIcon: TLabel;
-    LblMenuPagNavText: TLabel;
-    RectMenuDivider: TRectangle;
+    BtnMenuPagNav: TButton;
     LayContent: TLayout;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure BtnHamburgerClick(Sender: TObject);
     procedure MenuShowcaseClick(Sender: TObject);
     procedure MenuConnectionClick(Sender: TObject);
     procedure MenuConnectorClick(Sender: TObject);
     procedure MenuDataTypesClick(Sender: TObject);
     procedure MenuPagNavClick(Sender: TObject);
-    procedure RectSidebarResize(Sender: TObject);
   private
     FSidebarOpen: Boolean;
     FActiveSection: TMenuSection;
     FActiveFrame: TFrame;
     procedure NavigateTo(ASection: TMenuSection);
     procedure UpdateMenuActiveState(ASection: TMenuSection);
-    procedure SetMenuItemActive(
-      ARectActive: TRectangle;
-      ALblIcon: TLabel;
-      ALblText: TLabel;
-      AActive: Boolean);
     procedure CloseSidebarIfOpen;
     procedure ApplyDemoChrome;
   public
@@ -105,12 +81,15 @@ uses
   Frame.Connector,
   Frame.DataTypes,
   Frame.PagNav,
-  BootstrapStyle;
+  BootstrapStyle,
+  BootstrapStyle.Core;
 
 {$R *.fmx}
 
 const
   SIDEBAR_WIDTH = 280;
+  { Same font size as Icon + Text row in Frame.BootstrapShowcase (ApplyButton …, 15, …). }
+  SIDEBAR_NAV_FONT = 15;
 
 { TGenericDemoForm }
 
@@ -121,30 +100,8 @@ begin
   TBootstrapStyle.ApplyLabelTypography(LblHamburger);
   TBootstrapStyle.ApplyLabelTypography(LblSidebarTitle);
   TBootstrapStyle.ApplyLabelTypography(LblSidebarSubtitle);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuShowcaseIcon);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuShowcaseText);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectionIcon);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectionText);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectorIcon);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuConnectorText);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuDataTypesIcon);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuDataTypesText);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuPagNavIcon);
-  TBootstrapStyle.ApplyLabelTypography(LblMenuPagNavText);
 
   TBootstrapStyle.ApplyBootstrapIconLabel(LblSidebarTitle, 'database-fill');
-  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuShowcaseIcon, 'speedometer2');
-  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuConnectionIcon, 'plug-fill');
-  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuConnectorIcon, 'arrow-left-right');
-  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuDataTypesIcon, 'braces');
-  TBootstrapStyle.ApplyBootstrapIconLabel(LblMenuPagNavIcon, 'table');
-
-  TBootstrapStyle.StretchSidebarMenuPills([
-    RectMenuShowcaseActive,
-    RectMenuConnectionActive,
-    RectMenuConnectorActive,
-    RectMenuDataTypesActive,
-    RectMenuPagNavActive]);
 end;
 
 procedure TGenericDemoForm.FormCreate(Sender: TObject);
@@ -161,16 +118,6 @@ procedure TGenericDemoForm.FormDestroy(Sender: TObject);
 begin
   if Assigned(FActiveFrame) then
     FreeAndNil(FActiveFrame);
-end;
-
-procedure TGenericDemoForm.FormResize(Sender: TObject);
-begin
-  TBootstrapStyle.StretchSidebarMenuPills([
-    RectMenuShowcaseActive,
-    RectMenuConnectionActive,
-    RectMenuConnectorActive,
-    RectMenuDataTypesActive,
-    RectMenuPagNavActive]);
 end;
 
 procedure TGenericDemoForm.BtnHamburgerClick(Sender: TObject);
@@ -196,22 +143,24 @@ begin
   end;
 end;
 
-procedure TGenericDemoForm.SetMenuItemActive(
-  ARectActive: TRectangle;
-  ALblIcon: TLabel;
-  ALblText: TLabel;
-  AActive: Boolean);
-begin
-  TBootstrapStyle.ApplyNavPillState(ARectActive, ALblIcon, ALblText, AActive);
-end;
-
 procedure TGenericDemoForm.UpdateMenuActiveState(ASection: TMenuSection);
+  procedure StyleNav(const B: TButton; const ASec: TMenuSection;
+    const ACaption, AIcon: string);
+  var
+    V: TBootstrapVariant;
+  begin
+    if ASection = ASec then
+      V := bsPrimary
+    else
+      V := bsSecondary;
+    TBootstrapStyle.ApplyButton(B, V, ACaption, SIDEBAR_NAV_FONT, AIcon);
+  end;
 begin
-  SetMenuItemActive(RectMenuShowcaseActive,   LblMenuShowcaseIcon,   LblMenuShowcaseText,   ASection = msBootstrapShowcase);
-  SetMenuItemActive(RectMenuConnectionActive, LblMenuConnectionIcon, LblMenuConnectionText, ASection = msConnection);
-  SetMenuItemActive(RectMenuConnectorActive,  LblMenuConnectorIcon,  LblMenuConnectorText,  ASection = msConnector);
-  SetMenuItemActive(RectMenuDataTypesActive,  LblMenuDataTypesIcon,  LblMenuDataTypesText,  ASection = msDataTypes);
-  SetMenuItemActive(RectMenuPagNavActive,     LblMenuPagNavIcon,     LblMenuPagNavText,     ASection = msPagNav);
+  StyleNav(BtnMenuShowcase, msBootstrapShowcase, 'Bootstrap', 'speedometer2');
+  StyleNav(BtnMenuConnection, msConnection, 'Connection', 'plug-fill');
+  StyleNav(BtnMenuConnector, msConnector, 'Connector', 'arrow-left-right');
+  StyleNav(BtnMenuDataTypes, msDataTypes, 'DataTypes', 'braces');
+  StyleNav(BtnMenuPagNav, msPagNav, 'PagNav', 'table');
 end;
 
 procedure TGenericDemoForm.NavigateTo(ASection: TMenuSection);
@@ -300,16 +249,6 @@ end;
 procedure TGenericDemoForm.MenuPagNavClick(Sender: TObject);
 begin
   NavigateTo(msPagNav);
-end;
-
-procedure TGenericDemoForm.RectSidebarResize(Sender: TObject);
-begin
-  TBootstrapStyle.StretchSidebarMenuPills([
-    RectMenuShowcaseActive,
-    RectMenuConnectionActive,
-    RectMenuConnectorActive,
-    RectMenuDataTypesActive,
-    RectMenuPagNavActive]);
 end;
 
 end.

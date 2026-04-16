@@ -1,5 +1,4 @@
 program GenericDemo;
-
 uses
   FastMM5 in '..\Source\Vendor\FastMM5\FastMM5.pas',
   System.StartUpCopy,
@@ -39,11 +38,11 @@ uses
   Frame.Connection in 'Frames\Frame.Connection.pas' {TFrameConnection: TFrame},
   Frame.Connector in 'Frames\Frame.Connector.pas' {TFrameConnector: TFrame},
   Frame.DataTypes in 'Frames\Frame.DataTypes.pas' {TFrameDataTypes: TFrame},
-  Frame.PagNav in 'Frames\Frame.PagNav.pas' {TFramePagNav: TFrame};
+  Frame.PagNav in 'Frames\Frame.PagNav.pas' {TFramePagNav: TFrame},
+  Frame.BootstrapShowcase in 'Frames\Frame.BootstrapShowcase.pas' {FrameBootstrapShowcase: TFrame};
 
 {$R *.res}
 {$R 'Resources\Fonts\fonts.res'}
-
 begin
   FastMM_EnterDebugMode;
   FastMM_MessageBoxEvents := [];

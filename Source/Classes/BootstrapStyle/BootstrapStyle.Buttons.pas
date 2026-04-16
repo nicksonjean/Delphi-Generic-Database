@@ -191,8 +191,10 @@ begin
   Idx := FindIndex(AControl);
   if Idx >= 0 then
   begin
-    { Already registered — update mutable fields only. }
+    { Already registered — update fields (variant may change, e.g. nav primary/secondary). }
     E          := FEntries[Idx];
+    E.Kind     := AKind;
+    E.Variant  := AVariant;
     E.Caption  := ACaption;
     E.IconName := AIconName;
     E.FontSize := AFontSize;

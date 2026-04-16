@@ -106,14 +106,34 @@ implementation
 uses
   System.SysUtils,
   System.Classes,
+  System.Types,
   System.Generics.Collections,
   FMX.Objects,
   FMX.Graphics,
   FMX.TextLayout,
   FMX.Layouts,
+  FMX.Forms,
+  {$IFDEF MSWINDOWS}
+  Winapi.Windows,
+  FMX.Platform.Win,
+  {$ENDIF}
   BootstrapStyle.Colors;
 
 { ── Types ─────────────────────────────────────────────────────────────────── }
+
+type
+  { One-shot timer that fires once after ADelayMs milliseconds, applies the
+    Bootstrap prompt inset to AControl, then frees itself.  Used to guarantee
+    the prompt is correctly positioned even after FMX's own lazy initialisation
+    (HandleCreated, WM_ACTIVATE state-trigger resets, etc.) has finished. }
+  TBSPromptFixTimer = class(TObject)
+  private
+    FTimer:   TTimer;
+    FControl: TStyledControl;
+    procedure Fired(Sender: TObject);
+  public
+    constructor Create(AControl: TStyledControl; ADelayMs: Cardinal = 120);
+  end;
 
 type
   TBSFormKind = (
@@ -325,6 +345,216 @@ end;
   STYLE-RESOURCE helpers — shared by all controls
   ══════════════════════════════════════════════════════════════════════════════ }
 
+function BsShellUsesEditPrompt(const Shell: TStyledControl): Boolean;
+begin
+  Result := (Shell is TEdit) or (Shell is TComboEdit) or (Shell is TSearchBox);
+end;
+
+{ Finds a TControl in the styled presentation tree by StyleName or Name
+  (case-insensitive).  Used when FindStyleResource on the shell returns nil
+  on some FMX / platform builds. }
+function FindPresentationChildById(const Root: TFmxObject;
+  const CanonicalId: string): TControl;
+
+  function IdMatches(const C: TControl): Boolean;
+  var
+    S: string;
+  begin
+    S := Trim(C.StyleName);
+    if S = '' then
+      S := Trim(C.Name);
+    Result := SameText(S, CanonicalId);
+  end;
+
+  procedure Walk(const O: TFmxObject);
+  var
+    I: Integer;
+    C: TControl;
+  begin
+    if Result <> nil then Exit;
+    if O is TControl then
+    begin
+      C := TControl(O);
+      if IdMatches(C) then
+      begin
+        Result := C;
+        Exit;
+      end;
+    end;
+    for I := 0 to O.ChildrenCount - 1 do
+      Walk(O.Children[I]);
+  end;
+
+begin
+  Result := nil;
+  if Root = nil then Exit;
+  Walk(Root);
+end;
+
+function FindContentOrPrompt(const Shell: TStyledControl;
+  const CanonicalId: string): TControl;
+var
+  O: TFmxObject;
+begin
+  Result := nil;
+  O := Shell.FindStyleResource(CanonicalId);
+  if O is TControl then
+    Exit(TControl(O));
+  if not BsShellUsesEditPrompt(Shell) then Exit;
+  if not (Shell is TPresentedControl) then Exit;
+  if not TPresentedControl(Shell).HasPresentationProxy then Exit;
+  O := TPresentedControl(Shell).Presentation as TFmxObject;
+  Result := FindPresentationChildById(O, CanonicalId);
+end;
+
+{ Clears Padding on TText / TLabel descendants so only the prompt root carries
+  the horizontal inset (avoids stacked style padding on nested prompt text). }
+procedure ZeroTextPaddingUnderPrompt(const PromptRoot: TControl);
+var
+  Root: TControl;
+
+  procedure Walk(const P: TFmxObject);
+  var
+    I: Integer;
+  begin
+    if P = Root then
+    begin
+      for I := 0 to P.ChildrenCount - 1 do
+        Walk(P.Children[I]);
+      Exit;
+    end;
+    if P is TText then
+    begin
+      TText(P).Padding.Left := 0;
+      TText(P).Padding.Top := 0;
+      TText(P).Padding.Right := 0;
+      TText(P).Padding.Bottom := 0;
+    end
+    else if P is TLabel then
+    begin
+      TLabel(P).Padding.Left := 0;
+      TLabel(P).Padding.Top := 0;
+      TLabel(P).Padding.Right := 0;
+      TLabel(P).Padding.Bottom := 0;
+    end;
+    for I := 0 to P.ChildrenCount - 1 do
+      Walk(P.Children[I]);
+  end;
+
+begin
+  if PromptRoot <> nil then
+  begin
+    Root := PromptRoot;
+    Walk(PromptRoot);
+  end;
+end;
+
+{ Applies the Bootstrap left inset (12 px) to a prompt control regardless of
+  how it is laid out.
+
+  FMX controls use DIFFERENT mechanisms for position depending on their Align:
+    Align <> None  → Margins create an outer gap between the control edge and
+                     its parent's content rect.  Padding.Left is INNER space
+                     (between the control's own bounds and its content), so it
+                     does NOT move the control and is zeroed here to prevent
+                     double-indentation.
+    Align  = None  → The layout engine does not enforce Margins; only Position.X
+                     (absolute) moves the control.  Padding.Left is also set as
+                     a secondary fallback for the TText/TLabel that lives inside
+                     a None-aligned container prompt. }
+procedure ApplyPromptInset(const Pr: TControl; const AInset: Single);
+begin
+  if Pr = nil then Exit;
+  if Pr.Align = TAlignLayout.None then
+  begin
+    Pr.Position.X   := AInset;
+    Pr.Padding.Left := AInset;   { inner fallback for TText child }
+    Pr.Margins.Left := 0;
+  end
+  else
+  begin
+    Pr.Margins.Left := AInset;
+    Pr.Padding.Left := 0;        { avoid double-indent on top of Margins }
+  end;
+  Pr.Padding.Top    := 0;
+  Pr.Padding.Right  := 0;
+  Pr.Padding.Bottom := 0;
+  ZeroTextPaddingUnderPrompt(Pr);
+end;
+
+procedure SyncPromptPaddingFromContent(const Shell: TStyledControl;
+  const Content: TControl);
+var
+  Pr: TControl;
+begin
+  Pr := FindContentOrPrompt(Shell, 'prompt');
+  if (Pr = nil) or (Content = nil) then Exit;
+  ApplyPromptInset(Pr, Content.Padding.Left);
+end;
+
+{ TBSPromptFixTimer — implementation }
+
+constructor TBSPromptFixTimer.Create(AControl: TStyledControl;
+  ADelayMs: Cardinal);
+begin
+  inherited Create;
+  FControl        := AControl;
+  FTimer          := TTimer.Create(nil);
+  FTimer.Interval := ADelayMs;
+  FTimer.OnTimer  := Fired;
+  FTimer.Enabled  := True;
+end;
+
+procedure TBSPromptFixTimer.Fired(Sender: TObject);
+var
+  Pr: TControl;
+begin
+  FTimer.Enabled := False;
+  if (FControl <> nil) and not (csDestroying in FControl.ComponentState) then
+  begin
+    Pr := FindContentOrPrompt(FControl, 'prompt');
+    if Pr <> nil then
+    begin
+      ApplyPromptInset(Pr, 12);
+      FControl.Repaint;
+    end;
+  end;
+  FTimer.Free;
+  FTimer := nil;
+  Free;          { self-destruct }
+end;
+
+{ Deferred prompt realign — runs after FMX style triggers have fired.
+  Works even when the 'content' resource is absent (Platform-mode controls).
+  After applying the inset, Repaint is called explicitly because changing
+  Margins/Position on a style child does not always propagate invalidation
+  up to the TEdit's visual layer automatically.
+
+  A TBSPromptFixTimer (120 ms) is also created as a belt-and-suspenders
+  guarantee: it fires well after FMX's HandleCreated / WM_ACTIVATE
+  state-trigger resets have settled, ensuring the prompt is already in the
+  correct position on the very first visible paint. }
+procedure QueueDeferredPromptRealign(const C: TStyledControl);
+begin
+  if (C = nil) or not BsShellUsesEditPrompt(C) then Exit;
+  TThread.Queue(nil,
+    procedure
+    var
+      Pr: TControl;
+    begin
+      if (C = nil) or (csDestroying in C.ComponentState) then Exit;
+      Pr := FindContentOrPrompt(C, 'prompt');
+      if Pr <> nil then
+        ApplyPromptInset(Pr, 12);
+      { Force repaint so the new prompt position is visible immediately. }
+      C.Repaint;
+    end);
+  { Second path: timer fires 120 ms after scheduling — by then all FMX lazy
+    init (presentation creation, WM_ACTIVATE, first Realign cycle) is done.
+    The timer self-destructs after firing once. }
+  TBSPromptFixTimer.Create(C, 120);
+end;
+
 { Reduces the "content" layout inner-padding to Bootstrap values (12 px L/R,
   6 px T/B).  FMX's Windows styled TEdit can have a wider default inset. }
 procedure ApplyContentPadding(C: TStyledControl);
@@ -346,7 +576,11 @@ begin
       TControl(Obj).Padding.Top    := 0;
       TControl(Obj).Padding.Bottom := 0;
     end;
+    SyncPromptPaddingFromContent(C, TControl(Obj));
   end;
+  { Always queue the deferred pass — FMX style triggers fire after
+    ApplyStyleLookup and may reset what we just set above. }
+  QueueDeferredPromptRealign(C);
 end;
 
 { Colours the "prompt" style resource (placeholder / hint text) with
@@ -368,6 +602,18 @@ begin
     TLabel(Obj).TextSettings.FontColor   := BS_FORM_PLACEHOLDER;
     TLabel(Obj).TextSettings.Font.Family := 'Segoe UI';
   end;
+end;
+
+{ Re-sync after focus / style triggers (same as post-ApplyContentPadding). }
+procedure AlignPromptWithEditText(const C: TStyledControl);
+var
+  Co: TControl;
+begin
+  if C = nil then Exit;
+  Co := FindContentOrPrompt(C, 'content');
+  if Co = nil then Exit;
+  SyncPromptPaddingFromContent(C, Co);
+  QueueDeferredPromptRealign(C);
 end;
 
 { Colours the "text" style resource used by TComboBox to display the
@@ -666,18 +912,97 @@ procedure DoResetEntry(const E: TBSFormEntry); forward;
   TEdit  — overlay path
   ══════════════════════════════════════════════════════════════════════════════ }
 
+{$IFDEF MSWINDOWS}
+{ On Windows, TEdit with Password = True always runs as a native Win32 EDIT
+  control (ControlType = Platform) — FMX style resources are not involved and
+  the only way to indent the placeholder is EM_SETMARGINS on the native HWND.
+
+  Regular (non-password) TEdits are typically set to ControlType = Styled, but
+  some FMX builds on Windows still use a native HWND internally.  Calling this
+  function for all TEdits is safe: if no native child HWND is found at the
+  control's screen position the function exits without doing anything.
+
+  The call is always deferred (TThread.Queue) so the HWND is guaranteed to
+  exist when this code runs. }
+procedure ApplyNativeEditMargin(const Ed: TEdit; const ALeft: Integer);
+const
+  EM_SETMARGINS_MSG = $00D3;
+  EC_LEFTMARGIN     = $0001;
+var
+  Form:    TCommonCustomForm;
+  FormWnd: HWND;
+  AbsRect: TRectF;
+  CliOrg:  TPoint;
+  ScrnPt:  TPoint;
+  EditWnd: HWND;
+  P:       TFmxObject;
+begin
+  if (Ed = nil) or (csDestroying in Ed.ComponentState) then Exit;
+  { Walk up the parent chain to find the owning TCommonCustomForm.
+    Direct interface-to-class casting via Ed.Root is fragile in FMX. }
+  Form := nil;
+  P := Ed.Parent;
+  while P <> nil do
+  begin
+    if P is TCommonCustomForm then
+    begin
+      Form := TCommonCustomForm(P);
+      Break;
+    end;
+    P := P.Parent;
+  end;
+  if (Form = nil) or (Form.Handle = nil) then Exit;
+  FormWnd := WindowHandleToPlatform(Form.Handle).Wnd;
+  if FormWnd = 0 then Exit;
+
+  { FMX AbsoluteRect is in physical pixels relative to the form client area.
+    Convert to screen coordinates by adding the client origin. }
+  AbsRect  := Ed.AbsoluteRect;
+  CliOrg.X := 0;
+  CliOrg.Y := 0;
+  ClientToScreen(FormWnd, CliOrg);
+  ScrnPt.X := CliOrg.X + Round(AbsRect.Left + AbsRect.Width  * 0.5);
+  ScrnPt.Y := CliOrg.Y + Round(AbsRect.Top  + AbsRect.Height * 0.5);
+
+  { Find the native EDIT control at that screen position. }
+  EditWnd := WindowFromPoint(ScrnPt);
+  if (EditWnd = 0) or (EditWnd = FormWnd) then Exit;
+
+  SendMessage(EditWnd, EM_SETMARGINS_MSG, EC_LEFTMARGIN, MakeLong(ALeft, 0));
+end;
+{$ENDIF}
+
 procedure DoApplyEdit(const E: TBSFormEntry);
 var
   Ed: TEdit;
   R:  TRectangle;
+  Pr: TControl;
 begin
   Ed := TEdit(E.Control);
   R  := EnsureFormBg(Ed);
   MakeStyleBackgroundTransparent(Ed);
   StyleFormBg(R, Ed.IsFocused, Ed.Enabled);
-  ApplyContentPadding(Ed);
+  ApplyContentPadding(Ed);   { ← also calls QueueDeferredPromptRealign }
   ApplyPromptResource(Ed);
   ApplyBsFontEdit(Ed, E.FontSize);
+
+  { Synchronous fix — ensures the prompt is already positioned correctly for
+    the very first paint, even before FMX style triggers might reset it.
+    QueueDeferredPromptRealign (called via ApplyContentPadding) takes care of
+    re-applying after those triggers and forces a Repaint. }
+  Pr := FindContentOrPrompt(Ed, 'prompt');
+  if Pr <> nil then
+    ApplyPromptInset(Pr, 12);
+
+  {$IFDEF MSWINDOWS}
+  { Win32 API path — covers TEdits that FMX keeps as native HWNDs (e.g. when
+    Password = True).  Safe no-op when no native child HWND is found. }
+  TThread.Queue(nil,
+    procedure
+    begin
+      ApplyNativeEditMargin(Ed, 12);
+    end);
+  {$ENDIF}
 end;
 
 procedure DoResetEdit(const E: TBSFormEntry);
@@ -1105,6 +1430,10 @@ begin
     { FMX focus trigger fires after OnApplyStyleLookup and can reset text
       colour.  Re-force it here, after the trigger has had its chance. }
     ForceTextColor(E);
+    case E.Kind of
+      bsfkEdit, bsfkComboEdit, bsfkSearchBox:
+        AlignPromptWithEditText(E.Control);
+    end;
   end;
 
   if Assigned(E.OrigOnEnter) then
@@ -1126,6 +1455,10 @@ begin
   begin
     StyleFormBg(FindFormBg(E.Control), False, E.Control.Enabled);
     ForceTextColor(E);
+    case E.Kind of
+      bsfkEdit, bsfkComboEdit, bsfkSearchBox:
+        AlignPromptWithEditText(E.Control);
+    end;
   end;
 
   if Assigned(E.OrigOnExit) then

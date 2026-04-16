@@ -1,4 +1,4 @@
-unit Frame.BootstrapShowcase;
+﻿unit Frame.BootstrapShowcase;
 
 interface
 
@@ -28,7 +28,9 @@ uses
   FMX.ListView,
   FMX.ListView.Types,
   FMX.ListView.Appearances,
-  FMX.ListView.Adapters.Base;
+  FMX.ListView.Adapters.Base,
+  System.Rtti,
+  FMX.Grid.Style;
 
 type
   TFrameBootstrapShowcase = class(TFrame)

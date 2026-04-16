@@ -10,7 +10,6 @@ object GenericDemoForm: TGenericDemoForm
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnResize = FormResize
   DesignerMasterStyle = 0
   object RectBackground: TRectangle
     Align = Client
@@ -105,7 +104,6 @@ object GenericDemoForm: TGenericDemoForm
         Size.Width = 0.000000000000000000
         Size.Height = 708.000000000000000000
         Size.PlatformDefault = False
-        OnResize = RectSidebarResize
         object AnimSidebarShow: TFloatAnimation
           Duration = 0.250000000000000000
           Interpolation = Sinusoidal
@@ -157,14 +155,6 @@ object GenericDemoForm: TGenericDemoForm
             Size.PlatformDefault = False
           end
         end
-        object RectSidebarDivider: TRectangle
-          Align = Top
-          Fill.Color = xFF495057
-          Stroke.Kind = None
-          Size.Width = 280.000000000000000000
-          Size.Height = 1.000000000000000000
-          Size.PlatformDefault = False
-        end
         object ScrollSidebarMenu: TVertScrollBox
           Align = Client
           Padding.Top = 8.000000000000000000
@@ -182,58 +172,14 @@ object GenericDemoForm: TGenericDemoForm
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            object RectMenuShowcaseBg: TRectangle
+            object BtnMenuShowcase: TButton
               Align = Client
-              Fill.Color = x00000000
-              Stroke.Kind = None
               Size.Width = 256.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
-              HitTest = True
+              TabOrder = 0
+              Text = 'Bootstrap'
               OnClick = MenuShowcaseClick
-              object RectMenuShowcaseActive: TRectangle
-                Align = None
-                Position.X = 0.000000000000000000
-                Position.Y = 0.000000000000000000
-                Fill.Color = xFF0D6EFD
-                Stroke.Kind = None
-                XRadius = 6.000000000000000000
-                YRadius = 6.000000000000000000
-                Size.Width = 256.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                Visible = False
-                HitTest = False
-              end
-              object LblMenuShowcaseIcon: TLabel
-                Align = Left
-                Margins.Left = 16.000000000000000000
-                Margins.Right = 12.000000000000000000
-                Text = 'BS'
-                TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 17.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Center
-                TextSettings.VertAlign = Center
-                Size.Width = 26.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                HitTest = False
-              end
-              object LblMenuShowcaseText: TLabel
-                Align = Client
-                Margins.Right = 16.000000000000000000
-                Text = 'Bootstrap'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                HitTest = False
-                Size.Width = 196.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-              end
             end
           end
           object LayMenuConnection: TLayout
@@ -246,58 +192,14 @@ object GenericDemoForm: TGenericDemoForm
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
-            object RectMenuConnectionBg: TRectangle
+            object BtnMenuConnection: TButton
               Align = Client
-              Fill.Color = x00000000
-              Stroke.Kind = None
               Size.Width = 256.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
-              HitTest = True
+              TabOrder = 0
+              Text = 'Connection'
               OnClick = MenuConnectionClick
-              object RectMenuConnectionActive: TRectangle
-                Align = None
-                Position.X = 0.000000000000000000
-                Position.Y = 0.000000000000000000
-                Fill.Color = xFF0D6EFD
-                Stroke.Kind = None
-                XRadius = 6.000000000000000000
-                YRadius = 6.000000000000000000
-                Size.Width = 256.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                Visible = False
-                HitTest = False
-              end
-              object LblMenuConnectionIcon: TLabel
-                Align = Left
-                Margins.Left = 16.000000000000000000
-                Margins.Right = 12.000000000000000000
-                Text = #62710
-                TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 17.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Center
-                TextSettings.VertAlign = Center
-                Size.Width = 26.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                HitTest = False
-              end
-              object LblMenuConnectionText: TLabel
-                Align = Client
-                Margins.Right = 16.000000000000000000
-                Text = 'Connection'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                HitTest = False
-                Size.Width = 196.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-              end
             end
           end
           object LayMenuConnector: TLayout
@@ -310,58 +212,14 @@ object GenericDemoForm: TGenericDemoForm
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 2
-            object RectMenuConnectorBg: TRectangle
+            object BtnMenuConnector: TButton
               Align = Client
-              Fill.Color = x00000000
-              Stroke.Kind = None
               Size.Width = 256.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
-              HitTest = True
+              TabOrder = 0
+              Text = 'Connector'
               OnClick = MenuConnectorClick
-              object RectMenuConnectorActive: TRectangle
-                Align = None
-                Position.X = 0.000000000000000000
-                Position.Y = 0.000000000000000000
-                Fill.Color = xFF0D6EFD
-                Stroke.Kind = None
-                XRadius = 6.000000000000000000
-                YRadius = 6.000000000000000000
-                Size.Width = 256.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                Visible = False
-                HitTest = False
-              end
-              object LblMenuConnectorIcon: TLabel
-                Align = Left
-                Margins.Left = 16.000000000000000000
-                Margins.Right = 12.000000000000000000
-                Text = #61739
-                TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 17.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Center
-                TextSettings.VertAlign = Center
-                Size.Width = 26.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                HitTest = False
-              end
-              object LblMenuConnectorText: TLabel
-                Align = Client
-                Margins.Right = 16.000000000000000000
-                Text = 'Connector'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                HitTest = False
-                Size.Width = 196.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-              end
             end
           end
           object LayMenuDataTypes: TLayout
@@ -374,58 +232,14 @@ object GenericDemoForm: TGenericDemoForm
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 3
-            object RectMenuDataTypesBg: TRectangle
+            object BtnMenuDataTypes: TButton
               Align = Client
-              Fill.Color = x00000000
-              Stroke.Kind = None
               Size.Width = 256.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
-              HitTest = True
+              TabOrder = 0
+              Text = 'DataTypes'
               OnClick = MenuDataTypesClick
-              object RectMenuDataTypesActive: TRectangle
-                Align = None
-                Position.X = 0.000000000000000000
-                Position.Y = 0.000000000000000000
-                Fill.Color = xFF0D6EFD
-                Stroke.Kind = None
-                XRadius = 6.000000000000000000
-                YRadius = 6.000000000000000000
-                Size.Width = 256.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                Visible = False
-                HitTest = False
-              end
-              object LblMenuDataTypesIcon: TLabel
-                Align = Left
-                Margins.Left = 16.000000000000000000
-                Margins.Right = 12.000000000000000000
-                Text = #61897
-                TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 17.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Center
-                TextSettings.VertAlign = Center
-                Size.Width = 26.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                HitTest = False
-              end
-              object LblMenuDataTypesText: TLabel
-                Align = Client
-                Margins.Right = 16.000000000000000000
-                Text = 'DataTypes'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 14.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                HitTest = False
-                Size.Width = 196.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-              end
             end
           end
           object LayMenuPagNav: TLayout
@@ -438,67 +252,15 @@ object GenericDemoForm: TGenericDemoForm
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 4
-            object RectMenuPagNavBg: TRectangle
+            object BtnMenuPagNav: TButton
               Align = Client
-              Fill.Color = x00000000
-              Stroke.Kind = None
               Size.Width = 256.000000000000000000
               Size.Height = 40.000000000000000000
               Size.PlatformDefault = False
-              HitTest = True
+              TabOrder = 0
+              Text = 'PagNav'
               OnClick = MenuPagNavClick
-              object RectMenuPagNavActive: TRectangle
-                Align = None
-                Position.X = 0.000000000000000000
-                Position.Y = 0.000000000000000000
-                Fill.Color = xFF0D6EFD
-                Stroke.Kind = None
-                XRadius = 6.000000000000000000
-                YRadius = 6.000000000000000000
-                Size.Width = 256.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                Visible = False
-                HitTest = False
-              end
-              object LblMenuPagNavIcon: TLabel
-                Align = Left
-                Margins.Left = 16.000000000000000000
-                Margins.Right = 12.000000000000000000
-                Text = #62890
-                TextSettings.Font.Family = 'bootstrap-icons'
-                TextSettings.Font.Size = 16.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Center
-                TextSettings.VertAlign = Center
-                Size.Width = 28.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-                HitTest = False
-              end
-              object LblMenuPagNavText: TLabel
-                Align = Client
-                Margins.Right = 16.000000000000000000
-                Text = 'PagNav'
-                TextSettings.Font.Family = 'Segoe UI'
-                TextSettings.Font.Size = 16.000000000000000000
-                TextSettings.FontColor = xFFFFFFFF
-                TextSettings.HorzAlign = Leading
-                TextSettings.VertAlign = Center
-                HitTest = False
-                Size.Width = 196.000000000000000000
-                Size.Height = 40.000000000000000000
-                Size.PlatformDefault = False
-              end
             end
-          end
-          object RectMenuDivider: TRectangle
-            Align = Top
-            Fill.Color = xFF495057
-            Stroke.Kind = None
-            Size.Width = 280.000000000000000000
-            Size.Height = 1.000000000000000000
-            Size.PlatformDefault = False
           end
         end
       end
