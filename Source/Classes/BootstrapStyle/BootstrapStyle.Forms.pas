@@ -1047,8 +1047,7 @@ begin
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
     TStyledSetting.Other];
-  AEdit.NeedStyleLookup;
-  AEdit.ApplyStyleLookup;
+  { Avoid ApplyStyleLookup: runs inside ControlApplyStyle → stack overflow. }
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1085,8 +1084,6 @@ begin
   ACombo := TComboBox(E.Control);
   if csDestroying in ACombo.ComponentState then Exit;
   RemoveFormBg(ACombo);
-  ACombo.NeedStyleLookup;
-  ACombo.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1120,8 +1117,6 @@ begin
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
     TStyledSetting.Other];
-  ACE.NeedStyleLookup;
-  ACE.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1148,8 +1143,6 @@ begin
   if csDestroying in LB.ComponentState then Exit;
   RemoveFormBg(LB);
   RevertBsListItems(LB);
-  LB.NeedStyleLookup;
-  LB.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1176,8 +1169,6 @@ begin
   AMo := TMemo(E.Control);
   if csDestroying in AMo.ComponentState then Exit;
   RemoveFormBg(AMo);
-  AMo.NeedStyleLookup;
-  AMo.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1209,8 +1200,6 @@ begin
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
     TStyledSetting.Other];
-  ASB.NeedStyleLookup;
-  ASB.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1235,8 +1224,6 @@ begin
   LV := TListView(E.Control);
   if csDestroying in LV.ComponentState then Exit;
   RemoveFormBg(LV);
-  LV.NeedStyleLookup;
-  LV.ApplyStyleLookup;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1290,8 +1277,6 @@ begin
     G.Model.DefaultTextSettings.Font.Style  := [];
     G.Model.DefaultTextSettings.FontColor   := TAlphaColors.Black;
   end;
-  G.NeedStyleLookup;
-  G.ApplyStyleLookup;
 end;
 
 procedure DoApplyGrid(const E: TBSFormEntry);
@@ -1518,16 +1503,40 @@ end;
 
 procedure TBSFormRegistry.SetActive(AActive: Boolean);
 var
-  I: Integer;
-  E: TBSFormEntry;
+  I:     Integer;
+  E:     TBSFormEntry;
+  C:     TStyledControl;
+  Saved: TNotifyEvent;
 begin
   FActive := AActive;
   for I := 0 to FEntries.Count - 1 do
   begin
     E := FEntries[I];
-    if csDestroying in E.Control.ComponentState then Continue;
-    E.Control.NeedStyleLookup;
-    E.Control.ApplyStyleLookup;
+    C := E.Control;
+    if csDestroying in C.ComponentState then Continue;
+
+    Saved := C.OnApplyStyleLookup;
+    C.OnApplyStyleLookup := nil;
+    try
+      if AActive then
+      begin
+        C.NeedStyleLookup;
+        C.ApplyStyleLookup;
+        if Assigned(E.OrigOnApplyStyle) then
+          E.OrigOnApplyStyle(C);
+        DoApplyEntry(E);
+      end
+      else
+      begin
+        DoResetEntry(E);
+        C.NeedStyleLookup;
+        C.ApplyStyleLookup;
+        if Assigned(E.OrigOnApplyStyle) then
+          E.OrigOnApplyStyle(C);
+      end;
+    finally
+      C.OnApplyStyleLookup := Saved;
+    end;
   end;
 end;
 

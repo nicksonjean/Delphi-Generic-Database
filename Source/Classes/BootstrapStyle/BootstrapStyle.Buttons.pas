@@ -53,6 +53,7 @@ type
     class function  FindBSAnimation(const R: TRectangle): TColorAnimation; static;
     class procedure AttachHover(const C: TControl; AVariant: TBootstrapVariant); static;
     class procedure HideStyleChildren(const C: TStyledControl); static;
+    class procedure ShowStyleChildren(const C: TStyledControl); static;
     class procedure BuildButtonVisuals(
       const C: TControl;
       const P: TBootstrapButtonPaint;
@@ -245,6 +246,16 @@ begin
       if E.Kind = bsbkButton then
         TButton(Ctrl).Text := E.Caption;
       { TCornerButton: Text stays empty — Windows mode shows a blank corner button. }
+      { HideStyleChildren left FMX style resources invisible (Opacity=0).  A fresh
+        ApplyStyleLookup rebuilds them; hook stays nil until ApplyButton runs again. }
+      if Ctrl is TStyledControl then
+      begin
+        { FMX may reuse style children; restore visibility explicitly. }
+        TBootstrapButtons.ShowStyleChildren(TStyledControl(Ctrl));
+        TStyledControl(Ctrl).NeedStyleLookup;
+        TStyledControl(Ctrl).ApplyStyleLookup;
+        TBootstrapButtons.ShowStyleChildren(TStyledControl(Ctrl));
+      end;
     end;
   end;
 end;
@@ -440,6 +451,30 @@ begin
     CC.Visible  := False;
     CC.HitTest  := False;
     CC.Opacity  := 0;
+  end;
+end;
+
+class procedure TBootstrapButtons.ShowStyleChildren(const C: TStyledControl);
+var
+  I: Integer;
+  Child: TFmxObject;
+  CC: TControl;
+begin
+  for I := 0 to C.ChildrenCount - 1 do
+  begin
+    Child := C.Children[I];
+    if not (Child is TControl) then
+      Continue;
+    CC := TControl(Child);
+    if (CC.Name = BS_BG_NAME)    or
+       (CC.Name = BS_INNER_NAME) or
+       (CC.Name = BS_ICON_NAME)  or
+       (CC.Name = BS_TEXT_NAME)  then
+      Continue;
+    CC.Visible := True;
+    CC.Opacity := 1;
+    { Ensure style children don't steal input from the button itself. }
+    CC.HitTest := False;
   end;
 end;
 
