@@ -483,7 +483,8 @@ begin
     Anim.StopValue     := P.Hover;
     Anim.AutoReverse   := False;
     Anim.Loop          := False;
-    Anim.Enabled       := True;
+    { Do not call Enabled/Start here: that spins up FMX.TAniThread + platform
+      timers that may not tear down cleanly on app exit.  Hover uses Anim.Start. }
   end;
 
   { ── Content layout: icon+text / icon-only / text-only ───────────────── }

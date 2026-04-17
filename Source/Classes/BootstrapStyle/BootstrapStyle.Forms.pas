@@ -133,7 +133,14 @@ type
     procedure Fired(Sender: TObject);
   public
     constructor Create(AControl: TStyledControl; ADelayMs: Cardinal = 120);
+    destructor Destroy; override;
   end;
+
+var
+  { Pending TBSPromptFixTimer instances are not owned by any component; if the
+    process exits before the one-shot fires (e.g. DoneApplication / deactivate),
+    finalization frees them so FTimer and Self do not leak. }
+  GPromptFixPending: TList<TBSPromptFixTimer>;
 
 type
   TBSFormKind = (
@@ -503,6 +510,27 @@ begin
   FTimer.Interval := ADelayMs;
   FTimer.OnTimer  := Fired;
   FTimer.Enabled  := True;
+  GPromptFixPending.Add(Self);
+end;
+
+destructor TBSPromptFixTimer.Destroy;
+var
+  Idx: Integer;
+begin
+  if GPromptFixPending <> nil then
+  begin
+    Idx := GPromptFixPending.IndexOf(Self);
+    if Idx >= 0 then
+      GPromptFixPending.Delete(Idx);
+  end;
+  if FTimer <> nil then
+  begin
+    FTimer.Enabled := False;
+    FTimer.OnTimer := nil;
+    FTimer.Free;
+    FTimer := nil;
+  end;
+  inherited;
 end;
 
 procedure TBSPromptFixTimer.Fired(Sender: TObject);
@@ -510,6 +538,7 @@ var
   Pr: TControl;
 begin
   FTimer.Enabled := False;
+  FTimer.OnTimer := nil;
   if (FControl <> nil) and not (csDestroying in FControl.ComponentState) then
   begin
     Pr := FindContentOrPrompt(FControl, 'prompt');
@@ -537,6 +566,8 @@ end;
 procedure QueueDeferredPromptRealign(const C: TStyledControl);
 begin
   if (C = nil) or not BsShellUsesEditPrompt(C) then Exit;
+  if (Application <> nil) and Application.Terminated then Exit;
+  if csDestroying in C.ComponentState then Exit;
   TThread.Queue(nil,
     procedure
     var
@@ -1592,9 +1623,16 @@ begin
 end;
 
 initialization
+  GPromptFixPending := TList<TBSPromptFixTimer>.Create;
   GFormRegistry := TBSFormRegistry.Create(nil);
 
 finalization
+  if GPromptFixPending <> nil then
+  begin
+    while GPromptFixPending.Count > 0 do
+      GPromptFixPending[0].Free;
+    FreeAndNil(GPromptFixPending);
+  end;
   FreeAndNil(GFormRegistry);
 
 end.
