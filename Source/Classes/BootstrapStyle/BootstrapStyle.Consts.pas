@@ -1,0 +1,81 @@
+unit BootstrapStyle.Consts;
+
+{
+  Bootstrap 5 shared, non-color constants.
+
+  Keep layout/metrics, internal resource names, and other "styling-only" values
+  centralized here so all Bootstrap rendering logic stays consistent.
+
+  Colors remain in BootstrapStyle.Colors.pas to keep the palette isolated from
+  component metrics and internal identifiers.
+}
+
+interface
+
+const
+  { ── Typography ───────────────────────────────────────────────────────────── }
+
+  { Base UI font used across Bootstrap-styled controls (non-icons). }
+  BS_FONT_FAMILY_UI = 'Segoe UI';
+
+  { Default font sizes kept here for cohesion.
+    Note: buttons default to 15 in ApplyButton; form-controls default to 14. }
+  BS_FONT_SIZE_FORMS_DEFAULT   = 14;
+  BS_FONT_SIZE_BUTTONS_DEFAULT = 15;
+
+  { ── Internal identifiers (injected child objects) ───────────────────────── }
+
+  { Offset stored in TControl.Tag to identify the Bootstrap variant at hover time.
+    Value is arbitrary but must not collide with application-defined tags. }
+  BS_HOVER_TAG_BASE = 910000000;
+
+  { Names for child objects injected into styled controls.
+    Double-underscore prefix guarantees no collision with designer-placed names. }
+  BS_BG_NAME    = '__BSBg__';
+  BS_INNER_NAME = '__BSInner__';
+  BS_ICON_NAME  = '__BSIcon__';
+  BS_TEXT_NAME  = '__BSText__';
+
+  { Forms overlay background rectangle tag-string. }
+  BS_FORM_BG_NAME = '__BSFormBg__';
+
+  { ── Buttons (BootstrapStyle.Buttons) ────────────────────────────────────── }
+  BS_BTN_RADIUS          = 6;
+  BS_BTN_HOVER_DURATION  = 0.15;
+  BS_BTN_CONTENT_MARGINX = 12;
+  BS_BTN_ICON_TEXT_EXTRA_WIDTH = 8;
+
+  { ── Form controls (BootstrapStyle.Forms) ────────────────────────────────── }
+  BS_FORM_RADIUS            = 6;
+  BS_FORM_PROMPT_INSET_LEFT = 15;
+  BS_FORM_PROMPT_REALIGN_DELAY_MS = 120;
+
+  BS_FORM_BORDER_THICKNESS       = 1;
+  BS_FORM_BORDER_THICKNESS_FOCUS = 2;
+
+  { Content layout padding (left/right = 12, top/bottom = 6) }
+  BS_FORM_CONTENT_PAD_X = 12;
+  BS_FORM_CONTENT_PAD_Y = 6;
+
+  { ── FMX style resource identifiers (used by FindStyleResource) ──────────── }
+  FMX_RES_BACKGROUND = 'background';
+  FMX_RES_CONTENT    = 'content';
+  FMX_RES_PROMPT     = 'prompt';
+  FMX_RES_TEXT       = 'text';
+  FMX_RES_BUTTON     = 'button';
+  FMX_RES_ARROW      = 'arrow';
+  FMX_RES_HEADER     = 'header';
+  FMX_RES_BOX        = 'box';
+
+  { FMX internal-name heuristics (child object names often include these). }
+  FMX_NAME_CARET = 'caret';
+  FMX_NAME_TEXT  = 'text';
+  FMX_NAME_CURSOR    = 'cursor';
+  FMX_NAME_SELECTION = 'selection';
+  FMX_NAME_SEL       = 'sel';
+  FMX_NAME_HIGHLIGHT = 'highlight';
+
+implementation
+
+end.
+

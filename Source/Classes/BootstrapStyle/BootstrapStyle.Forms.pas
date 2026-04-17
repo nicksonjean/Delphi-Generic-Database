@@ -117,6 +117,7 @@ uses
   Winapi.Windows,
   FMX.Platform.Win,
   {$ENDIF}
+  BootstrapStyle.Consts,
   BootstrapStyle.Colors;
 
 { ── Types ─────────────────────────────────────────────────────────────────── }
@@ -132,7 +133,8 @@ type
     FControl: TStyledControl;
     procedure Fired(Sender: TObject);
   public
-    constructor Create(AControl: TStyledControl; ADelayMs: Cardinal = 120);
+    constructor Create(AControl: TStyledControl;
+      ADelayMs: Cardinal = BS_FORM_PROMPT_REALIGN_DELAY_MS);
     destructor Destroy; override;
   end;
 
@@ -167,8 +169,7 @@ type
   OVERLAY helpers — used by TEdit / TMemo / TSearchBox / TComboEdit
   ══════════════════════════════════════════════════════════════════════════════ }
 
-const
-  BS_FORM_BG_NAME = '__BSFormBg__';
+{ BS_FORM_BG_NAME is defined in BootstrapStyle.Consts }
 
 { Finds the persistent __BSFormBg__ TRectangle child, or nil. }
 function FindFormBg(const C: TStyledControl): TRectangle;
@@ -244,12 +245,12 @@ var
 
       { Preserve caret/cursor/selection visuals. Different FMX styles vary. }
       Result :=
-        (N.Contains('caret')) or
-        (N.Contains('cursor')) or
-        (N.Contains('selection')) or
-        (N.Contains('sel')) or
-        (N.Contains('highlight')) or
-        (N.Contains('text'));
+        (N.Contains(FMX_NAME_CARET)) or
+        (N.Contains(FMX_NAME_CURSOR)) or
+        (N.Contains(FMX_NAME_SELECTION)) or
+        (N.Contains(FMX_NAME_SEL)) or
+        (N.Contains(FMX_NAME_HIGHLIGHT)) or
+        (N.Contains(FMX_NAME_TEXT));
     end;
   begin
     if Obj = nil then Exit;
@@ -301,7 +302,7 @@ var
     end;
   end;
 begin
-  Bg := C.FindStyleResource('background');
+  Bg := C.FindStyleResource(FMX_RES_BACKGROUND);
   if Bg is TShape then
   begin
     TShape(Bg).Fill.Kind   := TBrushKind.None;
@@ -318,8 +319,8 @@ begin
 
   { ComboEdit/ComboBox frequently paints a native-looking button; strip it too
     (paths are preserved so ApplyComboArrow can recolour them). }
-  StripNativeChrome(C.FindStyleResource('button'));
-  StripNativeChrome(C.FindStyleResource('box'));
+  StripNativeChrome(C.FindStyleResource(FMX_RES_BUTTON));
+  StripNativeChrome(C.FindStyleResource(FMX_RES_BOX));
 end;
 
 { Paints Bootstrap form-control visuals onto the persistent __BSFormBg__ rect.
@@ -337,15 +338,15 @@ begin
   if AFocused and AEnabled then
   begin
     R.Stroke.Color     := BS_FORM_BORDER_FOCUS;
-    R.Stroke.Thickness := 2;
+    R.Stroke.Thickness := BS_FORM_BORDER_THICKNESS_FOCUS;
   end
   else
   begin
     R.Stroke.Color     := BS_FORM_BORDER;
-    R.Stroke.Thickness := 1;
+    R.Stroke.Thickness := BS_FORM_BORDER_THICKNESS;
   end;
-  R.XRadius := 6;
-  R.YRadius := 6;
+  R.XRadius := BS_FORM_RADIUS;
+  R.YRadius := BS_FORM_RADIUS;
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -494,7 +495,7 @@ procedure SyncPromptPaddingFromContent(const Shell: TStyledControl;
 var
   Pr: TControl;
 begin
-  Pr := FindContentOrPrompt(Shell, 'prompt');
+  Pr := FindContentOrPrompt(Shell, FMX_RES_PROMPT);
   if (Pr = nil) or (Content = nil) then Exit;
   ApplyPromptInset(Pr, Content.Padding.Left);
 end;
@@ -541,10 +542,10 @@ begin
   FTimer.OnTimer := nil;
   if (FControl <> nil) and not (csDestroying in FControl.ComponentState) then
   begin
-    Pr := FindContentOrPrompt(FControl, 'prompt');
+    Pr := FindContentOrPrompt(FControl, FMX_RES_PROMPT);
     if Pr <> nil then
     begin
-      ApplyPromptInset(Pr, 12);
+      ApplyPromptInset(Pr, BS_FORM_PROMPT_INSET_LEFT);
       FControl.Repaint;
     end;
   end;
@@ -574,16 +575,16 @@ begin
       Pr: TControl;
     begin
       if (C = nil) or (csDestroying in C.ComponentState) then Exit;
-      Pr := FindContentOrPrompt(C, 'prompt');
+      Pr := FindContentOrPrompt(C, FMX_RES_PROMPT);
       if Pr <> nil then
-        ApplyPromptInset(Pr, 12);
+        ApplyPromptInset(Pr, BS_FORM_PROMPT_INSET_LEFT);
       { Force repaint so the new prompt position is visible immediately. }
       C.Repaint;
     end);
   { Second path: timer fires 120 ms after scheduling — by then all FMX lazy
     init (presentation creation, WM_ACTIVATE, first Realign cycle) is done.
     The timer self-destructs after firing once. }
-  TBSPromptFixTimer.Create(C, 120);
+  TBSPromptFixTimer.Create(C, BS_FORM_PROMPT_REALIGN_DELAY_MS);
 end;
 
 { Reduces the "content" layout inner-padding to Bootstrap values (12 px L/R,
@@ -592,15 +593,15 @@ procedure ApplyContentPadding(C: TStyledControl);
 var
   Obj: TFmxObject;
 begin
-  Obj := C.FindStyleResource('content');
+  Obj := C.FindStyleResource(FMX_RES_CONTENT);
   if Obj is TControl then
   begin
-    TControl(Obj).Padding.Left   := 12;
-    TControl(Obj).Padding.Right  := 12;
+    TControl(Obj).Padding.Left   := BS_FORM_CONTENT_PAD_X;
+    TControl(Obj).Padding.Right  := BS_FORM_CONTENT_PAD_X;
     if C is TMemo then
     begin
-      TControl(Obj).Padding.Top    := 6;
-      TControl(Obj).Padding.Bottom := 6;
+      TControl(Obj).Padding.Top    := BS_FORM_CONTENT_PAD_Y;
+      TControl(Obj).Padding.Bottom := BS_FORM_CONTENT_PAD_Y;
     end
     else
     begin
@@ -620,18 +621,18 @@ procedure ApplyPromptResource(C: TStyledControl);
 var
   Obj: TFmxObject;
 begin
-  Obj := C.FindStyleResource('prompt');
+  Obj := C.FindStyleResource(FMX_RES_PROMPT);
   if Obj is TText then
   begin
     TText(Obj).Color       := BS_FORM_PLACEHOLDER;
-    TText(Obj).Font.Family := 'Segoe UI';
+    TText(Obj).Font.Family := BS_FONT_FAMILY_UI;
   end
   else if Obj is TLabel then
   begin
     TLabel(Obj).StyledSettings := TLabel(Obj).StyledSettings -
       [TStyledSetting.FontColor, TStyledSetting.Family];
     TLabel(Obj).TextSettings.FontColor   := BS_FORM_PLACEHOLDER;
-    TLabel(Obj).TextSettings.Font.Family := 'Segoe UI';
+    TLabel(Obj).TextSettings.Font.Family := BS_FONT_FAMILY_UI;
   end;
 end;
 
@@ -641,7 +642,7 @@ var
   Co: TControl;
 begin
   if C = nil then Exit;
-  Co := FindContentOrPrompt(C, 'content');
+  Co := FindContentOrPrompt(C, FMX_RES_CONTENT);
   if Co = nil then Exit;
   SyncPromptPaddingFromContent(C, Co);
   QueueDeferredPromptRealign(C);
@@ -653,18 +654,18 @@ procedure ApplyComboSelectedText(C: TStyledControl; AFontSize: Single);
 var
   Obj: TFmxObject;
 begin
-  Obj := C.FindStyleResource('text');
+  Obj := C.FindStyleResource(FMX_RES_TEXT);
   if Obj is TText then
   begin
     TText(Obj).Color       := BS_FORM_TEXT;
-    TText(Obj).Font.Family := 'Segoe UI';
+    TText(Obj).Font.Family := BS_FONT_FAMILY_UI;
     TText(Obj).Font.Size   := AFontSize;
     TText(Obj).Font.Style  := [];
   end
   else if Obj is TLabel then
   begin
     TLabel(Obj).StyledSettings := [];
-    TLabel(Obj).TextSettings.Font.Family := 'Segoe UI';
+    TLabel(Obj).TextSettings.Font.Family := BS_FONT_FAMILY_UI;
     TLabel(Obj).TextSettings.Font.Size   := AFontSize;
     TLabel(Obj).TextSettings.Font.Style  := [];
     TLabel(Obj).TextSettings.FontColor   := BS_FORM_TEXT;
@@ -713,7 +714,7 @@ begin
       TText(Ch).Visible     := True;
       TText(Ch).Opacity     := 1;
       TText(Ch).Color       := BS_FORM_TEXT;
-      TText(Ch).Font.Family := 'Segoe UI';
+      TText(Ch).Font.Family := BS_FONT_FAMILY_UI;
       if AFontSize > 0 then
         TText(Ch).Font.Size := AFontSize;
       TText(Ch).Font.Style := [];
@@ -723,7 +724,7 @@ begin
       TLabel(Ch).Visible := True;
       TLabel(Ch).Opacity := 1;
       TLabel(Ch).StyledSettings := [];
-      TLabel(Ch).TextSettings.Font.Family := 'Segoe UI';
+      TLabel(Ch).TextSettings.Font.Family := BS_FONT_FAMILY_UI;
       if AFontSize > 0 then
         TLabel(Ch).TextSettings.Font.Size := AFontSize;
       TLabel(Ch).TextSettings.Font.Style  := [];
@@ -740,12 +741,12 @@ begin
   if C = nil then Exit;
 
   { Most presented edits expose a "text" style resource (TEditText/TText). }
-  Obj := C.FindStyleResource('text');
+  Obj := C.FindStyleResource(FMX_RES_TEXT);
   if Obj <> nil then
     ForceStyleTextInObj(Obj, AFontSize);
 
   { Memo often nests its text object under "content". }
-  Obj := C.FindStyleResource('content');
+  Obj := C.FindStyleResource(FMX_RES_CONTENT);
   if Obj <> nil then
     ForceStyleTextInObj(Obj, AFontSize);
 end;
@@ -754,8 +755,8 @@ end;
   Tries "button" and "arrow" resource names (name varies across FMX styles). }
 procedure ApplyComboArrow(C: TStyledControl);
 begin
-  ColorPathsInObj(C.FindStyleResource('button'));
-  ColorPathsInObj(C.FindStyleResource('arrow'));
+  ColorPathsInObj(C.FindStyleResource(FMX_RES_BUTTON));
+  ColorPathsInObj(C.FindStyleResource(FMX_RES_ARROW));
 end;
 
 { Styles all TListBoxItem instances of a TComboBox dropdown with Segoe UI.
@@ -780,7 +781,7 @@ begin
     Item.StyledSettings := Item.StyledSettings - [
       TStyledSetting.Family, TStyledSetting.Size,
       TStyledSetting.Style,  TStyledSetting.FontColor];
-    Item.TextSettings.Font.Family := 'Segoe UI';
+    Item.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
     Item.TextSettings.Font.Size   := AFontSize;
     Item.TextSettings.Font.Style  := [];
     Item.TextSettings.FontColor   := BS_FORM_TEXT;
@@ -796,7 +797,7 @@ begin
   Ed.StyledSettings := Ed.StyledSettings - [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor];
-  Ed.TextSettings.Font.Family := 'Segoe UI';
+  Ed.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
   Ed.TextSettings.Font.Size   := AFontSize;
   Ed.TextSettings.Font.Style  := [];
   Ed.TextSettings.FontColor   := BS_FORM_TEXT;
@@ -815,7 +816,7 @@ begin
   CE.StyledSettings := CE.StyledSettings - [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor];
-  CE.TextSettings.Font.Family := 'Segoe UI';
+  CE.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
   CE.TextSettings.Font.Size   := AFontSize;
   CE.TextSettings.Font.Style  := [];
   CE.TextSettings.FontColor   := BS_FORM_TEXT;
@@ -832,13 +833,13 @@ begin
   Mo.StyledSettings := Mo.StyledSettings - [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor];
-  Mo.TextSettings.Font.Family := 'Segoe UI';
+  Mo.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
   Mo.TextSettings.Font.Size   := AFontSize;
   Mo.TextSettings.Font.Style  := [];
   Mo.TextSettings.FontColor   := BS_FORM_TEXT;
   if Supports(Mo, ITextSettings, ITS) then
   begin
-    ITS.DefaultTextSettings.Font.Family := 'Segoe UI';
+    ITS.DefaultTextSettings.Font.Family := BS_FONT_FAMILY_UI;
     ITS.DefaultTextSettings.Font.Size   := AFontSize;
     ITS.DefaultTextSettings.Font.Style  := [];
     ITS.DefaultTextSettings.FontColor   := BS_FORM_TEXT;
@@ -853,7 +854,7 @@ begin
   SB.StyledSettings := SB.StyledSettings - [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor];
-  SB.TextSettings.Font.Family := 'Segoe UI';
+  SB.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
   SB.TextSettings.Font.Size   := AFontSize;
   SB.TextSettings.Font.Style  := [];
   SB.TextSettings.FontColor   := BS_FORM_TEXT;
@@ -873,7 +874,7 @@ begin
     Item.StyledSettings := Item.StyledSettings - [
       TStyledSetting.Family, TStyledSetting.Size,
       TStyledSetting.Style,  TStyledSetting.FontColor];
-    Item.TextSettings.Font.Family := 'Segoe UI';
+    Item.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
     Item.TextSettings.Font.Size   := AFontSize;
     Item.TextSettings.Font.Style  := [];
     Item.TextSettings.FontColor   := BS_FORM_TEXT;
@@ -900,7 +901,7 @@ function FindBgRect(const C: TStyledControl): TRectangle;
 var
   Obj: TFmxObject;
 begin
-  Obj := C.FindStyleResource('background');
+  Obj := C.FindStyleResource(FMX_RES_BACKGROUND);
   if Obj is TRectangle then Result := TRectangle(Obj)
   else                       Result := nil;
 end;
@@ -1021,9 +1022,9 @@ begin
     the very first paint, even before FMX style triggers might reset it.
     QueueDeferredPromptRealign (called via ApplyContentPadding) takes care of
     re-applying after those triggers and forces a Repaint. }
-  Pr := FindContentOrPrompt(Ed, 'prompt');
+  Pr := FindContentOrPrompt(Ed, FMX_RES_PROMPT);
   if Pr <> nil then
-    ApplyPromptInset(Pr, 12);
+    ApplyPromptInset(Pr, BS_FORM_PROMPT_INSET_LEFT);
 
   {$IFDEF MSWINDOWS}
   { Win32 API path — covers TEdits that FMX keeps as native HWNDs (e.g. when
@@ -1031,7 +1032,7 @@ begin
   TThread.Queue(nil,
     procedure
     begin
-      ApplyNativeEditMargin(Ed, 12);
+      ApplyNativeEditMargin(Ed, BS_FORM_PROMPT_INSET_LEFT);
     end);
   {$ENDIF}
 end;
@@ -1241,7 +1242,7 @@ begin
 
   if G.Model <> nil then
   begin
-    G.Model.DefaultTextSettings.Font.Family := 'Segoe UI';
+    G.Model.DefaultTextSettings.Font.Family := BS_FONT_FAMILY_UI;
     G.Model.DefaultTextSettings.Font.Size   := AFontSize;
     G.Model.DefaultTextSettings.Font.Style  := [];
     G.Model.DefaultTextSettings.FontColor   := BS_FORM_TEXT;
@@ -1250,7 +1251,7 @@ begin
   R := EnsureFormBg(G);
   StyleFormBg(R, G.IsFocused, G.Enabled);
 
-  Hdr := G.FindStyleResource('header');
+  Hdr := G.FindStyleResource(FMX_RES_HEADER);
   if Hdr is TRectangle then
   begin
     HdrR              := TRectangle(Hdr);

@@ -41,6 +41,7 @@ uses
   FMX.Objects,
   FMX.Layouts,
   FMX.Ani,
+  BootstrapStyle.Consts,
   BootstrapStyle.Core;
 
 type
@@ -54,12 +55,7 @@ type
     class procedure AttachHover(const C: TControl; AVariant: TBootstrapVariant); static;
     class procedure HideStyleChildren(const C: TStyledControl); static;
     class procedure ShowStyleChildren(const C: TStyledControl); static;
-    class procedure BuildButtonVisuals(
-      const C: TControl;
-      const P: TBootstrapButtonPaint;
-      const AIconName, ACaption: string;
-      AFontSize: Single); static;
-
+    class procedure BuildButtonVisuals(const C: TControl; const P: TBootstrapButtonPaint; const AIconName, ACaption: string; AFontSize: Single); static;
   public
     { Called by the internal TBootstrapHoverHook singleton. }
     class procedure ProcessHoverEnter(Sender: TObject); static;
@@ -67,26 +63,13 @@ type
     class procedure ProcessApplyStyle(Sender: TObject); static;
 
     { AIconName is optional — empty string means text-only button. }
-    class procedure ApplyButton(
-      const ABtn: TButton;
-      AVariant: TBootstrapVariant;
-      const ACaption: string;
-      AFontSize: Single = 15;
-      const AIconName: string = ''); static;
+    class procedure ApplyButton(const ABtn: TButton; AVariant: TBootstrapVariant; const ACaption: string; AFontSize: Single = 15; const AIconName: string = ''); static;
 
     { Icon-only TButton (no caption). }
-    class procedure ApplyButtonIconOnly(
-      const ABtn: TButton;
-      AVariant: TBootstrapVariant;
-      const ABootstrapIconName: string;
-      AFontSize: Single = 18); static;
+    class procedure ApplyButtonIconOnly(const ABtn: TButton; AVariant: TBootstrapVariant; const ABootstrapIconName: string; AFontSize: Single = 18); static;
 
     { TCornerButton with a single bootstrap-icons glyph. }
-    class procedure ApplyCornerButtonGlyph(
-      const ABtn: TCornerButton;
-      AVariant: TBootstrapVariant;
-      const ABootstrapIconName: string;
-      AFontSize: Single = 14); static;
+    class procedure ApplyCornerButtonGlyph(const ABtn: TCornerButton; AVariant: TBootstrapVariant; const ABootstrapIconName: string; AFontSize: Single = 14); static;
 
     { Runtime toggle — applies or reverts ALL registered buttons. }
     class procedure SetActive(AActive: Boolean); static;
@@ -506,14 +489,14 @@ begin
     BGRect.Fill.Kind   := TBrushKind.Solid;
     BGRect.Fill.Color  := P.Normal;
     BGRect.Stroke.Kind := TBrushKind.None;  { no extra border line on any state }
-    BGRect.XRadius     := 6;
-    BGRect.YRadius     := 6;
+    BGRect.XRadius     := BS_BTN_RADIUS;
+    BGRect.YRadius     := BS_BTN_RADIUS;
 
     { Smooth hover animation — 0.15 s matches Bootstrap 5 default transition. }
     Anim               := TColorAnimation.Create(BGRect);
     Anim.Parent        := BGRect;
     Anim.PropertyName  := 'Fill.Color';
-    Anim.Duration      := 0.15;
+    Anim.Duration      := BS_BTN_HOVER_DURATION;
     Anim.StartValue    := P.Normal;
     Anim.StopValue     := P.Hover;
     Anim.AutoReverse   := False;
@@ -531,14 +514,14 @@ begin
     InnerLayout.Parent         := C;
     InnerLayout.Align          := TAlignLayout.Client;
     InnerLayout.HitTest        := False;
-    InnerLayout.Margins.Left   := 12;
-    InnerLayout.Margins.Right  := 12;
+    InnerLayout.Margins.Left   := BS_BTN_CONTENT_MARGINX;
+    InnerLayout.Margins.Right  := BS_BTN_CONTENT_MARGINX;
 
     IconLbl                               := TLabel.Create(C);
     IconLbl.Name                          := BS_ICON_NAME;
     IconLbl.Parent                        := InnerLayout;
     IconLbl.Align                         := TAlignLayout.Left;
-    IconLbl.Width                         := AFontSize + 8;
+    IconLbl.Width                         := AFontSize + BS_BTN_ICON_TEXT_EXTRA_WIDTH;
     IconLbl.HitTest                       := False;
     IconLbl.AutoSize                      := False;
     IconLbl.StyledSettings                := [];
@@ -557,7 +540,7 @@ begin
     TextLbl.HitTest                       := False;
     TextLbl.AutoSize                      := False;
     TextLbl.StyledSettings                := [];
-    TextLbl.TextSettings.Font.Family      := 'Segoe UI';
+    TextLbl.TextSettings.Font.Family      := BS_FONT_FAMILY_UI;
     TextLbl.TextSettings.Font.Size        := AFontSize;
     TextLbl.TextSettings.Font.Style       := [];
     TextLbl.TextSettings.HorzAlign        := TTextAlign.Leading;
@@ -593,7 +576,7 @@ begin
     TextLbl.HitTest                       := False;
     TextLbl.AutoSize                      := False;
     TextLbl.StyledSettings                := [];
-    TextLbl.TextSettings.Font.Family      := 'Segoe UI';
+    TextLbl.TextSettings.Font.Family      := BS_FONT_FAMILY_UI;
     TextLbl.TextSettings.Font.Size        := AFontSize;
     TextLbl.TextSettings.Font.Style       := [];
     TextLbl.TextSettings.HorzAlign        := TTextAlign.Center;
