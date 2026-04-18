@@ -622,8 +622,8 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Size.Width = 320.000000000000000000
               Size.Height = 275.000000000000000000
               Size.PlatformDefault = False
-              Viewport.Width = 320.000000000000000000
-              Viewport.Height = 275.000000000000000000
+              Viewport.Width = 316.000000000000000000
+              Viewport.Height = 271.000000000000000000
             end
           end
         end
@@ -780,8 +780,8 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Size.Width = 490.000000000000000000
               Size.Height = 208.000000000000000000
               Size.PlatformDefault = False
-              Viewport.Width = 490.000000000000000000
-              Viewport.Height = 208.000000000000000000
+              Viewport.Width = 470.000000000000000000
+              Viewport.Height = 167.000000000000000000
               object TStringColumn
                 Header = 'Name'
                 Size.Width = 160.000000000000000000
@@ -807,8 +807,8 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Size.Width = 498.000000000000000000
               Size.Height = 208.000000000000000000
               Size.PlatformDefault = False
-              Viewport.Width = 498.000000000000000000
-              Viewport.Height = 208.000000000000000000
+              Viewport.Width = 494.000000000000000000
+              Viewport.Height = 183.000000000000000000
             end
           end
         end

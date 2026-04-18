@@ -388,6 +388,13 @@ begin
   TBootstrapStyle.ApplyCornerButtonGlyph(CbtnInfo,      bsInfo,      'x-lg',            14);
 
   { ── Section 2: Form Controls — labels ── }
+  TBootstrapStyle.ApplyFormLabel(LblBtnsTitle,   18);
+  TBootstrapStyle.ApplyFormLabel(LblFormsTitle,  18);
+  TBootstrapStyle.ApplyFormLabel(LblListsTitle,  18);
+  TBootstrapStyle.ApplyFormLabel(LblGridTitle,   18);
+
+  TBootstrapStyle.ApplyFormLabel(LblEditNormal,   14);
+
   TBootstrapStyle.ApplyFormLabel(LblEditNormal,   14);
   TBootstrapStyle.ApplyFormLabel(LblEditPassword, 14);
   TBootstrapStyle.ApplyFormLabel(LblEditDisabled, 14);
@@ -395,6 +402,11 @@ begin
   TBootstrapStyle.ApplyFormLabel(LblComboEdit,    14);
   TBootstrapStyle.ApplyFormLabel(LblSearchBox,    14);
   TBootstrapStyle.ApplyFormLabel(LblMemo,         14);
+  TBootstrapStyle.ApplyFormLabel(LblRowText,      14);
+  TBootstrapStyle.ApplyFormLabel(LblRowIconText,  14);
+  TBootstrapStyle.ApplyFormLabel(LblRowIconOnly,  14);
+  TBootstrapStyle.ApplyFormLabel(LblRowCorner,    14);
+  TBootstrapStyle.ApplyFormLabel(LblToggleTitle,  14);
 
   { ── Section 2: Form Controls — inputs ── }
   TBootstrapStyle.ApplyEdit(EditNormal,   14);
