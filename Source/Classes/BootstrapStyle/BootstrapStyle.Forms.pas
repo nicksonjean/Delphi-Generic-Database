@@ -224,6 +224,82 @@ begin
   if R <> nil then R.Free;
 end;
 
+{ ── Glow-ring helpers — TEdit / TComboEdit / TMemo / TSearchBox only ───────── }
+
+function FindFormGlow(const C: TStyledControl): TRectangle;
+var
+  I: Integer;
+begin
+  Result := nil;
+  if C = nil then Exit;
+  for I := 0 to C.ChildrenCount - 1 do
+    if (C.Children[I] is TRectangle) and
+       (TRectangle(C.Children[I]).TagString = BS_FORM_GLOW_NAME) then
+      Exit(TRectangle(C.Children[I]));
+end;
+
+{ Creates (or resets) the persistent __BSFormGlow__ ring.
+  Negative Margins extend it BS_FORM_FOCUS_RING_SPREAD px beyond the
+  control bounds so the ring appears OUTSIDE the 1 px border, matching
+  Bootstrap box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25).
+  Must be called AFTER EnsureFormBg so SendToBack places it behind __BSFormBg__. }
+function EnsureFormGlow(const C: TStyledControl): TRectangle;
+var
+  R: TRectangle;
+const
+  SP = BS_FORM_FOCUS_RING_SPREAD;
+begin
+  Result := FindFormGlow(C);
+  if Result = nil then
+  begin
+    R           := TRectangle.Create(C);
+    R.TagString := BS_FORM_GLOW_NAME;
+    R.HitTest   := False;
+    R.Parent    := C;
+  end
+  else
+    R := Result;
+
+  R.Align          := TAlignLayout.Client;
+  R.Margins.Left   := -SP;
+  R.Margins.Top    := -SP;
+  R.Margins.Right  := -SP;
+  R.Margins.Bottom := -SP;
+  R.Fill.Kind      := TBrushKind.None;
+  R.Stroke.Kind    := TBrushKind.None;
+  R.XRadius        := BS_FORM_RADIUS + SP;
+  R.YRadius        := BS_FORM_RADIUS + SP;
+  R.Index := 0;
+  R.SendToBack;
+  Result := R;
+end;
+
+procedure RemoveFormGlow(const C: TStyledControl);
+var
+  R: TRectangle;
+begin
+  R := FindFormGlow(C);
+  if R <> nil then R.Free;
+end;
+
+procedure StyleFormGlow(const R: TRectangle; AFocused, AEnabled: Boolean);
+begin
+  if R = nil then Exit;
+  if AFocused and AEnabled then
+  begin
+    R.Stroke.Kind      := TBrushKind.Solid;
+    R.Stroke.Color     := BS_FORM_FOCUS_RING;
+    R.Stroke.Thickness := BS_FORM_FOCUS_RING_SPREAD;
+  end
+  else
+    R.Stroke.Kind := TBrushKind.None;
+end;
+
+function IsEditFamily(AKind: TBSFormKind): Boolean;
+begin
+  Result := AKind in [bsfkEdit, bsfkComboEdit, bsfkMemo, bsfkSearchBox];
+end;
+
 procedure MakeStyleBackgroundTransparent(const C: TStyledControl);
 var
   Bg: TFmxObject;
@@ -328,9 +404,13 @@ begin
 end;
 
 { Paints Bootstrap form-control visuals onto the persistent __BSFormBg__ rect.
-  AFocused = True   → focus ring (BS_FORM_BORDER_FOCUS, 2 px)
-  AEnabled = False  → disabled background (#e9ecef) }
-procedure StyleFormBg(const R: TRectangle; AFocused, AEnabled: Boolean);
+  AFocused  = True  → focus border colour (BS_FORM_BORDER_FOCUS)
+  AEnabled  = False → disabled background (#e9ecef)
+  AUseGlow  = True  → edit-family path: border stays 1 px on focus (the glow
+                       ring handled by StyleFormGlow provides the spread effect);
+              False → other controls: border widens to 2 px on focus. }
+procedure StyleFormBg(const R: TRectangle; AFocused, AEnabled: Boolean;
+  AUseGlow: Boolean = False);
 begin
   if R = nil then Exit;
   R.Fill.Kind  := TBrushKind.Solid;
@@ -342,7 +422,10 @@ begin
   if AFocused and AEnabled then
   begin
     R.Stroke.Color     := BS_FORM_BORDER_FOCUS;
-    R.Stroke.Thickness := BS_FORM_BORDER_THICKNESS_FOCUS;
+    if AUseGlow then
+      R.Stroke.Thickness := BS_FORM_BORDER_THICKNESS        { 1 px — glow ring handles spread }
+    else
+      R.Stroke.Thickness := BS_FORM_BORDER_THICKNESS_FOCUS; { 2 px for non-glow controls }
   end
   else
   begin
@@ -1012,12 +1095,15 @@ procedure DoApplyEdit(const E: TBSFormEntry);
 var
   Ed: TEdit;
   R:  TRectangle;
+  G:  TRectangle;
   Pr: TControl;
 begin
   Ed := TEdit(E.Control);
   R  := EnsureFormBg(Ed);
+  G  := EnsureFormGlow(Ed);  { must be called after EnsureFormBg so it goes behind }
   MakeStyleBackgroundTransparent(Ed);
-  StyleFormBg(R, Ed.IsFocused, Ed.Enabled);
+  StyleFormBg(R, Ed.IsFocused, Ed.Enabled, True);
+  StyleFormGlow(G, Ed.IsFocused, Ed.Enabled);
   ApplyContentPadding(Ed);   { ← also calls QueueDeferredPromptRealign }
   ApplyPromptResource(Ed);
   ApplyBsFontEdit(Ed, E.FontSize);
@@ -1048,6 +1134,7 @@ begin
   AEdit := TEdit(E.Control);
   if csDestroying in AEdit.ComponentState then Exit;
   RemoveFormBg(AEdit);
+  RemoveFormGlow(AEdit);
   AEdit.StyledSettings := [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
@@ -1099,11 +1186,14 @@ procedure DoApplyComboEdit(const E: TBSFormEntry);
 var
   CE: TComboEdit;
   R:  TRectangle;
+  G:  TRectangle;
 begin
   CE := TComboEdit(E.Control);
   R  := EnsureFormBg(CE);
+  G  := EnsureFormGlow(CE);
   MakeStyleBackgroundTransparent(CE);
-  StyleFormBg(R, CE.IsFocused, CE.Enabled);
+  StyleFormBg(R, CE.IsFocused, CE.Enabled, True);
+  StyleFormGlow(G, CE.IsFocused, CE.Enabled);
   ApplyContentPadding(CE);
   ApplyPromptResource(CE);
   ApplyBsFontComboEdit(CE, E.FontSize);
@@ -1118,6 +1208,7 @@ begin
   ACE := TComboEdit(E.Control);
   if csDestroying in ACE.ComponentState then Exit;
   RemoveFormBg(ACE);
+  RemoveFormGlow(ACE);
   ACE.StyledSettings := [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
@@ -1158,11 +1249,14 @@ procedure DoApplyMemo(const E: TBSFormEntry);
 var
   Mo: TMemo;
   R:  TRectangle;
+  G:  TRectangle;
 begin
   Mo := TMemo(E.Control);
   R  := EnsureFormBg(Mo);
+  G  := EnsureFormGlow(Mo);
   MakeStyleBackgroundTransparent(Mo);
-  StyleFormBg(R, Mo.IsFocused, Mo.Enabled);
+  StyleFormBg(R, Mo.IsFocused, Mo.Enabled, True);
+  StyleFormGlow(G, Mo.IsFocused, Mo.Enabled);
   ApplyContentPadding(Mo);
   ApplyBsFontMemo(Mo, E.FontSize);
 end;
@@ -1174,6 +1268,7 @@ begin
   AMo := TMemo(E.Control);
   if csDestroying in AMo.ComponentState then Exit;
   RemoveFormBg(AMo);
+  RemoveFormGlow(AMo);
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1184,11 +1279,14 @@ procedure DoApplySearchBox(const E: TBSFormEntry);
 var
   SB: TSearchBox;
   R:  TRectangle;
+  G:  TRectangle;
 begin
   SB := TSearchBox(E.Control);
   R  := EnsureFormBg(SB);
+  G  := EnsureFormGlow(SB);
   MakeStyleBackgroundTransparent(SB);
-  StyleFormBg(R, SB.IsFocused, SB.Enabled);
+  StyleFormBg(R, SB.IsFocused, SB.Enabled, True);
+  StyleFormGlow(G, SB.IsFocused, SB.Enabled);
   ApplyContentPadding(SB);
   ApplyPromptResource(SB);
   ApplyBsFontSearchBox(SB, E.FontSize);
@@ -1201,6 +1299,7 @@ begin
   ASB := TSearchBox(E.Control);
   if csDestroying in ASB.ComponentState then Exit;
   RemoveFormBg(ASB);
+  RemoveFormGlow(ASB);
   ASB.StyledSettings := [
     TStyledSetting.Family, TStyledSetting.Size,
     TStyledSetting.Style,  TStyledSetting.FontColor,
@@ -1447,7 +1546,10 @@ begin
 
   if FActive then
   begin
-    StyleFormBg(FindFormBg(E.Control), True, E.Control.Enabled);
+    StyleFormBg(FindFormBg(E.Control), True, E.Control.Enabled,
+      IsEditFamily(E.Kind));
+    if IsEditFamily(E.Kind) then
+      StyleFormGlow(FindFormGlow(E.Control), True, E.Control.Enabled);
     { FMX focus trigger fires after OnApplyStyleLookup and can reset text
       colour.  Re-force it here, after the trigger has had its chance. }
     ForceTextColor(E);
@@ -1474,7 +1576,10 @@ begin
 
   if FActive then
   begin
-    StyleFormBg(FindFormBg(E.Control), False, E.Control.Enabled);
+    StyleFormBg(FindFormBg(E.Control), False, E.Control.Enabled,
+      IsEditFamily(E.Kind));
+    if IsEditFamily(E.Kind) then
+      StyleFormGlow(FindFormGlow(E.Control), False, E.Control.Enabled);
     ForceTextColor(E);
     case E.Kind of
       bsfkEdit, bsfkComboEdit, bsfkSearchBox:
