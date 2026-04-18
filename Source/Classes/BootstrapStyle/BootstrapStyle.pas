@@ -68,6 +68,11 @@ type
       const ALabel: TLabel;
       const ABootstrapIconName: string); static;
 
+    { Styles a TLabel as a Bootstrap 5 form-label (Segoe UI, body colour). }
+    class procedure ApplyFormLabel(
+      const ALabel: TLabel;
+      AFontSize: Single = 14); static;
+
     { ── Navigation pills ──────────────────────────────────────────────── }
     class procedure ApplyNavPillState(
       const ARectActive: TRectangle;
@@ -188,6 +193,12 @@ begin
     TStyledSetting.Size];
   ALabel.TextSettings.Font.Family := TBootstrapIcons.FontFamily;
   ALabel.Text := TBootstrapIcons.Glyph(ABootstrapIconName);
+end;
+
+class procedure TBootstrapStyle.ApplyFormLabel(const ALabel: TLabel;
+  AFontSize: Single);
+begin
+  TBootstrapForms.ApplyFormLabel(ALabel, AFontSize);
 end;
 
 { ── TBootstrapStyle — navigation pills ────────────────────────────────────── }

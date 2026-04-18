@@ -97,6 +97,10 @@ type
       const AListView: TListView;
       AFontSize: Single = 13); static;
 
+    class procedure ApplyFormLabel(
+      const ALabel: TLabel;
+      AFontSize: Single = 14); static;      
+
     class procedure SetActive(AActive: Boolean); static;
     class function  GetActive: Boolean; static;
   end;
@@ -1620,6 +1624,19 @@ begin
   GFormRegistry.Register(AListView, bsfkListView, AFontSize);
   AListView.NeedStyleLookup;
   AListView.ApplyStyleLookup;
+end;
+
+class procedure TBootstrapForms.ApplyFormLabel(const ALabel: TLabel;
+  AFontSize: Single);
+begin
+  if ALabel = nil then Exit;
+  ALabel.StyledSettings := ALabel.StyledSettings - [
+    TStyledSetting.Family, TStyledSetting.Size,
+    TStyledSetting.Style,  TStyledSetting.FontColor];
+  ALabel.TextSettings.Font.Family := BS_FONT_FAMILY_UI;
+  ALabel.TextSettings.Font.Size   := AFontSize;
+  ALabel.TextSettings.Font.Style  := [];
+  ALabel.TextSettings.FontColor   := BS_FORM_TEXT;
 end;
 
 class procedure TBootstrapForms.SetActive(AActive: Boolean);

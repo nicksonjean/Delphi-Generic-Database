@@ -398,13 +398,12 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
       end
       object RectSectionForms: TRectangle
         Align = Top
-        ClipChildren = True
         Fill.Color = claWhite
         Margins.Top = 20.000000000000000000
         Position.X = 24.000000000000000000
         Position.Y = 433.000000000000000000
         Size.Width = 1036.000000000000000000
-        Size.Height = 301.000000000000000000
+        Size.Height = 384.000000000000000000
         Size.PlatformDefault = False
         Stroke.Color = xFFDEE2E6
         XRadius = 6.000000000000000000
@@ -445,19 +444,19 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
           Padding.Right = 18.000000000000000000
           Padding.Bottom = 16.000000000000000000
           Size.Width = 1036.000000000000000000
-          Size.Height = 252.000000000000000000
+          Size.Height = 335.000000000000000000
           Size.PlatformDefault = False
           object LayFormsLeft: TLayout
             Align = Left
             Position.X = 18.000000000000000000
             Position.Y = 16.000000000000000000
-            Size.Width = 500.000000000000000000
-            Size.Height = 220.000000000000000000
+            Size.Width = 320.000000000000000000
+            Size.Height = 303.000000000000000000
             Size.PlatformDefault = False
             object LblEditNormal: TLabel
               Align = Top
               Margins.Bottom = 8.000000000000000000
-              Size.Width = 500.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 20.000000000000000000
               Size.PlatformDefault = False
               TextSettings.FontColor = xFF212529
@@ -468,7 +467,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Align = Top
               Position.Y = 28.000000000000000000
               Margins.Bottom = 14.000000000000000000
-              Size.Width = 500.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TextPrompt = 'Enter text...'
@@ -477,7 +476,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Align = Top
               Margins.Bottom = 8.000000000000000000
               Position.Y = 78.000000000000000000
-              Size.Width = 500.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 20.000000000000000000
               Size.PlatformDefault = False
               TextSettings.FontColor = xFF212529
@@ -489,7 +488,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Password = True
               Position.Y = 106.000000000000000000
               Margins.Bottom = 14.000000000000000000
-              Size.Width = 500.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TextPrompt = 'Password'
@@ -498,7 +497,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Align = Top
               Margins.Bottom = 8.000000000000000000
               Position.Y = 156.000000000000000000
-              Size.Width = 500.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 20.000000000000000000
               Size.PlatformDefault = False
               TextSettings.FontColor = xFF212529
@@ -510,21 +509,23 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Text = 'Disabled field'
               Position.Y = 184.000000000000000000
               Enabled = False
-              Size.Width = 500.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
             end
           end
           object LayFormsRight: TLayout
-            Align = Client
-            Margins.Left = 16.000000000000000000
-            Size.Width = 484.000000000000000000
-            Size.Height = 220.000000000000000000
+            Align = Left
+            Margins.Left = 12.000000000000000000
+            Position.X = 350.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 320.000000000000000000
+            Size.Height = 303.000000000000000000
             Size.PlatformDefault = False
             object LblComboBox: TLabel
               Align = Top
               Margins.Bottom = 8.000000000000000000
-              Size.Width = 484.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 20.000000000000000000
               Size.PlatformDefault = False
               TextSettings.FontColor = xFF212529
@@ -542,7 +543,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               ItemIndex = 0
               Margins.Bottom = 14.000000000000000000
               Position.Y = 28.000000000000000000
-              Size.Width = 484.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
             end
@@ -550,7 +551,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Align = Top
               Margins.Bottom = 8.000000000000000000
               Position.Y = 78.000000000000000000
-              Size.Width = 484.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 20.000000000000000000
               Size.PlatformDefault = False
               TextSettings.FontColor = xFF212529
@@ -568,7 +569,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               ItemIndex = -1
               Position.Y = 106.000000000000000000
               Margins.Bottom = 14.000000000000000000
-              Size.Width = 484.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
             end
@@ -576,7 +577,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Align = Top
               Margins.Bottom = 8.000000000000000000
               Position.Y = 156.000000000000000000
-              Size.Width = 484.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 20.000000000000000000
               Size.PlatformDefault = False
               TextSettings.FontColor = xFF212529
@@ -586,21 +587,53 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               Align = Top
               Position.Y = 184.000000000000000000
-              Size.Width = 484.000000000000000000
+              Size.Width = 320.000000000000000000
               Size.Height = 36.000000000000000000
               Size.PlatformDefault = False
               TextPrompt = 'Search...'
+            end
+          end
+          object LayFormsMemo: TLayout
+            Align = Left
+            Margins.Left = 12.000000000000000000
+            Position.X = 682.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 320.000000000000000000
+            Size.Height = 303.000000000000000000
+            Size.PlatformDefault = False
+            object LblMemo: TLabel
+              Align = Top
+              Margins.Bottom = 8.000000000000000000
+              Size.Width = 320.000000000000000000
+              Size.Height = 20.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.FontColor = xFF212529
+              Text = 'Textarea (TMemo)'
+            end
+            object MemoMain: TMemo
+              Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+              DataDetectorTypes = []
+              Lines.Strings = (
+                'Bootstrap 5 textarea'
+                'Multiple lines supported'
+                'Styled with Bootstrap form-control'
+                'Rounded border on focus')
+              Align = Client
+              Size.Width = 320.000000000000000000
+              Size.Height = 275.000000000000000000
+              Size.PlatformDefault = False
+              Viewport.Width = 320.000000000000000000
+              Viewport.Height = 275.000000000000000000
             end
           end
         end
       end
       object RectSectionLists: TRectangle
         Align = Top
-        ClipChildren = True
         Fill.Color = claWhite
         Margins.Top = 20.000000000000000000
         Position.X = 24.000000000000000000
-        Position.Y = 754.000000000000000000
+        Position.Y = 837.000000000000000000
         Size.Width = 1036.000000000000000000
         Size.Height = 269.000000000000000000
         Size.PlatformDefault = False
@@ -624,7 +657,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
             TextSettings.Font.Size = 15.000000000000000000
             TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.FontColor = xFF212529
-            Text = 'Memo & List Group'
+            Text = 'Lists'
           end
         end
         object RectListsDivider: TRectangle
@@ -649,73 +682,47 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
             Align = Left
             Position.X = 18.000000000000000000
             Position.Y = 16.000000000000000000
-            Size.Width = 500.000000000000000000
+            Size.Width = 490.000000000000000000
             Size.Height = 188.000000000000000000
             Size.PlatformDefault = False
-            object LblMemo: TLabel
-              Align = Top
-              Margins.Bottom = 8.000000000000000000
-              Size.Width = 500.000000000000000000
-              Size.Height = 20.000000000000000000
-              Size.PlatformDefault = False
-              TextSettings.FontColor = xFF212529
-              Text = 'Textarea (TMemo)'
-            end
-            object MemoMain: TMemo
-              Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
-              DataDetectorTypes = []
-              Lines.Strings = (
-                'Bootstrap 5 textarea'
-                'Multiple lines supported'
-                'Styled with Bootstrap form-control'
-                'Rounded border on focus')
-              Align = Top
-              Position.Y = 28.000000000000000000
-              Size.Width = 500.000000000000000000
-              Size.Height = 160.000000000000000000
-              Size.PlatformDefault = False
-              Viewport.Width = 500.000000000000000000
-              Viewport.Height = 160.000000000000000000
-            end
-          end
-          object LayListsRight: TLayout
-            Align = Client
-            Margins.Left = 16.000000000000000000
-            Size.Width = 484.000000000000000000
-            Size.Height = 188.000000000000000000
-            Size.PlatformDefault = False
-            object LblListBox: TLabel
-              Align = Top
-              Margins.Bottom = 8.000000000000000000
-              Size.Width = 484.000000000000000000
-              Size.Height = 20.000000000000000000
-              Size.PlatformDefault = False
-              TextSettings.FontColor = xFF212529
-              Text = 'List Group (TListBox)'
-            end
             object ListBoxMain: TListBox
-              Align = Top
-              Position.Y = 28.000000000000000000
-              Size.Width = 484.000000000000000000
-              Size.Height = 160.000000000000000000
+              Align = Client
+              Size.Width = 490.000000000000000000
+              Size.Height = 188.000000000000000000
               Size.PlatformDefault = False
               DisableFocusEffect = True
               DefaultItemStyles.ItemStyle = ''
               DefaultItemStyles.GroupHeaderStyle = ''
               DefaultItemStyles.GroupFooterStyle = ''
-              Viewport.Width = 484.000000000000000000
-              Viewport.Height = 160.000000000000000000
+              Viewport.Width = 486.000000000000000000
+              Viewport.Height = 184.000000000000000000
+            end
+          end
+          object LayListsRight: TLayout
+            Align = Client
+            Margins.Left = 12.000000000000000000
+            Size.Width = 498.000000000000000000
+            Size.Height = 188.000000000000000000
+            Size.PlatformDefault = False
+            object ListViewMain: TListView
+              ItemAppearanceClassName = 'TListItemAppearance'
+              ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+              HeaderAppearanceClassName = 'TListHeaderObjects'
+              FooterAppearanceClassName = 'TListHeaderObjects'
+              Align = Client
+              Size.Width = 498.000000000000000000
+              Size.Height = 188.000000000000000000
+              Size.PlatformDefault = False
             end
           end
         end
       end
       object RectSectionGrid: TRectangle
         Align = Top
-        ClipChildren = True
         Fill.Color = claWhite
         Margins.Top = 20.000000000000000000
         Position.X = 24.000000000000000000
-        Position.Y = 1043.000000000000000000
+        Position.Y = 1126.000000000000000000
         Size.Width = 1036.000000000000000000
         Size.Height = 289.000000000000000000
         Size.PlatformDefault = False
@@ -739,7 +746,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
             TextSettings.Font.Size = 15.000000000000000000
             TextSettings.Font.StyleExt = {00070000000000000004000000}
             TextSettings.FontColor = xFF212529
-            Text = 'Grids & List View'
+            Text = 'Grids'
           end
         end
         object RectGridDivider: TRectangle
@@ -764,28 +771,17 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
             Align = Left
             Position.X = 18.000000000000000000
             Position.Y = 16.000000000000000000
-            Size.Width = 500.000000000000000000
+            Size.Width = 490.000000000000000000
             Size.Height = 208.000000000000000000
             Size.PlatformDefault = False
-            object LblStringGrid: TLabel
-              Align = Top
-              Margins.Bottom = 8.000000000000000000
-              Size.Width = 500.000000000000000000
-              Size.Height = 20.000000000000000000
-              Size.PlatformDefault = False
-              TextSettings.FontColor = xFF212529
-              Text = 'String Grid (TStringGrid)'
-            end
             object StringGridMain: TStringGrid
-              Align = Top
+              Align = Client
               CanFocus = True
-              ClipChildren = True
-              Position.Y = 28.000000000000000000
-              Size.Width = 500.000000000000000000
-              Size.Height = 180.000000000000000000
+              Size.Width = 490.000000000000000000
+              Size.Height = 208.000000000000000000
               Size.PlatformDefault = False
-              Viewport.Width = 500.000000000000000000
-              Viewport.Height = 180.000000000000000000
+              Viewport.Width = 490.000000000000000000
+              Viewport.Height = 208.000000000000000000
               object TStringColumn
                 Header = 'Name'
                 Size.Width = 160.000000000000000000
@@ -799,31 +795,20 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
               end
             end
           end
-          object LayGridRight: TLayout
+          object LayGridMid: TLayout
             Align = Client
-            Margins.Left = 16.000000000000000000
-            Size.Width = 484.000000000000000000
+            Margins.Left = 12.000000000000000000
+            Size.Width = 498.000000000000000000
             Size.Height = 208.000000000000000000
             Size.PlatformDefault = False
-            object LblListView: TLabel
-              Align = Top
-              Margins.Bottom = 8.000000000000000000
-              Size.Width = 484.000000000000000000
-              Size.Height = 20.000000000000000000
+            object GridExample: TGrid
+              Align = Client
+              CanFocus = True
+              Size.Width = 498.000000000000000000
+              Size.Height = 208.000000000000000000
               Size.PlatformDefault = False
-              TextSettings.FontColor = xFF212529
-              Text = 'List View (TListView)'
-            end
-            object ListViewMain: TListView
-              ItemAppearanceClassName = 'TListItemAppearance'
-              ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
-              HeaderAppearanceClassName = 'TListHeaderObjects'
-              FooterAppearanceClassName = 'TListHeaderObjects'
-              Align = Top
-              Position.Y = 28.000000000000000000
-              Size.Width = 484.000000000000000000
-              Size.Height = 180.000000000000000000
-              Size.PlatformDefault = False
+              Viewport.Width = 498.000000000000000000
+              Viewport.Height = 208.000000000000000000
             end
           end
         end
@@ -834,7 +819,7 @@ object FrameBootstrapShowcase: TFrameBootstrapShowcase
         Fill.Color = claWhite
         Margins.Top = 20.000000000000000000
         Position.X = 24.000000000000000000
-        Position.Y = 1352.000000000000000000
+        Position.Y = 1435.000000000000000000
         Size.Width = 1036.000000000000000000
         Size.Height = 100.000000000000000000
         Size.PlatformDefault = False

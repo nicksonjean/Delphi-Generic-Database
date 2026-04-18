@@ -37,7 +37,15 @@ const
   BS_TEXT_NAME  = '__BSText__';
 
   { Forms overlay background rectangle tag-string. }
-  BS_FORM_BG_NAME = '__BSFormBg__';
+  BS_FORM_BG_NAME   = '__BSFormBg__';
+  { Outer focus “ring” (Bootstrap box-shadow) drawn behind BS_FORM_BG_NAME. }
+  BS_FORM_GLOW_NAME  = '__BSFormGlow__';
+  { 1 px rounded border drawn ON TOP of the styled presentation so it is not
+    covered by the platform’s opaque square chrome / content rect. }
+  BS_FORM_STROKE_NAME = '__BSFormStroke__';
+
+  { Spread of the focus ring outside the 1 px border (~Bootstrap 0.25 rem). }
+  BS_FORM_FOCUS_RING_SPREAD = 4;
 
   { ── Buttons (BootstrapStyle.Buttons) ────────────────────────────────────── }
   BS_BTN_RADIUS          = 6;
@@ -50,7 +58,7 @@ const
   BS_FORM_PROMPT_INSET_LEFT = 15;
   BS_FORM_PROMPT_REALIGN_DELAY_MS = 120;
 
-  BS_FORM_BORDER_THICKNESS       = 1;
+  BS_FORM_BORDER_THICKNESS = 1;
   BS_FORM_BORDER_THICKNESS_FOCUS = 2;
 
   { Content layout padding (left/right = 12, top/bottom = 6) }

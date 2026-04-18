@@ -44,6 +44,8 @@ const
   BS_FORM_BG_DISABLED   = $FFE9ECEF;  { disabled / read-only background }
   BS_FORM_BORDER        = $FFDEE2E6;  { normal border (#dee2e6) }
   BS_FORM_BORDER_FOCUS  = $FF86B7FE;  { focus border (#86b7fe) }
+  { Focus ring — matches Bootstrap 5 box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) }
+  BS_FORM_FOCUS_RING    = $400D6EFD;
   BS_FORM_TEXT          = $FF212529;  { body / input text (#212529) }
   BS_FORM_PLACEHOLDER   = $FF6C757D;  { placeholder / muted text (#6c757d) }
 
