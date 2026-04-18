@@ -297,7 +297,7 @@ end;
 
 function IsEditFamily(AKind: TBSFormKind): Boolean;
 begin
-  Result := AKind in [bsfkEdit, bsfkComboEdit, bsfkMemo, bsfkSearchBox];
+  Result := AKind in [bsfkEdit, bsfkComboBox, bsfkComboEdit, bsfkMemo, bsfkSearchBox];
 end;
 
 procedure MakeStyleBackgroundTransparent(const C: TStyledControl);
@@ -1150,22 +1150,16 @@ procedure DoApplyComboBox(const E: TBSFormEntry);
 var
   CB: TComboBox;
   R:  TRectangle;
+  G:  TRectangle;
 begin
   CB := TComboBox(E.Control);
-  { Use the same __BSFormBg__ overlay approach as TEdit / TMemo.
-    The overlay is a persistent child rectangle that survives FMX style
-    rebuilds and is immune to state-trigger overrides.  Making the FMX
-    "background" style resource transparent lets the overlay show through,
-    while all style children (dropdown button, selected-text TText) are
-    rendered in front of the overlay as normal style siblings. }
-  R := EnsureFormBg(CB);
+  R  := EnsureFormBg(CB);
+  G  := EnsureFormGlow(CB);
   MakeStyleBackgroundTransparent(CB);
-  StyleFormBg(R, CB.IsFocused, CB.Enabled);
-  { Selected item text colour + font. }
+  StyleFormBg(R, CB.IsFocused, CB.Enabled, True);
+  StyleFormGlow(G, CB.IsFocused, CB.Enabled);
   ApplyComboSelectedText(CB, E.FontSize);
-  { Dropdown arrow — recolour every TPath inside "button" / "arrow" resource. }
   ApplyComboArrow(CB);
-  { Dropdown list items — Segoe UI, same size, dark text. }
   ApplyComboDropItems(CB, E.FontSize);
 end;
 
@@ -1176,6 +1170,7 @@ begin
   ACombo := TComboBox(E.Control);
   if csDestroying in ACombo.ComponentState then Exit;
   RemoveFormBg(ACombo);
+  RemoveFormGlow(ACombo);
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
