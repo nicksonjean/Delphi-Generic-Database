@@ -111,12 +111,15 @@ uses
   System.SysUtils,
   System.Classes,
   System.Types,
+  System.Math,
   System.Generics.Collections,
   FMX.Objects,
   FMX.Graphics,
   FMX.TextLayout,
   FMX.Layouts,
   FMX.Forms,
+  FMX.ScrollBox,
+  FMX.InertialMovement,
   {$IFDEF MSWINDOWS}
   Winapi.Windows,
   FMX.Platform.Win,
@@ -142,13 +145,33 @@ type
     destructor Destroy; override;
   end;
 
+  { One-shot timer that strips the FMX native border from a TMemo.
+    TScrollBox.ApplyStyleLookup (which adds the border TRectangle child) is
+    called lazily by FMX — often AFTER both TThread.Queue passes have fired.
+    Firing at 120 ms guarantees the border child exists before we erase it.
+    Same self-freeing pattern as TBSPromptFixTimer. }
+  TBSMemoFixTimer = class(TObject)
+  private
+    FTimer: TTimer;
+    FMemo:  TMemo;
+    procedure Fired(Sender: TObject);
+  public
+    constructor Create(AMemo: TMemo;
+      ADelayMs: Cardinal = BS_FORM_PROMPT_REALIGN_DELAY_MS);
+    destructor Destroy; override;
+  end;
+
 var
   { Pending TBSPromptFixTimer instances are not owned by any component; if the
     process exits before the one-shot fires (e.g. DoneApplication / deactivate),
     finalization frees them so FTimer and Self do not leak. }
   GPromptFixPending: TList<TBSPromptFixTimer>;
+  GMemoFixPending:   TList<TBSMemoFixTimer>;
 
 type
+  { Forward — full declaration appears after the helper-function block. }
+  TBSMemoScrollAdapter = class;
+
   TBSFormKind = (
     bsfkEdit,
     bsfkComboBox,
@@ -167,6 +190,117 @@ type
     OrigOnEnter:      TNotifyEvent;
     OrigOnExit:       TNotifyEvent;
     OrigOnApplyStyle: TNotifyEvent;
+    { Non-nil for bsfkMemo entries only.  Manages the external scrollbar,
+      the Bootstrap border/aura rects injected into the presentation tree,
+      and the extra event chains (OnChangeTracking, OnViewportPositionChange,
+      OnResize) that keep scrollbar state in sync with memo content. }
+    MemoAdapter:      TBSMemoScrollAdapter;
+  end;
+
+  { ── TAniCalculationsScrollHelper ───────────────────────────────────────────
+    Forces TAniCalculations to report scroll bars as visible and immediately
+    refreshes the internal position — necessary because the FMX styled TMemo
+    presentation can suppress scrollbar visibility on content-size changes. }
+  TAniCalculationsScrollHelper = class helper for TAniCalculations
+    procedure ForceScrollBarsVisible;
+  end;
+
+  { ── TMemoScrollBarsHelper ───────────────────────────────────────────────────
+    Triggers a full scroll-presentation refresh on TMemo: recalculates content
+    size, realigns children, and forces scroll-bar visibility.
+    The standard RealignContent path on TCustomPresentedScrollBox calls
+    UpdateContentSize which is suppressed when AutoCalculateContentSize=False
+    (the TMemo default).  This helper bypasses that via Content.RecalcSize
+    followed by Realign and an AniCalculations nudge. }
+  TMemoScrollBarsHelper = class helper for TMemo
+    procedure RefreshStyledScrollPresentation;
+  end;
+
+  { ── TBSMemoScrollAdapter ────────────────────────────────────────────────────
+    Per-memo controller created by TBSFormRegistry.Register.  Lifetime is tied
+    to the TMemo: destroyed via FreeNotification when the memo is freed, or
+    explicitly in DoResetMemo when Bootstrap styling is toggled off.
+
+    Responsibilities
+    ─────────────────
+    • Injects FRectBorder (white fill + Bootstrap border stroke) and FFocusAura
+      (semi-transparent blue fill) directly into the memo's presentation tree,
+      alongside the 'background' resource, so they participate in the same
+      layout and z-order as the text layer.
+    • Creates and positions FExternVScroll — a TScrollBar sibling of the memo
+      that overlays its right edge.  The FMX styled internal scrollbar is
+      unreliable inside TPresentedControl; the external one replaces it.
+    • Chains OnChangeTracking, OnViewportPositionChange, and OnResize to keep
+      scrollbar geometry and value in sync as content changes.
+
+    Memory safety
+    ─────────────
+    FRectBorder, FFocusAura, and FExternVScroll are all owned by the TMemo
+    (Create(FMemo)).  When the memo is being destroyed the destructor detects
+    csDestroying and only nils the references — the memo's TComponent machinery
+    will free the owned objects.  When Bootstrap styling is removed via
+    TBootstrapForms.SetActive(False) → DoResetMemo, the adapter is freed with
+    the memo still alive, so FreeAndNil is called explicitly instead. }
+  TBSMemoScrollAdapter = class(TObject)
+  private
+    FMemo:     TMemo;
+    FFontSize: Single;
+
+    { Presentation-tree rects injected into background's parent. }
+    FRectBorder:  TRectangle;  { Bootstrap white bg + border stroke }
+    FFocusAura:   TRectangle;  { Semi-transparent focus halo behind the border }
+
+    { External scrollbar overlaid on the right edge of the memo. }
+    FExternVScroll:    TScrollBar;
+    FSyncExternScroll: Boolean;  { Reentrancy guard: viewport↔scrollbar sync }
+
+    { True while the adapter's own handlers are installed on the memo.
+      Prevents HookEvents from overwriting saved originals if called twice,
+      and lets ApplyStyle know when to re-hook after a Detach. }
+    FHooked: Boolean;
+
+    { Saved original memo event handlers (restored on Destroy / Detach). }
+    FOrigOnChangeTracking: TNotifyEvent;
+    FOrigOnViewportChange: procedure(Sender: TObject;
+      const OldViewportPosition, NewViewportPosition: TPointF;
+      const ContentSizeChanged: Boolean) of object;
+    FOrigOnResize: TNotifyEvent;
+
+    procedure DoChangeTracking(Sender: TObject);
+    procedure DoViewportChange(Sender: TObject;
+      const OldViewportPosition, NewViewportPosition: TPointF;
+      const ContentSizeChanged: Boolean);
+    procedure DoMemoResize(Sender: TObject);
+    procedure DoExternScrollChange(Sender: TObject);
+
+    procedure SyncScrollbar;
+    procedure RefreshScrollPresentation;
+  public
+    constructor Create(AMemo: TMemo; AFontSize: Single);
+    destructor  Destroy; override;
+
+    { Called from DoApplyMemo (via OnApplyStyleLookup).  Injects visuals into
+      the presentation tree, creates the external scrollbar if needed, and
+      queues a deferred z-order / chrome-strip pass. }
+    procedure ApplyStyle;
+
+    { Called from TBSFormRegistry.ControlEnter / ControlExit.  Updates border
+      colour and focus-aura visibility; re-strips FMX native chrome to undo
+      any state-trigger resets. }
+    procedure UpdateFocusState(AFocused: Boolean);
+
+    { Called from DoResetMemo: hides Bootstrap overlays and the external
+      scrollbar without freeing them (adapter object stays alive for reuse). }
+    procedure Detach;
+
+    { Saves current OnChangeTracking / OnViewportPositionChange / OnResize and
+      installs the adapter's own handlers.  Called once from the constructor. }
+    procedure HookEvents;
+
+    { Restores the saved handlers.  Called from the destructor and Detach. }
+    procedure UnhookEvents;
+
+    property FontSize: Single read FFontSize write FFontSize;
   end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -366,7 +500,20 @@ var
       end
       else if (Obj is TScrollBox) then
       begin
-        { Preserve scrollbox container }
+        { Preserve scrollbox container AND stop recursion here.
+          All children of a TScrollBox (TContent viewport, list items, text
+          layouts) must NOT have their opacity zeroed — doing so makes the
+          text invisible in TMemo while leaving the cursor still blinking.
+          Early-exit prevents the for-loop below from descending further. }
+        Exit;
+      end
+      else if (Obj is TLayout) then
+      begin
+        { TLayout has no visual representation of its own.  Setting Opacity=0
+          on it silences ALL its children (text viewport, caret, selection),
+          making typed text invisible while the cursor animation survives via a
+          separate FMX rendering layer.  Preserve the layout and let the loop
+          below recurse safely into its children. }
       end
       else
       begin
@@ -587,6 +734,24 @@ begin
   ApplyPromptInset(Pr, Content.Padding.Left);
 end;
 
+(* Forward declarations for procedures used by TBSMemoFixTimer that are defined
+  later in the implementation (StripMemoBackground, RemoveNativeMemoHWNDBorder).
+  DoMemoFix is the single call-site helper used by all Queue closures and the
+  timer, keeping {$IFDEF} out of anonymous-method bodies. *)
+procedure StripMemoBackground(const Mo: TMemo); forward;
+{$IFDEF MSWINDOWS}
+procedure RemoveNativeMemoHWNDBorder(const Mo: TMemo); forward;
+{$ENDIF}
+
+procedure DoMemoFix(const Mo: TMemo);
+begin
+  if (Mo = nil) or (csDestroying in Mo.ComponentState) then Exit;
+  {$IFDEF MSWINDOWS}
+  RemoveNativeMemoHWNDBorder(Mo);
+  {$ENDIF}
+  StripMemoBackground(Mo);
+end;
+
 { TBSPromptFixTimer — implementation }
 
 constructor TBSPromptFixTimer.Create(AControl: TStyledControl;
@@ -638,7 +803,64 @@ begin
   end;
   FTimer.Free;
   FTimer := nil;
-  Free;          { self-destruct }
+  Free;
+end;
+
+{ TBSMemoFixTimer }
+
+constructor TBSMemoFixTimer.Create(AMemo: TMemo; ADelayMs: Cardinal);
+begin
+  inherited Create;
+  FMemo           := AMemo;
+  FTimer          := TTimer.Create(nil);
+  FTimer.Interval := ADelayMs;
+  FTimer.OnTimer  := Fired;
+  FTimer.Enabled  := True;
+  GMemoFixPending.Add(Self);
+end;
+
+destructor TBSMemoFixTimer.Destroy;
+var
+  Idx: Integer;
+begin
+  if GMemoFixPending <> nil then
+  begin
+    Idx := GMemoFixPending.IndexOf(Self);
+    if Idx >= 0 then
+      GMemoFixPending.Delete(Idx);
+  end;
+  if FTimer <> nil then
+  begin
+    FTimer.Enabled := False;
+    FTimer.OnTimer := nil;
+    FTimer.Free;
+    FTimer := nil;
+  end;
+  inherited;
+end;
+
+procedure TBSMemoFixTimer.Fired(Sender: TObject);
+var
+  Bg: TRectangle;
+begin
+  FTimer.Enabled := False;
+  FTimer.OnTimer := nil;
+  if (FMemo <> nil) and not (csDestroying in FMemo.ComponentState) then
+  begin
+    { By now (120 ms) TScrollBox.ApplyStyleLookup has run and the border
+      TRectangle child is guaranteed to exist in the style tree. }
+    DoMemoFix(FMemo);
+    Bg := FindFormBg(FMemo);
+    if Bg <> nil then
+    begin
+      Bg.Fill.Kind := TBrushKind.None;
+      Bg.BringToFront;
+    end;
+    FMemo.Repaint;
+  end;
+  FTimer.Free;
+  FTimer := nil;
+  Free;
 end;
 
 { Deferred prompt realign — runs after FMX style triggers have fired.
@@ -1089,6 +1311,63 @@ begin
 
   SendMessage(EditWnd, EM_SETMARGINS_MSG, EC_LEFTMARGIN, MakeLong(ALeft, 0));
 end;
+
+{ Removes the native Win32 border (WS_BORDER / WS_EX_CLIENTEDGE) from the
+  child HWND that FMX creates for TMemo's text-editing surface.
+  Even with ControlType=Styled, FMX on Windows embeds a native RichEdit HWND
+  for multi-line text; that HWND has its own border painted by the OS that
+  is invisible to FMX's rendering layer — no TShape manipulation can remove it.
+  This mirrors the WindowFromPoint technique used in ApplyNativeEditMargin.
+  Safe no-op when no native child HWND exists at the control's position. }
+procedure RemoveNativeMemoHWNDBorder(const Mo: TMemo);
+var
+  Form:    TCommonCustomForm;
+  FormWnd: HWND;
+  AbsRect: TRectF;
+  CliOrg:  TPoint;
+  ScrnPt:  TPoint;
+  MemoWnd: HWND;
+  ExStyle: NativeUInt;
+  Style:   NativeUInt;
+  P:       TFmxObject;
+begin
+  if (Mo = nil) or (csDestroying in Mo.ComponentState) then Exit;
+  Form := nil;
+  P := Mo.Parent;
+  while P <> nil do
+  begin
+    if P is TCommonCustomForm then
+    begin
+      Form := TCommonCustomForm(P);
+      Break;
+    end;
+    P := P.Parent;
+  end;
+  if (Form = nil) or (Form.Handle = nil) then Exit;
+  FormWnd := WindowHandleToPlatform(Form.Handle).Wnd;
+  if FormWnd = 0 then Exit;
+
+  AbsRect  := Mo.AbsoluteRect;
+  CliOrg.X := 0;
+  CliOrg.Y := 0;
+  ClientToScreen(FormWnd, CliOrg);
+  ScrnPt.X := CliOrg.X + Round(AbsRect.Left + AbsRect.Width  * 0.5);
+  ScrnPt.Y := CliOrg.Y + Round(AbsRect.Top  + AbsRect.Height * 0.5);
+
+  MemoWnd := WindowFromPoint(ScrnPt);
+  if (MemoWnd = 0) or (MemoWnd = FormWnd) then Exit;
+
+  ExStyle := GetWindowLong(MemoWnd, GWL_EXSTYLE);
+  Style   := GetWindowLong(MemoWnd, GWL_STYLE);
+  { Strip every border-related style bit. }
+  SetWindowLong(MemoWnd, GWL_EXSTYLE,
+    ExStyle and not WS_EX_CLIENTEDGE and not WS_EX_STATICEDGE and not WS_EX_DLGMODALFRAME);
+  SetWindowLong(MemoWnd, GWL_STYLE, Style and not WS_BORDER and not WS_DLGFRAME);
+  { SWP_FRAMECHANGED forces Windows to recalculate the non-client area so the
+    border disappears immediately without waiting for the next paint cycle. }
+  SetWindowPos(MemoWnd, 0, 0, 0, 0, 0,
+    SWP_NOMOVE or SWP_NOSIZE or SWP_NOZORDER or SWP_FRAMECHANGED);
+end;
 {$ENDIF}
 
 procedure DoApplyEdit(const E: TBSFormEntry);
@@ -1240,20 +1519,527 @@ end;
   TMemo — overlay path
   ══════════════════════════════════════════════════════════════════════════════ }
 
+{ ══════════════════════════════════════════════════════════════════════════════
+  Class helper implementations
+  ══════════════════════════════════════════════════════════════════════════════ }
+
+procedure TAniCalculationsScrollHelper.ForceScrollBarsVisible;
+begin
+  Shown := True;
+  UpdatePosImmediately(True);
+end;
+
+procedure TMemoScrollBarsHelper.RefreshStyledScrollPresentation;
+var
+  AC: TAniCalculations;
+begin
+  { RealignContent on TCustomPresentedScrollBox calls UpdateContentSize, which
+    TMemo suppresses (AutoCalculateContentSize = False).  Bypass via
+    Content.RecalcSize + Realign, then nudge AniCalculations. }
+  if Content <> nil then
+    Content.RecalcSize;
+  Realign;
+  AC := AniCalculations;
+  if AC <> nil then
+    AC.ForceScrollBarsVisible;
+end;
+
+{ ══════════════════════════════════════════════════════════════════════════════
+  TBSMemoScrollAdapter — implementation
+  ══════════════════════════════════════════════════════════════════════════════ }
+
+constructor TBSMemoScrollAdapter.Create(AMemo: TMemo; AFontSize: Single);
+begin
+  inherited Create;
+  FMemo     := AMemo;
+  FFontSize := AFontSize;
+  HookEvents;
+end;
+
+destructor TBSMemoScrollAdapter.Destroy;
+begin
+  UnhookEvents;
+  { If the memo is in csDestroying its TComponent machinery will free the
+    owned objects (FRectBorder, FFocusAura, FExternVScroll).  Only nil the
+    pointers here to prevent double-free. }
+  if (FMemo <> nil) and not (csDestroying in FMemo.ComponentState) then
+  begin
+    FreeAndNil(FRectBorder);
+    FreeAndNil(FFocusAura);
+    FreeAndNil(FExternVScroll);
+  end
+  else
+  begin
+    FRectBorder    := nil;
+    FFocusAura     := nil;
+    FExternVScroll := nil;
+  end;
+  FMemo := nil;
+  inherited;
+end;
+
+procedure TBSMemoScrollAdapter.HookEvents;
+begin
+  if FHooked then Exit;  { Already hooked — guard against double-install. }
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  FOrigOnChangeTracking := FMemo.OnChangeTracking;
+  FOrigOnViewportChange := FMemo.OnViewportPositionChange;
+  FOrigOnResize         := FMemo.OnResize;
+  FMemo.OnChangeTracking         := DoChangeTracking;
+  FMemo.OnViewportPositionChange := DoViewportChange;
+  FMemo.OnResize                 := DoMemoResize;
+  FHooked := True;
+end;
+
+procedure TBSMemoScrollAdapter.UnhookEvents;
+begin
+  if not FHooked then Exit;
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  FMemo.OnChangeTracking         := FOrigOnChangeTracking;
+  FMemo.OnViewportPositionChange := FOrigOnViewportChange;
+  FMemo.OnResize                 := FOrigOnResize;
+  FHooked := False;
+end;
+
+procedure TBSMemoScrollAdapter.Detach;
+begin
+  UnhookEvents;
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  if FRectBorder    <> nil then FRectBorder.Visible    := False;
+  if FFocusAura     <> nil then FFocusAura.Visible     := False;
+  if FExternVScroll <> nil then FExternVScroll.Visible := False;
+end;
+
+procedure TBSMemoScrollAdapter.RefreshScrollPresentation;
+begin
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  FMemo.RefreshStyledScrollPresentation;
+end;
+
+procedure TBSMemoScrollAdapter.SyncScrollbar;
+var
+  R:          TRectF;
+  CH, VH, VMax, EstLineH: Single;
+begin
+  if (FExternVScroll = nil) or (FMemo = nil) then Exit;
+  if csDestroying in FMemo.ComponentState then Exit;
+
+  { Position the external scrollbar over the right edge of the memo,
+    inset by one pixel from the rounded border on each side. }
+  R := FMemo.BoundsRect;
+  FExternVScroll.SetBounds(
+    R.Right  - BS_MEMO_EXTERN_SCROLL_W - BS_MEMO_SCROLL_INSET_RIGHT,
+    R.Top    + BS_MEMO_SCROLL_INSET_VERT,
+    BS_MEMO_EXTERN_SCROLL_W,
+    R.Height - 2 * BS_MEMO_SCROLL_INSET_VERT);
+  FExternVScroll.BringToFront;
+
+  CH := FMemo.ContentSize.Height;
+  VH := FMemo.ViewportSize.Height;
+  { Fallback: if ContentSize has not been updated yet, estimate from line count. }
+  if (FMemo.Lines.Count > 1) and (VH > 1) then
+  begin
+    EstLineH := Max(8, FMemo.TextSettings.Font.Size * 1.25);
+    CH := Max(CH, FMemo.Lines.Count * EstLineH);
+  end;
+
+  if CH > VH + 1 then
+  begin
+    VMax := Max(0, CH - VH);
+    FExternVScroll.Visible := True;
+    FExternVScroll.ValueRange.BeginUpdate;
+    try
+      FExternVScroll.ValueRange.Min          := 0;
+      FExternVScroll.ValueRange.Max          := CH;
+      FExternVScroll.ValueRange.ViewportSize := VH;
+    finally
+      FExternVScroll.ValueRange.EndUpdate;
+    end;
+    FExternVScroll.SmallChange := Max(1, VH / BS_MEMO_SCROLL_SMALL_CHANGE_DIV);
+    FSyncExternScroll := True;
+    try
+      { Clamp viewport if content shrank. }
+      if FMemo.ViewportPosition.Y > VMax then
+        FMemo.ViewportPosition := TPointF.Create(FMemo.ViewportPosition.X, VMax);
+      FExternVScroll.Value := FMemo.ViewportPosition.Y;
+    finally
+      FSyncExternScroll := False;
+    end;
+  end
+  else
+  begin
+    FExternVScroll.Visible := False;
+    FSyncExternScroll := True;
+    try
+      FExternVScroll.Value := 0;
+    finally
+      FSyncExternScroll := False;
+    end;
+  end;
+end;
+
+procedure TBSMemoScrollAdapter.ApplyStyle;
+var
+  BgObj:  TFmxObject;
+  BgCtl:  TControl;
+  BgPar:  TFmxObject;
+  FocObj: TFmxObject;
+begin
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+
+  { Re-hook extra events if they were released by a previous Detach call
+    (e.g. after TBootstrapForms.SetActive(False) → SetActive(True)). }
+  HookEvents;
+
+  { ── 1. Locate and neutralise the 'background' resource. ─────────────────── }
+  BgObj := FMemo.FindStyleResource(FMX_RES_BACKGROUND);
+
+  if BgObj = nil then
+  begin
+    { FindStyleResource returns nil when ApplyStyleLookup fires during
+      FormCreate — the TPresentedControl presentation proxy is not yet
+      initialised, so the style tree does not exist.  Queue a deferred
+      re-application for after the first layout pass (message loop tick),
+      when the presentation is guaranteed to be ready.  The scrollbar and
+      font setup below still proceeds on this first call. }
+    TThread.Queue(nil, procedure
+    begin
+      if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+      FMemo.NeedStyleLookup;
+      FMemo.ApplyStyleLookup;
+    end);
+  end;
+
+  if (BgObj <> nil) and (BgObj is TControl) then
+  begin
+    BgCtl := TControl(BgObj);
+
+    { Erase native background fill/stroke so our overlay shows through. }
+    if BgObj is TShape then
+    begin
+      TShape(BgObj).Fill.Kind   := TBrushKind.None;
+      TShape(BgObj).Stroke.Kind := TBrushKind.None;
+    end
+    else
+      BgCtl.Opacity := 0;
+
+    { ── 2. Apply Bootstrap content inset via 'background' padding. ─────────
+      On the FMX styled TMemo, padding on the 'background' resource feeds
+      UpdateContentLayoutMargins which creates the correct text inset.
+      Setting padding on 'content' in parallel doubles the inset and shifts
+      text relative to our FRectBorder — so only 'background' is used here. }
+    BgCtl.Padding.Left   := BS_FORM_CONTENT_PAD_X;
+    BgCtl.Padding.Top    := BS_FORM_CONTENT_PAD_Y;
+    BgCtl.Padding.Right  := BS_FORM_CONTENT_PAD_X;
+    BgCtl.Padding.Bottom := BS_FORM_CONTENT_PAD_Y;
+
+    { ── 3. Inject FRectBorder and FFocusAura into the background's parent. ──
+      Parenting into the presentation tree (not into TMemo.Children) ensures
+      that the rects participate in the same coordinate frame and z-order as
+      the text layer — they render correctly behind the text and scrollbars. }
+    BgPar := BgCtl.Parent;
+    if BgPar <> nil then
+    begin
+      { Lazy creation: first call or after the objects were freed on Detach.
+        All three objects are owned by FMemo so the memo's TComponent destructor
+        will free them if the adapter is destroyed while the memo lives. }
+      if FRectBorder = nil then
+      begin
+        FRectBorder             := TRectangle.Create(FMemo);
+        { TagString = BS_FORM_BG_NAME marks it as a Bootstrap overlay so
+          StripMemoBackground does NOT erase it during focus/style passes. }
+        FRectBorder.TagString   := BS_FORM_BG_NAME;
+        FRectBorder.HitTest     := False;
+        FRectBorder.XRadius     := BS_FORM_RADIUS;
+        FRectBorder.YRadius     := BS_FORM_RADIUS;
+        FRectBorder.Fill.Kind   := TBrushKind.Solid;
+        FRectBorder.Fill.Color  := BS_FORM_BG;
+        FRectBorder.Stroke.Kind      := TBrushKind.Solid;
+        FRectBorder.Stroke.Thickness := BS_FORM_BORDER_THICKNESS;
+        FRectBorder.Stroke.Color     := BS_FORM_BORDER;
+      end;
+
+      if FFocusAura = nil then
+      begin
+        FFocusAura             := TRectangle.Create(FMemo);
+        { TagString = BS_FORM_GLOW_NAME marks it as a Bootstrap overlay. }
+        FFocusAura.TagString   := BS_FORM_GLOW_NAME;
+        FFocusAura.HitTest     := False;
+        FFocusAura.XRadius     := BS_FORM_RADIUS + BS_FORM_FOCUS_RING_SPREAD;
+        FFocusAura.YRadius     := BS_FORM_RADIUS + BS_FORM_FOCUS_RING_SPREAD;
+        FFocusAura.Fill.Kind   := TBrushKind.Solid;
+        FFocusAura.Fill.Color  := BS_FORM_FOCUS_RING;
+        FFocusAura.Stroke.Kind := TBrushKind.None;
+        FFocusAura.Visible     := False;
+        FFocusAura.Align       := TAlignLayout.Contents;
+        FFocusAura.Margins.Left   := -BS_FORM_FOCUS_RING_SPREAD;
+        FFocusAura.Margins.Top    := -BS_FORM_FOCUS_RING_SPREAD;
+        FFocusAura.Margins.Right  := -BS_FORM_FOCUS_RING_SPREAD;
+        FFocusAura.Margins.Bottom := -BS_FORM_FOCUS_RING_SPREAD;
+      end;
+
+      FRectBorder.Visible := True;
+      FRectBorder.Opacity := 1;
+      FRectBorder.Parent  := BgPar;
+      FRectBorder.Align   := TAlignLayout.Contents;
+      FRectBorder.Margins.Rect := TRectF.Empty;
+
+      FFocusAura.Parent := BgPar;
+
+      { Z-order: FFocusAura at the very back, FRectBorder in front of it,
+        text / scrollbars rendered in front of both. }
+      FRectBorder.SendToBack;
+      FFocusAura.SendToBack;
+    end;
+  end;
+
+  { ── 4. Hide the FMX native 'focus' indicator. ───────────────────────────── }
+  FocObj := FMemo.FindStyleResource('focus');
+  if (FocObj <> nil) and (FocObj is TControl) then
+    TControl(FocObj).Visible := False;
+
+  { ── 5. Reflect current focus state (border colour + aura visibility). ───── }
+  UpdateFocusState(FMemo.IsFocused);
+
+  { ── 6. Create external scrollbar if not yet present. ────────────────────── }
+  if FExternVScroll = nil then
+  begin
+    FExternVScroll             := TScrollBar.Create(FMemo);
+    FExternVScroll.Orientation := TOrientation.Vertical;
+    FExternVScroll.OnChange    := DoExternScrollChange;
+    FExternVScroll.Visible     := False;
+    FExternVScroll.Width       := BS_MEMO_EXTERN_SCROLL_W;
+    FExternVScroll.TabStop     := False;
+  end;
+  { Parent to memo's parent so SetBounds coordinates match FMemo.BoundsRect. }
+  if FMemo.Parent <> nil then
+    FExternVScroll.Parent := FMemo.Parent;
+
+  { ── 7. Initial scroll-presentation refresh + scrollbar geometry. ─────────── }
+  RefreshScrollPresentation;
+  SyncScrollbar;
+
+  { ── 8. Deferred pass: FMX style triggers fire after ApplyStyleLookup and   ─
+    may shift child z-order or restore native chrome.  Re-apply after settling. }
+  TThread.Queue(nil, procedure
+  begin
+    if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+    if FRectBorder <> nil then FRectBorder.SendToBack;
+    if FFocusAura  <> nil then FFocusAura.SendToBack;
+    RefreshScrollPresentation;
+    SyncScrollbar;
+  end);
+end;
+
+procedure TBSMemoScrollAdapter.UpdateFocusState(AFocused: Boolean);
+begin
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+
+  { FMX state triggers that fire on focus change may restore native chrome;
+    re-strip here so the Bootstrap overlay stays clean. }
+  StripMemoBackground(FMemo);
+
+  if FRectBorder <> nil then
+  begin
+    if AFocused and FMemo.Enabled then
+      FRectBorder.Stroke.Color := BS_FORM_BORDER_FOCUS
+    else
+      FRectBorder.Stroke.Color := BS_FORM_BORDER;
+    FRectBorder.Stroke.Thickness := BS_FORM_BORDER_THICKNESS;
+    FRectBorder.Stroke.Kind := TBrushKind.Solid;
+  end;
+
+  if FFocusAura <> nil then
+  begin
+    FFocusAura.Opacity := 1;
+    FFocusAura.Visible := AFocused and FMemo.Enabled;
+  end;
+
+  { Deferred pass: late-firing state triggers may reset visuals after this
+    method returns.  Re-apply z-order and chrome strip once the dust settles. }
+  TThread.Queue(nil, procedure
+  begin
+    if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+    DoMemoFix(FMemo);
+    if FRectBorder <> nil then FRectBorder.SendToBack;
+    if FFocusAura  <> nil then FFocusAura.SendToBack;
+  end);
+end;
+
+{ ── TBSMemoScrollAdapter event handlers ─────────────────────────────────── }
+
+procedure TBSMemoScrollAdapter.DoChangeTracking(Sender: TObject);
+begin
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  RefreshScrollPresentation;
+  SyncScrollbar;
+  { Second pass queued for the next message loop iteration: ContentSize may
+    not be fully updated until after the current event chain finishes. }
+  TThread.Queue(nil, procedure
+  begin
+    if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+    RefreshScrollPresentation;
+    SyncScrollbar;
+  end);
+  if Assigned(FOrigOnChangeTracking) then
+    FOrigOnChangeTracking(Sender);
+end;
+
+procedure TBSMemoScrollAdapter.DoViewportChange(Sender: TObject;
+  const OldViewportPosition, NewViewportPosition: TPointF;
+  const ContentSizeChanged: Boolean);
+begin
+  { Guard: exit if this change was triggered by DoExternScrollChange itself. }
+  if FSyncExternScroll then Exit;
+  if (FExternVScroll = nil) or not FExternVScroll.Visible then Exit;
+  FSyncExternScroll := True;
+  try
+    if not SameValue(FExternVScroll.Value, NewViewportPosition.Y, 0.5) then
+      FExternVScroll.Value := NewViewportPosition.Y;
+  finally
+    FSyncExternScroll := False;
+  end;
+  if Assigned(FOrigOnViewportChange) then
+    FOrigOnViewportChange(Sender, OldViewportPosition, NewViewportPosition,
+      ContentSizeChanged);
+end;
+
+procedure TBSMemoScrollAdapter.DoMemoResize(Sender: TObject);
+begin
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  SyncScrollbar;
+  if Assigned(FOrigOnResize) then
+    FOrigOnResize(Sender);
+end;
+
+procedure TBSMemoScrollAdapter.DoExternScrollChange(Sender: TObject);
+var
+  P: TPointF;
+begin
+  { Guard: exit if this change was triggered by DoViewportChange itself. }
+  if FSyncExternScroll then Exit;
+  if (FMemo = nil) or (csDestroying in FMemo.ComponentState) then Exit;
+  P   := FMemo.ViewportPosition;
+  P.Y := FExternVScroll.Value;
+  FMemo.ViewportPosition := P;
+end;
+
+{ Strips the FMX native border from TMemo's styled presentation.
+
+  TMemo is a TPresentedControl: its entire style tree (TScrollBox, TContent,
+  border TRectangle, scrollbars) lives in the PRESENTATION object — NOT in
+  Mo.Children.  Mo.FindStyleResource may also return nil because TPresentedControl
+  does not always delegate FindStyleResource to its presentation.
+
+  Strategy — recursive walk covering every possible access path:
+    1. Mo.Children (our own injected rects; all others walked).
+    2. Mo.FindStyleResource('background') if non-nil.
+    3. TPresentedControl(Mo).Presentation — the definitive source for the style
+       tree on Windows FMX.
+  All three paths call Walk(), which recursively erases any TShape that is NOT
+  a protected object (scrollbars, text objects, caret/selection/content subtrees,
+  our own __BSFormBg__ / __BSFormGlow__).  Because we set BOTH Opacity=0 AND
+  Visible=False AND Fill/Stroke=None, the erasure survives FMX state-trigger
+  resets that only touch Fill.Color. }
+procedure StripMemoBackground(const Mo: TMemo);
+
+  function IsProtected(const Obj: TFmxObject): Boolean;
+  var
+    N: string;
+  begin
+    { Never touch our own Bootstrap overlays. }
+    if Obj is TRectangle then
+    begin
+      Result :=
+        (TRectangle(Obj).TagString = BS_FORM_BG_NAME) or
+        (TRectangle(Obj).TagString = BS_FORM_GLOW_NAME);
+      if Result then Exit;
+    end;
+    { Keep scrollbars, text objects, and labels intact. }
+    Result := (Obj is TScrollBar) or (Obj is TText) or (Obj is TLabel);
+    if Result then Exit;
+    { Detect content/caret/selection subtrees by name. }
+    if Obj is TControl then
+      N := LowerCase(Trim(TControl(Obj).StyleName))
+    else
+      N := '';
+    if N = '' then N := LowerCase(Trim(Obj.Name));
+    Result :=
+      N.Contains('content')   or N.Contains('text') or
+      N.Contains('caret')     or N.Contains('cursor') or
+      N.Contains('selection') or N.Contains('sel') or
+      N.Contains('highlight');
+  end;
+
+  procedure Walk(const Obj: TFmxObject);
+  var
+    I: Integer;
+  begin
+    if Obj = nil then Exit;
+    { IsProtected → stop: do NOT recurse into protected subtrees. }
+    if IsProtected(Obj) then Exit;
+    if Obj is TShape then
+    begin
+      { Erase with every available mechanism so FMX trigger resets cannot bring
+        the shape back: Visible/Opacity survive most trigger rewrites. }
+      TShape(Obj).Visible     := False;
+      TShape(Obj).Opacity     := 0;
+      TShape(Obj).Fill.Kind   := TBrushKind.None;
+      TShape(Obj).Stroke.Kind := TBrushKind.None;
+    end;
+    for I := 0 to Obj.ChildrenCount - 1 do
+      Walk(Obj.Children[I]);
+  end;
+
+var
+  I:    Integer;
+  BgObj: TFmxObject;
+  Pres:  TFmxObject;
+begin
+  { Path 1 — Mo.Children (typically only our injected rects, but walk anyway). }
+  for I := 0 to Mo.ChildrenCount - 1 do
+    Walk(Mo.Children[I]);
+
+  { Path 2 — FindStyleResource (works when TPresentedControl delegates it). }
+  BgObj := Mo.FindStyleResource(FMX_RES_BACKGROUND);
+  if BgObj <> nil then Walk(BgObj);
+
+  { Path 3 — direct Presentation access: the definitive style tree for
+    TPresentedControl on Windows FMX.  FindStyleResource may miss it. }
+  if (Mo is TPresentedControl) and
+     TPresentedControl(Mo).HasPresentationProxy then
+  begin
+    Pres := TPresentedControl(Mo).Presentation as TFmxObject;
+    if Pres <> nil then Walk(Pres);
+  end;
+end;
+
 procedure DoApplyMemo(const E: TBSFormEntry);
 var
   Mo: TMemo;
-  R:  TRectangle;
-  G:  TRectangle;
 begin
   Mo := TMemo(E.Control);
-  R  := EnsureFormBg(Mo);
-  G  := EnsureFormGlow(Mo);
-  MakeStyleBackgroundTransparent(Mo);
-  StyleFormBg(R, Mo.IsFocused, Mo.Enabled, True);
-  StyleFormGlow(G, Mo.IsFocused, Mo.Enabled);
-  ApplyContentPadding(Mo);
+
+  { Strip native chrome (straight border, native background fill) from the
+    FMX presentation tree.  The adapter injects its own Bootstrap overlay. }
+  StripMemoBackground(Mo);
+
+  { Delegate all memo-specific Bootstrap visuals and scrollbar management to
+    the adapter.  The adapter handles:
+      • FRectBorder / FFocusAura injection into the presentation tree.
+      • Content inset via 'background' padding (NOT 'content' padding).
+      • External TScrollBar creation and geometry.
+      • Deferred z-order and chrome-strip passes. }
+  if E.MemoAdapter <> nil then
+    E.MemoAdapter.ApplyStyle;
+
+  { Apply Bootstrap typography (font family, size, colour). }
   ApplyBsFontMemo(Mo, E.FontSize);
+
+  { Belt-and-suspenders: 120 ms timer fires after TScrollBox.ApplyStyleLookup
+    has completed and the border TRectangle child exists, guaranteeing that
+    StripMemoBackground can find and erase it. }
+  TBSMemoFixTimer.Create(Mo, BS_FORM_PROMPT_REALIGN_DELAY_MS);
 end;
 
 procedure DoResetMemo(const E: TBSFormEntry);
@@ -1262,8 +2048,19 @@ var
 begin
   AMo := TMemo(E.Control);
   if csDestroying in AMo.ComponentState then Exit;
+  { Detach Bootstrap overlays and unhook extra events without destroying the
+    adapter (it is reused when Bootstrap styling is toggled back on). }
+  if E.MemoAdapter <> nil then
+    E.MemoAdapter.Detach;
+  { Remove legacy overlay rects from previous non-adapter approach if present. }
   RemoveFormBg(AMo);
   RemoveFormGlow(AMo);
+  { Restore the scrollbar and full styled settings. }
+  AMo.ShowScrollBars := True;
+  AMo.StyledSettings := [
+    TStyledSetting.Family, TStyledSetting.Size,
+    TStyledSetting.Style,  TStyledSetting.FontColor,
+    TStyledSetting.Other];
 end;
 
 { ══════════════════════════════════════════════════════════════════════════════
@@ -1473,13 +2270,27 @@ end;
 procedure TBSFormRegistry.Notification(AComponent: TComponent;
   Operation: TOperation);
 var
-  I: Integer;
+  I:    Integer;
+  EE:   TBSFormEntry;
 begin
   inherited;
   if Operation = opRemove then
     for I := FEntries.Count - 1 downto 0 do
       if FEntries[I].Control = AComponent then
+      begin
+        { Free the memo adapter before the entry is removed.  The memo is in
+          csDestroying at this point, so the adapter destructor will only nil
+          its object pointers — the memo's TComponent machinery frees the owned
+          objects (FRectBorder, FFocusAura, FExternVScroll). }
+        EE := FEntries[I];
+        if EE.MemoAdapter <> nil then
+        begin
+          EE.MemoAdapter.Free;
+          EE.MemoAdapter := nil;
+          FEntries[I] := EE;
+        end;
         FEntries.Delete(I);
+      end;
 end;
 
 function TBSFormRegistry.FindIndex(AControl: TStyledControl): Integer;
@@ -1506,8 +2317,11 @@ begin
   Idx := FindIndex(AControl);
   if Idx >= 0 then
   begin
+    { Re-registration: only update font size and propagate to adapter. }
     Entry          := FEntries[Idx];
     Entry.FontSize := AFontSize;
+    if Entry.MemoAdapter <> nil then
+      Entry.MemoAdapter.FontSize := AFontSize;
     FEntries[Idx]  := Entry;
     Exit;
   end;
@@ -1518,6 +2332,7 @@ begin
   Entry.OrigOnEnter      := AControl.OnEnter;
   Entry.OrigOnExit       := AControl.OnExit;
   Entry.OrigOnApplyStyle := AControl.OnApplyStyleLookup;
+  Entry.MemoAdapter      := nil;
 
   FEntries.Add(Entry);
 
@@ -1526,6 +2341,21 @@ begin
   AControl.OnEnter            := ControlEnter;
   AControl.OnExit             := ControlExit;
   AControl.OnApplyStyleLookup := ControlApplyStyle;
+
+  { For TMemo: create the adapter that manages the external scrollbar and the
+    presentation-tree border/aura injection.  The adapter hooks
+    OnChangeTracking, OnViewportPositionChange, and OnResize so the scrollbar
+    stays in sync.  It must be created AFTER Add() because the constructor
+    calls HookEvents, which reads AControl's current event slots — those are
+    already overwritten above for OnEnter/OnExit/OnApplyStyle, but the memo-
+    specific events are still the user's originals at this point. }
+  if AKind = bsfkMemo then
+  begin
+    Idx := FEntries.Count - 1;
+    Entry := FEntries[Idx];
+    Entry.MemoAdapter := TBSMemoScrollAdapter.Create(TMemo(AControl), AFontSize);
+    FEntries[Idx] := Entry;
+  end;
 end;
 
 procedure TBSFormRegistry.ControlEnter(Sender: TObject);
@@ -1541,10 +2371,20 @@ begin
 
   if FActive then
   begin
-    StyleFormBg(FindFormBg(E.Control), True, E.Control.Enabled,
-      IsEditFamily(E.Kind));
-    if IsEditFamily(E.Kind) then
-      StyleFormGlow(FindFormGlow(E.Control), True, E.Control.Enabled);
+    if E.Kind = bsfkMemo then
+    begin
+      { Adapter updates border colour, shows/hides focus aura, and runs a
+        deferred chrome-strip pass to undo any FMX trigger resets. }
+      if E.MemoAdapter <> nil then
+        E.MemoAdapter.UpdateFocusState(True);
+    end
+    else
+    begin
+      StyleFormBg(FindFormBg(E.Control), True, E.Control.Enabled,
+        IsEditFamily(E.Kind));
+      if IsEditFamily(E.Kind) then
+        StyleFormGlow(FindFormGlow(E.Control), True, E.Control.Enabled);
+    end;
     { FMX focus trigger fires after OnApplyStyleLookup and can reset text
       colour.  Re-force it here, after the trigger has had its chance. }
     ForceTextColor(E);
@@ -1571,10 +2411,18 @@ begin
 
   if FActive then
   begin
-    StyleFormBg(FindFormBg(E.Control), False, E.Control.Enabled,
-      IsEditFamily(E.Kind));
-    if IsEditFamily(E.Kind) then
-      StyleFormGlow(FindFormGlow(E.Control), False, E.Control.Enabled);
+    if E.Kind = bsfkMemo then
+    begin
+      if E.MemoAdapter <> nil then
+        E.MemoAdapter.UpdateFocusState(False);
+    end
+    else
+    begin
+      StyleFormBg(FindFormBg(E.Control), False, E.Control.Enabled,
+        IsEditFamily(E.Kind));
+      if IsEditFamily(E.Kind) then
+        StyleFormGlow(FindFormGlow(E.Control), False, E.Control.Enabled);
+    end;
     ForceTextColor(E);
     case E.Kind of
       bsfkEdit, bsfkComboEdit, bsfkSearchBox:
@@ -1703,8 +2551,13 @@ end;
 
 class procedure TBootstrapForms.ApplyMemo(const AMemo: TMemo; AFontSize: Single);
 begin
+  { Set scroll-related properties BEFORE Register hooks OnApplyStyleLookup.
+    Some setters call NeedStyleLookup internally; if that fires our handler
+    before the adapter exists the result is undefined behaviour. }
+  AMemo.ControlType    := TControlType.Styled;
+  AMemo.ShowScrollBars := False;  { Replaced by the adapter's external TScrollBar. }
+  AMemo.EnabledScroll  := True;
   GFormRegistry.Register(AMemo, bsfkMemo, AFontSize);
-  AMemo.ControlType := TControlType.Styled;
   AMemo.NeedStyleLookup;
   AMemo.ApplyStyleLookup;
 end;
@@ -1751,6 +2604,7 @@ end;
 
 initialization
   GPromptFixPending := TList<TBSPromptFixTimer>.Create;
+  GMemoFixPending   := TList<TBSMemoFixTimer>.Create;
   GFormRegistry := TBSFormRegistry.Create(nil);
 
 finalization
@@ -1759,6 +2613,12 @@ finalization
     while GPromptFixPending.Count > 0 do
       GPromptFixPending[0].Free;
     FreeAndNil(GPromptFixPending);
+  end;
+  if GMemoFixPending <> nil then
+  begin
+    while GMemoFixPending.Count > 0 do
+      GMemoFixPending[0].Free;
+    FreeAndNil(GMemoFixPending);
   end;
   FreeAndNil(GFormRegistry);
 

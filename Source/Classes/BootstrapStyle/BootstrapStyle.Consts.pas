@@ -65,6 +65,14 @@ const
   BS_FORM_CONTENT_PAD_X = 12;
   BS_FORM_CONTENT_PAD_Y = 6;
 
+  { External vertical scrollbar for TMemo.
+    The FMX styled internal scrollbar is unreliable inside a presented TMemo;
+    an external TScrollBar sibling is overlaid on the right edge instead. }
+  BS_MEMO_EXTERN_SCROLL_W         = 10;  { pixel width of the external TScrollBar }
+  BS_MEMO_SCROLL_INSET_RIGHT      =  1;  { gap: scrollbar right edge → memo border }
+  BS_MEMO_SCROLL_INSET_VERT       =  1;  { gap: top/bottom of scrollbar → memo border }
+  BS_MEMO_SCROLL_SMALL_CHANGE_DIV =  5;  { viewport fraction per arrow-key step }
+
   { ── FMX style resource identifiers (used by FindStyleResource) ──────────── }
   FMX_RES_BACKGROUND = 'background';
   FMX_RES_CONTENT    = 'content';
